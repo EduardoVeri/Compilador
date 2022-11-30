@@ -54,8 +54,7 @@ SIMBSIMPLESLOGICOS <|>
 			}
 		}
 		
-		
-
+	
 {PRIORIDADE} printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
 = printf("\t%d: {ATRIB, %s}\n", qntLinhas, yytext);	
 , printf("\t%d: {COMMA, %s}\n", qntLinhas, yytext);	
