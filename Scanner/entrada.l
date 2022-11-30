@@ -45,6 +45,8 @@ SIMBSIMPLESLOGICOS <|>
 	}
    }
    
+   
+   
 {DIGIT}{DIGIT}*  printf("\t%d: {NUM, %s}\n", qntLinhas, yytext);
 {LETRA}{LETRA}* {
 			if((tabelaNomes()) == 0){
