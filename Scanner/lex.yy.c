@@ -782,12 +782,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 47 "entrada.l"
+#line 50 "entrada.l"
 printf("\t%d: {NUM, %s}\n", qntLinhas, yytext);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 48 "entrada.l"
+#line 51 "entrada.l"
 {
 			if((tabelaNomes()) == 0){
 				printf("\t%d: {ID, %s}\n", qntLinhas, yytext);
@@ -796,41 +796,41 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 56 "entrada.l"
+#line 58 "entrada.l"
 printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 57 "entrada.l"
+#line 59 "entrada.l"
 printf("\t%d: {ATRIB, %s}\n", qntLinhas, yytext);	
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 58 "entrada.l"
+#line 60 "entrada.l"
 printf("\t%d: {COMMA, %s}\n", qntLinhas, yytext);	
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 59 "entrada.l"
+#line 61 "entrada.l"
 printf("\t%d: {SEMICOLON, %s}\n", qntLinhas, yytext);	
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 60 "entrada.l"
+#line 62 "entrada.l"
 printf("\t%d: {OPAR, %s}\n", qntLinhas, yytext);	
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 61 "entrada.l"
+#line 63 "entrada.l"
 printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 62 "entrada.l"
+#line 64 "entrada.l"
 printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 64 "entrada.l"
+#line 66 "entrada.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -838,12 +838,12 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 69 "entrada.l"
+#line 71 "entrada.l"
 {printf("\t%d: Erro, problema em = %s\n", qntLinhas, yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 71 "entrada.l"
+#line 73 "entrada.l"
 ECHO;
 	YY_BREAK
 #line 850 "lex.yy.c"
@@ -1849,7 +1849,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 71 "entrada.l"
+#line 73 "entrada.l"
 
 
 int main(int argc, char *argv[])
