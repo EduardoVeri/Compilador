@@ -52,7 +52,25 @@ extern int yydebug;
     NUM = 258,
     SOMA = 259,
     SUB = 260,
-    MULT = 261
+    MULT = 261,
+    DIV = 262,
+    INT = 263,
+    ID = 264,
+    VOID = 265,
+    WHILE = 266,
+    ELSE = 267,
+    IF = 268,
+    ABREPARENTESES = 269,
+    FECHAPARENTESES = 270,
+    OPRELACIONAL = 271,
+    RETURN = 272,
+    COMMA = 273,
+    ABRECHAVES = 274,
+    FECHACHAVES = 275,
+    SEMICOLON = 276,
+    ATRIB = 277,
+    ABRECOLCHETES = 278,
+    FECHACOLCHETES = 279
   };
 #endif
 

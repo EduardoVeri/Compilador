@@ -16,6 +16,8 @@ FILE *f_in = NULL;
 
 DIGIT [0-9]
 LETRA [a-zA-Z]
+OPAR \+|\-|\*|\/
+PRIORIDADE \(|\)|\[|\]|\\|\{|\}
 SIMBCOMPOSTOSLOGICOS ==|<=|>=|!=
 SIMBSIMPLESLOGICOS <|>
 
@@ -67,53 +69,25 @@ SIMBSIMPLESLOGICOS <|>
 			return token;
 		 }
 		
-	      
-\( {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return ABREPARENTESES;
-   }
-
-\) {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return FECHAPARENTESES;
-   } 
-
-\[ {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return ABRECOLCHETES;
-   }	      
-	      
-	      
-\] {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return FECHACOLCHETES;
-   }	      
-
-	      
-\{ {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return ABRECHAVES;
-   }
-	      
-\} {
-	printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-	return FECHACHAVES;	
-   }
-
+	
+{PRIORIDADE} {
+		printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
+		return yytext;
+	      }
 	      
 = {
 	printf("\t%d: {ATRIB, %s}\n", qntLinhas, yytext);
-	return ATRIB;
+	return yytext;
   }	
 	
 , {
 	printf("\t%d: {COMMA, %s}\n", qntLinhas, yytext);
-	return COMMA;
+	return yytext;
   }	
   
 ; {
 	printf("\t%d: {SEMICOLON, %s}\n", qntLinhas, yytext);	
-	return SEMICOLON;
+	return yytext;
   }
   
 \+ {
@@ -178,7 +152,7 @@ int main(int argc, char *argv[]){
 		printf("Bem vindo ao analisador Lexico!\nDigite \"!N\" para sair\n");
 	}
 	
-	yyparse();
+	while(yylex() != 0);
 		
 	return(0);
 }

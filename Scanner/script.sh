@@ -1,5 +1,5 @@
 #!/bin/bash
 
-flex entrada.l
+flex scanner.l
 gcc -o exec lex.yy.c -lfl
 ./exec mdc.cm
