@@ -16,8 +16,6 @@ FILE *f_in = NULL;
 
 DIGIT [0-9]
 LETRA [a-zA-Z]
-OPAR \+|\-|\*|\/
-PRIORIDADE \(|\)|\[|\]|\\|\{|\}
 SIMBCOMPOSTOSLOGICOS ==|<=|>=|!=
 SIMBSIMPLESLOGICOS <|>
 
@@ -56,57 +54,85 @@ SIMBSIMPLESLOGICOS <|>
    
    
 {DIGIT}{DIGIT}* {
-			printf("\t%d: {NUM, %s}\n", qntLinhas, yytext);
+			printf("\t%d: { NUM, %s }\n", qntLinhas, yytext);
 		  	return NUM; 
 		 }
 		  
 {LETRA}{LETRA}* {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
-				printf("\t%d: {ID, %s}\n", qntLinhas, yytext);
+				printf("\t%d: { ID, %s }\n", qntLinhas, yytext);
 				token = ID;
 			}
 			return token;
 		 }
 		
-	
-{PRIORIDADE} {
-		printf("\t%d: {PRIORITY, %s}\n", qntLinhas, yytext);
-		return yytext;
-	      }
+	      
+\( {
+	printf("\t%d: { ABREPARENTESES, %s }\n", qntLinhas, yytext);
+	return ABREPARENTESES;
+   }
+
+\) {
+	printf("\t%d: { FECHAPARENTESES, %s }\n", qntLinhas, yytext);
+	return FECHAPARENTESES;
+   } 
+
+\[ {
+	printf("\t%d: { ABRECOLCHETES, %s }\n", qntLinhas, yytext);
+	return ABRECOLCHETES;
+   }	      
+	      
+	      
+\] {
+	printf("\t%d: { FECHACOLCHETES, %s }\n", qntLinhas, yytext);
+	return FECHACOLCHETES;
+   }	      
+
+	      
+\{ {
+	printf("\t%d: { ABRECHAVES, %s }\n", qntLinhas, yytext);
+	return ABRECHAVES;
+   }
+	      
+\} {
+	printf("\t%d: { FECHACHAVES, %s }\n", qntLinhas, yytext);
+	return FECHACHAVES;	
+   }
+
 	      
 = {
-	printf("\t%d: {ATRIB, %s}\n", qntLinhas, yytext);
-	return yytext;
+	printf("\t%d: { ATRIB, %s }\n", qntLinhas, yytext);
+	return ATRIB;
   }	
 	
 , {
-	printf("\t%d: {COMMA, %s}\n", qntLinhas, yytext);
-	return yytext;
+	printf("\t%d: { COMMA, %s }\n", qntLinhas, yytext);
+	return COMMA;
   }	
   
 ; {
-	printf("\t%d: {SEMICOLON, %s}\n", qntLinhas, yytext);	
-	return yytext;
+	printf("\t%d: { SEMICOLON, %s }\n", qntLinhas, yytext);	
+	return SEMICOLON;
   }
   
 \+ {
-	printf("\t%d: {SOMA, %s}\n", qntLinhas, yytext);
+	printf("\t%d: { SOMA, %s }\n", qntLinhas, yytext);
 	return SOMA;
    }	
    
 \- {
-	printf("\t%d: {SUB, %s}\n", qntLinhas, yytext);
+	printf("\t%d: { SUB, %s }\n", qntLinhas, yytext);
 	return SUB;
    }  
    
 \* {
-	printf("\t%d: {SOMA, %s}\n", qntLinhas, yytext);
+	printf("\t%d: { MULT, %s }\n", qntLinhas, yytext);
 	return MULT;
    }	
    
 \/ {
-	printf("\t%d: {SUB, %s}\n", qntLinhas, yytext);
+	printf("\t%d: { DIV, %s }\n", qntLinhas, yytext);
 	return DIV;
    } 
       
@@ -152,7 +178,7 @@ int main(int argc, char *argv[]){
 		printf("Bem vindo ao analisador Lexico!\nDigite \"!N\" para sair\n");
 	}
 	
-	while(yylex() != 0);
+	yyparse();
 		
 	return(0);
 }
@@ -192,7 +218,7 @@ int tabelaNomes(enum yytokentype *token){
 		flag =  1;
 	}
 	
-	if(flag == 1) printf("\t%d: {reserved word, %s}\n", qntLinhas, aux);
+	if(flag == 1) printf("\t%d: { reserved word , %s }\n", qntLinhas, aux);
 	
 	return flag;
 }

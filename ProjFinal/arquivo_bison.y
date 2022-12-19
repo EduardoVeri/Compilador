@@ -3,25 +3,31 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "global.h"
+
+#define YYSTYPE PONTEIRONO
 
 int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
-
+int qntLinhas = 0;
+PONTEIRONO arvoreSintatica;
 
 %}
+
+
 
 %token NUM SOMA SUB MULT DIV INT
 %token ID VOID WHILE ELSE IF ABREPARENTESES FECHAPARENTESES
 %token OPRELACIONAL RETURN COMMA ABRECHAVES FECHACHAVES SEMICOLON
 %token ATRIB ABRECOLCHETES FECHACOLCHETES
 
-%left SOMA SUB MULT
+
 
 %%
 
-programa		: declaracao_lista
+programa		: declaracao_lista {arvoreSintatica = $1;}
 			;
 			
 declaracao_lista	: declaracao_lista declaracao
@@ -77,7 +83,7 @@ expressao_decl		: expressao SEMICOLON
 			| SEMICOLON
 			;
 			
-selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement
+selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {$$ /* criaNo()*/; }
 			| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement
 			;
 			
@@ -143,5 +149,9 @@ void yyerror (char *s){
 	printf ("ERRO SINTATICO: %s LINHA:", s);
 }
 
-
+/*
+TreeNode * parse(void)
+{ yyparse();
+  return savedTree;
+}*/
 

@@ -72,15 +72,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "global.h"
+
+#define YYSTYPE PONTEIRONO
 
 int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
+int qntLinhas = 0;
+PONTEIRONO arvoreSintatica;
 
 
-
-#line 84 "arquivo_bison.tab.c"
+#line 88 "arquivo_bison.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -529,12 +533,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    27,    28,    31,    32,    35,    36,    39,
-      40,    43,    46,    47,    50,    51,    54,    55,    58,    61,
-      62,    65,    66,    69,    70,    71,    72,    73,    76,    77,
-      80,    81,    84,    87,    88,    91,    92,    95,    96,    99,
-     100,   103,   106,   107,   110,   111,   114,   115,   118,   119,
-     122,   123,   124,   125,   128,   131,   132,   135,   136
+       0,    30,    30,    33,    34,    37,    38,    41,    42,    45,
+      46,    49,    52,    53,    56,    57,    60,    61,    64,    67,
+      68,    71,    72,    75,    76,    77,    78,    79,    82,    83,
+      86,    87,    90,    93,    94,    97,    98,   101,   102,   105,
+     106,   109,   112,   113,   116,   117,   120,   121,   124,   125,
+     128,   129,   130,   131,   134,   137,   138,   141,   142
 };
 #endif
 
@@ -1388,8 +1392,20 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2:
+#line 30 "arquivo_bison.y"
+                                           {arvoreSintatica = yyvsp[0];}
+#line 1399 "arquivo_bison.tab.c"
+    break;
 
-#line 1393 "arquivo_bison.tab.c"
+  case 30:
+#line 86 "arquivo_bison.y"
+                                                                                {yyval /* criaNo()*/; }
+#line 1405 "arquivo_bison.tab.c"
+    break;
+
+
+#line 1409 "arquivo_bison.tab.c"
 
       default: break;
     }
@@ -1621,12 +1637,16 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 140 "arquivo_bison.y"
+#line 146 "arquivo_bison.y"
 
 
 void yyerror (char *s){
 	printf ("ERRO SINTATICO: %s LINHA:", s);
 }
 
-
+/*
+TreeNode * parse(void)
+{ yyparse();
+  return savedTree;
+}*/
 
