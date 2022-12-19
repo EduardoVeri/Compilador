@@ -46,7 +46,7 @@ SIMBSIMPLESLOGICOS <|>
 	qntLinhas++;
 	if (copiaArquivo != NULL){
 		fgets(stringAux, 1000, copiaArquivo);
-		if(feof(copiaArquivo) != EOF)
+		if(feof(copiaArquivo) == 0)
 			mostrarTela(stringAux);
 	}
 	
@@ -55,14 +55,14 @@ SIMBSIMPLESLOGICOS <|>
    
    
 {DIGIT}{DIGIT}* {
-			printf("\t%d: { NUM, %s }\n", qntLinhas, yytext);
+			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 		  	return NUM; 
 		 }
 		  
 {LETRA}{LETRA}* {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
-				printf("\t%d: { ID, %s }\n", qntLinhas, yytext);
+				printf("\t%d: ID, %s\n", qntLinhas, yytext);
 				token = ID;
 			}
 			return token;
@@ -70,80 +70,80 @@ SIMBSIMPLESLOGICOS <|>
 		
 	      
 \( {
-	printf("\t%d: { ABREPARENTESES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
    }
 
 \) {
-	printf("\t%d: { FECHAPARENTESES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
    } 
 
 \[ {
-	printf("\t%d: { ABRECOLCHETES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
    }	      
 	      
 	      
 \] {
-	printf("\t%d: { FECHACOLCHETES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
    }	      
 
 	      
 \{ {
-	printf("\t%d: { ABRECHAVES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
    }
 	      
 \} {
-	printf("\t%d: { FECHACHAVES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
    }
 
 	      
 = {
-	printf("\t%d: { ATRIB, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
   }	
 	
 , {
-	printf("\t%d: { COMMA, %s }\n", qntLinhas, yytext);
+	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
   }	
   
 ; {
-	printf("\t%d: { SEMICOLON, %s }\n", qntLinhas, yytext);	
+	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
   }
   
 \+ {
-	printf("\t%d: { SOMA, %s }\n", qntLinhas, yytext);
+	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
    }	
    
 \- {
-	printf("\t%d: { SUB, %s }\n", qntLinhas, yytext);
+	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
    }  
    
 \* {
-	printf("\t%d: { MULT, %s }\n", qntLinhas, yytext);
+	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
    }	
    
 \/ {
-	printf("\t%d: { DIV, %s }\n", qntLinhas, yytext);
+	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
    } 
       
 {SIMBCOMPOSTOSLOGICOS} {
-				printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
+				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
 			}
 			
 {SIMBSIMPLESLOGICOS} {
-				printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
+				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
 		      }
 
@@ -219,7 +219,7 @@ int tabelaNomes(enum yytokentype *token){
 		flag =  1;
 	}
 	
-	if(flag == 1) printf("\t%d: { reserved word , %s }\n", qntLinhas, aux);
+	if(flag == 1) printf("\t%d: reserved word , %s\n", qntLinhas, aux);
 	
 	return flag;
 }

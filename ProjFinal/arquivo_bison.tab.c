@@ -74,18 +74,19 @@
 #include <stdlib.h>
 #include "global.h"
 
-#define YYSTYPE PONTEIRONO
 
 int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
+
 PONTEIRONO arvoreSintatica;
+typedef NoArvore * PONTEIRONO;
 
 char auxLexema[26];
 
 
-#line 89 "arquivo_bison.tab.c"
+#line 90 "arquivo_bison.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -160,7 +161,16 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 21 "arquivo_bison.y"
+
+  NoArvore * no;
+
+#line 171 "arquivo_bison.tab.c"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -534,12 +544,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    34,    35,    38,    39,    42,    43,    46,
-      47,    50,    53,    54,    57,    58,    61,    62,    65,    68,
-      69,    72,    73,    76,    77,    78,    79,    80,    83,    84,
-      87,    90,    93,    96,    97,   100,   101,   104,   105,   108,
-     109,   112,   115,   116,   119,   120,   123,   124,   127,   128,
-     131,   132,   133,   134,   137,   140,   141,   144,   145
+       0,    39,    39,    42,    43,    46,    47,    50,    51,    54,
+      55,    58,    61,    62,    65,    66,    69,    70,    73,    76,
+      77,    80,    81,    84,    85,    86,    87,    88,    91,    92,
+      95,   102,   105,   108,   109,   112,   113,   116,   117,   120,
+     121,   124,   127,   128,   131,   132,   135,   136,   139,   140,
+     143,   144,   145,   146,   149,   152,   153,   156,   157
 };
 #endif
 
@@ -1394,21 +1404,157 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 31 "arquivo_bison.y"
-                                           {arvoreSintatica = yyvsp[0];}
-#line 1400 "arquivo_bison.tab.c"
+#line 39 "arquivo_bison.y"
+                                                   {arvoreSintatica = (yyvsp[0].no);}
+#line 1410 "arquivo_bison.tab.c"
+    break;
+
+  case 9:
+#line 54 "arquivo_bison.y"
+                              {(yyval.no) = NULL;}
+#line 1416 "arquivo_bison.tab.c"
+    break;
+
+  case 10:
+#line 55 "arquivo_bison.y"
+                                               {(yyval.no) = NULL;}
+#line 1422 "arquivo_bison.tab.c"
+    break;
+
+  case 13:
+#line 62 "arquivo_bison.y"
+                                               {(yyval.no) = NULL;}
+#line 1428 "arquivo_bison.tab.c"
+    break;
+
+  case 18:
+#line 73 "arquivo_bison.y"
+                                                                                   {(yyval.no) = NULL;}
+#line 1434 "arquivo_bison.tab.c"
+    break;
+
+  case 20:
+#line 77 "arquivo_bison.y"
+                                                 {(yyval.no) = NULL;}
+#line 1440 "arquivo_bison.tab.c"
+    break;
+
+  case 22:
+#line 81 "arquivo_bison.y"
+                                                 {(yyval.no) = NULL;}
+#line 1446 "arquivo_bison.tab.c"
+    break;
+
+  case 29:
+#line 92 "arquivo_bison.y"
+                                                    {(yyval.no) = NULL;}
+#line 1452 "arquivo_bison.tab.c"
     break;
 
   case 30:
-#line 87 "arquivo_bison.y"
-                                                                                                {
-				/*strcpy(auxLexema, "IF");
-				$$ = criaNo(auxLexema, );*/ }
-#line 1408 "arquivo_bison.tab.c"
+#line 95 "arquivo_bison.y"
+                                                                                {
+						strcpy(auxLexema, "IF");
+						(yyval.no) = criaNo(auxLexema, qntLinhas, 0, 1);
+						adicionaFilho((yyval.no), (yyvsp[-2].no));
+						adicionaFilho((yyval.no), (yyvsp[0].no));
+						
+						}
+#line 1464 "arquivo_bison.tab.c"
+    break;
+
+  case 31:
+#line 102 "arquivo_bison.y"
+                                                                                                               {(yyval.no) = NULL;}
+#line 1470 "arquivo_bison.tab.c"
+    break;
+
+  case 32:
+#line 105 "arquivo_bison.y"
+                                                                                   {(yyval.no) = NULL;}
+#line 1476 "arquivo_bison.tab.c"
+    break;
+
+  case 33:
+#line 108 "arquivo_bison.y"
+                                           {(yyval.no) = NULL;}
+#line 1482 "arquivo_bison.tab.c"
+    break;
+
+  case 34:
+#line 109 "arquivo_bison.y"
+                                                                     {(yyval.no) = NULL;}
+#line 1488 "arquivo_bison.tab.c"
+    break;
+
+  case 37:
+#line 116 "arquivo_bison.y"
+                                     {(yyval.no) = NULL;}
+#line 1494 "arquivo_bison.tab.c"
+    break;
+
+  case 38:
+#line 117 "arquivo_bison.y"
+                                                                                    {(yyval.no) = NULL;}
+#line 1500 "arquivo_bison.tab.c"
+    break;
+
+  case 41:
+#line 124 "arquivo_bison.y"
+                                               {(yyval.no) = NULL;}
+#line 1506 "arquivo_bison.tab.c"
+    break;
+
+  case 44:
+#line 131 "arquivo_bison.y"
+                                       {(yyval.no) = NULL;}
+#line 1512 "arquivo_bison.tab.c"
+    break;
+
+  case 45:
+#line 132 "arquivo_bison.y"
+                                              {(yyval.no) = NULL;}
+#line 1518 "arquivo_bison.tab.c"
+    break;
+
+  case 48:
+#line 139 "arquivo_bison.y"
+                                       {(yyval.no) = NULL;}
+#line 1524 "arquivo_bison.tab.c"
+    break;
+
+  case 49:
+#line 140 "arquivo_bison.y"
+                                              {(yyval.no) = NULL;}
+#line 1530 "arquivo_bison.tab.c"
+    break;
+
+  case 50:
+#line 143 "arquivo_bison.y"
+                                                                            {(yyval.no) = NULL;}
+#line 1536 "arquivo_bison.tab.c"
+    break;
+
+  case 53:
+#line 146 "arquivo_bison.y"
+                                              {(yyval.no) = NULL;}
+#line 1542 "arquivo_bison.tab.c"
+    break;
+
+  case 54:
+#line 149 "arquivo_bison.y"
+                                                                         {(yyval.no) = NULL;}
+#line 1548 "arquivo_bison.tab.c"
+    break;
+
+  case 56:
+#line 153 "arquivo_bison.y"
+                                                 {(yyval.no) = NULL;}
+#line 1554 "arquivo_bison.tab.c"
     break;
 
 
-#line 1412 "arquivo_bison.tab.c"
+#line 1558 "arquivo_bison.tab.c"
 
       default: break;
     }
@@ -1640,12 +1786,18 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 149 "arquivo_bison.y"
+#line 161 "arquivo_bison.y"
 
 
 void yyerror (char *s){
 	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
+
+
+
+
+
+
 
 /*
 TreeNode * parse(void)

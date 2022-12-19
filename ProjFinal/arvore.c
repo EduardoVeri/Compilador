@@ -28,6 +28,10 @@ PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo){
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no){
     PONTEIRONO aux = raiz;
 
+    if(aux == NULL){
+        return NULL;
+    }
+
     while(aux->irmao != NULL){
         aux = aux->irmao;
     }
@@ -41,14 +45,13 @@ PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no){
     PONTEIRONO aux = raiz;
     int i;
 
+    if(aux == NULL){
+        return NULL;
+    }
+
     for(i = 0; i < 3 && aux->filho[i] != NULL; i++);
 
     aux->filho[i] = no;
 
     return raiz;
-}
-
-int main(){
-    printf("Hello");
-    return 0;
 }

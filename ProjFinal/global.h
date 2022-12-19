@@ -14,6 +14,7 @@ typedef struct NoArvore{
 	char lexema[26]; //Tamanho máximo lexema é de 25
 } NoArvore;
 
+
 typedef NoArvore * PONTEIRONO;
 
 PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo);

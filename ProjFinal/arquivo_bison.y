@@ -5,18 +5,27 @@
 #include <stdlib.h>
 #include "global.h"
 
-#define YYSTYPE PONTEIRONO
 
 int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
+
 PONTEIRONO arvoreSintatica;
+
 
 char auxLexema[26];
 
 %}
 
+%union {
+  NoArvore * no;
+}
+
+%type <no> programa declaracao_lista declaracao var_declaracao tipo_especificador fun_declaracao
+%type <no> params param_lista param composto_decl local_declaracoes statement_lista statement expressao_decl
+%type <no> selecao_decl iteracao_decl retorno_decl expressao var simples_expressao relacional soma_expressao
+%type <no> soma termo mult fator ativacao args arg_lista 
 
 
 %token NUM SOMA SUB MULT DIV INT
@@ -25,128 +34,128 @@ char auxLexema[26];
 %token ATRIB ABRECOLCHETES FECHACOLCHETES
 
 
-
 %%
 
-programa		: declaracao_lista {arvoreSintatica = $1;}
-			;
+programa			: declaracao_lista {arvoreSintatica = $1;}
+					;
 			
 declaracao_lista	: declaracao_lista declaracao
-			| declaracao
-			;
+					| declaracao
+					;
 
-declaracao		: var_declaracao
-			| fun_declaracao
-			;
+declaracao			: var_declaracao
+					| fun_declaracao
+					;
 
 var_declaracao		: tipo_especificador ID SEMICOLON
-			| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON
-			;
+					| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON
+					;
 
-tipo_especificador 	: INT 
-			| VOID
-			;
+tipo_especificador 	: INT {$$ = NULL;}
+					| VOID {$$ = NULL;}
+					;
 
 fun_declaracao		: tipo_especificador ID ABREPARENTESES params FECHAPARENTESES composto_decl
-			;
+					;
 
-params			: param_lista
-			| VOID
-			;
+params				: param_lista
+					| VOID {$$ = NULL;}
+					;
 
-param_lista		: param_lista COMMA param
-			| param
-			;
+param_lista			: param_lista COMMA param
+					| param
+					;
 
-param			: tipo_especificador ID
-			| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES
-			;
+param				: tipo_especificador ID
+					| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES
+					;
 
-composto_decl		: ABRECHAVES local_declaracoes statement_lista FECHACHAVES
-			;
+composto_decl		: ABRECHAVES local_declaracoes statement_lista FECHACHAVES {$$ = NULL;}
+					;
 
 local_declaracoes 	: local_declaracoes var_declaracao
-			| %empty
-			;
+					| %empty {$$ = NULL;}
+					;
 
 statement_lista 	: statement_lista statement 
-			| %empty
-			;
+					| %empty {$$ = NULL;}
+					;
 			
-statement		: expressao_decl
-			| composto_decl
-			| selecao_decl
-			| iteracao_decl
-			| retorno_decl
-			;
+statement			: expressao_decl
+					| composto_decl
+					| selecao_decl
+					| iteracao_decl
+					| retorno_decl
+					;
 
 expressao_decl		: expressao SEMICOLON
-			| SEMICOLON
-			;
+					| SEMICOLON {$$ = NULL;}
+					;
 			
-selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement 		{
-				strcpy(auxLexema, "IF");
-				$$ = criaNo(auxLexema, qntLinhas, 0, 1);
-				
-						 
-			}
-			| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement
-			;
+selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
+						strcpy(auxLexema, "IF");
+						$$ = criaNo(auxLexema, qntLinhas, 0, 1);
+						adicionaFilho($$, $3);
+						adicionaFilho($$, $5);
+						
+						}
+					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {$$ = NULL;}
+					;
 			
-iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement
-			;
+iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {$$ = NULL;}
+					;
 			
-retorno_decl		: RETURN SEMICOLON
-			| RETURN expressao SEMICOLON
-			;
+retorno_decl		: RETURN SEMICOLON {$$ = NULL;}
+					| RETURN expressao SEMICOLON {$$ = NULL;}
+					;
 
-expressao		: var ATRIB expressao
-			| simples_expressao
-			;
+expressao			: var ATRIB expressao
+					| simples_expressao
+					;
 
-var 			: ID
-			| ID ABRECOLCHETES expressao FECHACOLCHETES
-			;
+var 				: ID {$$ = NULL;}
+					| ID ABRECOLCHETES expressao FECHACOLCHETES {$$ = NULL;}
+					;
 			
 simples_expressao	: soma_expressao relacional soma_expressao
-			| soma_expressao
-			;
+					| soma_expressao
+					;
 			
-relacional		: OPRELACIONAL
-			;
+relacional			: OPRELACIONAL {$$ = NULL;}
+					;
 			
 soma_expressao		: soma_expressao soma termo 
-			| termo
-			;
+					| termo
+					;
 			
-soma			: SOMA
-			| SUB
-			;
+soma				: SOMA {$$ = NULL;}
+					| SUB {$$ = NULL;} 
+					;
 			
-termo			: termo mult fator
-			| fator
-			;
+termo				: termo mult fator
+					| fator
+					;
 			
-mult			: MULT
-			| DIV
-			;
+mult				: MULT {$$ = NULL;}
+					| DIV {$$ = NULL;}
+					;
 			
-fator			: ABREPARENTESES expressao FECHAPARENTESES 
-			| var
-			| ativacao
-			| NUM
-			;
+fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = NULL;}
+					| var
+					| ativacao
+					| NUM {$$ = NULL;}
+					;
 
-ativacao 		: ID ABREPARENTESES args FECHAPARENTESES
-			;
+ativacao 			: ID ABREPARENTESES args FECHAPARENTESES {$$ = NULL;}
+					;
 			
-args 			: arg_lista
-			| %empty
-			;
+args 				: arg_lista
+					| %empty {$$ = NULL;}
+					;
 			
-arg_lista		: arg_lista COMMA expressao 
-			| expressao
-			;			
+arg_lista			: arg_lista COMMA expressao 
+					| expressao
+					;			
 
 
 %%
@@ -154,6 +163,12 @@ arg_lista		: arg_lista COMMA expressao
 void yyerror (char *s){
 	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
+
+
+
+
+
+
 
 /*
 TreeNode * parse(void)

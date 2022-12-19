@@ -677,7 +677,7 @@ YY_RULE_SETUP
 	qntLinhas++;
 	if (copiaArquivo != NULL){
 		fgets(stringAux, 1000, copiaArquivo);
-		if(feof(copiaArquivo) != EOF)
+		if(feof(copiaArquivo) == 0)
 			mostrarTela(stringAux);
 	}
 	
@@ -687,7 +687,7 @@ case 4:
 YY_RULE_SETUP
 #line 57 "entrada.l"
 {
-			printf("\t%d: { NUM, %s }\n", qntLinhas, yytext);
+			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 		  	return NUM; 
 		 }
 	YY_BREAK
@@ -697,7 +697,7 @@ YY_RULE_SETUP
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
-				printf("\t%d: { ID, %s }\n", qntLinhas, yytext);
+				printf("\t%d: ID, %s\n", qntLinhas, yytext);
 				token = ID;
 			}
 			return token;
@@ -707,7 +707,7 @@ case 6:
 YY_RULE_SETUP
 #line 72 "entrada.l"
 {
-	printf("\t%d: { ABREPARENTESES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
    }
 	YY_BREAK
@@ -715,7 +715,7 @@ case 7:
 YY_RULE_SETUP
 #line 77 "entrada.l"
 {
-	printf("\t%d: { FECHAPARENTESES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
    } 
 	YY_BREAK
@@ -723,7 +723,7 @@ case 8:
 YY_RULE_SETUP
 #line 82 "entrada.l"
 {
-	printf("\t%d: { ABRECOLCHETES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
    }	      
 	YY_BREAK
@@ -731,7 +731,7 @@ case 9:
 YY_RULE_SETUP
 #line 88 "entrada.l"
 {
-	printf("\t%d: { FECHACOLCHETES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
    }	      
 	YY_BREAK
@@ -739,7 +739,7 @@ case 10:
 YY_RULE_SETUP
 #line 94 "entrada.l"
 {
-	printf("\t%d: { ABRECHAVES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
    }
 	YY_BREAK
@@ -747,7 +747,7 @@ case 11:
 YY_RULE_SETUP
 #line 99 "entrada.l"
 {
-	printf("\t%d: { FECHACHAVES, %s }\n", qntLinhas, yytext);
+	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
    }
 	YY_BREAK
@@ -755,7 +755,7 @@ case 12:
 YY_RULE_SETUP
 #line 105 "entrada.l"
 {
-	printf("\t%d: { ATRIB, %s }\n", qntLinhas, yytext);
+	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
   }	
 	YY_BREAK
@@ -763,7 +763,7 @@ case 13:
 YY_RULE_SETUP
 #line 110 "entrada.l"
 {
-	printf("\t%d: { COMMA, %s }\n", qntLinhas, yytext);
+	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
   }	
 	YY_BREAK
@@ -771,7 +771,7 @@ case 14:
 YY_RULE_SETUP
 #line 115 "entrada.l"
 {
-	printf("\t%d: { SEMICOLON, %s }\n", qntLinhas, yytext);	
+	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
   }
 	YY_BREAK
@@ -779,7 +779,7 @@ case 15:
 YY_RULE_SETUP
 #line 120 "entrada.l"
 {
-	printf("\t%d: { SOMA, %s }\n", qntLinhas, yytext);
+	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
    }	
 	YY_BREAK
@@ -787,7 +787,7 @@ case 16:
 YY_RULE_SETUP
 #line 125 "entrada.l"
 {
-	printf("\t%d: { SUB, %s }\n", qntLinhas, yytext);
+	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
    }  
 	YY_BREAK
@@ -795,7 +795,7 @@ case 17:
 YY_RULE_SETUP
 #line 130 "entrada.l"
 {
-	printf("\t%d: { MULT, %s }\n", qntLinhas, yytext);
+	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
    }	
 	YY_BREAK
@@ -803,7 +803,7 @@ case 18:
 YY_RULE_SETUP
 #line 135 "entrada.l"
 {
-	printf("\t%d: { DIV, %s }\n", qntLinhas, yytext);
+	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
    } 
 	YY_BREAK
@@ -811,7 +811,7 @@ case 19:
 YY_RULE_SETUP
 #line 140 "entrada.l"
 {
-				printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
+				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
 			}
 	YY_BREAK
@@ -819,7 +819,7 @@ case 20:
 YY_RULE_SETUP
 #line 145 "entrada.l"
 {
-				printf("\t%d: {OPLOG, %s}\n", qntLinhas, yytext);
+				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
 		      }
 	YY_BREAK
@@ -1797,7 +1797,7 @@ int tabelaNomes(enum yytokentype *token){
 		flag =  1;
 	}
 	
-	if(flag == 1) printf("\t%d: { reserved word , %s }\n", qntLinhas, aux);
+	if(flag == 1) printf("\t%d: reserved word , %s\n", qntLinhas, aux);
 	
 	return flag;
 }
