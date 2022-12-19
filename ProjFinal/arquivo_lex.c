@@ -391,10 +391,10 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 char stringAux[1000];
-
+char auxNome[26];
 
 FILE* copiaArquivo = NULL;
-FILE *f_in = NULL;
+FILE* f_in = NULL;
 
 #line 400 "arquivo_lex.c"
 
@@ -685,7 +685,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 57 "entrada.l"
+#line 56 "entrada.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 		  	return NUM; 
@@ -693,13 +693,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 62 "entrada.l"
+#line 61 "entrada.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
 				printf("\t%d: ID, %s\n", qntLinhas, yytext);
 				token = ID;
 			}
+			strcpy(auxNome, yytext);
 			return token;
 		 }
 	YY_BREAK
@@ -845,7 +846,7 @@ YY_RULE_SETUP
 #line 159 "entrada.l"
 ECHO;
 	YY_BREAK
-#line 849 "arquivo_lex.c"
+#line 850 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{

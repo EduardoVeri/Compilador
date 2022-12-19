@@ -4,6 +4,27 @@
 #include "global.h"
 
 
+PONTEIRONO novoNo(){
+    PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
+
+    novoNo->filho[0] = NULL;
+    novoNo->filho[1] = NULL;
+    novoNo->filho[2] = NULL;
+
+    novoNo->irmao = NULL;
+
+    strcpy(novoNo->lexema, "");
+
+    novoNo->numLinha = 0;
+
+    novoNo->tipoDecl = 0;
+
+    novoNo->tipoNo = 0;
+
+    return novoNo;
+}
+
+
 PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo){
     PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
 

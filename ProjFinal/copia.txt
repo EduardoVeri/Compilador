@@ -1,5 +1,3 @@
 int main(void){
-	if(a == b){
-		int a;
-	}
+	int a;
 }

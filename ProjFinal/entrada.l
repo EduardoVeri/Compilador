@@ -8,10 +8,10 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 char stringAux[1000];
-
+char auxNome[26];
 
 FILE* copiaArquivo = NULL;
-FILE *f_in = NULL;
+FILE* f_in = NULL;
 
 %}
 
@@ -23,7 +23,7 @@ SIMBSIMPLESLOGICOS <|>
 %%
 
 (" "|\t) {/*Ignora as entradas com espaços e tabulacoes*/}
- 
+
 \/\*		{
 		  char c, aux = 'x'; 
 		  do
@@ -53,9 +53,9 @@ SIMBSIMPLESLOGICOS <|>
    }
    
    
-   
 {DIGIT}{DIGIT}* {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
+			strcpy(auxNome, yytext);
 		  	return NUM; 
 		 }
 		  
@@ -65,6 +65,7 @@ SIMBSIMPLESLOGICOS <|>
 				printf("\t%d: ID, %s\n", qntLinhas, yytext);
 				token = ID;
 			}
+			strcpy(auxNome, yytext);
 			return token;
 		 }
 		

@@ -9,7 +9,8 @@
 int yylex();
 void yyerror(char* s);
 int yyparse(void);
-
+char auxNome[26];
+int qntLinhas;
 
 PONTEIRONO arvoreSintatica;
 
@@ -28,7 +29,11 @@ char auxLexema[26];
 programa			: declaracao_lista {arvoreSintatica = $1;}
 					;
 			
-declaracao_lista	: declaracao_lista declaracao {  /*        
+declaracao_lista	: declaracao_lista declaracao {  
+							//printf("DeclLista");
+							/*        
+							
+							
 							YYSTYPE t = $1;
 							if (t != NULL){
 								while (t->sibling != NULL)
@@ -36,13 +41,13 @@ declaracao_lista	: declaracao_lista declaracao {  /*
 								t->sibling = $2;
 								$$ = $1;
 							}
-							else $$ = $2;;
+							else $$ = $2;
 						*/}
 					| declaracao {$$ = $1;}
 					;
 
 declaracao			: var_declaracao {$$ = $1;}
-					| fun_declaracao {$$ = $1;}
+					| fun_declaracao {$$ = $1;}				
 					;
 
 var_declaracao		: tipo_especificador ID SEMICOLON {/* 
@@ -66,6 +71,9 @@ var_declaracao		: tipo_especificador ID SEMICOLON {/*
 					;
 
 tipo_especificador 	: INT {
+						$$ = novoNo();
+						strcpy($$->lexema, "INT");
+
 						/*$$ = newExpNode(TypeK);
 						$$->attr.name = "INT";
 						$$->type = INTTYPE;
@@ -78,7 +86,15 @@ tipo_especificador 	: INT {
 					;
 					
 					/* Trocar o ID da funcao por um IDFUNC */
-fun_declaracao		: tipo_especificador ID ABREPARENTESES params FECHAPARENTESES composto_decl { /*
+fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESES composto_decl { 
+						//strcpy(auxLexema, "")
+						$$ = novoNo();
+						strcpy($$->lexema, $2->lexema);
+						adicionaFilho($$, $1);
+						adicionaFilho($$, $4);
+						adicionaFilho($$, $6);
+
+						/*
             			$$ = newExpNode(FunDeclK);
 						$$->kind.exp = FunDeclK;
 						$$->attr.name = $2->attr.name;
@@ -88,6 +104,14 @@ fun_declaracao		: tipo_especificador ID ABREPARENTESES params FECHAPARENTESES co
 						$$->child[2] = $6;
 						$$->lineno = $2->lineno;*/}
 					;
+
+fun_id				: ID {
+						$$ = novoNo();
+						strcpy($$->lexema, auxNome);
+
+						printf("\n--->> %s\n",auxNome);
+						}
+					;	
 
 params				: param_lista {$$ = $1;}
 					| VOID {/*
