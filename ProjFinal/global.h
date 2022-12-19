@@ -21,3 +21,6 @@ PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo);
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no);
 
 PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
+
+
+

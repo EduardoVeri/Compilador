@@ -80,11 +80,12 @@ int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
-int qntLinhas = 0;
 PONTEIRONO arvoreSintatica;
 
+char auxLexema[26];
 
-#line 88 "arquivo_bison.tab.c"
+
+#line 89 "arquivo_bison.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -533,12 +534,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    33,    34,    37,    38,    41,    42,    45,
-      46,    49,    52,    53,    56,    57,    60,    61,    64,    67,
-      68,    71,    72,    75,    76,    77,    78,    79,    82,    83,
-      86,    87,    90,    93,    94,    97,    98,   101,   102,   105,
-     106,   109,   112,   113,   116,   117,   120,   121,   124,   125,
-     128,   129,   130,   131,   134,   137,   138,   141,   142
+       0,    31,    31,    34,    35,    38,    39,    42,    43,    46,
+      47,    50,    53,    54,    57,    58,    61,    62,    65,    68,
+      69,    72,    73,    76,    77,    78,    79,    80,    83,    84,
+      87,    90,    93,    96,    97,   100,   101,   104,   105,   108,
+     109,   112,   115,   116,   119,   120,   123,   124,   127,   128,
+     131,   132,   133,   134,   137,   140,   141,   144,   145
 };
 #endif
 
@@ -1393,19 +1394,21 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 30 "arquivo_bison.y"
+#line 31 "arquivo_bison.y"
                                            {arvoreSintatica = yyvsp[0];}
-#line 1399 "arquivo_bison.tab.c"
+#line 1400 "arquivo_bison.tab.c"
     break;
 
   case 30:
-#line 86 "arquivo_bison.y"
-                                                                                {yyval /* criaNo()*/; }
-#line 1405 "arquivo_bison.tab.c"
+#line 87 "arquivo_bison.y"
+                                                                                                {
+				/*strcpy(auxLexema, "IF");
+				$$ = criaNo(auxLexema, );*/ }
+#line 1408 "arquivo_bison.tab.c"
     break;
 
 
-#line 1409 "arquivo_bison.tab.c"
+#line 1412 "arquivo_bison.tab.c"
 
       default: break;
     }
@@ -1637,11 +1640,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 146 "arquivo_bison.y"
+#line 149 "arquivo_bison.y"
 
 
 void yyerror (char *s){
-	printf ("ERRO SINTATICO: %s LINHA:", s);
+	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
 
 /*

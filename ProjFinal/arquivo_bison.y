@@ -11,8 +11,9 @@ int yylex();
 void yyerror(char* s);
 int yyparse(void);
 
-int qntLinhas = 0;
 PONTEIRONO arvoreSintatica;
+
+char auxLexema[26];
 
 %}
 
@@ -83,7 +84,12 @@ expressao_decl		: expressao SEMICOLON
 			| SEMICOLON
 			;
 			
-selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {$$ /* criaNo()*/; }
+selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement 		{
+				strcpy(auxLexema, "IF");
+				$$ = criaNo(auxLexema, qntLinhas, 0, 1);
+				
+						 
+			}
 			| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement
 			;
 			
@@ -146,7 +152,7 @@ arg_lista		: arg_lista COMMA expressao
 %%
 
 void yyerror (char *s){
-	printf ("ERRO SINTATICO: %s LINHA:", s);
+	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
 
 /*
