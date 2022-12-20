@@ -38,22 +38,18 @@ programa			: declaracao_lista {
 					;
 			
 declaracao_lista	: declaracao_lista declaracao {  
-						if($1 != NULL){
-							$$ = $1;
-							adicionaIrmao($$, $2);
-						}
-						else{
-							$$ = $2;
-						}
-						/*						
-						YYSTYPE t = $1;
-						if (t != NULL){
-							while (t->sibling != NULL)
-							t = t->sibling;
-							t->sibling = $2;
-							$$ = $1;
-						}
-						else $$ = $2;
+							//printf("DeclLista");
+							/*        
+							
+							
+							YYSTYPE t = $1;
+							if (t != NULL){
+								while (t->sibling != NULL)
+								t = t->sibling;
+								t->sibling = $2;
+								$$ = $1;
+							}
+							else $$ = $2;
 						*/}
 					| declaracao {$$ = $1;}
 					;
@@ -78,18 +74,7 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$->kind.exp = VarDeclK;
 						$$->lineno = lineno;
 					*/}
-					| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON {
-						$$ = novoNo();
-						strcpy($$->lexema, $1->lexema);
-						
-						PONTEIRONO aux = novoNo();
-						strcpy(aux->lexema, id);
-						adicionaFilho($$, aux);
-						
-						adicionaFilho($$, $4);
-						
-						
-						/*            
+					| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON {/*            
 						$$ = newExpNode(VetorK);
 						$$->attr.name = copyString(id);
 						$$->child[0] = $1;
@@ -109,9 +94,6 @@ tipo_especificador 	: INT {
 						$$->type = INTTYPE;
 						$$->kind.exp = TypeK; */}
 					| VOID {
-						$$ = novoNo();
-						strcpy($$->lexema, "VOID");
-
 						/*$ = newExpNode(TypeK);
 						$$->attr.name = "VOID";
 						$$->type = VOIDTYPE;
@@ -122,10 +104,10 @@ tipo_especificador 	: INT {
 fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESES composto_decl { 
 						//strcpy(auxLexema, "")
 						$$ = novoNo();
-						strcpy($$->lexema, $1->lexema);
-						adicionaFilho($$, $2);
+						strcpy($$->lexema, $2->lexema);
+						adicionaFilho($$, $1);
 						adicionaFilho($$, $4);
-						adicionaFilho($2, $6);
+						adicionaFilho($$, $6);
 
 						/*
             			$$ = newExpNode(FunDeclK);
@@ -147,7 +129,7 @@ fun_id				: ID {
 params				: param_lista {$$ = $1;}
 					| VOID {
 						$$ = novoNo();
-						strcpy($$->lexema, "VOID");
+						strcpy($$->lexema, auxNome);
 						
 						
 						/*
@@ -158,16 +140,7 @@ params				: param_lista {$$ = $1;}
 						$$->lineno = lineno;*/}
 					;
 
-param_lista			: param_lista COMMA param {
-						if($1 != NULL){
-							$$ = $1;
-							adicionaIrmao($$, $3);
-						}
-						else{
-							$$ = $3;
-						}						
-						
-						/*
+param_lista			: param_lista COMMA param {/*
 						YYSTYPE t = $1;
 						if (t != NULL){
 						while (t->sibling != NULL)
@@ -177,7 +150,6 @@ param_lista			: param_lista COMMA param {
 						}
 						else $$ = $3;
 						*/}
-
 					| param {$$ = $1;}
 					;
 
