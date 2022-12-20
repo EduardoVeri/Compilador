@@ -50,7 +50,12 @@ declaracao			: var_declaracao {$$ = $1;}
 					| fun_declaracao {$$ = $1;}				
 					;
 
-var_declaracao		: tipo_especificador ID SEMICOLON {/* 
+var_declaracao		: tipo_especificador ID SEMICOLON {
+						$$ = novoNo();
+						strcpy($$->lexema, $1->lexema);
+						adicionaFilho($$, $2);
+
+						/*
 						$$ = newExpNode(VarDeclK);
 						$$->attr.name = copyString(id);
 						$$->child[0] = $1;
@@ -108,13 +113,16 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 fun_id				: ID {
 						$$ = novoNo();
 						strcpy($$->lexema, auxNome);
-
-						printf("\n--->> %s\n",auxNome);
 						}
 					;	
 
 params				: param_lista {$$ = $1;}
-					| VOID {/*
+					| VOID {
+						$$ = novoNo();
+						strcpy($$->lexema, auxNome);
+						
+						
+						/*
 						$$ = newExpNode(TypeK);
 						$$->attr.name = "VOID";
 						$$->size = 0;
@@ -156,7 +164,15 @@ param				: tipo_especificador ID {/*
 					*/}
 					;
 
-composto_decl		: ABRECHAVES local_declaracoes statement_lista FECHACHAVES { /*             
+composto_decl		: ABRECHAVES local_declaracoes statement_lista FECHACHAVES { 
+						if($2 != NULL){
+							$$ = $2;
+							adicionaIrmao($$, $3);
+						}
+						else{
+							$$ = $3;
+						}
+						/*             
 						YYSTYPE t = $2;
 						if (t != NULL){
 							while (t->sibling != NULL)
@@ -168,7 +184,16 @@ composto_decl		: ABRECHAVES local_declaracoes statement_lista FECHACHAVES { /*
 						*/}
 					;
 
-local_declaracoes 	: local_declaracoes var_declaracao {/*
+local_declaracoes 	: local_declaracoes var_declaracao {
+						if($1 != NULL){
+							$$ = $1;
+							adicionaIrmao($$, $2);
+						}
+						else{
+							$$ = $2;
+						}
+
+					/*
 						YYSTYPE t = $1;
 						if (t != NULL){
 							while (t->sibling != NULL)
@@ -369,11 +394,6 @@ arg_lista			: arg_lista COMMA expressao {/*
 void yyerror (char *s){
 	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
-
-
-
-
-
 
 
 /*
