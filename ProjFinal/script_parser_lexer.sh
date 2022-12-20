@@ -1,5 +1,6 @@
 #!/bin/bash
 
+clear
 bison -d arquivo_bison.y
 flex -oarquivo_lex.c entrada.l
 gcc -c arquivo_lex.c 

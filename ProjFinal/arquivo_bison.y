@@ -123,8 +123,8 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 						//strcpy(auxLexema, "")
 						$$ = novoNo();
 						strcpy($$->lexema, $1->lexema);
-						adicionaFilho($$, $2);
 						adicionaFilho($$, $4);
+						adicionaFilho($$, $2);
 						adicionaFilho($2, $6);
 
 						/*
@@ -285,7 +285,7 @@ statement			: expressao_decl {$$ = $1;}
 					;
 
 expressao_decl		: expressao SEMICOLON {$$ = $1;}
-					| SEMICOLON {$$ = $1;} //Deixar vazio talvez
+					| SEMICOLON {$$ = NULL;} //Deixar vazio talvez
 					;
 			
 selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
@@ -310,10 +310,10 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {
 						$$ = novoNo();
 						strcpy($$->lexema, "IF");
-						adicionaFilho($$, $3);
-						adicionaFilho($$, $5);
 						adicionaFilho($$, $7);
-						
+						adicionaFilho($$, $5);
+						adicionaFilho($$, $3);
+
 						/*            
 						$$ = newStmtNode(IfK);
 						$$->attr.name = "IF";
@@ -325,7 +325,13 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$->kind.stmt = IfK;*/}
 					;
 			
-iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {/*
+iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {
+						$$ = novoNo();
+						strcpy($$->lexema, "WHILE");
+						adicionaFilho($$, $3);
+						adicionaFilho($$, $5);
+
+						/*
 						$$ = newStmtNode(WhileK);
 						$$->attr.name = "WHILE";
 						$$->child[0] = $3;
@@ -335,14 +341,29 @@ iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {/*
 						$$->kind.stmt = WhileK; */}
 					;
 			
-retorno_decl		: RETURN SEMICOLON { /*              
+retorno_decl		: RETURN SEMICOLON { 
+						$$ = novoNo();
+						strcpy($$->lexema, "ReturnVOID");
+						
+						/*              
 						$$ = newStmtNode(ReturnINT);
 						$$->child[0] = $2;
 						$$->lineno = lineno;*/}
-					| RETURN expressao SEMICOLON {/*$$ = newStmtNode(ReturnVOID);*/}
+					| RETURN expressao SEMICOLON {
+						$$ = novoNo();
+						strcpy($$->lexema, "ReturnINT");
+						adicionaFilho($$, $2);
+						
+						/*$$ = newStmtNode(ReturnVOID);*/}
 					;
 
-expressao			: var ATRIB expressao {/*
+expressao			: var ATRIB expressao {
+						$$ = novoNo();
+						strcpy($$->lexema, "=");
+						adicionaFilho($$, $1);
+						adicionaFilho($$, $3);
+
+						/*
 						$$ = newStmtNode(AssignK);
 						$$->kind.stmt = AssignK;
 						$$->attr.name= $1->attr.name;
@@ -355,19 +376,34 @@ expressao			: var ATRIB expressao {/*
 					| simples_expressao {$$ = $1;}
 					;
 
-var 				: ID {/*
+var 				: ID {
+						$$ = novoNo();
+						strcpy($$->lexema, id);
+
+						/*
 					    $$ = newExpNode(IdK);
 						$$->attr.name = copyString(id);
 						$$->lineno = lineno;
 						$$->child[0] = NULL; */}
-					| ID ABRECOLCHETES expressao FECHACOLCHETES {/*
+					| ID ABRECOLCHETES expressao FECHACOLCHETES {
+						$$ = novoNo();
+						strcpy($$->lexema, id);
+						adicionaFilho($$, $3);
+						
+						/*
 					    $$ = newExpNode(IdK);
 						$$->attr.name = $1->attr.name;
 						$$->child[0] = $3;
 						$$->lineno = lineno; */}
 					;
 			
-simples_expressao	: soma_expressao relacional soma_expressao {/*
+simples_expressao	: soma_expressao relacional soma_expressao {
+						//$$ = novoNo();
+						$$ = $2;
+						adicionaFilho($$, $1);
+						adicionaFilho($$, $3);	
+						
+					/*
 						$$ = newStmtNode(AssignK);
 						$$ = $2;
 						$$->child[0] = $1;
@@ -375,14 +411,24 @@ simples_expressao	: soma_expressao relacional soma_expressao {/*
 						$$->scope = scope; */}
 					| soma_expressao {$$ = $1;}
 					;
-			
-relacional			: OPRELACIONAL {/*
+
+//Criar novas regras para as demais operações relacionais			
+relacional			: OPRELACIONAL {
+						$$ = novoNo();
+						strcpy($$->lexema, "OPRELACIONAL");
+
+						/*
 						$$ = newExpNode(OpK);
 						$$->attr.op = IGL;
 						$$->lineno = lineno;*/}
 					;
 			
-soma_expressao		: soma_expressao soma termo {/*
+soma_expressao		: soma_expressao soma termo {
+						$$ = $2;
+						adicionaFilho($$, $1);
+						adicionaFilho($$, $3);
+					
+					/*
 						$$ = $2;
 						$$->child[0] = $1;
 						$$->child[1] = $3;
@@ -391,17 +437,30 @@ soma_expressao		: soma_expressao soma termo {/*
 					| termo {$$ = $1;}
 					;
 			
-soma				: SOMA {/*         
+soma				: SOMA {
+						$$ = novoNo();
+						strcpy($$->lexema, "+");
+
+						/*         
 						$$ = newExpNode(OpK);
 						$$->attr.op = SOM;
 						$$->lineno = lineno;*/}
-					| SUB {/*         
+					| SUB {
+						$$ = novoNo();
+						strcpy($$->lexema, "-");
+
+						/*         
 						$$ = newExpNode(OpK);
 						$$->attr.op = SUB;
 						$$->lineno = lineno;*/} 
 					;
 			
-termo				: termo mult fator {/*
+termo				: termo mult fator {
+						$$ = $2;
+						adicionaFilho($$, $1);
+						adicionaFilho($$, $3);
+						
+						/*
 						$$ = $2;
 						$$->scope = scope;
 						$$->child[0] = $1;
@@ -410,11 +469,18 @@ termo				: termo mult fator {/*
 					| fator {$$ = $1;}
 					;
 			
-mult				: MULT {/*
+mult				: MULT {
+						$$ = novoNo();
+						strcpy($$->lexema, "*");
+					/*
 						$$ = newExpNode(OpK);
 						$$->attr.op = MUL;
 						$$->lineno = lineno;*/}
-					| DIV {/*
+					| DIV {
+						$$ = novoNo();
+						strcpy($$->lexema, "/");
+						
+						/*
 			        	$$ = newExpNode(OpK);
 						$$->attr.op = DIV;
 						$$->lineno = lineno;*/}
@@ -423,14 +489,21 @@ mult				: MULT {/*
 fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = $2;}
 					| var {$$ = $1;}
 					| ativacao {$$ = $1;}
-					| NUM { /*
+					| NUM { 
+						$$ = novoNo();
+						strcpy($$->lexema, auxNome);
+						
+						/*
 						$$ = newExpNode(ConstK);
 						$$->type = INTTYPE;
 						$$->attr.name = "teste";
 						$$->attr.val = atoi(tokenString);*/}
 					;
 
-ativacao 			: ID ABREPARENTESES args FECHAPARENTESES {/*
+ativacao 			: fun_id ABREPARENTESES args FECHAPARENTESES {
+						$$ = $1;
+						
+						/*
 						$$ = newExpNode(AtivK);
 						$$->kind.exp = AtivK;
 						$$->attr.name = $1->attr.name;
@@ -443,7 +516,13 @@ args 				: arg_lista {$$ = $1;}
 					| %empty {$$ = NULL;}
 					;
 			
-arg_lista			: arg_lista COMMA expressao {/*
+arg_lista			: arg_lista COMMA expressao {
+						if($1 != NULL){
+							$$ = $1;
+							adicionaIrmao($$, $3);
+						} else $$ = $3;
+						
+						/*
 						YYSTYPE t = $1;
 						if (t != NULL){
 							while (t->sibling != NULL)
@@ -452,7 +531,9 @@ arg_lista			: arg_lista COMMA expressao {/*
 							params ++;
 						$$ = $1;
 						} else $$ = $3;*/}
-					| expressao {/*
+					| expressao {
+						$$ = $1;
+						/*
 						params ++;
            				$$ = $1;*/}
 					;			
@@ -488,7 +569,7 @@ void mostraArvore(PONTEIRONO raiz, int num){
 	}
 	printf("%s\n", raiz->lexema);
 	
-	for(int i = 2; i > -1; i--){
+	for(int i = 0; i < 3; i++){
 		mostraArvore(raiz->filho[i], num + 1);
 	}
 	mostraArvore(raiz->irmao, num);
