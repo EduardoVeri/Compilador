@@ -14,6 +14,8 @@ char id[26];
 int qntLinhas;
 
 PONTEIRONO arvoreSintatica;
+
+void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 
 char auxLexema[26];
@@ -27,7 +29,8 @@ char auxLexema[26];
 
 %%
 
-programa			: declaracao_lista {arvoreSintatica = $1;}
+programa			: declaracao_lista {arvoreSintatica = $1;
+										mostraArvore(arvoreSintatica, 0);}
 					;
 			
 declaracao_lista	: declaracao_lista declaracao {  
@@ -54,7 +57,9 @@ declaracao			: var_declaracao {$$ = $1;}
 var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$ = novoNo();
 						strcpy($$->lexema, $1->lexema);
-						adicionaFilho($$, $2);
+						PONTEIRONO aux = novoNo();
+						strcpy(aux->lexema, id);
+						adicionaFilho($$, aux);
 
 						/*
 						$$ = newExpNode(VarDeclK);
@@ -405,3 +410,20 @@ TreeNode * parse(void)
   return savedTree;
 }*/
 
+void mostraArvore(PONTEIRONO raiz, int num){
+	if(raiz == NULL){
+		return;
+	}
+
+	for(int i = 0; i < num; i++){
+		printf("\t");
+	}
+	printf("%s\n", raiz->lexema);
+	
+	for(int i = 0; i < 3; i++){
+		mostraArvore(raiz->filho[i], num + 1);
+	}
+	mostraArvore(raiz->irmao, num);
+
+	
+}
