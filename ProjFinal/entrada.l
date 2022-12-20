@@ -4,6 +4,7 @@
 #include "arquivo_bison.tab.h"
 #include "global.h"
 
+char id[26];
 int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
@@ -249,4 +250,12 @@ void copiar(FILE* velho){
 
 	fclose(novo);
 	return;
+}
+
+enum yytokentype getToken(void)
+{ 
+	enum yytokentype currentToken;
+	currentToken = yylex();
+	if(currentToken == ID) strcpy(id, yytext);
+	return currentToken;
 }

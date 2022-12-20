@@ -1,7 +1,7 @@
 
 extern int qntLinhas; //Depois trocar para um valor global para utilizar no parser
 extern char auxNome[26];
-
+extern char id[26];
 /* Declaracao da arvore de analise sintatica */
 
 typedef struct NoArvore{
@@ -25,3 +25,4 @@ PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
 
 PONTEIRONO novoNo();
 
+enum yytokentype getToken(void);

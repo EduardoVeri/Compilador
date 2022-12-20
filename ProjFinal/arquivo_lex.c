@@ -387,6 +387,7 @@ char *yytext;
 #include "arquivo_bison.tab.h"
 #include "global.h"
 
+char id[26];
 int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
@@ -396,7 +397,7 @@ char auxNome[26];
 FILE* copiaArquivo = NULL;
 FILE* f_in = NULL;
 
-#line 400 "arquivo_lex.c"
+#line 401 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -558,10 +559,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 23 "entrada.l"
+#line 24 "entrada.l"
 
 
-#line 565 "arquivo_lex.c"
+#line 566 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -646,12 +647,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 25 "entrada.l"
+#line 26 "entrada.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "entrada.l"
+#line 28 "entrada.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -672,7 +673,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 45 "entrada.l"
+#line 46 "entrada.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -685,7 +686,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "entrada.l"
+#line 57 "entrada.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			strcpy(auxNome, yytext);
@@ -694,7 +695,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 62 "entrada.l"
+#line 63 "entrada.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -707,7 +708,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 73 "entrada.l"
+#line 74 "entrada.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -715,7 +716,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 78 "entrada.l"
+#line 79 "entrada.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -723,7 +724,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 83 "entrada.l"
+#line 84 "entrada.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -731,7 +732,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 89 "entrada.l"
+#line 90 "entrada.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -739,7 +740,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 95 "entrada.l"
+#line 96 "entrada.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -747,7 +748,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 100 "entrada.l"
+#line 101 "entrada.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -755,7 +756,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 106 "entrada.l"
+#line 107 "entrada.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -763,7 +764,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 111 "entrada.l"
+#line 112 "entrada.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -771,7 +772,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 116 "entrada.l"
+#line 117 "entrada.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -779,7 +780,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 121 "entrada.l"
+#line 122 "entrada.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -787,7 +788,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 126 "entrada.l"
+#line 127 "entrada.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -795,7 +796,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 131 "entrada.l"
+#line 132 "entrada.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -803,7 +804,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 136 "entrada.l"
+#line 137 "entrada.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -811,7 +812,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 141 "entrada.l"
+#line 142 "entrada.l"
 {
 				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
@@ -819,14 +820,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 146 "entrada.l"
+#line 147 "entrada.l"
 {
 				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
 				return OPRELACIONAL;
 		      }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 151 "entrada.l"
+#line 152 "entrada.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -834,20 +835,20 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 156 "entrada.l"
+#line 157 "entrada.l"
 {if(f_in == NULL) return 0;} //Encerra o programa quando digitado pelo usuário
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 158 "entrada.l"
+#line 159 "entrada.l"
 {printf("\t%d: Erro, problema no lexema = %s\n", qntLinhas, yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 160 "entrada.l"
+#line 161 "entrada.l"
 ECHO;
 	YY_BREAK
-#line 851 "arquivo_lex.c"
+#line 852 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1735,7 +1736,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 160 "entrada.l"
+#line 161 "entrada.l"
 
 
 int main(int argc, char *argv[]){
@@ -1828,4 +1829,12 @@ void copiar(FILE* velho){
 
 	fclose(novo);
 	return;
+}
+
+enum yytokentype getToken(void)
+{ 
+	enum yytokentype currentToken;
+	currentToken = yylex();
+	if(currentToken == ID) strcpy(id, yytext);
+	return currentToken;
 }

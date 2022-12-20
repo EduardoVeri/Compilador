@@ -6,14 +6,15 @@
 #include "global.h"
 
 #define YYSTYPE PONTEIRONO
-int yylex();
+static int yylex(void);
 void yyerror(char* s);
 int yyparse(void);
 char auxNome[26];
+char id[26];
 int qntLinhas;
 
 PONTEIRONO arvoreSintatica;
-
+enum yytokentype getToken(void);
 
 char auxLexema[26];
 
@@ -395,6 +396,8 @@ void yyerror (char *s){
 	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
 }
 
+int yylex(void)
+{ return getToken(); }
 
 /*
 TreeNode * parse(void)
