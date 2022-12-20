@@ -12,6 +12,7 @@ int yyparse(void);
 char auxNome[26];
 char id[26];
 int qntLinhas;
+int flagMA = 0;
 
 PONTEIRONO arvoreSintatica;
 
@@ -29,8 +30,11 @@ char auxLexema[26];
 
 %%
 
-programa			: declaracao_lista {arvoreSintatica = $1;
-										mostraArvore(arvoreSintatica, 0);}
+programa			: declaracao_lista {
+						arvoreSintatica = $1;
+						mostraArvore(arvoreSintatica, 0);
+					}
+
 					;
 			
 declaracao_lista	: declaracao_lista declaracao {  
@@ -411,6 +415,11 @@ TreeNode * parse(void)
 }*/
 
 void mostraArvore(PONTEIRONO raiz, int num){
+	if(flagMA == 0){
+		flagMA = 1;
+		printf("\n========== Arvore de Analise Sintatica ========== \n");
+	}
+	
 	if(raiz == NULL){
 		return;
 	}
