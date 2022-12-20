@@ -152,15 +152,21 @@ extern int yydebug;
     IF = 268,
     ABREPARENTESES = 269,
     FECHAPARENTESES = 270,
-    OPRELACIONAL = 271,
-    RETURN = 272,
-    COMMA = 273,
-    ABRECHAVES = 274,
-    FECHACHAVES = 275,
-    SEMICOLON = 276,
-    ATRIB = 277,
-    ABRECOLCHETES = 278,
-    FECHACOLCHETES = 279
+    RETURN = 271,
+    COMMA = 272,
+    ABRECHAVES = 273,
+    FECHACHAVES = 274,
+    SEMICOLON = 275,
+    ATRIB = 276,
+    ABRECOLCHETES = 277,
+    FECHACOLCHETES = 278,
+    EQ = 279,
+    NEQ = 280,
+    LT = 281,
+    LET = 282,
+    GT = 283,
+    GET = 284,
+    ERRO = 285
   };
 #endif
 
@@ -482,19 +488,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   98
+#define YYLAST   99
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  25
+#define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  31
+#define YYNNTS  32
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  59
+#define YYNRULES  65
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  99
+#define YYNSTATES  105
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   279
+#define YYMAXUTOK   285
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -533,19 +539,21 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    33,    33,    40,    58,    61,    62,    65,    81,   103,
-     111,   122,   141,   147,   148,   161,   181,   184,   199,   217,
-     237,   256,   259,   277,   280,   281,   282,   283,   284,   287,
-     288,   291,   310,   328,   344,   352,   360,   376,   379,   388,
-     400,   412,   416,   426,   437,   440,   448,   458,   469,   472,
-     479,   489,   490,   491,   492,   503,   515,   516,   519,   534
+       0,    39,    39,    46,    64,    67,    68,    71,    87,   109,
+     117,   128,   147,   153,   154,   167,   187,   190,   205,   223,
+     243,   262,   265,   283,   286,   287,   288,   289,   290,   293,
+     294,   297,   312,   330,   346,   354,   362,   378,   381,   390,
+     402,   414,   418,   428,   437,   446,   455,   464,   473,   484,
+     495,   498,   506,   516,   527,   530,   537,   547,   548,   549,
+     550,   561,   573,   574,   577,   592
 };
 #endif
 
@@ -556,15 +564,16 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "NUM", "SOMA", "SUB", "MULT", "DIV",
   "INT", "ID", "VOID", "WHILE", "ELSE", "IF", "ABREPARENTESES",
-  "FECHAPARENTESES", "OPRELACIONAL", "RETURN", "COMMA", "ABRECHAVES",
-  "FECHACHAVES", "SEMICOLON", "ATRIB", "ABRECOLCHETES", "FECHACOLCHETES",
-  "$accept", "programa", "declaracao_lista", "declaracao",
-  "var_declaracao", "tipo_especificador", "fun_declaracao", "fun_id",
-  "params", "param_lista", "param", "composto_decl", "local_declaracoes",
-  "statement_lista", "statement", "expressao_decl", "selecao_decl",
-  "iteracao_decl", "retorno_decl", "expressao", "var", "simples_expressao",
-  "relacional", "soma_expressao", "soma", "termo", "mult", "fator",
-  "ativacao", "args", "arg_lista", YY_NULLPTR
+  "FECHAPARENTESES", "RETURN", "COMMA", "ABRECHAVES", "FECHACHAVES",
+  "SEMICOLON", "ATRIB", "ABRECOLCHETES", "FECHACOLCHETES", "EQ", "NEQ",
+  "LT", "LET", "GT", "GET", "ERRO", "$accept", "programa",
+  "declaracao_lista", "declaracao", "var_declaracao", "tipo_especificador",
+  "fun_declaracao", "fun_id", "params", "param_lista", "param",
+  "composto_decl", "local_declaracoes", "statement_lista", "statement",
+  "expressao_decl", "selecao_decl", "iteracao_decl", "retorno_decl",
+  "expressao", "var", "simples_expressao", "relacional",
+  "operador_relacional", "soma_expressao", "soma", "termo", "mult",
+  "fator", "ativacao", "args", "arg_lista", YY_NULLPTR
 };
 #endif
 
@@ -575,11 +584,12 @@ static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285
 };
 # endif
 
-#define YYPACT_NINF (-42)
+#define YYPACT_NINF (-44)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -593,16 +603,17 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -4,   -42,   -42,    11,    -4,   -42,   -42,    20,   -42,   -42,
-     -42,   -11,    18,   -42,    42,    29,    23,    34,    44,    43,
-      46,   -42,    45,    47,    48,    -4,   -42,    41,   -42,   -42,
-     -42,   -42,    -4,   -42,    59,    14,   -11,   -42,    -7,    55,
-      57,    -1,     0,   -42,   -42,    60,   -42,   -42,   -42,   -42,
-     -42,   -42,    51,    53,   -42,    38,    54,   -42,   -42,    -1,
-      -1,    -1,    61,   -42,    52,    -1,   -42,    -1,   -42,   -42,
-     -42,    -1,    -1,   -42,   -42,    -1,    56,    62,    63,   -42,
-     -42,   -42,    64,    65,   -42,   -42,    58,    54,   -42,   -42,
-      27,    27,   -42,    -1,   -42,    69,   -42,    27,   -42
+      27,   -44,   -44,     2,    27,   -44,   -44,    -4,   -44,   -44,
+     -44,    16,    -1,   -44,    14,    37,    17,     7,    43,    10,
+      46,   -44,    49,    50,    53,    27,   -44,    52,   -44,   -44,
+     -44,   -44,    27,   -44,    64,    30,    16,   -44,    20,    60,
+      62,     0,     1,   -44,   -44,    63,   -44,   -44,   -44,   -44,
+     -44,   -44,    58,    59,   -44,     3,     5,   -44,   -44,     0,
+       0,     0,    66,   -44,    65,     0,   -44,     0,   -44,   -44,
+     -44,   -44,   -44,   -44,   -44,   -44,     0,   -44,     0,   -44,
+     -44,     0,    56,    67,    68,   -44,   -44,   -44,    69,    70,
+     -44,   -44,    51,     5,   -44,   -44,    48,    48,   -44,     0,
+     -44,    74,   -44,    48,   -44
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -613,22 +624,23 @@ static const yytype_int8 yydefact[] =
        0,     9,    10,     0,     2,     4,     5,     0,     6,     1,
        3,    12,     0,     7,     0,     0,     0,    10,     0,     0,
       13,    16,     0,    17,     0,     0,     8,     0,    21,    11,
-      15,    18,    23,    20,     0,     0,     0,    54,    38,     0,
+      15,    18,    23,    20,     0,     0,     0,    60,    38,     0,
        0,     0,     0,    19,    30,     0,    25,    22,    24,    26,
-      27,    28,     0,    52,    37,    41,    44,    48,    53,     0,
-       0,     0,     0,    34,     0,    57,    29,     0,    45,    46,
-      42,     0,     0,    49,    50,     0,     0,     0,     0,    51,
-      35,    59,     0,    56,    36,    52,    40,    43,    47,    39,
-       0,     0,    55,     0,    33,    31,    58,     0,    32
+      27,    28,     0,    58,    37,    41,    50,    54,    59,     0,
+       0,     0,     0,    34,     0,    63,    29,     0,    51,    52,
+      43,    44,    45,    47,    46,    48,     0,    42,     0,    55,
+      56,     0,     0,     0,     0,    57,    35,    65,     0,    62,
+      36,    58,    40,    49,    53,    39,     0,     0,    61,     0,
+      33,    31,    64,     0,    32
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -42,   -42,   -42,    78,    66,   -10,   -42,    77,   -42,   -42,
-      67,    70,   -42,   -42,   -40,   -42,   -42,   -42,   -42,   -41,
-     -16,   -42,   -42,    15,   -42,    13,   -42,    12,   -42,   -42,
-     -42
+     -44,   -44,   -44,    84,    57,    -9,   -44,    83,   -44,   -44,
+      71,    73,   -44,   -44,   -43,   -44,   -44,   -44,   -44,   -41,
+     -11,   -44,   -44,   -44,    15,   -44,    21,   -44,    11,   -44,
+     -44,   -44
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -636,8 +648,8 @@ static const yytype_int8 yydefgoto[] =
 {
       -1,     3,     4,     5,     6,     7,     8,    45,    19,    20,
       21,    46,    32,    35,    47,    48,    49,    50,    51,    52,
-      53,    54,    71,    55,    72,    56,    75,    57,    58,    82,
-      83
+      53,    54,    76,    77,    55,    78,    56,    81,    57,    58,
+      88,    89
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -645,57 +657,59 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      62,    64,    37,    37,     1,    18,     2,   -12,    38,    38,
-      13,     9,    14,    41,    41,    18,    59,    37,    76,    77,
-      78,    63,    34,    38,    81,    39,    84,    40,    41,    11,
-      37,    42,    15,    28,    43,    44,    38,     1,    39,    17,
-      40,    41,    68,    69,    42,    16,    28,    22,    44,   -14,
-      94,    95,    96,    23,    70,    85,    85,    98,    24,    85,
-      73,    74,    68,    69,    25,    31,    26,    28,    36,    60,
-      27,    61,    66,    80,    65,    67,    79,    90,    91,    92,
-      89,    97,    10,    93,    12,    87,    86,    88,     0,     0,
-       0,     0,    30,     0,    29,     0,     0,     0,    33
+      62,    64,     9,    37,    37,    11,    18,    68,    69,    38,
+      38,    79,    80,    15,    41,    41,    18,    16,    82,    83,
+      84,    63,   -14,    34,    87,    24,    90,    70,    71,    72,
+      73,    74,    75,    37,   -12,     1,    13,     2,    14,    38,
+      22,    39,    59,    40,    41,     1,    42,    17,    28,    43,
+      44,    37,    23,   100,   101,    68,    69,    38,   102,    39,
+     104,    40,    41,    25,    42,    91,    28,    91,    44,    26,
+      91,    28,    27,    36,    60,    31,    61,    65,    66,    95,
+      67,    85,    96,    97,    98,    86,   103,    99,    10,    33,
+      12,    92,    94,     0,     0,     0,    30,    29,     0,    93
 };
 
 static const yytype_int8 yycheck[] =
 {
-      41,    42,     3,     3,     8,    15,    10,    14,     9,     9,
-      21,     0,    23,    14,    14,    25,    23,     3,    59,    60,
-      61,    21,    32,     9,    65,    11,    67,    13,    14,     9,
-       3,    17,    14,    19,    20,    21,     9,     8,    11,    10,
-      13,    14,     4,     5,    17,     3,    19,    24,    21,    15,
-      90,    91,    93,     9,    16,    71,    72,    97,    15,    75,
-       6,     7,     4,     5,    18,    24,    21,    19,     9,    14,
-      23,    14,    21,    21,    14,    22,    15,    15,    15,    15,
-      24,    12,     4,    18,     7,    72,    71,    75,    -1,    -1,
-      -1,    -1,    25,    -1,    24,    -1,    -1,    -1,    32
+      41,    42,     0,     3,     3,     9,    15,     4,     5,     9,
+       9,     6,     7,    14,    14,    14,    25,     3,    59,    60,
+      61,    20,    15,    32,    65,    15,    67,    24,    25,    26,
+      27,    28,    29,     3,    14,     8,    20,    10,    22,     9,
+      23,    11,    22,    13,    14,     8,    16,    10,    18,    19,
+      20,     3,     9,    96,    97,     4,     5,     9,    99,    11,
+     103,    13,    14,    17,    16,    76,    18,    78,    20,    20,
+      81,    18,    22,     9,    14,    23,    14,    14,    20,    23,
+      21,    15,    15,    15,    15,    20,    12,    17,     4,    32,
+       7,    76,    81,    -1,    -1,    -1,    25,    24,    -1,    78
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     8,    10,    26,    27,    28,    29,    30,    31,     0,
-      28,     9,    32,    21,    23,    14,     3,    10,    30,    33,
-      34,    35,    24,     9,    15,    18,    21,    23,    19,    36,
-      35,    24,    37,    29,    30,    38,     9,     3,     9,    11,
-      13,    14,    17,    20,    21,    32,    36,    39,    40,    41,
-      42,    43,    44,    45,    46,    48,    50,    52,    53,    23,
-      14,    14,    44,    21,    44,    14,    21,    22,     4,     5,
-      16,    47,    49,     6,     7,    51,    44,    44,    44,    15,
-      21,    44,    54,    55,    44,    45,    48,    50,    52,    24,
-      15,    15,    15,    18,    39,    39,    44,    12,    39
+       0,     8,    10,    32,    33,    34,    35,    36,    37,     0,
+      34,     9,    38,    20,    22,    14,     3,    10,    36,    39,
+      40,    41,    23,     9,    15,    17,    20,    22,    18,    42,
+      41,    23,    43,    35,    36,    44,     9,     3,     9,    11,
+      13,    14,    16,    19,    20,    38,    42,    45,    46,    47,
+      48,    49,    50,    51,    52,    55,    57,    59,    60,    22,
+      14,    14,    50,    20,    50,    14,    20,    21,     4,     5,
+      24,    25,    26,    27,    28,    29,    53,    54,    56,     6,
+       7,    58,    50,    50,    50,    15,    20,    50,    61,    62,
+      50,    51,    55,    57,    59,    23,    15,    15,    15,    17,
+      45,    45,    50,    12,    45
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    25,    26,    27,    27,    28,    28,    29,    29,    30,
-      30,    31,    32,    33,    33,    34,    34,    35,    35,    36,
-      37,    37,    38,    38,    39,    39,    39,    39,    39,    40,
-      40,    41,    41,    42,    43,    43,    44,    44,    45,    45,
-      46,    46,    47,    48,    48,    49,    49,    50,    50,    51,
-      51,    52,    52,    52,    52,    53,    54,    54,    55,    55
+       0,    31,    32,    33,    33,    34,    34,    35,    35,    36,
+      36,    37,    38,    39,    39,    40,    40,    41,    41,    42,
+      43,    43,    44,    44,    45,    45,    45,    45,    45,    46,
+      46,    47,    47,    48,    49,    49,    50,    50,    51,    51,
+      52,    52,    53,    54,    54,    54,    54,    54,    54,    55,
+      55,    56,    56,    57,    57,    58,    58,    59,    59,    59,
+      59,    60,    61,    61,    62,    62
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -705,8 +719,9 @@ static const yytype_int8 yyr2[] =
        1,     6,     1,     1,     1,     3,     1,     2,     4,     4,
        2,     0,     2,     0,     1,     1,     1,     1,     1,     2,
        1,     5,     7,     5,     2,     3,     3,     1,     1,     4,
-       3,     1,     1,     3,     1,     1,     1,     3,     1,     1,
-       1,     3,     1,     1,     1,     4,     1,     0,     3,     1
+       3,     1,     1,     1,     1,     1,     1,     1,     1,     3,
+       1,     1,     1,     3,     1,     1,     1,     3,     1,     1,
+       1,     4,     1,     0,     3,     1
 };
 
 
@@ -1402,16 +1417,16 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 33 "arquivo_bison.y"
+#line 39 "arquivo_bison.y"
                                                    {
 						arvoreSintatica = yyvsp[0];
 						mostraArvore(arvoreSintatica, 0);
 					}
-#line 1411 "arquivo_bison.tab.c"
+#line 1426 "arquivo_bison.tab.c"
     break;
 
   case 3:
-#line 40 "arquivo_bison.y"
+#line 46 "arquivo_bison.y"
                                                       {  
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1430,29 +1445,29 @@ yyreduce:
 						}
 						else $$ = $2;
 						*/}
-#line 1434 "arquivo_bison.tab.c"
+#line 1449 "arquivo_bison.tab.c"
     break;
 
   case 4:
-#line 58 "arquivo_bison.y"
+#line 64 "arquivo_bison.y"
                                                      {yyval = yyvsp[0];}
-#line 1440 "arquivo_bison.tab.c"
+#line 1455 "arquivo_bison.tab.c"
     break;
 
   case 5:
-#line 61 "arquivo_bison.y"
+#line 67 "arquivo_bison.y"
                                                  {yyval = yyvsp[0];}
-#line 1446 "arquivo_bison.tab.c"
+#line 1461 "arquivo_bison.tab.c"
     break;
 
   case 6:
-#line 62 "arquivo_bison.y"
+#line 68 "arquivo_bison.y"
                                                          {yyval = yyvsp[0];}
-#line 1452 "arquivo_bison.tab.c"
+#line 1467 "arquivo_bison.tab.c"
     break;
 
   case 7:
-#line 65 "arquivo_bison.y"
+#line 71 "arquivo_bison.y"
                                                           {
 						yyval = novoNo();
 						strcpy(yyval->lexema, yyvsp[-2]->lexema);
@@ -1469,11 +1484,11 @@ yyreduce:
 						$$->kind.exp = VarDeclK;
 						$$->lineno = lineno;
 					*/}
-#line 1473 "arquivo_bison.tab.c"
+#line 1488 "arquivo_bison.tab.c"
     break;
 
   case 8:
-#line 81 "arquivo_bison.y"
+#line 87 "arquivo_bison.y"
                                                                                                            {
 						yyval = novoNo();
 						strcpy(yyval->lexema, yyvsp[-5]->lexema);
@@ -1494,11 +1509,11 @@ yyreduce:
 						$$->scope= scope;
 						$$->kind.exp = VetorK;
 						$$->lineno = lineno;*/}
-#line 1498 "arquivo_bison.tab.c"
+#line 1513 "arquivo_bison.tab.c"
     break;
 
   case 9:
-#line 103 "arquivo_bison.y"
+#line 109 "arquivo_bison.y"
                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "INT");
@@ -1507,11 +1522,11 @@ yyreduce:
 						$$->attr.name = "INT";
 						$$->type = INTTYPE;
 						$$->kind.exp = TypeK; */}
-#line 1511 "arquivo_bison.tab.c"
+#line 1526 "arquivo_bison.tab.c"
     break;
 
   case 10:
-#line 111 "arquivo_bison.y"
+#line 117 "arquivo_bison.y"
                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "VOID");
@@ -1520,11 +1535,11 @@ yyreduce:
 						$$->attr.name = "VOID";
 						$$->type = VOIDTYPE;
 						$$->kind.exp = TypeK;*/}
-#line 1524 "arquivo_bison.tab.c"
+#line 1539 "arquivo_bison.tab.c"
     break;
 
   case 11:
-#line 122 "arquivo_bison.y"
+#line 128 "arquivo_bison.y"
                                                                                                         { 
 						//strcpy(auxLexema, "")
 						yyval = novoNo();
@@ -1542,26 +1557,26 @@ yyreduce:
 						$$->child[1] = $4;
 						$$->child[2] = $6;
 						$$->lineno = $2->lineno;*/}
-#line 1546 "arquivo_bison.tab.c"
+#line 1561 "arquivo_bison.tab.c"
     break;
 
   case 12:
-#line 141 "arquivo_bison.y"
+#line 147 "arquivo_bison.y"
                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, auxNome);
 						}
-#line 1555 "arquivo_bison.tab.c"
+#line 1570 "arquivo_bison.tab.c"
     break;
 
   case 13:
-#line 147 "arquivo_bison.y"
+#line 153 "arquivo_bison.y"
                                               {yyval = yyvsp[0];}
-#line 1561 "arquivo_bison.tab.c"
+#line 1576 "arquivo_bison.tab.c"
     break;
 
   case 14:
-#line 148 "arquivo_bison.y"
+#line 154 "arquivo_bison.y"
                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "VOID");
@@ -1573,11 +1588,11 @@ yyreduce:
 						$$->size = 0;
 						$$->child[0] = NULL;
 						$$->lineno = lineno;*/}
-#line 1577 "arquivo_bison.tab.c"
+#line 1592 "arquivo_bison.tab.c"
     break;
 
   case 15:
-#line 161 "arquivo_bison.y"
+#line 167 "arquivo_bison.y"
                                                           {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1597,17 +1612,17 @@ yyreduce:
 						}
 						else $$ = $3;
 						*/}
-#line 1601 "arquivo_bison.tab.c"
+#line 1616 "arquivo_bison.tab.c"
     break;
 
   case 16:
-#line 181 "arquivo_bison.y"
+#line 187 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 1607 "arquivo_bison.tab.c"
+#line 1622 "arquivo_bison.tab.c"
     break;
 
   case 17:
-#line 184 "arquivo_bison.y"
+#line 190 "arquivo_bison.y"
                                                         {
 						yyval = yyvsp[-1];
 						PONTEIRONO aux = novoNo();
@@ -1623,11 +1638,11 @@ yyreduce:
 						$$->type = $1->type;
 						$$->child[0] = $1;
 					*/}
-#line 1627 "arquivo_bison.tab.c"
+#line 1642 "arquivo_bison.tab.c"
     break;
 
   case 18:
-#line 199 "arquivo_bison.y"
+#line 205 "arquivo_bison.y"
                                                                                              {
 						yyval = yyvsp[-3];
 						PONTEIRONO aux = novoNo();
@@ -1644,11 +1659,11 @@ yyreduce:
 						$$->type = $1->type;
 						$$->child[0] = $1;
 					*/}
-#line 1648 "arquivo_bison.tab.c"
+#line 1663 "arquivo_bison.tab.c"
     break;
 
   case 19:
-#line 217 "arquivo_bison.y"
+#line 223 "arquivo_bison.y"
                                                                                    { 
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1667,11 +1682,11 @@ yyreduce:
 						}
 						else $$ = $3;
 						*/}
-#line 1671 "arquivo_bison.tab.c"
+#line 1686 "arquivo_bison.tab.c"
     break;
 
   case 20:
-#line 237 "arquivo_bison.y"
+#line 243 "arquivo_bison.y"
                                                            {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1691,17 +1706,17 @@ yyreduce:
 						}
 						else $$ = $2;
 					*/}
-#line 1695 "arquivo_bison.tab.c"
+#line 1710 "arquivo_bison.tab.c"
     break;
 
   case 21:
-#line 256 "arquivo_bison.y"
+#line 262 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 1701 "arquivo_bison.tab.c"
+#line 1716 "arquivo_bison.tab.c"
     break;
 
   case 22:
-#line 259 "arquivo_bison.y"
+#line 265 "arquivo_bison.y"
                                                     {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1720,66 +1735,64 @@ yyreduce:
 						}
 						else $$ = $2;
 					*/}
-#line 1724 "arquivo_bison.tab.c"
+#line 1739 "arquivo_bison.tab.c"
     break;
 
   case 23:
-#line 277 "arquivo_bison.y"
+#line 283 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 1730 "arquivo_bison.tab.c"
+#line 1745 "arquivo_bison.tab.c"
     break;
 
   case 24:
-#line 280 "arquivo_bison.y"
+#line 286 "arquivo_bison.y"
                                                  {yyval = yyvsp[0];}
-#line 1736 "arquivo_bison.tab.c"
+#line 1751 "arquivo_bison.tab.c"
     break;
 
   case 25:
-#line 281 "arquivo_bison.y"
+#line 287 "arquivo_bison.y"
                                                         {yyval = yyvsp[0];}
-#line 1742 "arquivo_bison.tab.c"
+#line 1757 "arquivo_bison.tab.c"
     break;
 
   case 26:
-#line 282 "arquivo_bison.y"
+#line 288 "arquivo_bison.y"
                                                        {yyval = yyvsp[0];}
-#line 1748 "arquivo_bison.tab.c"
+#line 1763 "arquivo_bison.tab.c"
     break;
 
   case 27:
-#line 283 "arquivo_bison.y"
+#line 289 "arquivo_bison.y"
                                                         {yyval = yyvsp[0];}
-#line 1754 "arquivo_bison.tab.c"
+#line 1769 "arquivo_bison.tab.c"
     break;
 
   case 28:
-#line 284 "arquivo_bison.y"
+#line 290 "arquivo_bison.y"
                                                        {yyval = yyvsp[0];}
-#line 1760 "arquivo_bison.tab.c"
+#line 1775 "arquivo_bison.tab.c"
     break;
 
   case 29:
-#line 287 "arquivo_bison.y"
+#line 293 "arquivo_bison.y"
                                               {yyval = yyvsp[-1];}
-#line 1766 "arquivo_bison.tab.c"
+#line 1781 "arquivo_bison.tab.c"
     break;
 
   case 30:
-#line 288 "arquivo_bison.y"
+#line 294 "arquivo_bison.y"
                                                     {yyval = NULL;}
-#line 1772 "arquivo_bison.tab.c"
+#line 1787 "arquivo_bison.tab.c"
     break;
 
   case 31:
-#line 291 "arquivo_bison.y"
+#line 297 "arquivo_bison.y"
                                                                                 {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "IF");
 						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);
-						
-						
+						adicionaFilho(yyval, yyvsp[0]);		
 						/*
 						$$ = newStmtNode(IfK);
 						$$->attr.name = "IF";
@@ -1789,14 +1802,12 @@ yyreduce:
 						$$->kind.stmt = IfK;
 						*/
 						
-
-						
 						}
-#line 1796 "arquivo_bison.tab.c"
+#line 1807 "arquivo_bison.tab.c"
     break;
 
   case 32:
-#line 310 "arquivo_bison.y"
+#line 312 "arquivo_bison.y"
                                                                                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "IF");
@@ -1805,7 +1816,7 @@ yyreduce:
 						adicionaFilho(yyval, yyvsp[-4]);
 
 						/*            
-						$$ = newStmtNode(IfK);
+						$$ = newStmtNode(IfK);r
 						$$->attr.name = "IF";
 						$$->child[0] = $3;
 						$$->child[1] = $5;
@@ -1813,11 +1824,11 @@ yyreduce:
 						$$->scope= $3->scope;
 						$$->lineno = lineno;
 						$$->kind.stmt = IfK;*/}
-#line 1817 "arquivo_bison.tab.c"
+#line 1828 "arquivo_bison.tab.c"
     break;
 
   case 33:
-#line 328 "arquivo_bison.y"
+#line 330 "arquivo_bison.y"
                                                                                    {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "WHILE");
@@ -1832,11 +1843,11 @@ yyreduce:
 						$$->scope = $3->scope;
 						$$->lineno = lineno;
 						$$->kind.stmt = WhileK; */}
-#line 1836 "arquivo_bison.tab.c"
+#line 1847 "arquivo_bison.tab.c"
     break;
 
   case 34:
-#line 344 "arquivo_bison.y"
+#line 346 "arquivo_bison.y"
                                            { 
 						yyval = novoNo();
 						strcpy(yyval->lexema, "ReturnVOID");
@@ -1845,22 +1856,22 @@ yyreduce:
 						$$ = newStmtNode(ReturnINT);
 						$$->child[0] = $2;
 						$$->lineno = lineno;*/}
-#line 1849 "arquivo_bison.tab.c"
+#line 1860 "arquivo_bison.tab.c"
     break;
 
   case 35:
-#line 352 "arquivo_bison.y"
+#line 354 "arquivo_bison.y"
                                                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "ReturnINT");
 						adicionaFilho(yyval, yyvsp[-1]);
 						
 						/*$$ = newStmtNode(ReturnVOID);*/}
-#line 1860 "arquivo_bison.tab.c"
+#line 1871 "arquivo_bison.tab.c"
     break;
 
   case 36:
-#line 360 "arquivo_bison.y"
+#line 362 "arquivo_bison.y"
                                                       {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "=");
@@ -1877,17 +1888,17 @@ yyreduce:
 						$$->lineno = lineno;
 
 					*/}
-#line 1881 "arquivo_bison.tab.c"
+#line 1892 "arquivo_bison.tab.c"
     break;
 
   case 37:
-#line 376 "arquivo_bison.y"
+#line 378 "arquivo_bison.y"
                                                             {yyval = yyvsp[0];}
-#line 1887 "arquivo_bison.tab.c"
+#line 1898 "arquivo_bison.tab.c"
     break;
 
   case 38:
-#line 379 "arquivo_bison.y"
+#line 381 "arquivo_bison.y"
                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, id);
@@ -1897,11 +1908,11 @@ yyreduce:
 						$$->attr.name = copyString(id);
 						$$->lineno = lineno;
 						$$->child[0] = NULL; */}
-#line 1901 "arquivo_bison.tab.c"
+#line 1912 "arquivo_bison.tab.c"
     break;
 
   case 39:
-#line 388 "arquivo_bison.y"
+#line 390 "arquivo_bison.y"
                                                                                     {
 						yyval = novoNo();
 						strcpy(yyval->lexema, id);
@@ -1912,11 +1923,11 @@ yyreduce:
 						$$->attr.name = $1->attr.name;
 						$$->child[0] = $3;
 						$$->lineno = lineno; */}
-#line 1916 "arquivo_bison.tab.c"
+#line 1927 "arquivo_bison.tab.c"
     break;
 
   case 40:
-#line 400 "arquivo_bison.y"
+#line 402 "arquivo_bison.y"
                                                                    {
 						//$$ = novoNo();
 						yyval = yyvsp[-1];
@@ -1929,30 +1940,108 @@ yyreduce:
 						$$->child[0] = $1;
 						$$->child[1] = $3;
 						$$->scope = scope; */}
-#line 1933 "arquivo_bison.tab.c"
+#line 1944 "arquivo_bison.tab.c"
     break;
 
   case 41:
-#line 412 "arquivo_bison.y"
+#line 414 "arquivo_bison.y"
                                                          {yyval = yyvsp[0];}
-#line 1939 "arquivo_bison.tab.c"
+#line 1950 "arquivo_bison.tab.c"
     break;
 
   case 42:
-#line 416 "arquivo_bison.y"
-                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "OPRELACIONAL");
+#line 418 "arquivo_bison.y"
+                                                      {
+						yyval = yyvsp[0];
+						
 
 						/*
 						$$ = newExpNode(OpK);
 						$$->attr.op = IGL;
 						$$->lineno = lineno;*/}
-#line 1952 "arquivo_bison.tab.c"
+#line 1963 "arquivo_bison.tab.c"
     break;
 
   case 43:
-#line 426 "arquivo_bison.y"
+#line 428 "arquivo_bison.y"
+                             {
+						yyval = novoNo();
+						strcpy(yyval->lexema, "==");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = EQ;
+						$$->lineno = lineno;*/}
+#line 1976 "arquivo_bison.tab.c"
+    break;
+
+  case 44:
+#line 437 "arquivo_bison.y"
+                                              {
+						yyval = novoNo();
+						strcpy(yyval->lexema, "!=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = NEQ;
+						$$->lineno = lineno;*/}
+#line 1989 "arquivo_bison.tab.c"
+    break;
+
+  case 45:
+#line 446 "arquivo_bison.y"
+                                             {
+						yyval = novoNo();
+						strcpy(yyval->lexema, "<");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = LT;
+						$$->lineno = lineno;*/}
+#line 2002 "arquivo_bison.tab.c"
+    break;
+
+  case 46:
+#line 455 "arquivo_bison.y"
+                                             {
+						yyval = novoNo();
+						strcpy(yyval->lexema, ">");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = GT;
+						$$->lineno = lineno;*/}
+#line 2015 "arquivo_bison.tab.c"
+    break;
+
+  case 47:
+#line 464 "arquivo_bison.y"
+                                              {
+						yyval = novoNo();
+						strcpy(yyval->lexema, "<=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = LET;
+						$$->lineno = lineno;*/}
+#line 2028 "arquivo_bison.tab.c"
+    break;
+
+  case 48:
+#line 473 "arquivo_bison.y"
+                                              {
+						yyval = novoNo();
+						strcpy(yyval->lexema, ">=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = GET;
+						$$->lineno = lineno;*/}
+#line 2041 "arquivo_bison.tab.c"
+    break;
+
+  case 49:
+#line 484 "arquivo_bison.y"
                                                     {
 						yyval = yyvsp[-1];
 						adicionaFilho(yyval, yyvsp[-2]);
@@ -1964,17 +2053,17 @@ yyreduce:
 						$$->child[1] = $3;
 						$$->scope = scope;
 						$$->lineno = lineno; */}
-#line 1968 "arquivo_bison.tab.c"
+#line 2057 "arquivo_bison.tab.c"
     break;
 
-  case 44:
-#line 437 "arquivo_bison.y"
+  case 50:
+#line 495 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 1974 "arquivo_bison.tab.c"
+#line 2063 "arquivo_bison.tab.c"
     break;
 
-  case 45:
-#line 440 "arquivo_bison.y"
+  case 51:
+#line 498 "arquivo_bison.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "+");
@@ -1983,11 +2072,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = SOM;
 						$$->lineno = lineno;*/}
-#line 1987 "arquivo_bison.tab.c"
+#line 2076 "arquivo_bison.tab.c"
     break;
 
-  case 46:
-#line 448 "arquivo_bison.y"
+  case 52:
+#line 506 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "-");
@@ -1996,11 +2085,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = SUB;
 						$$->lineno = lineno;*/}
-#line 2000 "arquivo_bison.tab.c"
+#line 2089 "arquivo_bison.tab.c"
     break;
 
-  case 47:
-#line 458 "arquivo_bison.y"
+  case 53:
+#line 516 "arquivo_bison.y"
                                                    {
 						yyval = yyvsp[-1];
 						adicionaFilho(yyval, yyvsp[-2]);
@@ -2012,17 +2101,17 @@ yyreduce:
 						$$->child[0] = $1;
 						$$->child[1] = $3;
 						$$->lineno = lineno; */}
-#line 2016 "arquivo_bison.tab.c"
+#line 2105 "arquivo_bison.tab.c"
     break;
 
-  case 48:
-#line 469 "arquivo_bison.y"
+  case 54:
+#line 527 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 2022 "arquivo_bison.tab.c"
+#line 2111 "arquivo_bison.tab.c"
     break;
 
-  case 49:
-#line 472 "arquivo_bison.y"
+  case 55:
+#line 530 "arquivo_bison.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "*");
@@ -2030,11 +2119,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = MUL;
 						$$->lineno = lineno;*/}
-#line 2034 "arquivo_bison.tab.c"
+#line 2123 "arquivo_bison.tab.c"
     break;
 
-  case 50:
-#line 479 "arquivo_bison.y"
+  case 56:
+#line 537 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "/");
@@ -2043,29 +2132,29 @@ yyreduce:
 			        	$$ = newExpNode(OpK);
 						$$->attr.op = DIV;
 						$$->lineno = lineno;*/}
-#line 2047 "arquivo_bison.tab.c"
+#line 2136 "arquivo_bison.tab.c"
     break;
 
-  case 51:
-#line 489 "arquivo_bison.y"
+  case 57:
+#line 547 "arquivo_bison.y"
                                                                             {yyval = yyvsp[-1];}
-#line 2053 "arquivo_bison.tab.c"
+#line 2142 "arquivo_bison.tab.c"
     break;
 
-  case 52:
-#line 490 "arquivo_bison.y"
+  case 58:
+#line 548 "arquivo_bison.y"
                                               {yyval = yyvsp[0];}
-#line 2059 "arquivo_bison.tab.c"
+#line 2148 "arquivo_bison.tab.c"
     break;
 
-  case 53:
-#line 491 "arquivo_bison.y"
+  case 59:
+#line 549 "arquivo_bison.y"
                                                    {yyval = yyvsp[0];}
-#line 2065 "arquivo_bison.tab.c"
+#line 2154 "arquivo_bison.tab.c"
     break;
 
-  case 54:
-#line 492 "arquivo_bison.y"
+  case 60:
+#line 550 "arquivo_bison.y"
                                               { 
 						yyval = novoNo();
 						strcpy(yyval->lexema, auxNome);
@@ -2075,14 +2164,14 @@ yyreduce:
 						$$->type = INTTYPE;
 						$$->attr.name = "teste";
 						$$->attr.val = atoi(tokenString);*/}
-#line 2079 "arquivo_bison.tab.c"
+#line 2168 "arquivo_bison.tab.c"
     break;
 
-  case 55:
-#line 503 "arquivo_bison.y"
+  case 61:
+#line 561 "arquivo_bison.y"
                                                                              {
 						yyval = yyvsp[-3];
-						
+						adicionaFilho(yyval, yyvsp[-1]);
 						/*
 						$$ = newExpNode(AtivK);
 						$$->kind.exp = AtivK;
@@ -2090,23 +2179,23 @@ yyreduce:
 						$$->child[0] = $3;
 						$$->params = params;
 						$$->lineno = lineno;*/}
-#line 2094 "arquivo_bison.tab.c"
+#line 2183 "arquivo_bison.tab.c"
     break;
 
-  case 56:
-#line 515 "arquivo_bison.y"
+  case 62:
+#line 573 "arquivo_bison.y"
                                             {yyval = yyvsp[0];}
-#line 2100 "arquivo_bison.tab.c"
+#line 2189 "arquivo_bison.tab.c"
     break;
 
-  case 57:
-#line 516 "arquivo_bison.y"
+  case 63:
+#line 574 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 2106 "arquivo_bison.tab.c"
+#line 2195 "arquivo_bison.tab.c"
     break;
 
-  case 58:
-#line 519 "arquivo_bison.y"
+  case 64:
+#line 577 "arquivo_bison.y"
                                                             {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -2122,21 +2211,21 @@ yyreduce:
 							params ++;
 						$$ = $1;
 						} else $$ = $3;*/}
-#line 2126 "arquivo_bison.tab.c"
+#line 2215 "arquivo_bison.tab.c"
     break;
 
-  case 59:
-#line 534 "arquivo_bison.y"
+  case 65:
+#line 592 "arquivo_bison.y"
                                                     {
 						yyval = yyvsp[0];
 						/*
 						params ++;
            				$$ = $1;*/}
-#line 2136 "arquivo_bison.tab.c"
+#line 2225 "arquivo_bison.tab.c"
     break;
 
 
-#line 2140 "arquivo_bison.tab.c"
+#line 2229 "arquivo_bison.tab.c"
 
       default: break;
     }
@@ -2368,7 +2457,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 542 "arquivo_bison.y"
+#line 600 "arquivo_bison.y"
 
 
 void yyerror (char *s){
@@ -2378,8 +2467,7 @@ void yyerror (char *s){
 int yylex(void)
 { return getToken(); }
 
-/*
-TreeNode * parse(void)
+/* TreeNode * parse(void)
 { yyparse();
   return savedTree;
 }*/

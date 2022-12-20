@@ -286,13 +286,14 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 23
-#define YY_END_OF_BUFFER 24
-static yyconst short int yy_accept[31] =
+#define YY_NUM_RULES 27
+#define YY_END_OF_BUFFER 28
+static yyconst short int yy_accept[34] =
     {   0,
-        0,    0,   24,   22,    1,    3,   22,    6,    7,   17,
-       15,   13,   16,   18,    4,   14,   20,   12,   20,    5,
-        8,    9,   10,   11,   19,   21,    2,    4,    5,    0
+        0,    0,   28,   26,    1,    3,   26,    6,    7,   17,
+       15,   13,   16,   18,    4,   14,   21,   12,   22,    5,
+        8,    9,   10,   11,   20,   25,    2,    4,   23,   19,
+       24,    5,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -334,38 +335,40 @@ static yyconst int yy_meta[24] =
         1,    1,    1
     } ;
 
-static yyconst short int yy_base[31] =
+static yyconst short int yy_base[34] =
     {   0,
         0,    0,   36,   37,   37,   37,    8,   37,   37,   37,
        37,   37,   37,   27,   21,   37,   17,   16,   15,    7,
-       37,   37,   37,   37,   37,   37,   37,   17,   10,   37
+       37,   37,   37,   37,   37,   37,   37,   17,   37,   37,
+       37,   10,   37
     } ;
 
-static yyconst short int yy_def[31] =
+static yyconst short int yy_def[34] =
     {   0,
-       30,    1,   30,   30,   30,   30,   30,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,    0
+       33,    1,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,    0
     } ;
 
 static yyconst short int yy_nxt[61] =
     {   0,
         4,    5,    6,    5,    7,    8,    9,   10,   11,   12,
        13,   14,   15,   16,   17,   18,   19,   20,   20,   21,
-       22,   23,   24,   25,   29,   29,   26,   29,   29,   28,
-       25,   25,   25,   28,   27,   30,    3,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   30
+       22,   23,   24,   25,   32,   32,   26,   32,   32,   28,
+       31,   30,   29,   28,   27,   33,    3,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
     } ;
 
 static yyconst short int yy_chk[61] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    7,   20,   20,    7,   29,   29,   28,
-       19,   18,   17,   15,   14,    3,   30,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   30
+        1,    1,    1,    7,   20,   20,    7,   32,   32,   28,
+       19,   18,   17,   15,   14,    3,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -397,7 +400,7 @@ char auxNome[26];
 FILE* copiaArquivo = NULL;
 FILE* f_in = NULL;
 
-#line 401 "arquivo_lex.c"
+#line 404 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -559,10 +562,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 24 "entrada.l"
+#line 22 "entrada.l"
 
 
-#line 566 "arquivo_lex.c"
+#line 569 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -613,7 +616,7 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 31 )
+				if ( yy_current_state >= 34 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -647,12 +650,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 26 "entrada.l"
+#line 24 "entrada.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 28 "entrada.l"
+#line 26 "entrada.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -673,7 +676,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 46 "entrada.l"
+#line 44 "entrada.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -686,7 +689,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 57 "entrada.l"
+#line 55 "entrada.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			strcpy(auxNome, yytext);
@@ -695,7 +698,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 63 "entrada.l"
+#line 61 "entrada.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -708,7 +711,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 74 "entrada.l"
+#line 72 "entrada.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -716,7 +719,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 79 "entrada.l"
+#line 77 "entrada.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -724,7 +727,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 84 "entrada.l"
+#line 82 "entrada.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -732,7 +735,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 90 "entrada.l"
+#line 88 "entrada.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -740,7 +743,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 96 "entrada.l"
+#line 94 "entrada.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -748,7 +751,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 101 "entrada.l"
+#line 99 "entrada.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -756,7 +759,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 107 "entrada.l"
+#line 105 "entrada.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -764,7 +767,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 112 "entrada.l"
+#line 110 "entrada.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -772,7 +775,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 117 "entrada.l"
+#line 115 "entrada.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -780,7 +783,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 122 "entrada.l"
+#line 120 "entrada.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -788,7 +791,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 127 "entrada.l"
+#line 125 "entrada.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -796,7 +799,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 132 "entrada.l"
+#line 130 "entrada.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -804,7 +807,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 137 "entrada.l"
+#line 135 "entrada.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -812,43 +815,78 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 142 "entrada.l"
+#line 140 "entrada.l"
 {
-				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
-				return OPRELACIONAL;
-			}
+	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
+	return EQ;
+   }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 147 "entrada.l"
+#line 145 "entrada.l"
 {
-				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
-				return OPRELACIONAL;
-		      }
+	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
+	return NEQ;
+	}
+	YY_BREAK
+case 21:
+YY_RULE_SETUP
+#line 150 "entrada.l"
+{
+	printf("\t%d: LT, %s\n", qntLinhas, yytext);
+	return LT;
+  }
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
+#line 155 "entrada.l"
+{
+	printf("\t%d: GT, %s\n", qntLinhas, yytext);
+	return GT;
+  }
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 160 "entrada.l"
+{
+		printf("\t%d: LET, %s\n", qntLinhas, yytext);
+		return LET;
+  	}
+	YY_BREAK
+case 24:
+YY_RULE_SETUP
+#line 165 "entrada.l"
+{
+		printf("\t%d: GET, %s\n", qntLinhas, yytext);
+		return GET;
+  	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 152 "entrada.l"
+#line 170 "entrada.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
 	}
 	YY_BREAK
-case 21:
+case 25:
 YY_RULE_SETUP
-#line 157 "entrada.l"
+#line 175 "entrada.l"
 {if(f_in == NULL) return 0;} //Encerra o programa quando digitado pelo usuário
 	YY_BREAK
-case 22:
+case 26:
 YY_RULE_SETUP
-#line 159 "entrada.l"
-{printf("\t%d: Erro, problema no lexema = %s\n", qntLinhas, yytext);}
+#line 177 "entrada.l"
+{
+	printf("ERRO LEXICO: '%s' LINHA %d\n", yytext, qntLinhas);
+	return ERRO;
+  }
 	YY_BREAK
-case 23:
+case 27:
 YY_RULE_SETUP
-#line 161 "entrada.l"
+#line 182 "entrada.l"
 ECHO;
 	YY_BREAK
-#line 852 "arquivo_lex.c"
+#line 890 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1138,7 +1176,7 @@ static yy_state_type yy_get_previous_state()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 31 )
+			if ( yy_current_state >= 34 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1173,11 +1211,11 @@ yy_state_type yy_current_state;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 31 )
+		if ( yy_current_state >= 34 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 30);
+	yy_is_jam = (yy_current_state == 33);
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -1736,7 +1774,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 161 "entrada.l"
+#line 182 "entrada.l"
 
 
 int main(int argc, char *argv[]){
@@ -1806,12 +1844,17 @@ int tabelaNomes(enum yytokentype *token){
 }
 
 void mostrarTela(char palavra[]){
-	int i;
+	int i = 0;
 	char ch;
 	printf("%d: ", qntLinhas);
-	for (i = 0; i < strlen(palavra); i++){
+	ch = palavra[i];
+	while(ch == '\t' || ch == ' '){
+		i++;
 		ch = palavra[i];
-		if(ch != '\n' && ch != '\t') printf("%c", palavra[i]);
+	}
+	for (; i < strlen(palavra); i++){
+		ch = palavra[i];
+		if(ch != '\n') printf("%c", palavra[i]);
 	}
 	printf("\n");
 }

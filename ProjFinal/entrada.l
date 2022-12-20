@@ -18,8 +18,6 @@ FILE* f_in = NULL;
 
 DIGIT [0-9]
 LETRA [a-zA-Z]
-SIMBCOMPOSTOSLOGICOS ==|<=|>=|!=
-SIMBSIMPLESLOGICOS <|>
 
 %%
 
@@ -138,17 +136,37 @@ SIMBSIMPLESLOGICOS <|>
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
    } 
-      
-{SIMBCOMPOSTOSLOGICOS} {
-				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
-				return OPRELACIONAL;
-			}
-			
-{SIMBSIMPLESLOGICOS} {
-				printf("\t%d: OPLOG, %s\n", qntLinhas, yytext);
-				return OPRELACIONAL;
-		      }
 
+\=\= {
+	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
+	return EQ;
+   }
+
+\!\= {
+	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
+	return NEQ;
+	}
+
+\< {
+	printf("\t%d: LT, %s\n", qntLinhas, yytext);
+	return LT;
+  }
+
+\> {
+	printf("\t%d: GT, %s\n", qntLinhas, yytext);
+	return GT;
+  }
+
+\<\= {
+		printf("\t%d: LET, %s\n", qntLinhas, yytext);
+		return LET;
+  	}
+
+\>\= {
+		printf("\t%d: GET, %s\n", qntLinhas, yytext);
+		return GET;
+  	}
+	
 <<EOF>> {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -156,7 +174,10 @@ SIMBSIMPLESLOGICOS <|>
 	
 !N  {if(f_in == NULL) return 0;} //Encerra o programa quando digitado pelo usuário
 
-. {printf("\t%d: Erro, problema no lexema = %s\n", qntLinhas, yytext);}
+. {
+	printf("ERRO LEXICO: '%s' LINHA %d\n", yytext, qntLinhas);
+	return ERRO;
+  }
 
 %%
 
@@ -227,12 +248,17 @@ int tabelaNomes(enum yytokentype *token){
 }
 
 void mostrarTela(char palavra[]){
-	int i;
+	int i = 0;
 	char ch;
 	printf("%d: ", qntLinhas);
-	for (i = 0; i < strlen(palavra); i++){
+	ch = palavra[i];
+	while(ch == '\t' || ch == ' '){
+		i++;
 		ch = palavra[i];
-		if(ch != '\n' && ch != '\t') printf("%c", palavra[i]);
+	}
+	for (; i < strlen(palavra); i++){
+		ch = palavra[i];
+		if(ch != '\n') printf("%c", palavra[i]);
 	}
 	printf("\n");
 }

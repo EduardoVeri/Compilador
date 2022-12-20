@@ -22,11 +22,17 @@ enum yytokentype getToken(void);
 char auxLexema[26];
 
 %}
+/*
+Declaracao dos tokens que serao utilizados durante o processo de analise
+sintatica. 
+*/
+
 
 %token NUM SOMA SUB MULT DIV INT
 %token ID VOID WHILE ELSE IF ABREPARENTESES FECHAPARENTESES
-%token OPRELACIONAL RETURN COMMA ABRECHAVES FECHACHAVES SEMICOLON
+%token RETURN COMMA ABRECHAVES FECHACHAVES SEMICOLON
 %token ATRIB ABRECOLCHETES FECHACOLCHETES
+%token EQ NEQ LT LET GT GET ERRO
 
 %%
 
@@ -292,9 +298,7 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$ = novoNo();
 						strcpy($$->lexema, "IF");
 						adicionaFilho($$, $3);
-						adicionaFilho($$, $5);
-						
-						
+						adicionaFilho($$, $5);		
 						/*
 						$$ = newStmtNode(IfK);
 						$$->attr.name = "IF";
@@ -303,8 +307,6 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$->lineno = lineno;
 						$$->kind.stmt = IfK;
 						*/
-						
-
 						
 						}
 					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {
@@ -315,7 +317,7 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						adicionaFilho($$, $3);
 
 						/*            
-						$$ = newStmtNode(IfK);
+						$$ = newStmtNode(IfK);r
 						$$->attr.name = "IF";
 						$$->child[0] = $3;
 						$$->child[1] = $5;
@@ -413,16 +415,72 @@ simples_expressao	: soma_expressao relacional soma_expressao {
 					;
 
 //Criar novas regras para as demais operações relacionais			
-relacional			: OPRELACIONAL {
-						$$ = novoNo();
-						strcpy($$->lexema, "OPRELACIONAL");
+relacional			: operador_relacional {
+						$$ = $1;
+						
 
 						/*
 						$$ = newExpNode(OpK);
 						$$->attr.op = IGL;
 						$$->lineno = lineno;*/}
 					;
-			
+
+operador_relacional	: EQ {
+						$$ = novoNo();
+						strcpy($$->lexema, "==");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = EQ;
+						$$->lineno = lineno;*/}
+
+					| NEQ {
+						$$ = novoNo();
+						strcpy($$->lexema, "!=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = NEQ;
+						$$->lineno = lineno;*/}
+
+					| LT {
+						$$ = novoNo();
+						strcpy($$->lexema, "<");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = LT;
+						$$->lineno = lineno;*/}
+					
+					| GT {
+						$$ = novoNo();
+						strcpy($$->lexema, ">");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = GT;
+						$$->lineno = lineno;*/}
+					
+					| LET {
+						$$ = novoNo();
+						strcpy($$->lexema, "<=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = LET;
+						$$->lineno = lineno;*/}
+
+					| GET {
+						$$ = novoNo();
+						strcpy($$->lexema, ">=");
+						
+						/*
+						$$ = newExpNode(OpK);
+						$$->attr.op = GET;
+						$$->lineno = lineno;*/}
+					;
+
+
 soma_expressao		: soma_expressao soma termo {
 						$$ = $2;
 						adicionaFilho($$, $1);
@@ -502,7 +560,7 @@ fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = $2;}
 
 ativacao 			: fun_id ABREPARENTESES args FECHAPARENTESES {
 						$$ = $1;
-						
+						adicionaFilho($$, $3);
 						/*
 						$$ = newExpNode(AtivK);
 						$$->kind.exp = AtivK;
@@ -548,8 +606,7 @@ void yyerror (char *s){
 int yylex(void)
 { return getToken(); }
 
-/*
-TreeNode * parse(void)
+/* TreeNode * parse(void)
 { yyparse();
   return savedTree;
 }*/

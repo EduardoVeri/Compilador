@@ -62,15 +62,21 @@ extern int yydebug;
     IF = 268,
     ABREPARENTESES = 269,
     FECHAPARENTESES = 270,
-    OPRELACIONAL = 271,
-    RETURN = 272,
-    COMMA = 273,
-    ABRECHAVES = 274,
-    FECHACHAVES = 275,
-    SEMICOLON = 276,
-    ATRIB = 277,
-    ABRECOLCHETES = 278,
-    FECHACOLCHETES = 279
+    RETURN = 271,
+    COMMA = 272,
+    ABRECHAVES = 273,
+    FECHACHAVES = 274,
+    SEMICOLON = 275,
+    ATRIB = 276,
+    ABRECOLCHETES = 277,
+    FECHACOLCHETES = 278,
+    EQ = 279,
+    NEQ = 280,
+    LT = 281,
+    LET = 282,
+    GT = 283,
+    GET = 284,
+    ERRO = 285
   };
 #endif
 
