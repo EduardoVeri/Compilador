@@ -181,7 +181,13 @@ param_lista			: param_lista COMMA param {
 					| param {$$ = $1;}
 					;
 
-param				: tipo_especificador ID {/*
+param				: tipo_especificador ID {
+						$$ = $1;
+						PONTEIRONO aux = novoNo();
+						strcpy(aux->lexema, id);
+						adicionaFilho($$, aux);
+						
+					/*
 						$$ = newExpNode(VarParamK);
 						$$->attr.name = copyString(id);
 						$$->kind.exp = VarParamK;
@@ -190,7 +196,13 @@ param				: tipo_especificador ID {/*
 						$$->type = $1->type;
 						$$->child[0] = $1;
 					*/}
-					| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES {/*
+					| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES {
+						$$ = $1;
+						PONTEIRONO aux = novoNo();
+						strcpy(aux->lexema, id);
+						adicionaFilho($$, aux);
+						
+						/*
 						$$ = newExpNode(VetParamK);
 						$$->child[0] = $1;
 						$$->attr.name = copyString(id);
@@ -244,7 +256,15 @@ local_declaracoes 	: local_declaracoes var_declaracao {
 					| %empty {$$ = NULL;}
 					;
 
-statement_lista 	: statement_lista statement {/*
+statement_lista 	: statement_lista statement {
+						if($1 != NULL){
+							$$ = $1;
+							adicionaIrmao($$, $2);
+						}
+						else{
+							$$ = $2;
+						}
+						/*
 						YYSTYPE t = $1;
 						if (t != NULL){
 							while (t->sibling != NULL)
@@ -269,6 +289,12 @@ expressao_decl		: expressao SEMICOLON {$$ = $1;}
 					;
 			
 selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
+						$$ = novoNo();
+						strcpy($$->lexema, "IF");
+						adicionaFilho($$, $3);
+						adicionaFilho($$, $5);
+						
+						
 						/*
 						$$ = newStmtNode(IfK);
 						$$->attr.name = "IF";
@@ -277,13 +303,18 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$->lineno = lineno;
 						$$->kind.stmt = IfK;
 						*/
-						strcpy(auxLexema, "IF");
-						$$ = criaNo(auxLexema, qntLinhas, 0, 1);
-						adicionaFilho($$, $3);
-						adicionaFilho($$, $5);
+						
+
 						
 						}
-					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {/*            
+					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {
+						$$ = novoNo();
+						strcpy($$->lexema, "IF");
+						adicionaFilho($$, $3);
+						adicionaFilho($$, $5);
+						adicionaFilho($$, $7);
+						
+						/*            
 						$$ = newStmtNode(IfK);
 						$$->attr.name = "IF";
 						$$->child[0] = $3;
@@ -457,7 +488,7 @@ void mostraArvore(PONTEIRONO raiz, int num){
 	}
 	printf("%s\n", raiz->lexema);
 	
-	for(int i = 0; i < 3; i++){
+	for(int i = 2; i > -1; i--){
 		mostraArvore(raiz->filho[i], num + 1);
 	}
 	mostraArvore(raiz->irmao, num);
