@@ -51,16 +51,7 @@ declaracao_lista	: declaracao_lista declaracao {
 						else{
 							$$ = $2;
 						}
-						/*						
-						YYSTYPE t = $1;
-						if (t != NULL){
-							while (t->sibling != NULL)
-							t = t->sibling;
-							t->sibling = $2;
-							$$ = $1;
-						}
-						else $$ = $2;
-						*/}
+					  }
 					| declaracao {$$ = $1;}
 					;
 
@@ -69,11 +60,17 @@ declaracao			: var_declaracao {$$ = $1;}
 					;
 
 var_declaracao		: tipo_especificador ID SEMICOLON {
-						$$ = novoNo();
-						strcpy($$->lexema, $1->lexema);
+						$$ = $1;
+						$$->tipoNo = 1;
+						$$->numLinha = qntLinhas;
+						
+
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
+
+
+
 
 						/*
 						$$ = newExpNode(VarDeclK);
@@ -92,7 +89,9 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 						
-						adicionaFilho($$, $4);
+						aux = novoNo();
+						strcpy(aux->lexema, auxNome);
+						adicionaFilho($$, aux);
 						
 						
 						/*            

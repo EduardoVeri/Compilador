@@ -547,13 +547,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    39,    39,    46,    64,    67,    68,    71,    87,   109,
-     117,   128,   147,   153,   154,   167,   187,   190,   205,   223,
-     243,   262,   265,   283,   286,   287,   288,   289,   290,   293,
-     294,   297,   312,   330,   346,   354,   362,   378,   381,   390,
-     402,   414,   418,   428,   437,   446,   455,   464,   473,   484,
-     495,   498,   506,   516,   527,   530,   537,   547,   548,   549,
-     550,   561,   573,   574,   577,   592
+       0,    39,    39,    46,    55,    58,    59,    62,    84,   108,
+     116,   127,   146,   152,   153,   166,   186,   189,   204,   222,
+     242,   261,   264,   282,   285,   286,   287,   288,   289,   292,
+     293,   296,   311,   329,   345,   353,   361,   377,   380,   389,
+     401,   413,   417,   427,   436,   445,   454,   463,   472,   483,
+     494,   497,   505,   515,   526,   529,   536,   546,   547,   548,
+     549,   560,   572,   573,   576,   591
 };
 #endif
 
@@ -1435,45 +1435,42 @@ yyreduce:
 						else{
 							yyval = yyvsp[0];
 						}
-						/*						
-						YYSTYPE t = $1;
-						if (t != NULL){
-							while (t->sibling != NULL)
-							t = t->sibling;
-							t->sibling = $2;
-							$$ = $1;
-						}
-						else $$ = $2;
-						*/}
-#line 1449 "arquivo_bison.tab.c"
+					  }
+#line 1440 "arquivo_bison.tab.c"
     break;
 
   case 4:
-#line 64 "arquivo_bison.y"
+#line 55 "arquivo_bison.y"
                                                      {yyval = yyvsp[0];}
-#line 1455 "arquivo_bison.tab.c"
+#line 1446 "arquivo_bison.tab.c"
     break;
 
   case 5:
-#line 67 "arquivo_bison.y"
+#line 58 "arquivo_bison.y"
                                                  {yyval = yyvsp[0];}
-#line 1461 "arquivo_bison.tab.c"
+#line 1452 "arquivo_bison.tab.c"
     break;
 
   case 6:
-#line 68 "arquivo_bison.y"
+#line 59 "arquivo_bison.y"
                                                          {yyval = yyvsp[0];}
-#line 1467 "arquivo_bison.tab.c"
+#line 1458 "arquivo_bison.tab.c"
     break;
 
   case 7:
-#line 71 "arquivo_bison.y"
+#line 62 "arquivo_bison.y"
                                                           {
-						yyval = novoNo();
-						strcpy(yyval->lexema, yyvsp[-2]->lexema);
+						yyval = yyvsp[-2];
+						yyval->tipoNo = 1;
+						yyval->numLinha = qntLinhas;
+						
+
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho(yyval, aux);
+
+
+
 
 						/*
 						$$ = newExpNode(VarDeclK);
@@ -1484,11 +1481,11 @@ yyreduce:
 						$$->kind.exp = VarDeclK;
 						$$->lineno = lineno;
 					*/}
-#line 1488 "arquivo_bison.tab.c"
+#line 1485 "arquivo_bison.tab.c"
     break;
 
   case 8:
-#line 87 "arquivo_bison.y"
+#line 84 "arquivo_bison.y"
                                                                                                            {
 						yyval = novoNo();
 						strcpy(yyval->lexema, yyvsp[-5]->lexema);
@@ -1497,7 +1494,9 @@ yyreduce:
 						strcpy(aux->lexema, id);
 						adicionaFilho(yyval, aux);
 						
-						adicionaFilho(yyval, yyvsp[-2]);
+						aux = novoNo();
+						strcpy(aux->lexema, auxNome);
+						adicionaFilho(yyval, aux);
 						
 						
 						/*            
@@ -1509,11 +1508,11 @@ yyreduce:
 						$$->scope= scope;
 						$$->kind.exp = VetorK;
 						$$->lineno = lineno;*/}
-#line 1513 "arquivo_bison.tab.c"
+#line 1512 "arquivo_bison.tab.c"
     break;
 
   case 9:
-#line 109 "arquivo_bison.y"
+#line 108 "arquivo_bison.y"
                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "INT");
@@ -1522,11 +1521,11 @@ yyreduce:
 						$$->attr.name = "INT";
 						$$->type = INTTYPE;
 						$$->kind.exp = TypeK; */}
-#line 1526 "arquivo_bison.tab.c"
+#line 1525 "arquivo_bison.tab.c"
     break;
 
   case 10:
-#line 117 "arquivo_bison.y"
+#line 116 "arquivo_bison.y"
                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "VOID");
@@ -1535,11 +1534,11 @@ yyreduce:
 						$$->attr.name = "VOID";
 						$$->type = VOIDTYPE;
 						$$->kind.exp = TypeK;*/}
-#line 1539 "arquivo_bison.tab.c"
+#line 1538 "arquivo_bison.tab.c"
     break;
 
   case 11:
-#line 128 "arquivo_bison.y"
+#line 127 "arquivo_bison.y"
                                                                                                         { 
 						//strcpy(auxLexema, "")
 						yyval = novoNo();
@@ -1557,26 +1556,26 @@ yyreduce:
 						$$->child[1] = $4;
 						$$->child[2] = $6;
 						$$->lineno = $2->lineno;*/}
-#line 1561 "arquivo_bison.tab.c"
+#line 1560 "arquivo_bison.tab.c"
     break;
 
   case 12:
-#line 147 "arquivo_bison.y"
+#line 146 "arquivo_bison.y"
                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, auxNome);
 						}
-#line 1570 "arquivo_bison.tab.c"
+#line 1569 "arquivo_bison.tab.c"
     break;
 
   case 13:
-#line 153 "arquivo_bison.y"
+#line 152 "arquivo_bison.y"
                                               {yyval = yyvsp[0];}
-#line 1576 "arquivo_bison.tab.c"
+#line 1575 "arquivo_bison.tab.c"
     break;
 
   case 14:
-#line 154 "arquivo_bison.y"
+#line 153 "arquivo_bison.y"
                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "VOID");
@@ -1588,11 +1587,11 @@ yyreduce:
 						$$->size = 0;
 						$$->child[0] = NULL;
 						$$->lineno = lineno;*/}
-#line 1592 "arquivo_bison.tab.c"
+#line 1591 "arquivo_bison.tab.c"
     break;
 
   case 15:
-#line 167 "arquivo_bison.y"
+#line 166 "arquivo_bison.y"
                                                           {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1612,17 +1611,17 @@ yyreduce:
 						}
 						else $$ = $3;
 						*/}
-#line 1616 "arquivo_bison.tab.c"
+#line 1615 "arquivo_bison.tab.c"
     break;
 
   case 16:
-#line 187 "arquivo_bison.y"
+#line 186 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 1622 "arquivo_bison.tab.c"
+#line 1621 "arquivo_bison.tab.c"
     break;
 
   case 17:
-#line 190 "arquivo_bison.y"
+#line 189 "arquivo_bison.y"
                                                         {
 						yyval = yyvsp[-1];
 						PONTEIRONO aux = novoNo();
@@ -1638,11 +1637,11 @@ yyreduce:
 						$$->type = $1->type;
 						$$->child[0] = $1;
 					*/}
-#line 1642 "arquivo_bison.tab.c"
+#line 1641 "arquivo_bison.tab.c"
     break;
 
   case 18:
-#line 205 "arquivo_bison.y"
+#line 204 "arquivo_bison.y"
                                                                                              {
 						yyval = yyvsp[-3];
 						PONTEIRONO aux = novoNo();
@@ -1659,11 +1658,11 @@ yyreduce:
 						$$->type = $1->type;
 						$$->child[0] = $1;
 					*/}
-#line 1663 "arquivo_bison.tab.c"
+#line 1662 "arquivo_bison.tab.c"
     break;
 
   case 19:
-#line 223 "arquivo_bison.y"
+#line 222 "arquivo_bison.y"
                                                                                    { 
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1682,11 +1681,11 @@ yyreduce:
 						}
 						else $$ = $3;
 						*/}
-#line 1686 "arquivo_bison.tab.c"
+#line 1685 "arquivo_bison.tab.c"
     break;
 
   case 20:
-#line 243 "arquivo_bison.y"
+#line 242 "arquivo_bison.y"
                                                            {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1706,17 +1705,17 @@ yyreduce:
 						}
 						else $$ = $2;
 					*/}
-#line 1710 "arquivo_bison.tab.c"
+#line 1709 "arquivo_bison.tab.c"
     break;
 
   case 21:
-#line 262 "arquivo_bison.y"
+#line 261 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 1716 "arquivo_bison.tab.c"
+#line 1715 "arquivo_bison.tab.c"
     break;
 
   case 22:
-#line 265 "arquivo_bison.y"
+#line 264 "arquivo_bison.y"
                                                     {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1735,59 +1734,59 @@ yyreduce:
 						}
 						else $$ = $2;
 					*/}
-#line 1739 "arquivo_bison.tab.c"
+#line 1738 "arquivo_bison.tab.c"
     break;
 
   case 23:
-#line 283 "arquivo_bison.y"
+#line 282 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 1745 "arquivo_bison.tab.c"
+#line 1744 "arquivo_bison.tab.c"
     break;
 
   case 24:
-#line 286 "arquivo_bison.y"
+#line 285 "arquivo_bison.y"
                                                  {yyval = yyvsp[0];}
-#line 1751 "arquivo_bison.tab.c"
+#line 1750 "arquivo_bison.tab.c"
     break;
 
   case 25:
-#line 287 "arquivo_bison.y"
+#line 286 "arquivo_bison.y"
                                                         {yyval = yyvsp[0];}
-#line 1757 "arquivo_bison.tab.c"
+#line 1756 "arquivo_bison.tab.c"
     break;
 
   case 26:
-#line 288 "arquivo_bison.y"
+#line 287 "arquivo_bison.y"
                                                        {yyval = yyvsp[0];}
-#line 1763 "arquivo_bison.tab.c"
+#line 1762 "arquivo_bison.tab.c"
     break;
 
   case 27:
-#line 289 "arquivo_bison.y"
+#line 288 "arquivo_bison.y"
                                                         {yyval = yyvsp[0];}
-#line 1769 "arquivo_bison.tab.c"
+#line 1768 "arquivo_bison.tab.c"
     break;
 
   case 28:
-#line 290 "arquivo_bison.y"
+#line 289 "arquivo_bison.y"
                                                        {yyval = yyvsp[0];}
-#line 1775 "arquivo_bison.tab.c"
+#line 1774 "arquivo_bison.tab.c"
     break;
 
   case 29:
-#line 293 "arquivo_bison.y"
+#line 292 "arquivo_bison.y"
                                               {yyval = yyvsp[-1];}
-#line 1781 "arquivo_bison.tab.c"
+#line 1780 "arquivo_bison.tab.c"
     break;
 
   case 30:
-#line 294 "arquivo_bison.y"
+#line 293 "arquivo_bison.y"
                                                     {yyval = NULL;}
-#line 1787 "arquivo_bison.tab.c"
+#line 1786 "arquivo_bison.tab.c"
     break;
 
   case 31:
-#line 297 "arquivo_bison.y"
+#line 296 "arquivo_bison.y"
                                                                                 {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "IF");
@@ -1803,11 +1802,11 @@ yyreduce:
 						*/
 						
 						}
-#line 1807 "arquivo_bison.tab.c"
+#line 1806 "arquivo_bison.tab.c"
     break;
 
   case 32:
-#line 312 "arquivo_bison.y"
+#line 311 "arquivo_bison.y"
                                                                                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "IF");
@@ -1824,11 +1823,11 @@ yyreduce:
 						$$->scope= $3->scope;
 						$$->lineno = lineno;
 						$$->kind.stmt = IfK;*/}
-#line 1828 "arquivo_bison.tab.c"
+#line 1827 "arquivo_bison.tab.c"
     break;
 
   case 33:
-#line 330 "arquivo_bison.y"
+#line 329 "arquivo_bison.y"
                                                                                    {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "WHILE");
@@ -1843,11 +1842,11 @@ yyreduce:
 						$$->scope = $3->scope;
 						$$->lineno = lineno;
 						$$->kind.stmt = WhileK; */}
-#line 1847 "arquivo_bison.tab.c"
+#line 1846 "arquivo_bison.tab.c"
     break;
 
   case 34:
-#line 346 "arquivo_bison.y"
+#line 345 "arquivo_bison.y"
                                            { 
 						yyval = novoNo();
 						strcpy(yyval->lexema, "ReturnVOID");
@@ -1856,22 +1855,22 @@ yyreduce:
 						$$ = newStmtNode(ReturnINT);
 						$$->child[0] = $2;
 						$$->lineno = lineno;*/}
-#line 1860 "arquivo_bison.tab.c"
+#line 1859 "arquivo_bison.tab.c"
     break;
 
   case 35:
-#line 354 "arquivo_bison.y"
+#line 353 "arquivo_bison.y"
                                                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "ReturnINT");
 						adicionaFilho(yyval, yyvsp[-1]);
 						
 						/*$$ = newStmtNode(ReturnVOID);*/}
-#line 1871 "arquivo_bison.tab.c"
+#line 1870 "arquivo_bison.tab.c"
     break;
 
   case 36:
-#line 362 "arquivo_bison.y"
+#line 361 "arquivo_bison.y"
                                                       {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "=");
@@ -1888,17 +1887,17 @@ yyreduce:
 						$$->lineno = lineno;
 
 					*/}
-#line 1892 "arquivo_bison.tab.c"
+#line 1891 "arquivo_bison.tab.c"
     break;
 
   case 37:
-#line 378 "arquivo_bison.y"
+#line 377 "arquivo_bison.y"
                                                             {yyval = yyvsp[0];}
-#line 1898 "arquivo_bison.tab.c"
+#line 1897 "arquivo_bison.tab.c"
     break;
 
   case 38:
-#line 381 "arquivo_bison.y"
+#line 380 "arquivo_bison.y"
                                      {
 						yyval = novoNo();
 						strcpy(yyval->lexema, id);
@@ -1908,11 +1907,11 @@ yyreduce:
 						$$->attr.name = copyString(id);
 						$$->lineno = lineno;
 						$$->child[0] = NULL; */}
-#line 1912 "arquivo_bison.tab.c"
+#line 1911 "arquivo_bison.tab.c"
     break;
 
   case 39:
-#line 390 "arquivo_bison.y"
+#line 389 "arquivo_bison.y"
                                                                                     {
 						yyval = novoNo();
 						strcpy(yyval->lexema, id);
@@ -1923,11 +1922,11 @@ yyreduce:
 						$$->attr.name = $1->attr.name;
 						$$->child[0] = $3;
 						$$->lineno = lineno; */}
-#line 1927 "arquivo_bison.tab.c"
+#line 1926 "arquivo_bison.tab.c"
     break;
 
   case 40:
-#line 402 "arquivo_bison.y"
+#line 401 "arquivo_bison.y"
                                                                    {
 						//$$ = novoNo();
 						yyval = yyvsp[-1];
@@ -1940,17 +1939,17 @@ yyreduce:
 						$$->child[0] = $1;
 						$$->child[1] = $3;
 						$$->scope = scope; */}
-#line 1944 "arquivo_bison.tab.c"
+#line 1943 "arquivo_bison.tab.c"
     break;
 
   case 41:
-#line 414 "arquivo_bison.y"
+#line 413 "arquivo_bison.y"
                                                          {yyval = yyvsp[0];}
-#line 1950 "arquivo_bison.tab.c"
+#line 1949 "arquivo_bison.tab.c"
     break;
 
   case 42:
-#line 418 "arquivo_bison.y"
+#line 417 "arquivo_bison.y"
                                                       {
 						yyval = yyvsp[0];
 						
@@ -1959,11 +1958,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = IGL;
 						$$->lineno = lineno;*/}
-#line 1963 "arquivo_bison.tab.c"
+#line 1962 "arquivo_bison.tab.c"
     break;
 
   case 43:
-#line 428 "arquivo_bison.y"
+#line 427 "arquivo_bison.y"
                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "==");
@@ -1972,11 +1971,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = EQ;
 						$$->lineno = lineno;*/}
-#line 1976 "arquivo_bison.tab.c"
+#line 1975 "arquivo_bison.tab.c"
     break;
 
   case 44:
-#line 437 "arquivo_bison.y"
+#line 436 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "!=");
@@ -1985,11 +1984,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = NEQ;
 						$$->lineno = lineno;*/}
-#line 1989 "arquivo_bison.tab.c"
+#line 1988 "arquivo_bison.tab.c"
     break;
 
   case 45:
-#line 446 "arquivo_bison.y"
+#line 445 "arquivo_bison.y"
                                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "<");
@@ -1998,11 +1997,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = LT;
 						$$->lineno = lineno;*/}
-#line 2002 "arquivo_bison.tab.c"
+#line 2001 "arquivo_bison.tab.c"
     break;
 
   case 46:
-#line 455 "arquivo_bison.y"
+#line 454 "arquivo_bison.y"
                                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, ">");
@@ -2011,11 +2010,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = GT;
 						$$->lineno = lineno;*/}
-#line 2015 "arquivo_bison.tab.c"
+#line 2014 "arquivo_bison.tab.c"
     break;
 
   case 47:
-#line 464 "arquivo_bison.y"
+#line 463 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "<=");
@@ -2024,11 +2023,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = LET;
 						$$->lineno = lineno;*/}
-#line 2028 "arquivo_bison.tab.c"
+#line 2027 "arquivo_bison.tab.c"
     break;
 
   case 48:
-#line 473 "arquivo_bison.y"
+#line 472 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, ">=");
@@ -2037,11 +2036,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = GET;
 						$$->lineno = lineno;*/}
-#line 2041 "arquivo_bison.tab.c"
+#line 2040 "arquivo_bison.tab.c"
     break;
 
   case 49:
-#line 484 "arquivo_bison.y"
+#line 483 "arquivo_bison.y"
                                                     {
 						yyval = yyvsp[-1];
 						adicionaFilho(yyval, yyvsp[-2]);
@@ -2053,17 +2052,17 @@ yyreduce:
 						$$->child[1] = $3;
 						$$->scope = scope;
 						$$->lineno = lineno; */}
-#line 2057 "arquivo_bison.tab.c"
+#line 2056 "arquivo_bison.tab.c"
     break;
 
   case 50:
-#line 495 "arquivo_bison.y"
+#line 494 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 2063 "arquivo_bison.tab.c"
+#line 2062 "arquivo_bison.tab.c"
     break;
 
   case 51:
-#line 498 "arquivo_bison.y"
+#line 497 "arquivo_bison.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "+");
@@ -2072,11 +2071,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = SOM;
 						$$->lineno = lineno;*/}
-#line 2076 "arquivo_bison.tab.c"
+#line 2075 "arquivo_bison.tab.c"
     break;
 
   case 52:
-#line 506 "arquivo_bison.y"
+#line 505 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "-");
@@ -2085,11 +2084,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = SUB;
 						$$->lineno = lineno;*/}
-#line 2089 "arquivo_bison.tab.c"
+#line 2088 "arquivo_bison.tab.c"
     break;
 
   case 53:
-#line 516 "arquivo_bison.y"
+#line 515 "arquivo_bison.y"
                                                    {
 						yyval = yyvsp[-1];
 						adicionaFilho(yyval, yyvsp[-2]);
@@ -2101,17 +2100,17 @@ yyreduce:
 						$$->child[0] = $1;
 						$$->child[1] = $3;
 						$$->lineno = lineno; */}
-#line 2105 "arquivo_bison.tab.c"
+#line 2104 "arquivo_bison.tab.c"
     break;
 
   case 54:
-#line 527 "arquivo_bison.y"
+#line 526 "arquivo_bison.y"
                                                 {yyval = yyvsp[0];}
-#line 2111 "arquivo_bison.tab.c"
+#line 2110 "arquivo_bison.tab.c"
     break;
 
   case 55:
-#line 530 "arquivo_bison.y"
+#line 529 "arquivo_bison.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "*");
@@ -2119,11 +2118,11 @@ yyreduce:
 						$$ = newExpNode(OpK);
 						$$->attr.op = MUL;
 						$$->lineno = lineno;*/}
-#line 2123 "arquivo_bison.tab.c"
+#line 2122 "arquivo_bison.tab.c"
     break;
 
   case 56:
-#line 537 "arquivo_bison.y"
+#line 536 "arquivo_bison.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "/");
@@ -2132,29 +2131,29 @@ yyreduce:
 			        	$$ = newExpNode(OpK);
 						$$->attr.op = DIV;
 						$$->lineno = lineno;*/}
-#line 2136 "arquivo_bison.tab.c"
+#line 2135 "arquivo_bison.tab.c"
     break;
 
   case 57:
-#line 547 "arquivo_bison.y"
+#line 546 "arquivo_bison.y"
                                                                             {yyval = yyvsp[-1];}
-#line 2142 "arquivo_bison.tab.c"
+#line 2141 "arquivo_bison.tab.c"
     break;
 
   case 58:
-#line 548 "arquivo_bison.y"
+#line 547 "arquivo_bison.y"
                                               {yyval = yyvsp[0];}
-#line 2148 "arquivo_bison.tab.c"
+#line 2147 "arquivo_bison.tab.c"
     break;
 
   case 59:
-#line 549 "arquivo_bison.y"
+#line 548 "arquivo_bison.y"
                                                    {yyval = yyvsp[0];}
-#line 2154 "arquivo_bison.tab.c"
+#line 2153 "arquivo_bison.tab.c"
     break;
 
   case 60:
-#line 550 "arquivo_bison.y"
+#line 549 "arquivo_bison.y"
                                               { 
 						yyval = novoNo();
 						strcpy(yyval->lexema, auxNome);
@@ -2164,11 +2163,11 @@ yyreduce:
 						$$->type = INTTYPE;
 						$$->attr.name = "teste";
 						$$->attr.val = atoi(tokenString);*/}
-#line 2168 "arquivo_bison.tab.c"
+#line 2167 "arquivo_bison.tab.c"
     break;
 
   case 61:
-#line 561 "arquivo_bison.y"
+#line 560 "arquivo_bison.y"
                                                                              {
 						yyval = yyvsp[-3];
 						adicionaFilho(yyval, yyvsp[-1]);
@@ -2179,23 +2178,23 @@ yyreduce:
 						$$->child[0] = $3;
 						$$->params = params;
 						$$->lineno = lineno;*/}
-#line 2183 "arquivo_bison.tab.c"
+#line 2182 "arquivo_bison.tab.c"
     break;
 
   case 62:
-#line 573 "arquivo_bison.y"
+#line 572 "arquivo_bison.y"
                                             {yyval = yyvsp[0];}
-#line 2189 "arquivo_bison.tab.c"
+#line 2188 "arquivo_bison.tab.c"
     break;
 
   case 63:
-#line 574 "arquivo_bison.y"
+#line 573 "arquivo_bison.y"
                                                  {yyval = NULL;}
-#line 2195 "arquivo_bison.tab.c"
+#line 2194 "arquivo_bison.tab.c"
     break;
 
   case 64:
-#line 577 "arquivo_bison.y"
+#line 576 "arquivo_bison.y"
                                                             {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -2211,21 +2210,21 @@ yyreduce:
 							params ++;
 						$$ = $1;
 						} else $$ = $3;*/}
-#line 2215 "arquivo_bison.tab.c"
+#line 2214 "arquivo_bison.tab.c"
     break;
 
   case 65:
-#line 592 "arquivo_bison.y"
+#line 591 "arquivo_bison.y"
                                                     {
 						yyval = yyvsp[0];
 						/*
 						params ++;
            				$$ = $1;*/}
-#line 2225 "arquivo_bison.tab.c"
+#line 2224 "arquivo_bison.tab.c"
     break;
 
 
-#line 2229 "arquivo_bison.tab.c"
+#line 2228 "arquivo_bison.tab.c"
 
       default: break;
     }
@@ -2457,7 +2456,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 600 "arquivo_bison.y"
+#line 599 "arquivo_bison.y"
 
 
 void yyerror (char *s){
