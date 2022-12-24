@@ -52,6 +52,7 @@ void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int 
         strcpy(novoItem->nomeIdentificador, nomeIdentificador);
         novoItem->tipoDado = tipoDado;
         novoItem->tipoIdentificador = tipoIdentificador;
+        
         adicionaLinha(novoItem, linha);
 
         tabelaHash[indice] = novoItem;
@@ -121,6 +122,10 @@ PONTEIROITEM procura(PONTEIROITEM tabelaHash[], char identificador[26], int tama
         aux = aux->proximo;
     }
 
+    if(aux == NULL){
+        printf("Identificador nao encontrado\n");
+    }
+
     return aux;
 }
 
@@ -158,6 +163,11 @@ void adicionaLinha(PONTEIROITEM num, int valorLinha){
 
     PONTEIROITEM aux = num;
 
+    if(num->linhas == NULL){
+        num->linhas = novaLinha;
+        return;
+    }
+
     while(num->linhas->proximo != NULL){
         aux->linhas = aux->linhas->proximo;
     }
@@ -180,27 +190,31 @@ unsigned longhash(char *str){
 
     hash = hash % MAX;
 
-    printf("%lu\n", hash);
     return hash;
 }
 
+/*
 int main(){
     char n[26];
-    scanf("%s", n);
-
-    printf("%u\n",longhash(n));
-
-    /*
+    
     PONTEIROITEM tabelaHash[MAX];
+
     inicializa(tabelaHash, MAX);
 
-    inserir(tabelaHash, MAX, 1, 1, n, "global", 1);
+    for(int i = 0; i < 2; i++){
+        scanf("%s", n);
+        inserir(tabelaHash, MAX, 1, 1, n, "global", 1);
+    }
+
+    scanf("%s", n);
 
     PONTEIROITEM aux = procura(tabelaHash, n, MAX);
 
-    printf("%s", aux->nomeIdentificador);
-    */
+   
+    if(aux != NULL)
+        printf("%s", aux->nomeIdentificador);
+    
 
     return 0;
-}
+}*/
 
