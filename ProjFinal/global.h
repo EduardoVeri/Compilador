@@ -25,4 +25,8 @@ PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
 
 PONTEIRONO novoNo();
 
+void mostraArvore(PONTEIRONO raiz, int num);
+
 enum yytokentype getToken(void);
+
+PONTEIRONO parse(void);

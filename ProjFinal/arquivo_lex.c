@@ -389,18 +389,26 @@ char *yytext;
 #include <string.h>
 #include "arquivo_bison.tab.h"
 #include "global.h"
+#include "tabelaSimb.h"
 
-char id[26];
-int tabelaNomes(enum yytokentype *token);
-void copiar(FILE* velho);
-void mostrarTela(char palavra[]);
+
 char stringAux[1000];
 char auxNome[26];
+char id[26];
 
 FILE* copiaArquivo = NULL;
 FILE* f_in = NULL;
 
-#line 404 "arquivo_lex.c"
+
+int tabelaNomes(enum yytokentype *token);
+void copiar(FILE* velho);
+void mostrarTela(char palavra[]);
+PONTEIRONO parse(void);
+
+
+
+
+#line 412 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -562,10 +570,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 22 "entrada.l"
+#line 30 "entrada.l"
 
 
-#line 569 "arquivo_lex.c"
+#line 577 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -650,12 +658,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 24 "entrada.l"
+#line 32 "entrada.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "entrada.l"
+#line 34 "entrada.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -676,7 +684,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 44 "entrada.l"
+#line 52 "entrada.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -689,7 +697,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 55 "entrada.l"
+#line 63 "entrada.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			strcpy(auxNome, yytext);
@@ -698,7 +706,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 61 "entrada.l"
+#line 69 "entrada.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -711,7 +719,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 72 "entrada.l"
+#line 80 "entrada.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -719,7 +727,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 77 "entrada.l"
+#line 85 "entrada.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -727,7 +735,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 82 "entrada.l"
+#line 90 "entrada.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -735,7 +743,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 88 "entrada.l"
+#line 96 "entrada.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -743,7 +751,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 94 "entrada.l"
+#line 102 "entrada.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -751,7 +759,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 99 "entrada.l"
+#line 107 "entrada.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -759,7 +767,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 105 "entrada.l"
+#line 113 "entrada.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -767,7 +775,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 110 "entrada.l"
+#line 118 "entrada.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -775,7 +783,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 115 "entrada.l"
+#line 123 "entrada.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -783,7 +791,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 120 "entrada.l"
+#line 128 "entrada.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -791,7 +799,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 125 "entrada.l"
+#line 133 "entrada.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -799,7 +807,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 130 "entrada.l"
+#line 138 "entrada.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -807,7 +815,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 135 "entrada.l"
+#line 143 "entrada.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -815,7 +823,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 140 "entrada.l"
+#line 148 "entrada.l"
 {
 	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
@@ -823,7 +831,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 145 "entrada.l"
+#line 153 "entrada.l"
 {
 	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
@@ -831,7 +839,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 150 "entrada.l"
+#line 158 "entrada.l"
 {
 	printf("\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
@@ -839,7 +847,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 155 "entrada.l"
+#line 163 "entrada.l"
 {
 	printf("\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
@@ -847,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 160 "entrada.l"
+#line 168 "entrada.l"
 {
 		printf("\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
@@ -855,14 +863,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 165 "entrada.l"
+#line 173 "entrada.l"
 {
 		printf("\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 170 "entrada.l"
+#line 178 "entrada.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -870,12 +878,12 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 175 "entrada.l"
+#line 183 "entrada.l"
 {if(f_in == NULL) return 0;} //Encerra o programa quando digitado pelo usuário
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 177 "entrada.l"
+#line 185 "entrada.l"
 {
 	printf("ERRO LEXICO: '%s' LINHA %d\n", yytext, qntLinhas);
 	return ERRO;
@@ -883,10 +891,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 182 "entrada.l"
+#line 190 "entrada.l"
 ECHO;
 	YY_BREAK
-#line 890 "arquivo_lex.c"
+#line 898 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1774,7 +1782,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 182 "entrada.l"
+#line 190 "entrada.l"
 
 
 int main(int argc, char *argv[]){
@@ -1798,8 +1806,8 @@ int main(int argc, char *argv[]){
 		printf("Bem vindo ao analisador Lexico!\nDigite \"!N\" para sair\n");
 	}
 	
-	yyparse();
-		
+	PONTEIRONO arvoreSintatica = parse();
+	mostraArvore(arvoreSintatica, 0);
 	return(0);
 }
 
@@ -1881,3 +1889,4 @@ enum yytokentype getToken(void)
 	if(currentToken == ID) strcpy(id, yytext);
 	return currentToken;
 }
+

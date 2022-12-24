@@ -76,3 +76,27 @@ PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no){
 
     return raiz;
 }
+
+int flagMA = 0;
+void mostraArvore(PONTEIRONO raiz, int num){
+	if(flagMA == 0){
+		flagMA = 1;
+		printf("\n========== Arvore de Analise Sintatica ========== \n");
+	}
+	
+	if(raiz == NULL){
+		return;
+	}
+
+	for(int i = 0; i < num; i++){
+		printf("\t");
+	}
+	printf("%s\n", raiz->lexema);
+	
+	for(int i = 0; i < 3; i++){
+		mostraArvore(raiz->filho[i], num + 1);
+	}
+	mostraArvore(raiz->irmao, num);
+
+	
+}

@@ -12,12 +12,12 @@ int yyparse(void);
 char auxNome[26];
 char id[26];
 int qntLinhas;
-int flagMA = 0;
 
 PONTEIRONO arvoreSintatica;
 
 void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
+PONTEIRONO parse(void);
 
 char auxLexema[26];
 
@@ -38,7 +38,6 @@ sintatica.
 
 programa			: declaracao_lista {
 						arvoreSintatica = $1;
-						mostraArvore(arvoreSintatica, 0);
 					}
 
 					;
@@ -605,30 +604,9 @@ void yyerror (char *s){
 int yylex(void)
 { return getToken(); }
 
-/* TreeNode * parse(void)
-{ yyparse();
-  return savedTree;
-}*/
-
-void mostraArvore(PONTEIRONO raiz, int num){
-	if(flagMA == 0){
-		flagMA = 1;
-		printf("\n========== Arvore de Analise Sintatica ========== \n");
-	}
-	
-	if(raiz == NULL){
-		return;
-	}
-
-	for(int i = 0; i < num; i++){
-		printf("\t");
-	}
-	printf("%s\n", raiz->lexema);
-	
-	for(int i = 0; i < 3; i++){
-		mostraArvore(raiz->filho[i], num + 1);
-	}
-	mostraArvore(raiz->irmao, num);
-
-	
+PONTEIRONO parse(void)
+{ 
+	yyparse();
+	return arvoreSintatica;
 }
+

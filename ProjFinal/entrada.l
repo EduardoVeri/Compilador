@@ -3,16 +3,24 @@
 #include <string.h>
 #include "arquivo_bison.tab.h"
 #include "global.h"
+#include "tabelaSimb.h"
 
-char id[26];
-int tabelaNomes(enum yytokentype *token);
-void copiar(FILE* velho);
-void mostrarTela(char palavra[]);
+
 char stringAux[1000];
 char auxNome[26];
+char id[26];
 
 FILE* copiaArquivo = NULL;
 FILE* f_in = NULL;
+
+
+int tabelaNomes(enum yytokentype *token);
+void copiar(FILE* velho);
+void mostrarTela(char palavra[]);
+PONTEIRONO parse(void);
+
+
+
 
 %}
 
@@ -202,8 +210,8 @@ int main(int argc, char *argv[]){
 		printf("Bem vindo ao analisador Lexico!\nDigite \"!N\" para sair\n");
 	}
 	
-	yyparse();
-		
+	PONTEIRONO arvoreSintatica = parse();
+	mostraArvore(arvoreSintatica, 0);
 	return(0);
 }
 
@@ -285,3 +293,4 @@ enum yytokentype getToken(void)
 	if(currentToken == ID) strcpy(id, yytext);
 	return currentToken;
 }
+
