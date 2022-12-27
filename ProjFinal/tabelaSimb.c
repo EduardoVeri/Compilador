@@ -43,8 +43,8 @@ void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int 
             else{
                 aux = aux->proximo;
             }
-
-        }while(aux->proximo != NULL || flag == 0);
+            
+        }while(aux != NULL && flag == 1);
 
         if(flag != 0){
             PONTEIROITEM novoItem = (PONTEIROITEM)malloc(sizeof(ITEM));
@@ -135,19 +135,19 @@ void adicionaLinha(PONTEIROITEM num, int valorLinha){
     novaLinha->proximo = NULL;
     novaLinha->anterior = NULL;
 
-    PONTEIROITEM aux = num;
+    PONTEIROLINHA aux = num->linhas;
 
-    if(num->linhas == NULL){
+    if(aux == NULL){
         num->linhas = novaLinha;
         return;
     }
 
-    while(num->linhas->proximo != NULL){
-        aux->linhas = aux->linhas->proximo;
+    while(aux->proximo != NULL){
+        aux = aux->proximo;
     }
 
-    aux->linhas->proximo = novaLinha;
-    novaLinha->anterior = aux->linhas;
+    aux->proximo = novaLinha;
+    novaLinha->anterior = aux;
 
     return;
 }
@@ -167,28 +167,56 @@ unsigned longhash(char *str){
     return hash;
 }
 
-/*
+
+
+
+//Função para imprimir a tabela hash
+void imprimirTabela(PONTEIROITEM tabelaHash[]){
+    PONTEIROITEM aux = NULL;
+    PONTEIROLINHA auxLinhas = NULL;
+
+    for(int i = 0; i < MAX; i++){
+        if(tabelaHash[i] != NULL){
+            aux = tabelaHash[i];
+            while(aux != NULL){
+                printf("Nome: %s\n", aux->nomeIdentificador);
+                printf("Escopo: %s\n", aux->escopo);
+                printf("Tipo de dado: %d\n", aux->tipoDado);
+                printf("Tipo de identificador: %d\n", aux->tipoIdentificador);
+                printf("Linhas: ");
+                auxLinhas = aux->linhas;
+                while(auxLinhas != NULL){
+                    printf("%d ", auxLinhas->numlinha);
+                    auxLinhas = auxLinhas->proximo;
+                }
+                printf("\n\n");
+                aux = aux->proximo;
+            }
+        }
+    }
+}
+
 int main(){
-    char n[26];
+    char n[26], escopo[50];
+    int linha;
+    char paragrafo[1000];
     
     PONTEIROITEM tabelaHash[MAX];
 
     inicializa(tabelaHash, MAX);
 
-    for(int i = 0; i < 2; i++){
-        scanf("%s", n);
-        inserir(tabelaHash, MAX, 1, 1, n, "global", 1);
+    for(int i = 0; i < 3; i++){
+        printf("Digite o nome do identificador, o escopo e a linha: ");
+        fgets(paragrafo, 1000, stdin);
+        if(sscanf(paragrafo, "%s %s %d", n, escopo, &linha) == 3){
+            inserir(tabelaHash, MAX, 1, 1, n, escopo, linha);
+        }
+        else{
+            printf("Erro na leitura\n");
+        }
     }
 
-    scanf("%s", n);
-
-    PONTEIROITEM aux = procura(tabelaHash, n, MAX);
-
-   
-    if(aux != NULL)
-        printf("%s", aux->nomeIdentificador);
-    
+    imprimirTabela(tabelaHash);
 
     return 0;
-}*/
-
+}

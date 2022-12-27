@@ -22,3 +22,4 @@ PONTEIROITEM procura(PONTEIROITEM tabelaHash[], char identificador[26], int tama
 void apagarTabela(PONTEIROITEM tabelaHash[]);
 void adicionaLinha(PONTEIROITEM num, int valorLinha);
 unsigned longhash(char *str);
+void imprimirTabela(PONTEIROITEM tabelaHash[]);
