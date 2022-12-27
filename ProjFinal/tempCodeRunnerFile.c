@@ -1,0 +1,1 @@
+PONTEIROITEM inicializa()

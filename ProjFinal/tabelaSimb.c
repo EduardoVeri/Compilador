@@ -5,11 +5,13 @@
 #include <string.h>
 #include "tabelaSimb.h"
 
-void inicializa(PONTEIROITEM tabelaHash[], int tamanho){
+PONTEIROITEM* inicializaTabela(){
     int i;
-    for(i=0; i<tamanho; i++){
+    PONTEIROITEM* tabelaHash = (PONTEIROITEM*)malloc(MAX*sizeof(ITEM*));
+    for(i=0; i<MAX; i++){
         tabelaHash[i] = NULL;
     }
+    return tabelaHash;
 }
 
 void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
@@ -201,9 +203,7 @@ int main(){
     int linha;
     char paragrafo[1000];
     
-    PONTEIROITEM tabelaHash[MAX];
-
-    inicializa(tabelaHash, MAX);
+    PONTEIROITEM* tabelaHash = inicializa();
 
     for(int i = 0; i < 3; i++){
         printf("Digite o nome do identificador, o escopo e a linha: ");

@@ -17,15 +17,17 @@ PONTEIRONO novoNo(){
 
     novoNo->numLinha = 0;
 
-    novoNo->tipoDecl = 0;
+    novoNo->tipoDeclaracao = NuloDecl;
 
-    novoNo->tipoNo = 0;
+    novoNo->tipo= NENHUM;
+
+    novoNo->tipoExpressao = NuloExp;
 
     return novoNo;
 }
 
 
-PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo){
+PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao){
     PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
 
     novoNo->filho[0] = NULL;
@@ -38,9 +40,11 @@ PONTEIRONO criaNo(char lexema[26], int numLinha, int tipoDecl, int tipoNo){
 
     novoNo->numLinha = numLinha;
 
-    novoNo->tipoDecl = tipoDecl;
+    novoNo->tipoDeclaracao = tipoDeclaracao;
 
-    novoNo->tipoNo = tipoNo;
+    novoNo->tipo = tipoNo;
+
+    novoNo->tipoExpressao = tipoExpressao;
 
     return novoNo;
 }

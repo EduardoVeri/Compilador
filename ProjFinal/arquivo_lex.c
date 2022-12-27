@@ -404,7 +404,7 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 PONTEIRONO parse(void);
-
+PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica);
 
 
 
@@ -1808,8 +1808,44 @@ int main(int argc, char *argv[]){
 	
 	PONTEIRONO arvoreSintatica = parse();
 	mostraArvore(arvoreSintatica, 0);
+
+	
+
 	return(0);
 }
+
+/*
+Função para percorrer todos os nós da árvore sintática e adicionar os itens de declaração, como variáveis e funções,
+na tabela de símbolos 
+*/
+/*
+PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica){
+	PONTEIROITEM item;
+	
+	if(arvoreSintatica != NULL){
+		if(arvoreSintatica->tipo == DECLARACAO){
+			item = (PONTEIROITEM) malloc(sizeof(ITEM));
+			item->tipo = arvoreSintatica->filho->tipo;
+			strcpy(item->nome, arvoreSintatica->filho->irmao->nome);
+			item->valor = 0;
+			item->prox = NULL;
+			
+			if(tabelaSimbolos == NULL){
+				tabelaSimbolos = item;
+			}
+			else{
+				item->prox = tabelaSimbolos;
+				tabelaSimbolos = item;
+			}
+		}
+		percorrerArvore(arvoreSintatica->filho);
+		percorrerArvore(arvoreSintatica->irmao);
+	}
+}
+
+*/
+
+
 
 int tabelaNomes(enum yytokentype *token){
 	char aux[20];

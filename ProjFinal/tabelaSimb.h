@@ -15,7 +15,7 @@ typedef struct item{
 typedef ITEM* PONTEIROITEM;
 typedef NOLINHA* PONTEIROLINHA;
 
-void inicializa(PONTEIROITEM tabelaHash[], int tamanho);
+PONTEIROITEM* inicializaTabela();
 void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int tipoDado, char nomeIdentificador[26], char escopo[26], int linha);
 void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num, int tamanho);
 PONTEIROITEM procura(PONTEIROITEM tabelaHash[], char identificador[26], int tamanho);

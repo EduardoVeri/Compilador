@@ -1460,7 +1460,7 @@ yyreduce:
 #line 61 "arquivo_bison.y"
                                                           {
 						yyval = yyvsp[-2];
-						yyval->tipoNo = 1;
+						yyval->tipo = VarDeclK;
 						yyval->numLinha = qntLinhas;
 						
 

@@ -60,7 +60,7 @@ declaracao			: var_declaracao {$$ = $1;}
 
 var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$ = $1;
-						$$->tipoNo = 1;
+						$$->tipo = VarDeclK;
 						$$->numLinha = qntLinhas;
 						
 
