@@ -10,8 +10,6 @@ PONTEIROITEM* inicializaTabela(){
     PONTEIROITEM* tabelaHash = (PONTEIROITEM*)malloc(MAX*sizeof(ITEM*));
     for(i=0; i<MAX; i++){
         tabelaHash[i] = NULL;
-
-        
     }
     return tabelaHash;
 }
@@ -171,9 +169,6 @@ unsigned longhash(char *str){
     return hash;
 }
 
-
-
-
 //Função para imprimir a tabela hash
 void imprimirTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROITEM aux = NULL;
@@ -200,6 +195,7 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
     }
 }
 
+/*
 int main(){
     char n[26], escopo[50];
     int linha;
@@ -222,3 +218,4 @@ int main(){
 
     return 0;
 }
+*/

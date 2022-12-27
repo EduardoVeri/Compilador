@@ -125,11 +125,16 @@ tipo_especificador 	: INT {
 					/* Trocar o ID da funcao por um IDFUNC */
 fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESES composto_decl { 
 						//strcpy(auxLexema, "")
-						$$ = novoNo();
-						strcpy($$->lexema, $1->lexema);
+						$$ = $1;
+
 						adicionaFilho($$, $4);
 						adicionaFilho($$, $2);
 						adicionaFilho($2, $6);
+						
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = FunDeclK;
+
 
 						/*
             			$$ = newExpNode(FunDeclK);

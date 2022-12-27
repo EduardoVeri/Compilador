@@ -1820,25 +1820,19 @@ na tabela de símbolos
 */
 /*
 PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica){
-	PONTEIROITEM item;
+	PONTEIROITEM* tabelaHash = inicializaTabela();
 	
 	if(arvoreSintatica != NULL){
-		if(arvoreSintatica->tipo == DECLARACAO){
-			item = (PONTEIROITEM) malloc(sizeof(ITEM));
-			item->tipo = arvoreSintatica->filho->tipo;
-			strcpy(item->nome, arvoreSintatica->filho->irmao->nome);
-			item->valor = 0;
-			item->prox = NULL;
+		if(arvoreSintatica->tipo == EXPRESSAO){
+			if()
 			
-			if(tabelaSimbolos == NULL){
-				tabelaSimbolos = item;
-			}
-			else{
-				item->prox = tabelaSimbolos;
-				tabelaSimbolos = item;
+		}
+
+		for(int i = 0; i < 3; i++){
+			if(arvoreSintatica->filho[i] != NULL){
+				percorrerArvore(arvoreSintatica->filho[i]);
 			}
 		}
-		percorrerArvore(arvoreSintatica->filho);
 		percorrerArvore(arvoreSintatica->irmao);
 	}
 }

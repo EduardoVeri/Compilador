@@ -222,32 +222,26 @@ int main(int argc, char *argv[]){
 Função para percorrer todos os nós da árvore sintática e adicionar os itens de declaração, como variáveis e funções,
 na tabela de símbolos 
 */
-
+/*
 PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica){
-	PONTEIROITEM* tabelaHash = inicializa();
+	PONTEIROITEM* tabelaHash = inicializaTabela();
 	
 	if(arvoreSintatica != NULL){
 		if(arvoreSintatica->tipo == EXPRESSAO){
+			if()
 			
-			item->tipo = arvoreSintatica->filho->tipo;
-			strcpy(item->nome, arvoreSintatica->filho->irmao->nome);
-			item->valor = 0;
-			item->prox = NULL;
-			
-			if(tabelaSimbolos == NULL){
-				tabelaSimbolos = item;
-			}
-			else{
-				item->prox = tabelaSimbolos;
-				tabelaSimbolos = item;
+		}
+
+		for(int i = 0; i < 3; i++){
+			if(arvoreSintatica->filho[i] != NULL){
+				percorrerArvore(arvoreSintatica->filho[i]);
 			}
 		}
-		percorrerArvore(arvoreSintatica->filho);
 		percorrerArvore(arvoreSintatica->irmao);
 	}
 }
 
-
+*/
 
 
 

@@ -14,9 +14,9 @@ typedef enum {
     ReturnINT,
     ReturnVOID,
 	NuloDecl,
-    VarDeclK, // Declaração de variável.
-    VetDeclK, // Declaração de vetor.
-    FunDeclK // Declaração de função.
+    VarDeclK,
+    VetDeclK,
+    FunDeclK 
 } tipoDECL;
 
 typedef enum {
