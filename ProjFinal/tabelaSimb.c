@@ -10,6 +10,8 @@ PONTEIROITEM* inicializaTabela(){
     PONTEIROITEM* tabelaHash = (PONTEIROITEM*)malloc(MAX*sizeof(ITEM*));
     for(i=0; i<MAX; i++){
         tabelaHash[i] = NULL;
+
+        
     }
     return tabelaHash;
 }
