@@ -81,6 +81,20 @@ PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no){
     return raiz;
 }
 
+//Desalocar Arvore
+void desalocaArvore(PONTEIRONO raiz){
+    if(raiz == NULL){
+        return;
+    }
+
+    for(int i = 0; i < 3; i++){
+        desalocaArvore(raiz->filho[i]);
+    }
+    desalocaArvore(raiz->irmao);
+
+    free(raiz);
+}
+
 int flagMA = 0;
 void mostraArvore(PONTEIRONO raiz, int num){
 	if(flagMA == 0){

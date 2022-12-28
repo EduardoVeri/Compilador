@@ -1813,9 +1813,16 @@ int main(int argc, char *argv[]){
 
 	char escopo[26] = "global"; 
 
+	//Percorre a árvore sintática e adiciona os itens de declaração na tabela de símbolos
 	percorrerArvore(arvoreSintatica, tabelaHash, escopo);
 
+	//imprime a tabela de símbolos
 	imprimirTabela(tabelaHash);
+
+	//libera a memória alocada para a árvore sintática
+	desalocaArvore(arvoreSintatica);
+	//libera a memória alocada para a tabela de símbolos
+	apagarTabela(tabelaHash);
 
 	return(0);
 }
@@ -1825,47 +1832,45 @@ Função para percorrer todos os nós da árvore sintática e adicionar os itens
 na tabela de símbolos 
 */
 
-
 void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* auxEscopo){
 	tipoTipo tipo;
 	PONTEIRONO auxNo = NULL;
 	PONTEIROITEM auxItem = NULL;
 
 	if(arvoreSintatica->tipoDeclaracao == FunDeclK){
-			tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
-			strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+		tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
+		strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
 
-			if(buscaIgual(tabelaHash, arvoreSintatica, 1, auxEscopo) == 1){
-				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
-			}
+		if(buscaIgual(tabelaHash, arvoreSintatica, 1, auxEscopo) == 1){
+			inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
+		}
 
-			if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
-				auxNo = arvoreSintatica->filho[0];
-				while(auxNo != NULL){
-					if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
-						if(strcmp(auxNo->lexema, "INT") == 0){
-							strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
-							inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-						}
-						else{
-							mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
-						}
+		if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
+			auxNo = arvoreSintatica->filho[0];
+			while(auxNo != NULL){
+				if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
+					if(strcmp(auxNo->lexema, "INT") == 0){
+						strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+						inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
 					}
-					auxNo = auxNo->irmao;
+					else{
+						mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
+					}
 				}
+				auxNo = auxNo->irmao;
 			}
 		}
-		else if(arvoreSintatica->tipoDeclaracao == VarDeclK){
-			if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
-				if(strcmp(arvoreSintatica->lexema, "INT") == 0){
-					inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-				}
-				else{
-					mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
-				}
+	}
+	else if((arvoreSintatica->tipoDeclaracao == VarDeclK) || (arvoreSintatica->tipoDeclaracao == VetDeclK)){
+		if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
+			if(strcmp(arvoreSintatica->lexema, "INT") == 0){
+				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
+			}
+			else{
+				mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
 			}
 		}
-	
+	}
 }
 /*
 void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]){
@@ -1955,16 +1960,16 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice,
 		mostrarErroSemantico(DeclFuncExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
 	//Nessa verificação é preciso analisar o escopo, pois é possível declarar uma variável com o mesmo nome em escopos diferentes
-	else if((tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && (tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
+	else if((tipoItem == VetDeclK || tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && (tipoArvore == VetDeclK || tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
 		if((strcmp(auxItem->escopo, escopo) != 0) && ((strcmp(auxItem->escopo, "global") != 0)))
 			return 1;
 		
 		mostrarErroSemantico(DeclVarExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
-	else if((tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && tipoArvore == FunDeclK){
+	else if((tipoItem == VetDeclK || tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && tipoArvore == FunDeclK){
 		mostrarErroSemantico(DeclFuncVar, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
-	else if (tipoItem == FunDeclK && (tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
+	else if ( tipoItem == FunDeclK && (tipoArvore == VetDeclK || tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
 		mostrarErroSemantico(DeclVarFunc, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
 
@@ -1973,7 +1978,7 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice,
 }
 
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
-	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_GRAY, linha);
+	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_RESET, linha);
 	switch (erro){
 		case DeclVoidVar:
 			printf(": Variavel '%s' declarada como void\n\n", nome);
@@ -2036,7 +2041,7 @@ int tabelaNomes(enum yytokentype *token){
 void mostrarTela(char palavra[]){
 	int i = 0;
 	char ch;
-	printf(ANSI_COLOR_GRAY "%d: ", qntLinhas);
+	printf(ANSI_COLOR_RESET "%d: ", qntLinhas);
 	ch = palavra[i];
 	while(ch == '\t' || ch == ' '){
 		i++;

@@ -57,14 +57,11 @@ typedef struct NoArvore{
 typedef NoArvore * PONTEIRONO;
 
 PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao);
-
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no);
-
 PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
-
 PONTEIRONO novoNo();
-
 void mostraArvore(PONTEIRONO raiz, int num);
+void desalocaArvore(PONTEIRONO raiz);
 
 enum yytokentype getToken(void);
 
@@ -74,4 +71,5 @@ PONTEIRONO parse(void);
 #define ANSI_COLOR_RED      "\x1b[31m" //cores em ANSI utilizadas 
 #define ANSI_COLOR_GRAY     "\e[0;37m"
 #define ANSI_COLOR_WHITE    "\e[1;37m" 
+#define ANSI_COLOR_RESET    "\e[0m"	
 #endif

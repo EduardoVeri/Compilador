@@ -71,9 +71,11 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 
 						}
 					| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON {
-						$$ = novoNo();
-						strcpy($$->lexema, $1->lexema);
-						
+						$$ = $1;
+						$$->tipo = DECLARACAO;
+						$$->tipoDeclaracao = VetDeclK;
+						$$->numLinha = qntLinhas;
+
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
