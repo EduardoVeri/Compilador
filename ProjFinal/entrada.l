@@ -20,7 +20,7 @@ void mostrarTela(char palavra[]);
 PONTEIRONO parse(void);
 void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo);
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
-
+int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice);
 
 %}
 
@@ -232,7 +232,9 @@ na tabela de símbolos
 void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
 	tipoTipo tipo;
 	PONTEIRONO auxNo = NULL;
-	char auxEscopo[26];
+	PONTEIROITEM auxItem = NULL;
+
+	char auxEscopo[250];
 
 	strcpy(auxEscopo, escopo);
 
@@ -243,9 +245,12 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	if(arvoreSintatica->tipo == DECLARACAO){
 		if(arvoreSintatica->tipoDeclaracao == FunDeclK){
 			tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
-			strcpy(auxEscopo, "Funcao");
-			inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
-		
+			strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+
+			if(buscaIgual(tabelaHash, arvoreSintatica, 1) == 1){
+				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
+			}
+
 			if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
 				auxNo = arvoreSintatica->filho[0];
 				while(auxNo != NULL){
@@ -262,14 +267,11 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 			}
 		}
 		else if(arvoreSintatica->tipoDeclaracao == VarDeclK){
-			if(strcmp(auxNo->lexema, "INT") == 0){
-				strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
-				inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-				auxNo = auxNo->irmao;
+			if(strcmp(arvoreSintatica->lexema, "INT") == 0){
+				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
 			}
 			else{
-				mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
-				auxNo = auxNo->irmao;
+				mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
 			}
 		}
 
@@ -285,11 +287,50 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
 
+int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice){
+	PONTEIROITEM auxItem = NULL;
+	
+	if((auxItem = procuraTabela(tabelaHash, arvoreSintatica->filho[indice]->lexema)) == NULL){
+		return 1;
+	}
+	
+	tipoDECL tipoItem = auxItem->tipoIdentificador;
+	tipoDECL tipoArvore = arvoreSintatica->tipoDeclaracao;
+
+	if(tipoItem == FunDeclK && tipoArvore == FunDeclK){
+		mostrarErroSemantico(DeclFuncExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
+	}
+	else if(tipoItem == VarDeclK && tipoArvore == VarDeclK){
+		mostrarErroSemantico(DeclVarExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
+	}
+	else if(tipoItem == VarDeclK && tipoArvore == FunDeclK){
+		mostrarErroSemantico(DeclFuncVar, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
+	}
+	else if (tipoItem == FunDeclK && tipoArvore == VarDeclK){
+		mostrarErroSemantico(DeclVarFunc, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
+	}
+
+	return 0;
+	
+}
+
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
 	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_GRAY, linha);
 	switch (erro){
 		case DeclVoidVar:
 			printf(": Variavel '%s' declarada como void\n\n", nome);
+			break;
+		case DeclFuncExiste:
+			printf(": Funcao '%s' ja declarada\n\n", nome);
+			break;
+		case DeclVarExiste:
+			printf(": Variavel '%s' ja declarada\n\n", nome);
+			break;
+		case DeclFuncVar:
+			printf(": Identificador '%s' ja declarado como variavel\n\n", nome);
+			break;
+		case DeclVarFunc:
+			printf(": Identificador '%s' ja declarado como funcao\n\n", nome);
 			break;
 	}
 }

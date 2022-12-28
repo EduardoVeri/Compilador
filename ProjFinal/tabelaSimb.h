@@ -9,8 +9,8 @@ typedef struct nolinha{
 } NOLINHA;
 
 typedef struct item{
-    tipoDECL tipoIdentificador; //Trocar para enum depois
-    tipoTipo tipoDado;
+    tipoDECL tipoIdentificador; //Variável ou função 
+    tipoTipo tipoDado; //Inteiro ou void
     char nomeIdentificador[26]; //Um identificador deve ter no máximo 25 caracteres
     char escopo[26];
     NOLINHA *linhas;
@@ -23,7 +23,7 @@ typedef NOLINHA* PONTEIROLINHA;
 PONTEIROITEM* inicializaTabela();
 void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha);
 void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num);
-PONTEIROITEM procura(PONTEIROITEM tabelaHash[], char identificador[26], int tamanho);
+PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[26]);
 void apagarTabela(PONTEIROITEM tabelaHash[]);
 void adicionaLinha(PONTEIROITEM num, int valorLinha);
 unsigned longhash(char *str);

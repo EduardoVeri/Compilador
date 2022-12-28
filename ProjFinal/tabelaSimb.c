@@ -89,17 +89,13 @@ void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     free(num);
 }
 
-PONTEIROITEM procura(PONTEIROITEM tabelaHash[], char identificador[26], int tamanho){
+PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[26]){
     unsigned int indice = longhash(identificador);
 
     PONTEIROITEM aux = tabelaHash[indice];
 
     while(aux != NULL && strcmp(identificador, aux->nomeIdentificador) != 0){
         aux = aux->proximo;
-    }
-
-    if(aux == NULL){
-        printf("Identificador nao encontrado\n");
     }
 
     return aux;

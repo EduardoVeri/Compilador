@@ -60,7 +60,8 @@ declaracao			: var_declaracao {$$ = $1;}
 
 var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$ = $1;
-						$$->tipo = VarDeclK;
+						$$->tipo = DECLARACAO;
+						$$->tipoDeclaracao = VarDeclK;
 						$$->numLinha = qntLinhas;
 						
 
@@ -107,7 +108,7 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 tipo_especificador 	: INT {
 						$$ = novoNo();
 						strcpy($$->lexema, "INT");
-
+						$$->numLinha = qntLinhas;
 						/*$$ = newExpNode(TypeK);
 						$$->attr.name = "INT";
 						$$->type = INTTYPE;
@@ -115,6 +116,7 @@ tipo_especificador 	: INT {
 					| VOID {
 						$$ = novoNo();
 						strcpy($$->lexema, "VOID");
+						$$->numLinha = qntLinhas;
 
 						/*$ = newExpNode(TypeK);
 						$$->attr.name = "VOID";
@@ -132,7 +134,6 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 						adicionaFilho($2, $6);
 						
 						$$->tipo = DECLARACAO;
-						$$->numLinha = qntLinhas;
 						$$->tipoDeclaracao = FunDeclK;
 
 

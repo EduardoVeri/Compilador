@@ -6,7 +6,14 @@ extern char auxNome[26];
 extern char id[26];
 /* Declaracao da arvore de analise sintatica */
 
-typedef enum {DeclVoidVar} erroSemantico;
+typedef enum {
+    DeclVoidVar, //Quando uma variavel é declarada como void.
+    DeclFuncExiste, //Quando uma função é declarada mais de uma vez.
+    DeclVarExiste, //Quando uma variável é declarada mais de uma vez.
+    DeclFuncVar, //Quando uma função é declarada com o mesmo nome de uma variável.
+    DeclVarFunc //Quando uma variável é declarada com o mesmo nome de uma função.
+
+} erroSemantico;
 
 typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo;
 
