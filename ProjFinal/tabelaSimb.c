@@ -89,12 +89,31 @@ void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     free(num);
 }
 
-PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[26]){
+PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoDECL tipoIdentificador){
     unsigned int indice = longhash(identificador);
 
     PONTEIROITEM aux = tabelaHash[indice];
 
-    while(aux != NULL && strcmp(identificador, aux->nomeIdentificador) != 0){
+    //Verificar se o identificador existe na tabela como uma função
+    if(tipoIdentificador == FunDeclK){
+        while(aux != NULL){
+            if(strcmp(identificador, aux->nomeIdentificador) == 0){
+                break;
+            }
+            aux = aux->proximo;
+        }
+        return aux;
+    }
+    
+    while(aux != NULL){
+        if(strcmp(identificador, aux->nomeIdentificador) == 0){
+            if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
+                break;
+            }
+            if(aux->tipoIdentificador == FunDeclK){
+                break;
+            }
+        }
         aux = aux->proximo;
     }
 

@@ -23,7 +23,7 @@ typedef NOLINHA* PONTEIROLINHA;
 PONTEIROITEM* inicializaTabela();
 void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha);
 void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num);
-PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[26]);
+PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoDECL tipoIdentificador);
 void apagarTabela(PONTEIROITEM tabelaHash[]);
 void adicionaLinha(PONTEIROITEM num, int valorLinha);
 unsigned longhash(char *str);

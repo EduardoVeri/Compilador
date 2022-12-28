@@ -229,21 +229,13 @@ Função para percorrer todos os nós da árvore sintática e adicionar os itens
 na tabela de símbolos 
 */
 
-void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
+
+void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* auxEscopo){
 	tipoTipo tipo;
 	PONTEIRONO auxNo = NULL;
 	PONTEIROITEM auxItem = NULL;
 
-	char auxEscopo[250];
-
-	strcpy(auxEscopo, escopo);
-
-	if(arvoreSintatica == NULL){
-		return;
-	}
-
-	if(arvoreSintatica->tipo == DECLARACAO){
-		if(arvoreSintatica->tipoDeclaracao == FunDeclK){
+	if(arvoreSintatica->tipoDeclaracao == FunDeclK){
 			tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
 			strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
 
@@ -277,7 +269,72 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 				}
 			}
 		}
+	
+}
+/*
+void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]){
+	PONTEIRONO auxNo = NULL;
+	PONTEIROITEM auxItem = NULL;
+
+	if(arvoreSintatica->tipoExpressao == OpK){
+		if(arvoreSintatica->filho[0] != NULL){
+			percorrerExp(arvoreSintatica->filho[0], tabelaHash, escopo);
+		}
+		if(arvoreSintatica->filho[1] != NULL){
+			percorrerExp(arvoreSintatica->filho[1], tabelaHash, escopo);
+		}
 	}
+	else if(arvoreSintatica->tipoExpressao == ConstK){
+		return;
+	}
+	else if(arvoreSintatica->tipoExpressao == IdK){
+		if(buscaIgual(tabelaHash, arvoreSintatica, 0, escopo) == 0){
+			mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+	}
+	else if(arvoreSintatica->tipoExpressao == CallK){
+		if(buscaIgual(tabelaHash, arvoreSintatica, 1, escopo) == 0){
+			mostrarErroSemantico(FuncaoNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+		else{
+			auxItem = buscaItem(tabelaHash, arvoreSintatica->lexema, escopo);
+			if(auxItem->tipo == Type_Void){
+				mostrarErroSemantico(ChamadaVoid, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+			}
+		}
+		if(arvoreSintatica->filho[0] != NULL){
+			auxNo = arvoreSintatica->filho[0];
+			while(auxNo != NULL){
+				percorrerExp(auxNo, tabelaHash, escopo);
+				auxNo = auxNo->irmao;
+			}
+		}
+	}
+	else if(arvoreSintatica->tipoExpressao == AssignK){
+		percorrerExp(arvoreSintatica->filho[1], tabelaHash, escopo);
+		if(buscaIgual(tabelaHash, arvore
+}*/
+
+void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
+	tipoTipo tipo;
+	PONTEIRONO auxNo = NULL;
+	PONTEIROITEM auxItem = NULL;
+
+	char auxEscopo[250];
+
+	strcpy(auxEscopo, escopo);
+
+	if(arvoreSintatica == NULL){
+		return;
+	}
+
+	if(arvoreSintatica->tipo == DECLARACAO){
+		percorrerDecl(arvoreSintatica, tabelaHash, auxEscopo);
+	}
+
+	/*if(arvoreSintatica->tipo == EXPRESSAO){
+		percorrerExp(arvoreSintatica, tabelaHash, auxEscopo);
+	}*/
 
 	for(int i = 0; i < 3; i++){
 		if(arvoreSintatica->filho[i] != NULL){
@@ -291,7 +348,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo){
 	PONTEIROITEM auxItem = NULL;
 	
-	if((auxItem = procuraTabela(tabelaHash, arvoreSintatica->filho[indice]->lexema)) == NULL){
+	if((auxItem = procuraTabela(tabelaHash, arvoreSintatica->filho[indice]->lexema, escopo, arvoreSintatica->tipoDeclaracao)) == NULL){
 		return 1;
 	}
 	

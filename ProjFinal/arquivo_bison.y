@@ -229,8 +229,6 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						adicionaFilho($$, $5);
 						adicionaFilho($$, $7);
 						
-						
-
 					}
 					;
 			

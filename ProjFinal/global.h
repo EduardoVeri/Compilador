@@ -22,7 +22,6 @@ typedef enum {Type_Int, Type_Void} tipoTipo;
 typedef enum {
     IfK,
     WhileK,
-    AssignK,
     ReturnINT,
     ReturnVOID,
 	NuloDecl,
@@ -41,6 +40,7 @@ typedef enum {
     AtivK, // Chamada de função.
     TypeK, // Palavra reservada de tipo.
     VetorK, // Uso de parâmetro vetor.
+    AssignK,
 	NuloExp
 } tipoEXP;
 
