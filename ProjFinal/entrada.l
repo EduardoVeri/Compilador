@@ -20,7 +20,7 @@ void mostrarTela(char palavra[]);
 PONTEIRONO parse(void);
 void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo);
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
-int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice);
+int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo);
 
 %}
 
@@ -247,35 +247,36 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 			tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
 			strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
 
-			if(buscaIgual(tabelaHash, arvoreSintatica, 1) == 1){
+			if(buscaIgual(tabelaHash, arvoreSintatica, 1, auxEscopo) == 1){
 				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
 			}
 
 			if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
 				auxNo = arvoreSintatica->filho[0];
 				while(auxNo != NULL){
-					if(strcmp(auxNo->lexema, "INT") == 0){
-						strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
-						inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-						auxNo = auxNo->irmao;
+					if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
+						if(strcmp(auxNo->lexema, "INT") == 0){
+							strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+							inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
+						}
+						else{
+							mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
+						}
 					}
-					else{
-						mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
-						auxNo = auxNo->irmao;
-					}
+					auxNo = auxNo->irmao;
 				}
 			}
 		}
 		else if(arvoreSintatica->tipoDeclaracao == VarDeclK){
-			if(strcmp(arvoreSintatica->lexema, "INT") == 0){
-				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-			}
-			else{
-				mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
+			if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
+				if(strcmp(arvoreSintatica->lexema, "INT") == 0){
+					inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
+				}
+				else{
+					mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
+				}
 			}
 		}
-
-
 	}
 
 	for(int i = 0; i < 3; i++){
@@ -287,7 +288,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
 
-int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice){
+int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo){
 	PONTEIROITEM auxItem = NULL;
 	
 	if((auxItem = procuraTabela(tabelaHash, arvoreSintatica->filho[indice]->lexema)) == NULL){
@@ -300,13 +301,17 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice)
 	if(tipoItem == FunDeclK && tipoArvore == FunDeclK){
 		mostrarErroSemantico(DeclFuncExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
-	else if(tipoItem == VarDeclK && tipoArvore == VarDeclK){
+	//Nessa verificação é preciso analisar o escopo, pois é possível declarar uma variável com o mesmo nome em escopos diferentes
+	else if((tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && (tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
+		if((strcmp(auxItem->escopo, escopo) != 0) && ((strcmp(auxItem->escopo, "global") != 0)))
+			return 1;
+		
 		mostrarErroSemantico(DeclVarExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
-	else if(tipoItem == VarDeclK && tipoArvore == FunDeclK){
+	else if((tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && tipoArvore == FunDeclK){
 		mostrarErroSemantico(DeclFuncVar, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
-	else if (tipoItem == FunDeclK && tipoArvore == VarDeclK){
+	else if (tipoItem == FunDeclK && (tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
 		mostrarErroSemantico(DeclVarFunc, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
 	}
 

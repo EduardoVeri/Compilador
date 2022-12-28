@@ -15,7 +15,7 @@ PONTEIROITEM* inicializaTabela(){
 }
 
 void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
-    PONTEIROITEM aux;
+    PONTEIROITEM aux, auxAnterior;
 
     int indice = longhash(nomeIdentificador);
     int flag = 1;
@@ -37,16 +37,16 @@ void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTi
     else{
         aux = tabelaHash[indice];
 
-        do{
-            if(strcmp(aux->nomeIdentificador, nomeIdentificador) == 0){
+        while(aux != NULL && flag == 1){
+            if(strcmp(aux->nomeIdentificador, nomeIdentificador) == 0 && (strcmp(aux->escopo, escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
                 adicionaLinha(aux, linha);
                 flag = 0;
             }
             else{
+                auxAnterior = aux;
                 aux = aux->proximo;
             }
-            
-        }while(aux != NULL && flag == 1);
+        }
 
         if(flag != 0){
             PONTEIROITEM novoItem = (PONTEIROITEM)malloc(sizeof(ITEM));
@@ -58,8 +58,8 @@ void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTi
             novoItem->tipoIdentificador = tipoIdentificador;
             adicionaLinha(novoItem, linha);
 
-            aux->proximo = novoItem;
-            novoItem->anterior = aux;
+            auxAnterior->proximo = novoItem;
+            novoItem->anterior = auxAnterior;
         }
 
     }

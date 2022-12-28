@@ -1,11 +1,13 @@
 /* Um programa para calcular o mdc
     segundo o algoritmo de euclides. */
 
-int main;
 
+int b;
 
-int gcd (void u, int v[])
-{ 	if (v == 0) return u ;
+int gcd (void u, int main)
+{ 	
+	int x;
+	if (v == 0) return u ;
 	else return gcd(v,u-u/v*v);
 	/* u-u/v*v == u mod v */
 }
