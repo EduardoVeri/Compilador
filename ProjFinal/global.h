@@ -1,10 +1,10 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 
-extern int qntLinhas; //Depois trocar para um valor global para utilizar no parser
-extern char auxNome[26];
-extern char id[26];
-/* Declaracao da arvore de analise sintatica */
+extern int qntLinhas; // Contador de linhas
+extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
+extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
+
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.
@@ -15,47 +15,52 @@ typedef enum {
 
 } erroSemantico;
 
-typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo;
+typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo; // Tipo de nó.
 
-typedef enum {Type_Int, Type_Void} tipoTipo;
+typedef enum {Type_Int, Type_Void} tipoTipo; // Tipo de dado.
 
 typedef enum {
-    IfK,
-    WhileK,
-    ReturnINT,
-    ReturnVOID,
-	NuloDecl,
-    VarDeclK,
-    VetDeclK,
-    FunDeclK,
+    IfK, // If.
+    WhileK, // While.
+    ReturnINT, // Retorno de função inteira.
+    ReturnVOID, // Retorno de função void.
+	NuloDecl, // Nulo
+    VarDeclK, // Declaração de variável.
+    VetDeclK, // Declaração de vetor.
+    FunDeclK, // Declaração de função.
     VarParamK, // Declaração de variável parâmetro.
     VetParamK, // Declaração de vetro parâmetro.
-    ParamVoid
+    ParamVoid // Declaração de função com parâmetro void.
 } tipoDECL;
 
 typedef enum {
     OpK, // Operando.
+    OpRel, // Operador relacional.
     ConstK, // Valor numérico constante.
     IdK, // Uso de variável.
     AtivK, // Chamada de função.
     TypeK, // Palavra reservada de tipo.
     VetorK, // Uso de parâmetro vetor.
-    AssignK,
-	NuloExp
+    AssignK, // Atribuição.
+	NuloExp // Nulo.
 } tipoEXP;
 
+
+/* Declaracao da arvore de analise sintatica */
+
 typedef struct NoArvore{
-	int numLinha;
-	tipoNo tipo; //Declaracao ou Expressao
-	tipoDECL tipoDeclaracao; //if(0) repeat(1) assign(2) read(3) write(4)
-	tipoEXP tipoExpressao; 
-	char lexema[26]; //Tamanho máximo lexema é de 25
-	struct NoArvore * filho[3]; //No maximo três filhos
-	struct NoArvore * irmao;
+	int numLinha; // Numero da linha
+	tipoNo tipo; // Declaracao ou Expressao
+	tipoDECL tipoDeclaracao; // Tipo da declaracao
+	tipoEXP tipoExpressao; // Tipo da Expressão
+	char lexema[26]; // Tamanho máximo lexema é de 25
+	struct NoArvore * filho[3]; // Ponteiro para os filhos. No maximo três filhos
+	struct NoArvore * irmao; // Ponteiro para o irmão
 } NoArvore;
 
 typedef NoArvore * PONTEIRONO;
 
+// Funcoes da arvore de analise sintatica
 PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao);
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no);
 PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
@@ -65,10 +70,11 @@ void desalocaArvore(PONTEIRONO raiz);
 
 enum yytokentype getToken(void);
 
+// Função do parser
 PONTEIRONO parse(void);
 
-
-#define ANSI_COLOR_RED      "\x1b[31m" //cores em ANSI utilizadas 
+// Cores em ANSI
+#define ANSI_COLOR_RED      "\x1b[31m" 
 #define ANSI_COLOR_GRAY     "\e[0;37m"
 #define ANSI_COLOR_WHITE    "\e[1;37m" 
 #define ANSI_COLOR_RESET    "\e[0m"	

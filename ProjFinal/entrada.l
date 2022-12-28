@@ -320,6 +320,8 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 		if(buscaIgual(tabelaHash, arvore
 }*/
 
+
+// Função que percorre a árvore sintática
 void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
 	tipoTipo tipo;
 	PONTEIRONO auxNo = NULL;
@@ -349,6 +351,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 
 	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
+
 
 int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo){
 	PONTEIROITEM auxItem = NULL;
@@ -380,6 +383,7 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice,
 	return 0;
 	
 }
+
 
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
 	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_RESET, linha);

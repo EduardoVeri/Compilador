@@ -63,8 +63,7 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$->tipo = DECLARACAO;
 						$$->tipoDeclaracao = VarDeclK;
 						$$->numLinha = qntLinhas;
-						
-
+					
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
@@ -96,7 +95,6 @@ tipo_especificador 	: INT {
 						$$ = novoNo();
 						strcpy($$->lexema, "VOID");
 						$$->numLinha = qntLinhas;
-
 					}
 					;
 					
@@ -111,14 +109,13 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 						
 						$$->tipo = DECLARACAO;
 						$$->tipoDeclaracao = FunDeclK;
-
-
 					}
 					;
 
 fun_id				: ID {
 						$$ = novoNo();
 						strcpy($$->lexema, auxNome);
+						$$->numLinha = qntLinhas;
 					}
 					;	
 
@@ -129,8 +126,6 @@ params				: param_lista {$$ = $1;}
 						$$->numLinha = qntLinhas;
 						$$->tipoDeclaracao = ParamVoid;
 						strcpy($$->lexema, "VOID");
-						
-						
 					}
 					;
 
@@ -142,9 +137,7 @@ param_lista			: param_lista COMMA param {
 						else{
 							$$ = $3;
 						}						
-						
 					}
-
 					| param {$$ = $1;}
 					;
 
@@ -221,12 +214,20 @@ expressao_decl		: expressao SEMICOLON {$$ = $1;}
 selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$ = novoNo();
 						strcpy($$->lexema, "IF");
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = IfK;
+
 						adicionaFilho($$, $3);
 						adicionaFilho($$, $5);		
 					}
 					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {
 						$$ = novoNo();
 						strcpy($$->lexema, "IF");
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = IfK;
+
 						adicionaFilho($$, $3);
 						adicionaFilho($$, $5);
 						adicionaFilho($$, $7);
@@ -237,6 +238,10 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {
 						$$ = novoNo();
 						strcpy($$->lexema, "WHILE");
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = WhileK;
+
 						adicionaFilho($$, $3);
 						adicionaFilho($$, $5);
 
@@ -245,20 +250,30 @@ iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {
 			
 retorno_decl		: RETURN SEMICOLON { 
 						$$ = novoNo();
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = ReturnVOID;
 						strcpy($$->lexema, "ReturnVOID");
 						
 					}
 					| RETURN expressao SEMICOLON {
 						$$ = novoNo();
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = ReturnINT;
 						strcpy($$->lexema, "ReturnINT");
+
 						adicionaFilho($$, $2);
-						
 					}
 					;
 
 expressao			: var ATRIB expressao {
 						$$ = novoNo();
 						strcpy($$->lexema, "=");
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = AssignK;
+
 						adicionaFilho($$, $1);
 						adicionaFilho($$, $3);
 
@@ -268,11 +283,18 @@ expressao			: var ATRIB expressao {
 
 var 				: ID {
 						$$ = novoNo();
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = IdK;
 						strcpy($$->lexema, id);
 
 					}
 					| ID ABRECOLCHETES expressao FECHACOLCHETES {
 						$$ = novoNo();
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = VetorK;
+						
 						strcpy($$->lexema, id);
 						adicionaFilho($$, $3);
 						
@@ -280,16 +302,18 @@ var 				: ID {
 					;
 			
 simples_expressao	: soma_expressao relacional soma_expressao {
-						//$$ = novoNo();
 						$$ = $2;
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = OpRel;
+
 						adicionaFilho($$, $1);
 						adicionaFilho($$, $3);	
 						
 					}
 					| soma_expressao {$$ = $1;}
 					;
-
-//Criar novas regras para as demais operações relacionais			
+		
 relacional			: operador_relacional {
 						$$ = $1;
 					}
@@ -334,9 +358,12 @@ operador_relacional	: EQ {
 
 soma_expressao		: soma_expressao soma termo {
 						$$ = $2;
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = OpK;
+
 						adicionaFilho($$, $1);
 						adicionaFilho($$, $3);
-					
 					}
 					| termo {$$ = $1;}
 					;
@@ -344,17 +371,19 @@ soma_expressao		: soma_expressao soma termo {
 soma				: SOMA {
 						$$ = novoNo();
 						strcpy($$->lexema, "+");
-
 					}
 					| SUB {
 						$$ = novoNo();
 						strcpy($$->lexema, "-");
-
 					} 
 					;
 			
 termo				: termo mult fator {
 						$$ = $2;
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = OpK;
+
 						adicionaFilho($$, $1);
 						adicionaFilho($$, $3);
 						
@@ -369,7 +398,6 @@ mult				: MULT {
 					| DIV {
 						$$ = novoNo();
 						strcpy($$->lexema, "/");
-						
 					}
 					;
 			
@@ -378,13 +406,18 @@ fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = $2;}
 					| ativacao {$$ = $1;}
 					| NUM { 
 						$$ = novoNo();
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = ConstK;
 						strcpy($$->lexema, auxNome);
-						
 					}
 					;
 
 ativacao 			: fun_id ABREPARENTESES args FECHAPARENTESES {
 						$$ = $1;
+						$$->tipo = EXPRESSAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoExpressao = AtivK;
 						adicionaFilho($$, $3);
 					}
 					;
@@ -398,7 +431,6 @@ arg_lista			: arg_lista COMMA expressao {
 							$$ = $1;
 							adicionaIrmao($$, $3);
 						} else $$ = $3;
-						
 					}
 					| expressao {
 						$$ = $1;
