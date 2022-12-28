@@ -156,6 +156,9 @@ fun_id				: ID {
 params				: param_lista {$$ = $1;}
 					| VOID {
 						$$ = novoNo();
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = ParamVoid;
 						strcpy($$->lexema, "VOID");
 						
 						
@@ -192,9 +195,15 @@ param_lista			: param_lista COMMA param {
 
 param				: tipo_especificador ID {
 						$$ = $1;
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = VarParamK;
+
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
+
+
 						
 					/*
 						$$ = newExpNode(VarParamK);
@@ -207,6 +216,9 @@ param				: tipo_especificador ID {
 					*/}
 					| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES {
 						$$ = $1;
+						$$->tipo = DECLARACAO;
+						$$->numLinha = qntLinhas;
+						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);

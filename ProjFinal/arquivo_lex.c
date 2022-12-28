@@ -404,8 +404,8 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 PONTEIRONO parse(void);
-PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica);
-
+void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo);
+void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
 
 
 #line 412 "arquivo_lex.c"
@@ -1808,8 +1808,14 @@ int main(int argc, char *argv[]){
 	
 	PONTEIRONO arvoreSintatica = parse();
 	mostraArvore(arvoreSintatica, 0);
+	printf("\n\n");
+	PONTEIROITEM* tabelaHash = inicializaTabela();
 
-	
+	char escopo[26] = "global"; 
+
+	percorrerArvore(arvoreSintatica, tabelaHash, escopo);
+
+	imprimirTabela(tabelaHash);
 
 	return(0);
 }
@@ -1818,28 +1824,71 @@ int main(int argc, char *argv[]){
 Função para percorrer todos os nós da árvore sintática e adicionar os itens de declaração, como variáveis e funções,
 na tabela de símbolos 
 */
-/*
-PONTEIROITEM percorrerArvore(PONTEIRONO arvoreSintatica){
-	PONTEIROITEM* tabelaHash = inicializaTabela();
-	
-	if(arvoreSintatica != NULL){
-		if(arvoreSintatica->tipo == EXPRESSAO){
-			if()
-			
-		}
 
-		for(int i = 0; i < 3; i++){
-			if(arvoreSintatica->filho[i] != NULL){
-				percorrerArvore(arvoreSintatica->filho[i]);
+void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
+	tipoTipo tipo;
+	PONTEIRONO auxNo = NULL;
+	char auxEscopo[26];
+
+	strcpy(auxEscopo, escopo);
+
+	if(arvoreSintatica == NULL){
+		return;
+	}
+
+	if(arvoreSintatica->tipo == DECLARACAO){
+		if(arvoreSintatica->tipoDeclaracao == FunDeclK){
+			tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
+			strcpy(auxEscopo, "Funcao");
+			inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
+		
+			if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
+				auxNo = arvoreSintatica->filho[0];
+				while(auxNo != NULL){
+					if(strcmp(auxNo->lexema, "INT") == 0){
+						strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+						inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
+						auxNo = auxNo->irmao;
+					}
+					else{
+						mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
+						auxNo = auxNo->irmao;
+					}
+				}
 			}
 		}
-		percorrerArvore(arvoreSintatica->irmao);
+		else if(arvoreSintatica->tipoDeclaracao == VarDeclK){
+			if(strcmp(auxNo->lexema, "INT") == 0){
+				strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
+				inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
+				auxNo = auxNo->irmao;
+			}
+			else{
+				mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
+				auxNo = auxNo->irmao;
+			}
+		}
+
+
 	}
+
+	for(int i = 0; i < 3; i++){
+		if(arvoreSintatica->filho[i] != NULL){
+			percorrerArvore(arvoreSintatica->filho[i], tabelaHash, auxEscopo);
+		}
+	}
+
+	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
 
-*/
-
-
+void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
+	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_GRAY, linha);
+	switch (erro){
+		case DeclVoidVar:
+			printf(": Variavel '%s' declarada como void\n\n", nome);
+			break;
+	}
+}
 
 int tabelaNomes(enum yytokentype *token){
 	char aux[20];
@@ -1884,7 +1933,7 @@ int tabelaNomes(enum yytokentype *token){
 void mostrarTela(char palavra[]){
 	int i = 0;
 	char ch;
-	printf("%d: ", qntLinhas);
+	printf(ANSI_COLOR_GRAY "%d: ", qntLinhas);
 	ch = palavra[i];
 	while(ch == '\t' || ch == ' '){
 		i++;

@@ -1,11 +1,16 @@
+#ifndef _GLOBALS_H_
+#define _GLOBALS_H_
 
 extern int qntLinhas; //Depois trocar para um valor global para utilizar no parser
 extern char auxNome[26];
 extern char id[26];
 /* Declaracao da arvore de analise sintatica */
 
+typedef enum {DeclVoidVar} erroSemantico;
 
 typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo;
+
+typedef enum {Type_Int, Type_Void} tipoTipo;
 
 typedef enum {
     IfK,
@@ -16,7 +21,10 @@ typedef enum {
 	NuloDecl,
     VarDeclK,
     VetDeclK,
-    FunDeclK 
+    FunDeclK,
+    VarParamK, // Declaração de variável parâmetro.
+    VetParamK, // Declaração de vetro parâmetro.
+    ParamVoid
 } tipoDECL;
 
 typedef enum {
@@ -26,8 +34,6 @@ typedef enum {
     AtivK, // Chamada de função.
     TypeK, // Palavra reservada de tipo.
     VetorK, // Uso de parâmetro vetor.
-    VarParamK, // Declaração de variável parâmetro.
-    VetParamK, // Declaração de vetro parâmetro.
 	NuloExp
 } tipoEXP;
 
@@ -40,7 +46,6 @@ typedef struct NoArvore{
 	struct NoArvore * filho[3]; //No maximo três filhos
 	struct NoArvore * irmao;
 } NoArvore;
-
 
 typedef NoArvore * PONTEIRONO;
 
@@ -57,3 +62,9 @@ void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 
 PONTEIRONO parse(void);
+
+
+#define ANSI_COLOR_RED      "\x1b[31m" //cores em ANSI utilizadas 
+#define ANSI_COLOR_GRAY     "\e[0;37m"
+#define ANSI_COLOR_WHITE    "\e[1;37m" 
+#endif

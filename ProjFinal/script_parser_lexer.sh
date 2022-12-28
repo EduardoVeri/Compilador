@@ -6,5 +6,5 @@ flex -oarquivo_lex.c entrada.l
 gcc -c arquivo_lex.c 
 gcc -c arvore.c 
 gcc -c tabelaSimb.c 
-gcc arquivo_bison.tab.c arquivo_lex.o arvore.o -o programa_parser.o -lfl
+gcc arquivo_bison.tab.c arquivo_lex.o arvore.o -o programa_parser.o tabelaSimb.o -lfl
 ./programa_parser.o mdc.cm

@@ -14,7 +14,7 @@ PONTEIROITEM* inicializaTabela(){
     return tabelaHash;
 }
 
-void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
+void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
     PONTEIROITEM aux;
 
     int indice = longhash(nomeIdentificador);
@@ -65,7 +65,7 @@ void inserir(PONTEIROITEM tabelaHash[], int tamanho, int tipoIdentificador, int 
     }
 }
 
-void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num, int tamanho){
+void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     unsigned int indice = longhash(num->nomeIdentificador);
 
     if(tabelaHash[indice] == num){
@@ -179,9 +179,30 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
             aux = tabelaHash[i];
             while(aux != NULL){
                 printf("Nome: %s\n", aux->nomeIdentificador);
-                printf("Escopo: %s\n", aux->escopo);
-                printf("Tipo de dado: %d\n", aux->tipoDado);
-                printf("Tipo de identificador: %d\n", aux->tipoIdentificador);
+                
+                if(aux->tipoIdentificador != FunDeclK)
+                    printf("Escopo: %s\n", aux->escopo);
+            
+                if(aux->tipoDado == Type_Int){
+                    printf("Tipo de dado: INT\n");
+                }
+                else{
+                    printf("Tipo de dado: VOID\n");
+                }
+                
+                if(aux->tipoIdentificador == VarDeclK){
+                    printf("Tipo de identificador: VAR\n");
+                }
+                else if(aux->tipoIdentificador == FunDeclK){
+                    printf("Tipo de identificador: FUN\n");
+                }
+                else if(aux->tipoIdentificador == VetDeclK){
+                    printf("Tipo de identificador: VET\n");
+                }
+                else{
+                    printf("Tipo de identificador: PARAM\n");
+                }
+
                 printf("Linhas: ");
                 auxLinhas = aux->linhas;
                 while(auxLinhas != NULL){

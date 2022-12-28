@@ -10,3 +10,15 @@ void sort(int a[], int low, int high){
         
     }
 }
+
+int min(void){
+
+}
+
+int max(void){
+
+}
+
+void main(void){
+    
+}
