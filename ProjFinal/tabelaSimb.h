@@ -28,6 +28,6 @@ void apagarTabela(PONTEIROITEM tabelaHash[]);
 void adicionaLinha(PONTEIROITEM num, int valorLinha);
 unsigned longhash(char *str);
 void imprimirTabela(PONTEIROITEM tabelaHash[]);
-PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[]);
+PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoEXP tipoIdentificador);
 
 #endif

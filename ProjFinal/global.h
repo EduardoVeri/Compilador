@@ -12,7 +12,10 @@ typedef enum {
     DeclVarExiste, //Quando uma variável é declarada mais de uma vez.
     DeclFuncVar, //Quando uma função é declarada com o mesmo nome de uma variável.
     DeclVarFunc, //Quando uma variável é declarada com o mesmo nome de uma função.
-    VarNaoDeclarada //Quando uma variável é usada sem ser declarada.
+    VarNaoDeclarada, //Quando uma variável é usada sem ser declarada.
+    FuncaoNaoDeclarada, //Quando uma função é usada sem ser declarada.
+    AtribFuncVoid, //Quando uma função do tipo void é atribuída a uma variável.
+    FuncMainNaoDeclarada //Quando a função main não é declarada.
 } erroSemantico;
 
 typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo; // Tipo de nó.

@@ -215,10 +215,17 @@ int main(int argc, char *argv[]){
 	printf("\n\n");
 	PONTEIROITEM* tabelaHash = inicializaTabela();
 
+	inserirTabela(tabelaHash, FunDeclK, Type_Int, "input", "global", 0);
+	inserirTabela(tabelaHash, FunDeclK, Type_Void, "output", "global", 0);
+
 	char escopo[26] = "global"; 
 
 	//Percorre a árvore sintática e adiciona os itens de declaração na tabela de símbolos
 	percorrerArvore(arvoreSintatica, tabelaHash, escopo);
+
+	if(procuraTabelaExp(tabelaHash, "main", "global", AtivK) == NULL){
+		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
+	}
 
 	//imprime a tabela de símbolos
 	imprimirTabela(tabelaHash);
@@ -283,12 +290,32 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 	tipoEXP tipo = arvoreSintatica->tipoExpressao;
 
 	if(tipo == IdK){
-		if(procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo) == NULL){
+		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
 			mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+		else{
+			adicionaLinha(auxItem, arvoreSintatica->numLinha);
+		}
+	}
+	else if(tipo == AtivK){
+		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
+			mostrarErroSemantico(FuncaoNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+		else{
+			adicionaLinha(auxItem, arvoreSintatica->numLinha);
+		}
+	}
+	else if(tipo == AssignK){
+		if(arvoreSintatica->filho[1]->tipoExpressao == AtivK){
+			auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->filho[1]->lexema, escopo, arvoreSintatica->filho[1]->tipoExpressao);
+			if(auxItem != NULL){
+				if(auxItem->tipoDado == Type_Void){
+					mostrarErroSemantico(AtribFuncVoid, arvoreSintatica->filho[1]->lexema, arvoreSintatica->filho[1]->numLinha);
+				}
+			}
 		}
 	}
 }
-
 
 // Função que percorre a árvore sintática
 void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
@@ -375,7 +402,15 @@ void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
 		case VarNaoDeclarada:
 			printf(": Variavel '%s' nao declarada\n\n", nome);
 			break;
-		
+		case FuncaoNaoDeclarada:
+			printf(": Funcao '%s' nao declarada\n\n", nome);
+			break;
+		case AtribFuncVoid:
+			printf(": Atribuicao invalida: funcao '%s' do tipo void \n\n", nome);
+			break;	
+		case FuncMainNaoDeclarada:
+			printf(": Funcao main nao declarada\n\n");
+			break;
 	}
 }
 

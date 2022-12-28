@@ -13,6 +13,24 @@ PONTEIROITEM* inicializaTabela(){
     }
     return tabelaHash;
 }
+/*
+void inserirFuncTabela(PONTEIROITEM tabelaHash[], char nomeIdentificador[], int linha){
+    PONTEIROITEM aux;
+    int indice = longhash(nomeIdentificador);
+    aux = tabelaHash[indice];
+
+    while(aux != NULL){
+        if(strcmp(aux->nomeIdentificador, nomeIdentificador) == 0){
+            adicionaLinha(aux, linha);
+            return;
+        }
+        else{
+            aux = aux->proximo;
+        }
+    }
+
+}
+*/
 
 void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
     PONTEIROITEM aux, auxAnterior;
@@ -89,10 +107,20 @@ void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     free(num);
 }
 
-PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[]){
+PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoEXP tipoIdentificador){
     unsigned int indice = longhash(identificador);
 
     PONTEIROITEM aux = tabelaHash[indice];
+
+    if(tipoIdentificador == AtivK){
+        while(aux != NULL){
+            if(strcmp(identificador, aux->nomeIdentificador) == 0 && aux->tipoIdentificador == FunDeclK){
+                break;
+            }
+            aux = aux->proximo;
+        }
+        return aux;
+    }
 
     while(aux != NULL){
         if(strcmp(identificador, aux->nomeIdentificador) == 0){
