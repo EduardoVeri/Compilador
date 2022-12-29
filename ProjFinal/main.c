@@ -6,6 +6,7 @@
 #include "global.h"
 #include "semantica.h"
 
+
 int main(int argc, char *argv[]){
     qntLinhas = 1;
     arquivoEntrada = NULL;

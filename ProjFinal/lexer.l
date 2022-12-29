@@ -177,9 +177,10 @@ LETRA [a-zA-Z]
 		return 0;
 	}
 
+!N {if(arquivoEntrada == stdin) return 0;}
 
 . {
-	printf("ERRO LEXICO: '%s' LINHA %d\n", yytext, qntLinhas);
+	printf(ANSI_COLOR_RED "ERRO LEXICO: '%s' LINHA %d\n" ANSI_COLOR_RESET, yytext, qntLinhas);
 	return ERRO;
   }
 
@@ -262,12 +263,18 @@ enum yytokentype getToken(void)
 		firstTime = 0;
 		yyin = arquivoEntrada;
 
-		copiar(arquivoEntrada);
-		rewind(arquivoEntrada);
-		copiaArquivo = fopen("copia.txt", "r");
-		
-		fgets(stringAux, 1000, copiaArquivo);
-		mostrarTela(stringAux);
+		if(arquivoEntrada == stdin){
+			printf("Digite o codigo fonte: \n");
+			copiaArquivo = NULL;
+		}
+		else{
+			copiar(arquivoEntrada);
+			rewind(arquivoEntrada);
+			copiaArquivo = fopen("copia.txt", "r");
+			
+			fgets(stringAux, 1000, copiaArquivo);
+			mostrarTela(stringAux);
+		}	
 	}
 
 	enum yytokentype currentToken;
