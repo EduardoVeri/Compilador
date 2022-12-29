@@ -286,14 +286,14 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 27
-#define YY_END_OF_BUFFER 28
-static yyconst short int yy_accept[34] =
+#define YY_NUM_RULES 26
+#define YY_END_OF_BUFFER 27
+static yyconst short int yy_accept[33] =
     {   0,
-        0,    0,   28,   26,    1,    3,   26,    6,    7,   17,
+        0,    0,   27,   25,    1,    3,   25,    6,    7,   17,
        15,   13,   16,   18,    4,   14,   21,   12,   22,    5,
-        8,    9,   10,   11,   20,   25,    2,    4,   23,   19,
-       24,    5,    0
+        8,    9,   10,   11,   20,    2,    4,   23,   19,   24,
+        5,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -305,13 +305,13 @@ static yyconst int yy_ec[256] =
         7,    8,    9,   10,   11,    1,   12,   13,   13,   13,
        13,   13,   13,   13,   13,   13,   13,    1,   14,   15,
        16,   17,    1,    1,   18,   18,   18,   18,   18,   18,
-       18,   18,   18,   18,   18,   18,   18,   19,   18,   18,
        18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
-       20,    1,   21,    1,    1,    1,   18,   18,   18,   18,
+       18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
+       19,    1,   20,    1,    1,    1,   18,   18,   18,   18,
 
        18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
        18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
-       18,   18,   22,    1,   23,    1,    1,    1,    1,    1,
+       18,   18,   21,    1,   22,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -328,47 +328,47 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst int yy_meta[24] =
+static yyconst int yy_meta[23] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1
+        1,    1
     } ;
 
-static yyconst short int yy_base[34] =
+static yyconst short int yy_base[33] =
     {   0,
-        0,    0,   36,   37,   37,   37,    8,   37,   37,   37,
-       37,   37,   37,   27,   21,   37,   17,   16,   15,    7,
-       37,   37,   37,   37,   37,   37,   37,   17,   37,   37,
-       37,   10,   37
+        0,    0,   32,   33,   33,   33,   15,   33,   33,   33,
+       33,   33,   33,   22,   16,   33,   12,   11,   10,    7,
+       33,   33,   33,   33,   33,   33,   11,   33,   33,   33,
+        5,   33
     } ;
 
-static yyconst short int yy_def[34] =
+static yyconst short int yy_def[33] =
     {   0,
-       33,    1,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,    0
+       32,    1,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,    0
     } ;
 
-static yyconst short int yy_nxt[61] =
+static yyconst short int yy_nxt[56] =
     {   0,
         4,    5,    6,    5,    7,    8,    9,   10,   11,   12,
-       13,   14,   15,   16,   17,   18,   19,   20,   20,   21,
-       22,   23,   24,   25,   32,   32,   26,   32,   32,   28,
-       31,   30,   29,   28,   27,   33,    3,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
+       13,   14,   15,   16,   17,   18,   19,   20,   21,   22,
+       23,   24,   31,   27,   31,   30,   29,   28,   27,   26,
+       25,   32,    3,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32
     } ;
 
-static yyconst short int yy_chk[61] =
+static yyconst short int yy_chk[56] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    7,   20,   20,    7,   32,   32,   28,
-       19,   18,   17,   15,   14,    3,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
+        1,    1,   31,   27,   20,   19,   18,   17,   15,   14,
+        7,    3,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -382,23 +382,20 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "entrada.l"
+#line 1 "lexer.l"
 #define INITIAL 0
-#line 2 "entrada.l"
+#line 2 "lexer.l"
 
 #include <string.h>
-#include "arquivo_bison.tab.h"
+#include "parser.tab.h"
 #include "global.h"
 #include "tabelaSimb.h"
-
 
 char stringAux[1000];
 char auxNome[26];
 char id[26];
-
-FILE* copiaArquivo = NULL;
-FILE* f_in = NULL;
-
+FILE * copiaArquivo = NULL;
+int firstTime = 1;
 
 int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
@@ -408,7 +405,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
 int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo);
 
-#line 412 "arquivo_lex.c"
+#line 409 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -570,10 +567,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 30 "entrada.l"
+#line 27 "lexer.l"
 
 
-#line 577 "arquivo_lex.c"
+#line 574 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -624,13 +621,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 34 )
+				if ( yy_current_state >= 33 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 37 );
+		while ( yy_base[yy_current_state] != 33 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -658,12 +655,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "entrada.l"
+#line 29 "lexer.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 34 "entrada.l"
+#line 31 "lexer.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -684,7 +681,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 52 "entrada.l"
+#line 49 "lexer.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -697,7 +694,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 63 "entrada.l"
+#line 60 "lexer.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			strcpy(auxNome, yytext);
@@ -706,7 +703,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 69 "entrada.l"
+#line 66 "lexer.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -719,7 +716,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 80 "entrada.l"
+#line 77 "lexer.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -727,7 +724,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 85 "entrada.l"
+#line 82 "lexer.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -735,7 +732,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 90 "entrada.l"
+#line 87 "lexer.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -743,7 +740,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 96 "entrada.l"
+#line 93 "lexer.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -751,7 +748,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 102 "entrada.l"
+#line 99 "lexer.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -759,7 +756,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 107 "entrada.l"
+#line 104 "lexer.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -767,7 +764,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 113 "entrada.l"
+#line 110 "lexer.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -775,7 +772,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 118 "entrada.l"
+#line 115 "lexer.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -783,7 +780,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 123 "entrada.l"
+#line 120 "lexer.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -791,7 +788,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 128 "entrada.l"
+#line 125 "lexer.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -799,7 +796,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 133 "entrada.l"
+#line 130 "lexer.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -807,7 +804,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 138 "entrada.l"
+#line 135 "lexer.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -815,7 +812,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 143 "entrada.l"
+#line 140 "lexer.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -823,7 +820,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 148 "entrada.l"
+#line 145 "lexer.l"
 {
 	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
@@ -831,7 +828,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 153 "entrada.l"
+#line 150 "lexer.l"
 {
 	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
@@ -839,7 +836,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 158 "entrada.l"
+#line 155 "lexer.l"
 {
 	printf("\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
@@ -847,7 +844,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 163 "entrada.l"
+#line 160 "lexer.l"
 {
 	printf("\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
@@ -855,7 +852,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 168 "entrada.l"
+#line 165 "lexer.l"
 {
 		printf("\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
@@ -863,14 +860,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 173 "entrada.l"
+#line 170 "lexer.l"
 {
 		printf("\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 178 "entrada.l"
+#line 175 "lexer.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -878,23 +875,18 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 183 "entrada.l"
-{if(f_in == NULL) return 0;} //Encerra o programa quando digitado pelo usuário
-	YY_BREAK
-case 26:
-YY_RULE_SETUP
-#line 185 "entrada.l"
+#line 181 "lexer.l"
 {
 	printf("ERRO LEXICO: '%s' LINHA %d\n", yytext, qntLinhas);
 	return ERRO;
   }
 	YY_BREAK
-case 27:
+case 26:
 YY_RULE_SETUP
-#line 190 "entrada.l"
+#line 186 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 898 "arquivo_lex.c"
+#line 890 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1184,7 +1176,7 @@ static yy_state_type yy_get_previous_state()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 34 )
+			if ( yy_current_state >= 33 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1219,11 +1211,11 @@ yy_state_type yy_current_state;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 34 )
+		if ( yy_current_state >= 33 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 33);
+	yy_is_jam = (yy_current_state == 32);
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -1782,233 +1774,8 @@ int main()
 	return 0;
 	}
 #endif
-#line 190 "entrada.l"
+#line 186 "lexer.l"
 
-
-int main(int argc, char *argv[]){
-	qntLinhas = 1;
-	
-	if (argc == 2){
-		if(f_in = fopen(argv[1],"r")) yyin = f_in;
-		else perror(argv[0]);
-		
-		copiar(f_in);
-		
-		rewind(f_in);
-		copiaArquivo = fopen("copia.txt", "r");
-		
-		fgets(stringAux, 1000, copiaArquivo);
-		mostrarTela(stringAux);
-		
-	}
-	else { 
-		yyin = stdin;
-		printf("Bem vindo ao analisador Lexico!\nDigite \"!N\" para sair\n");
-	}
-	
-	PONTEIRONO arvoreSintatica = parse();
-	mostraArvore(arvoreSintatica, 0);
-	printf("\n\n");
-	PONTEIROITEM* tabelaHash = inicializaTabela();
-
-	inserirTabela(tabelaHash, FunDeclK, Type_Int, "input", "global", 0);
-	inserirTabela(tabelaHash, FunDeclK, Type_Void, "output", "global", 0);
-
-	char escopo[26] = "global"; 
-
-	//Percorre a árvore sintática e adiciona os itens de declaração na tabela de símbolos
-	percorrerArvore(arvoreSintatica, tabelaHash, escopo);
-
-	if(procuraTabelaExp(tabelaHash, "main", "global", AtivK) == NULL){
-		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
-	}
-
-	//imprime a tabela de símbolos
-	imprimirTabela(tabelaHash);
-
-	//libera a memória alocada para a árvore sintática
-	desalocaArvore(arvoreSintatica);
-	//libera a memória alocada para a tabela de símbolos
-	apagarTabela(tabelaHash);
-
-	return(0);
-}
-
-/*
-Função para percorrer todos os nós da árvore sintática e adicionar os itens de declaração, como variáveis e funções,
-na tabela de símbolos 
-*/
-
-void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* auxEscopo){
-	tipoTipo tipo;
-	PONTEIRONO auxNo = NULL;
-	PONTEIROITEM auxItem = NULL;
-
-	if(arvoreSintatica->tipoDeclaracao == FunDeclK){
-		tipo = strcmp(arvoreSintatica->lexema, "INT") == 0 ? Type_Int : Type_Void;
-		strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
-
-		if(buscaIgual(tabelaHash, arvoreSintatica, 1, auxEscopo) == 1){
-			inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, tipo, arvoreSintatica->filho[1]->lexema, auxEscopo, arvoreSintatica->numLinha);
-		}
-
-		if(arvoreSintatica->filho[0]->tipoDeclaracao != ParamVoid){
-			auxNo = arvoreSintatica->filho[0];
-			while(auxNo != NULL){
-				if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
-					if(strcmp(auxNo->lexema, "INT") == 0){
-						strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
-						inserirTabela(tabelaHash, auxNo->tipoDeclaracao, Type_Int, auxNo->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-					}
-					else{
-						mostrarErroSemantico(DeclVoidVar, auxNo->filho[0]->lexema, auxNo->numLinha);
-					}
-				}
-				auxNo = auxNo->irmao;
-			}
-		}
-	}
-	else if((arvoreSintatica->tipoDeclaracao == VarDeclK) || (arvoreSintatica->tipoDeclaracao == VetDeclK)){
-		if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
-			if(strcmp(arvoreSintatica->lexema, "INT") == 0){
-				inserirTabela(tabelaHash, arvoreSintatica->tipoDeclaracao, Type_Int, arvoreSintatica->filho[0]->lexema, auxEscopo, arvoreSintatica->numLinha);
-			}
-			else{
-				mostrarErroSemantico(DeclVoidVar, arvoreSintatica->filho[0]->lexema, arvoreSintatica->numLinha);
-			}
-		}
-	}
-}
-
-void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]){
-	PONTEIRONO auxNo = NULL;
-	PONTEIROITEM auxItem = NULL;
-	tipoEXP tipo = arvoreSintatica->tipoExpressao;
-
-	if(tipo == IdK){
-		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
-			mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
-		}
-		else{
-			adicionaLinha(auxItem, arvoreSintatica->numLinha);
-		}
-	}
-	else if(tipo == AtivK){
-		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
-			mostrarErroSemantico(FuncaoNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
-		}
-		else{
-			adicionaLinha(auxItem, arvoreSintatica->numLinha);
-		}
-	}
-	else if(tipo == AssignK){
-		if(arvoreSintatica->filho[1]->tipoExpressao == AtivK){
-			auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->filho[1]->lexema, escopo, arvoreSintatica->filho[1]->tipoExpressao);
-			if(auxItem != NULL){
-				if(auxItem->tipoDado == Type_Void){
-					mostrarErroSemantico(AtribFuncVoid, arvoreSintatica->filho[1]->lexema, arvoreSintatica->filho[1]->numLinha);
-				}
-			}
-		}
-	}
-}
-
-// Função que percorre a árvore sintática
-void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo){
-	tipoTipo tipo;
-	PONTEIRONO auxNo = NULL;
-	PONTEIROITEM auxItem = NULL;
-
-	char auxEscopo[250];
-
-	strcpy(auxEscopo, escopo);
-
-	if(arvoreSintatica == NULL){
-		return;
-	}
-
-	if(arvoreSintatica->tipo == DECLARACAO){
-		percorrerDecl(arvoreSintatica, tabelaHash, auxEscopo);
-	}
-
-	if(arvoreSintatica->tipo == EXPRESSAO){
-		percorrerExp(arvoreSintatica, tabelaHash, auxEscopo);
-	}
-
-	for(int i = 0; i < 3; i++){
-		if(arvoreSintatica->filho[i] != NULL){
-			percorrerArvore(arvoreSintatica->filho[i], tabelaHash, auxEscopo);
-		}
-	}
-
-	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
-}
-
-
-int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo){
-	PONTEIROITEM auxItem = NULL;
-	
-	if((auxItem = procuraTabela(tabelaHash, arvoreSintatica->filho[indice]->lexema, escopo, arvoreSintatica->tipoDeclaracao)) == NULL){
-		return 1;
-	}
-	
-	tipoDECL tipoItem = auxItem->tipoIdentificador;
-	tipoDECL tipoArvore = arvoreSintatica->tipoDeclaracao;
-
-	if(tipoItem == FunDeclK && tipoArvore == FunDeclK){
-		mostrarErroSemantico(DeclFuncExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
-	}
-	//Nessa verificação é preciso analisar o escopo, pois é possível declarar uma variável com o mesmo nome em escopos diferentes
-	else if((tipoItem == VetDeclK || tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && (tipoArvore == VetDeclK || tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
-		if((strcmp(auxItem->escopo, escopo) != 0) && ((strcmp(auxItem->escopo, "global") != 0)))
-			return 1;
-		
-		mostrarErroSemantico(DeclVarExiste, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
-	}
-	else if((tipoItem == VetDeclK || tipoItem == VarDeclK || tipoItem == VarParamK || tipoItem == VetParamK) && tipoArvore == FunDeclK){
-		mostrarErroSemantico(DeclFuncVar, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
-	}
-	else if ( tipoItem == FunDeclK && (tipoArvore == VetDeclK || tipoArvore == VarDeclK || tipoArvore == VarParamK || tipoArvore == VetParamK)){
-		mostrarErroSemantico(DeclVarFunc, arvoreSintatica->filho[indice]->lexema, arvoreSintatica->numLinha);
-	}
-
-	return 0;
-	
-}
-
-
-void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
-	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_RESET, linha);
-	switch (erro){
-		case DeclVoidVar:
-			printf(": Variavel '%s' declarada como void\n\n", nome);
-			break;
-		case DeclFuncExiste:
-			printf(": Funcao '%s' ja declarada\n\n", nome);
-			break;
-		case DeclVarExiste:
-			printf(": Variavel '%s' ja declarada\n\n", nome);
-			break;
-		case DeclFuncVar:
-			printf(": Identificador '%s' ja declarado como variavel\n\n", nome);
-			break;
-		case DeclVarFunc:
-			printf(": Identificador '%s' ja declarado como funcao\n\n", nome);
-			break;
-		case VarNaoDeclarada:
-			printf(": Variavel '%s' nao declarada\n\n", nome);
-			break;
-		case FuncaoNaoDeclarada:
-			printf(": Funcao '%s' nao declarada\n\n", nome);
-			break;
-		case AtribFuncVoid:
-			printf(": Atribuicao invalida: funcao '%s' do tipo void \n\n", nome);
-			break;	
-		case FuncMainNaoDeclarada:
-			printf(": Funcao main nao declarada\n\n");
-			break;
-	}
-}
 
 int tabelaNomes(enum yytokentype *token){
 	char aux[20];
@@ -2082,8 +1849,21 @@ void copiar(FILE* velho){
 }
 
 enum yytokentype getToken(void)
-{ 
+{ 	
+	if(firstTime == 1){
+		firstTime = 0;
+		yyin = arquivoEntrada;
+
+		copiar(arquivoEntrada);
+		rewind(arquivoEntrada);
+		copiaArquivo = fopen("copia.txt", "r");
+		
+		fgets(stringAux, 1000, copiaArquivo);
+		mostrarTela(stringAux);
+	}
+
 	enum yytokentype currentToken;
+
 	currentToken = yylex();
 	if(currentToken == ID) strcpy(id, yytext);
 	return currentToken;

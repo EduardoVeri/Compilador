@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "string.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "semantica.h": "c",
+        "arquivo_bison.tab.h": "c",
+        "parser.tab.h": "c"
     }
 }

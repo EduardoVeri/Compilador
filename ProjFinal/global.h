@@ -4,7 +4,8 @@
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
-
+FILE * arquivoEntrada;
+FILE * copiaArquivo;
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.
