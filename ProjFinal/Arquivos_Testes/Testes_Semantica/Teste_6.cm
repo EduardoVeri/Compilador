@@ -1,0 +1,13 @@
+/* Nao realizar a declaracao da funcao main */
+
+int func(void){
+    return 30;
+}
+
+int funcUm(void){
+    return 40;
+}
+
+int funcDois(void){
+    return 50;
+}

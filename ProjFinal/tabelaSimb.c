@@ -112,6 +112,8 @@ PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], c
 
     PONTEIROITEM aux = tabelaHash[indice];
 
+    tipoDECL tipoDeclara = tipoIdentificador == VetorK ? VetDeclK : VarDeclK;
+
     if(tipoIdentificador == AtivK){
         while(aux != NULL){
             if(strcmp(identificador, aux->nomeIdentificador) == 0 && aux->tipoIdentificador == FunDeclK){
@@ -124,8 +126,19 @@ PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], c
 
     while(aux != NULL){
         if(strcmp(identificador, aux->nomeIdentificador) == 0){
-            if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
-                break;
+            if(tipoDeclara == VetDeclK){
+                if(aux->tipoIdentificador == VetDeclK || aux->tipoIdentificador == VetParamK){
+                    if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
+                        break;
+                    }
+                }
+            }
+            else{
+                if(aux->tipoIdentificador == VarDeclK || aux->tipoIdentificador == VarParamK){
+                    if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
+                        break;
+                    }
+                }
             }
         }
         aux = aux->proximo;

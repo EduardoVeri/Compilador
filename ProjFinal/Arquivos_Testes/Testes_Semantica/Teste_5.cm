@@ -1,0 +1,10 @@
+/* Realizar a chamada de uma funcao nao declarada */
+
+int func(void){
+    return 10;
+}
+
+int main(void){
+    int a;
+    a = fun();
+}

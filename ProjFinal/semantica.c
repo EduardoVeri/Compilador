@@ -32,7 +32,7 @@ void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* a
 			//Se sim, adiciona os parametros na tabela de simbolos
             while(auxNo != NULL){
                 //Verifica se o parametro ja foi declarado
-				if(buscaIgual(tabelaHash, arvoreSintatica, 0, auxEscopo) == 1){
+				if(buscaIgual(tabelaHash, auxNo, 0, auxEscopo) == 1){
 					//Verifica se o parametro eh do tipo inteiro
                     if(strcmp(auxNo->lexema, "INT") == 0){
 						strcpy(auxEscopo, arvoreSintatica->filho[1]->lexema);
@@ -65,6 +65,7 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 	PONTEIRONO auxNo = NULL;
 	PONTEIROITEM auxItem = NULL;
 	tipoEXP tipo = arvoreSintatica->tipoExpressao;
+
 
     //Verifica se o no atual eh um uso de variavel
 	if(tipo == IdK){
@@ -101,6 +102,16 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 					mostrarErroSemantico(AtribFuncVoid, arvoreSintatica->filho[1]->lexema, arvoreSintatica->filho[1]->numLinha);
 				}
 			}
+		}
+	}
+	else if(tipo == VetorK){
+		//Verifica se o vetor foi declarado
+		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
+			mostrarErroSemantico(VetorNaoDeclarado, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+		else{
+			//Adiciona a linha na lista de linhas do item
+			adicionaLinha(auxItem, arvoreSintatica->numLinha);
 		}
 	}
 }
@@ -202,6 +213,9 @@ void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
 			break;	
 		case FuncMainNaoDeclarada:
 			printf(": Funcao main nao declarada\n\n");
+			break;
+		case VetorNaoDeclarado:
+			printf(": Vetor '%s' nao declarado\n\n", nome);
 			break;
 	}
 }

@@ -1,0 +1,13 @@
+/* Atribuicao Invalida, a eh do 
+tipo int e exemplo nao retorna nada */
+
+void exemplo(int x){
+    x = 10 + x;
+    output(x);
+    return;
+}
+
+void main(void){
+    int a;
+    a = exemplo();
+}

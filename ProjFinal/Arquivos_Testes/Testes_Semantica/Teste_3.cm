@@ -1,0 +1,7 @@
+/* Declaracao de variavel como tipo void */
+
+void x;
+
+void main(void y){
+    void a;
+}

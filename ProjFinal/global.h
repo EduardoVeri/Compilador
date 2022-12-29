@@ -1,5 +1,7 @@
 #ifndef _GLOBALS_H_
-#define _GLOBALS_H_
+#define _GLOBALS_H_ 1
+
+#include <stdio.h>
 
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
@@ -16,7 +18,8 @@ typedef enum {
     VarNaoDeclarada, //Quando uma variável é usada sem ser declarada.
     FuncaoNaoDeclarada, //Quando uma função é usada sem ser declarada.
     AtribFuncVoid, //Quando uma função do tipo void é atribuída a uma variável.
-    FuncMainNaoDeclarada //Quando a função main não é declarada.
+    FuncMainNaoDeclarada, //Quando a função main não é declarada.
+    VetorNaoDeclarado //Quando um vetor é usado sem ser declarado.
 } erroSemantico;
 
 typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo; // Tipo de nó.

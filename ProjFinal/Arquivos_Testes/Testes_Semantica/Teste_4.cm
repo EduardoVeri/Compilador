@@ -1,0 +1,21 @@
+/* Tentar declarar variaveis com nomes
+iguais no mesmo escopo */
+
+int a;
+
+int main(int a){
+    a = 10;
+}
+
+int pteste(void){
+    int a;
+}
+
+int steste(void){
+    int b;
+    int b;
+}
+
+int tteste(int c){
+    int c;
+}

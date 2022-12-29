@@ -1,5 +1,5 @@
 #ifndef _ANALISE_SEMANT_H_
-#define _ANALISE_SEMANT_H_
+#define _ANALISE_SEMANT_H_ 1
 
 void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* auxEscopo);
 void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]);

@@ -1,5 +1,5 @@
 #ifndef _TABELA_SIMB_H_
-#define _TABELA_SIMB_H_
+#define _TABELA_SIMB_H_ 1
 
 #include "global.h"
 

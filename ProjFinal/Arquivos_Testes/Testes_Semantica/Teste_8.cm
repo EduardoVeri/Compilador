@@ -1,0 +1,14 @@
+/* Tentar declarar funcoes com nomes iguais */
+
+void func(void){
+    int x;
+    return;
+}
+
+int func(int x){
+    return x;
+}
+
+int main(void){
+    return;
+}

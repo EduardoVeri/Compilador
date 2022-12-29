@@ -1,0 +1,11 @@
+/* Declarar variaveis como o nome de uma funcao */
+
+int func(void){
+    return;
+}
+
+int main(void){
+    int main;
+    int func;
+    func = 10;
+}
