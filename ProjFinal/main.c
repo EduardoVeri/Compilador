@@ -1,3 +1,15 @@
+/*
+ *  Projeto compilador desenvolvido para a disciplina de compiladores
+ *  do curso de Bacharelado em Ciencia e Tecnologia na Universidade 
+ *  Federal de Sao Paulo (UNIFESP)
+ *  
+ *  Docente: Prof. Dr. Luis Augusto Martins Pereira
+ * 
+ *  Desenvolvido por: Eduardo Verissimo Faccio
+ *  RA: 148859
+ *  Data: 15/01/2023
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,7 +17,6 @@
 #include "parser.tab.h"
 #include "global.h"
 #include "semantica.h"
-
 
 int main(int argc, char *argv[]){
     qntLinhas = 1;
@@ -27,16 +38,20 @@ int main(int argc, char *argv[]){
         return 0;
     }
     
+    //Chama a funcao do parser, para iniciar a analise do codigo
     PONTEIRONO arvoreSintatica = parse();
 
+    //Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
         printf("Erro: Arvore sintatica nula.\n");
         return 0;
     }
 
+    //Imprime a arvore sintatica
     mostraArvore(arvoreSintatica, 0);
 	printf("\n\n");
-
+    
+    //Inicializa a tabela de simbolos
 	PONTEIROITEM* tabelaHash = inicializaTabela();
 
     //Adiciona as funções input e output na tabela de simbolos
@@ -62,8 +77,12 @@ int main(int argc, char *argv[]){
 	//libera a memoria alocada para a tabela de simbolos
 	apagarTabela(tabelaHash);
 
-    fclose(arquivoEntrada);
-    fclose(copiaArquivo);
+    //Fecha os arquivos abertos
+    if(arquivoEntrada != stdin)
+        fclose(arquivoEntrada);
+    
+    if(copiaArquivo != NULL)
+        fclose(copiaArquivo);
 
     return 0;
 }

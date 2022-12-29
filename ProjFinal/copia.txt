@@ -4,9 +4,9 @@
 int b;
 
 int gcd (int u, int v)
-{ 	if (v == 0) {
-		int b; 
-		return u;
+{ 	if (v == 0) { 
+		b[20]; /* Verificar esse erro */
+		return b[40];
 	}
 	else return gcd(v,u-u/v*v);
 	/* u-u/v*v == u mod v */

@@ -73,7 +73,6 @@ LETRA [a-zA-Z]
 			return token;
 		 }
 		
-	      
 \( {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;

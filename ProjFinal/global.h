@@ -4,8 +4,8 @@
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
-FILE * arquivoEntrada;
-FILE * copiaArquivo;
+FILE * arquivoEntrada; // Arquivo de entrada
+FILE * copiaArquivo; // Cópia do arquivo de entrada
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.
@@ -49,7 +49,6 @@ typedef enum {
 	NuloExp // Nulo.
 } tipoEXP;
 
-
 /* Declaracao da arvore de analise sintatica */
 
 typedef struct NoArvore{
@@ -64,17 +63,26 @@ typedef struct NoArvore{
 
 typedef NoArvore * PONTEIRONO;
 
-// Funcoes da arvore de analise sintatica
+//Cria um no para a arvore. Recebe os valores como parametro.
 PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao);
+
+//Funcoes para adicionar filhos e irmaos na arvore
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no);
 PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no);
+
+//Cria um no na arvore, com valores default
 PONTEIRONO novoNo();
+
+//Funcao para imprimir a arvore
 void mostraArvore(PONTEIRONO raiz, int num);
+
+//Funcao para desalocar a arvore
 void desalocaArvore(PONTEIRONO raiz);
 
+//Funcao yylex adapatada para o parser
 enum yytokentype getToken(void);
 
-// Função do parser
+//Funcao yyparse adaptada para a main
 PONTEIRONO parse(void);
 
 // Cores em ANSI

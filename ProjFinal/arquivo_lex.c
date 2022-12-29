@@ -716,7 +716,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 76 "lexer.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -724,7 +724,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 82 "lexer.l"
+#line 81 "lexer.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -732,7 +732,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 87 "lexer.l"
+#line 86 "lexer.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -740,7 +740,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 93 "lexer.l"
+#line 92 "lexer.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -748,7 +748,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 99 "lexer.l"
+#line 98 "lexer.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -756,7 +756,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 104 "lexer.l"
+#line 103 "lexer.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -764,7 +764,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 110 "lexer.l"
+#line 109 "lexer.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -772,7 +772,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 115 "lexer.l"
+#line 114 "lexer.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -780,7 +780,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 120 "lexer.l"
+#line 119 "lexer.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -788,7 +788,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 125 "lexer.l"
+#line 124 "lexer.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -796,7 +796,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 130 "lexer.l"
+#line 129 "lexer.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -804,7 +804,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 135 "lexer.l"
+#line 134 "lexer.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -812,7 +812,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 140 "lexer.l"
+#line 139 "lexer.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -820,7 +820,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 145 "lexer.l"
+#line 144 "lexer.l"
 {
 	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
@@ -828,7 +828,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 150 "lexer.l"
+#line 149 "lexer.l"
 {
 	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
@@ -836,7 +836,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 155 "lexer.l"
+#line 154 "lexer.l"
 {
 	printf("\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
@@ -844,7 +844,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 160 "lexer.l"
+#line 159 "lexer.l"
 {
 	printf("\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
@@ -852,7 +852,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 165 "lexer.l"
+#line 164 "lexer.l"
 {
 		printf("\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
@@ -860,14 +860,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 170 "lexer.l"
+#line 169 "lexer.l"
 {
 		printf("\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 175 "lexer.l"
+#line 174 "lexer.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -875,12 +875,12 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 180 "lexer.l"
+#line 179 "lexer.l"
 {if(arquivoEntrada == stdin) return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 182 "lexer.l"
+#line 181 "lexer.l"
 {
 	printf(ANSI_COLOR_RED "ERRO LEXICO: '%s' LINHA %d\n" ANSI_COLOR_RESET, yytext, qntLinhas);
 	return ERRO;
@@ -888,7 +888,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 187 "lexer.l"
+#line 186 "lexer.l"
 ECHO;
 	YY_BREAK
 #line 895 "arquivo_lex.c"
@@ -1779,7 +1779,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 187 "lexer.l"
+#line 186 "lexer.l"
 
 
 int tabelaNomes(enum yytokentype *token){

@@ -441,7 +441,8 @@ arg_lista			: arg_lista COMMA expressao {
 %%
 
 void yyerror (char *s){
-	printf ("ERRO SINTATICO: LINHA %d\n", qntLinhas);
+	printf(ANSI_COLOR_RED "ERRO SINTATICO, LINHA: %d", qntLinhas);
+	//printf(ANSI_COLOR_RESET "");
 }
 
 int yylex(void)
