@@ -43,7 +43,6 @@ int main(int argc, char *argv[]){
 
     //Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
-        printf("Erro: Arvore sintatica nula.\n");
         return 0;
     }
 
@@ -68,6 +67,8 @@ int main(int argc, char *argv[]){
 		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
 	}
 
+
+    printf("============== Tabela de Simbolos ===============\n");
 	//imprime a tabela de simbolos
 	imprimirTabela(tabelaHash);
 
