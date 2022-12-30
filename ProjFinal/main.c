@@ -18,6 +18,58 @@
 #include "global.h"
 #include "semantica.h"
 
+char nomeFunc[100] = "global";
+int numReg = 1; //Numero do registrador
+
+void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
+    PONTEIRONO noParam = arvoreSintatica->filho[0];
+
+    printf("FUN, %s, %s, -\n", arvoreSintatica->lexema, arvoreSintatica->filho[1]->lexema);
+
+    if(arvoreSintatica->filho[0]->tipoDeclaracao == ParamVoid){
+        return;
+    }
+
+    while(noParam != NULL){
+        printf("ARG, %s, %s, %s\n", noParam->lexema, noParam->filho[0]->lexema, arvoreSintatica->filho[1]->lexema);
+        noParam = noParam->irmao;
+    }
+
+    noParam = arvoreSintatica->filho[0];
+    while(noParam != NULL){
+        printf("LOAD, $t%d, %s, -\n", numReg, noParam->filho[0]->lexema);
+        noParam = noParam->irmao;
+        numReg++;
+    }
+}
+
+//Funcao que analisa a arvore sintatica e a tabela de simbolos e gera o codigo intermediario de tres enderecos
+void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
+    if(arvoreSintatica == NULL){
+        return;
+    }
+
+    if(arvoreSintatica->tipo == DECLARACAO){
+        if(arvoreSintatica->tipoDeclaracao == FunDeclK){
+            codIntDeclFunc(arvoreSintatica, tabelaHash);
+        }
+        if(arvoreSintatica->tipoDeclaracao == IfK){
+
+        }
+    }
+
+    //Repensar essa parte, já que nem sempre vou querer olhar todos os nós
+    //posso decidir quais nós percorrer em funções separadas
+    //Ou somente percorrer os nos irmaos sempre e os filhos quando necessário
+
+    for(int i = 0; i < 3; i++){
+        criarCodigoIntermediario(arvoreSintatica->filho[i], tabelaHash); 
+    }
+    criarCodigoIntermediario(arvoreSintatica->irmao, tabelaHash);
+
+}
+
+
 int main(int argc, char *argv[]){
     qntLinhas = 1;
     arquivoEntrada = NULL;
@@ -71,6 +123,9 @@ int main(int argc, char *argv[]){
     printf("============== Tabela de Simbolos ===============\n");
 	//imprime a tabela de simbolos
 	imprimirTabela(tabelaHash);
+
+    printf("============== Codigo Intermediario ===============\n");
+    criarCodigoIntermediario(arvoreSintatica, tabelaHash);
 
 	//libera a memória alocada para a arvore sintatica
 	desalocaArvore(arvoreSintatica);
