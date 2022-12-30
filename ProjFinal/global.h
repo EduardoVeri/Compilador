@@ -6,6 +6,7 @@
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
+extern char* yytext;
 FILE * arquivoEntrada; // Arquivo de entrada
 FILE * copiaArquivo; // Cópia do arquivo de entrada
 

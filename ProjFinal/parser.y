@@ -12,6 +12,7 @@ int yyparse(void);
 char auxNome[26];
 char id[26];
 int qntLinhas;
+enum yytokentype auxErro;
 
 PONTEIRONO arvoreSintatica;
 
@@ -27,12 +28,14 @@ Declaracao dos tokens que serao utilizados durante o processo de analise
 sintatica. 
 */
 
+%expect 1
 
 %token NUM SOMA SUB MULT DIV INT
 %token ID VOID WHILE ELSE IF ABREPARENTESES FECHAPARENTESES
 %token RETURN COMMA ABRECHAVES FECHACHAVES SEMICOLON
 %token ATRIB ABRECOLCHETES FECHACOLCHETES
 %token EQ NEQ LT LET GT GET ERRO
+
 
 %%
 
@@ -159,8 +162,7 @@ param				: tipo_especificador ID {
 						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
-						adicionaFilho($$, aux);
-						
+						adicionaFilho($$, aux);			
 					}
 					;
 
@@ -211,7 +213,7 @@ expressao_decl		: expressao SEMICOLON {$$ = $1;}
 					| SEMICOLON {$$ = NULL;} //Deixar vazio talvez
 					;
 			
-selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
+selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement fatoracao{
 						$$ = novoNo();
 						strcpy($$->lexema, "IF");
 						$$->tipo = DECLARACAO;
@@ -220,19 +222,14 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement {
 
 						adicionaFilho($$, $3);
 						adicionaFilho($$, $5);		
+						if($6 != NULL){
+							adicionaFilho($$, $6);
+						}
 					}
-					| IF ABREPARENTESES expressao FECHAPARENTESES statement ELSE statement {
-						$$ = novoNo();
-						strcpy($$->lexema, "IF");
-						$$->tipo = DECLARACAO;
-						$$->numLinha = qntLinhas;
-						$$->tipoDeclaracao = IfK;
+					;
 
-						adicionaFilho($$, $3);
-						adicionaFilho($$, $5);
-						adicionaFilho($$, $7);
-						
-					}
+fatoracao			: ELSE statement {$$ = $2;}
+					| %empty {$$ = NULL;}
 					;
 			
 iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {
@@ -440,13 +437,101 @@ arg_lista			: arg_lista COMMA expressao {
 
 %%
 
+//Funcao para mostrar o erro sintatico do codigo
 void yyerror (char *s){
-	printf(ANSI_COLOR_RED "ERRO SINTATICO, LINHA: %d", qntLinhas);
-	//printf(ANSI_COLOR_RESET "");
+	printf("\n" ANSI_COLOR_RED "ERRO SINTATICO, LINHA: %d", qntLinhas);
+	printf(ANSI_COLOR_RESET);
+	switch(auxErro){
+		case NUM:
+			printf(": '%s' não era esperado (NUM)", yytext);
+			break; 
+		case SOMA:
+			printf(": '%s' não era esperado (SOMA)", yytext);
+			break;
+		case SUB:
+			printf(": '%s' não era esperado (SUB)", yytext);
+			break;
+		case MULT:
+			printf(": '%s' não era esperado (MULT)", yytext);
+			break;
+		case DIV:
+			printf(": '%s' não era esperado (DIV)", yytext);
+			break;
+		case INT:
+			printf(": '%s' não era esperado (INT)", yytext);
+			break;
+		case ID:
+			printf(": '%s' não era esperado (ID)", yytext);
+			break;
+		case VOID:
+			printf(": '%s' não era esperado (VOID)", yytext);
+			break;
+		case WHILE:
+			printf(": '%s' não era esperado (WHILE)", yytext);
+			break;
+		case ELSE:
+			printf(": '%s' não era esperado (ELSE)", yytext);
+			break;
+		case IF:
+			printf(": '%s' não era esperado (IF)", yytext);
+			break;
+		case ABREPARENTESES:
+			printf(": '%s' não era esperado (RETURN)", yytext);
+			break;
+		case FECHAPARENTESES:
+			printf(": '%s' não era esperado (FECHAPARENTESES)", yytext);
+			break;
+		case RETURN:
+			printf(": '%s' não era esperado (RETURN)", yytext);
+			break;
+		case COMMA:
+			printf(": '%s' não era esperado (COMA)", yytext);
+			break;
+		case ABRECHAVES:
+			printf(": '%s' não era esperado (ABRECHAVES)", yytext);
+			break;
+		case FECHACHAVES:
+			printf(": '%s' não era esperado (FECHACHAVES)", yytext);
+			break;
+		case SEMICOLON:
+			printf(": '%s' não era esperado (SEMICOLON)", yytext);
+			break;
+		case ATRIB:
+			printf(": '%s' não era esperado (ATRIB)", yytext);
+			break;
+		case ABRECOLCHETES:
+			printf(": '%s' não era esperado (ABRECOLCHETES)", yytext);
+			break;
+		case FECHACOLCHETES:
+			printf(": '%s' não era esperado (FECHACOLCHETES)", yytext);
+			break;
+		case EQ:
+			printf(": '%s' não era esperado (EQ)", yytext);
+			break;
+		case NEQ:
+			printf(": '%s' não era esperado (NEQ)", yytext);
+			break;
+		case LT:
+			printf(": '%s' não era esperado (LT)", yytext);
+			break;
+		case LET:
+			printf(": '%s' não era esperado (LET)", yytext);
+			break;
+		case GT:
+			printf(": '%s' não era esperado (GT)", yytext);
+			break;
+		case GET:
+			printf(": '%s' não era esperado (GET)", yytext);
+			break;
+		case ERRO:
+			printf(": '%s' não era esperado (ERRO)", yytext);
+			break;
+	}
+	printf("\n");
 }
 
 int yylex(void)
-{ return getToken(); }
+{ return (auxErro = getToken()); }
 
 PONTEIRONO parse(void)
 { 

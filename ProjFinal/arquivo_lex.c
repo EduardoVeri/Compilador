@@ -337,10 +337,10 @@ static yyconst int yy_meta[24] =
 
 static yyconst short int yy_base[34] =
     {   0,
-        0,    0,   36,   37,   37,   37,    8,   37,   37,   37,
-       37,   37,   37,   27,   21,   37,   17,   16,   15,    7,
-       37,   37,   37,   37,   37,   37,   37,   17,   37,   37,
-       37,   10,   37
+        0,    0,   38,   39,   39,   39,    8,   39,   39,   39,
+       39,   39,   39,   29,   23,   39,   19,   16,   13,   12,
+       39,   39,   39,   39,   39,   39,   39,   13,   39,   39,
+       39,   15,   39
     } ;
 
 static yyconst short int yy_def[34] =
@@ -351,24 +351,26 @@ static yyconst short int yy_def[34] =
        33,   33,    0
     } ;
 
-static yyconst short int yy_nxt[61] =
+static yyconst short int yy_nxt[63] =
     {   0,
         4,    5,    6,    5,    7,    8,    9,   10,   11,   12,
        13,   14,   15,   16,   17,   18,   19,   20,   20,   21,
-       22,   23,   24,   25,   32,   32,   26,   32,   32,   28,
-       31,   30,   29,   28,   27,   33,    3,   33,   33,   33,
+       22,   23,   24,   25,   32,   28,   26,   32,   31,   32,
+       32,   30,   32,   32,   29,   28,   27,   33,    3,   33,
        33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33
     } ;
 
-static yyconst short int yy_chk[61] =
+static yyconst short int yy_chk[63] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    7,   20,   20,    7,   32,   32,   28,
-       19,   18,   17,   15,   14,    3,   33,   33,   33,   33,
+        1,    1,    1,    7,   20,   28,    7,   32,   19,   20,
+       20,   18,   32,   32,   17,   15,   14,    3,   33,   33,
        33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   33
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -400,12 +402,8 @@ int firstTime = 1;
 int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
-PONTEIRONO parse(void);
-void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo);
-void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
-int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo);
 
-#line 409 "arquivo_lex.c"
+#line 407 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -567,10 +565,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 27 "lexer.l"
+#line 23 "lexer.l"
 
 
-#line 574 "arquivo_lex.c"
+#line 572 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -627,7 +625,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 37 );
+		while ( yy_base[yy_current_state] != 39 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -655,12 +653,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 25 "lexer.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 27 "lexer.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -681,7 +679,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 49 "lexer.l"
+#line 45 "lexer.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -694,7 +692,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 56 "lexer.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			strcpy(auxNome, yytext);
@@ -703,7 +701,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 66 "lexer.l"
+#line 62 "lexer.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -716,7 +714,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 72 "lexer.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -724,7 +722,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 77 "lexer.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -732,7 +730,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 86 "lexer.l"
+#line 82 "lexer.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -740,7 +738,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 92 "lexer.l"
+#line 88 "lexer.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -748,7 +746,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 98 "lexer.l"
+#line 94 "lexer.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -756,7 +754,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 103 "lexer.l"
+#line 99 "lexer.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -764,7 +762,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 109 "lexer.l"
+#line 105 "lexer.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -772,7 +770,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 114 "lexer.l"
+#line 110 "lexer.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -780,7 +778,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 119 "lexer.l"
+#line 115 "lexer.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -788,7 +786,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 124 "lexer.l"
+#line 120 "lexer.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -796,7 +794,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 129 "lexer.l"
+#line 125 "lexer.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -804,7 +802,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 134 "lexer.l"
+#line 130 "lexer.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -812,7 +810,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 139 "lexer.l"
+#line 135 "lexer.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -820,7 +818,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 144 "lexer.l"
+#line 140 "lexer.l"
 {
 	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
@@ -828,7 +826,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 149 "lexer.l"
+#line 145 "lexer.l"
 {
 	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
@@ -836,7 +834,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 154 "lexer.l"
+#line 150 "lexer.l"
 {
 	printf("\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
@@ -844,7 +842,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 159 "lexer.l"
+#line 155 "lexer.l"
 {
 	printf("\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
@@ -852,7 +850,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 164 "lexer.l"
+#line 160 "lexer.l"
 {
 		printf("\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
@@ -860,14 +858,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 169 "lexer.l"
+#line 165 "lexer.l"
 {
 		printf("\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 174 "lexer.l"
+#line 170 "lexer.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -875,23 +873,24 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 179 "lexer.l"
+#line 175 "lexer.l"
 {if(arquivoEntrada == stdin) return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 181 "lexer.l"
+#line 177 "lexer.l"
 {
-	printf(ANSI_COLOR_RED "ERRO LEXICO: '%s' LINHA %d\n" ANSI_COLOR_RESET, yytext, qntLinhas);
+	printf(ANSI_COLOR_RED "\nERRO LEXICO, LINHA: %d" ANSI_COLOR_RESET, qntLinhas);
+	printf(": %s não identificado na linguagem\n", yytext);
 	return ERRO;
   }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 186 "lexer.l"
+#line 183 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 895 "arquivo_lex.c"
+#line 894 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1779,9 +1778,10 @@ int main()
 	return 0;
 	}
 #endif
-#line 186 "lexer.l"
+#line 183 "lexer.l"
 
 
+//Funcao que verifica se o id eh uma palavra reservada
 int tabelaNomes(enum yytokentype *token){
 	char aux[20];
 	int flag = 0;
@@ -1822,6 +1822,7 @@ int tabelaNomes(enum yytokentype *token){
 	return flag;
 }
 
+//Mostra a linha inteira na tela
 void mostrarTela(char palavra[]){
 	int i = 0;
 	char ch;
@@ -1838,6 +1839,7 @@ void mostrarTela(char palavra[]){
 	printf("\n");
 }
 
+//Funcao que copia o arquivo de entrada para um arquivo de saida extra
 void copiar(FILE* velho){
 	FILE *novo;
 	novo=fopen("copia.txt","w");
@@ -1853,6 +1855,7 @@ void copiar(FILE* velho){
 	return;
 }
 
+//Funcao que retorna o proximo token
 enum yytokentype getToken(void)
 { 	
 	if(firstTime == 1){
@@ -1860,6 +1863,8 @@ enum yytokentype getToken(void)
 		yyin = arquivoEntrada;
 
 		if(arquivoEntrada == stdin){
+			printf("Bem vindo ao compilador de C-!\n");
+			printf("Para sair, digite !N e aperte enter\n(O valor sera identificado como um token para finalizar as entradas)\n");
 			printf("Digite o codigo fonte: \n");
 			copiaArquivo = NULL;
 		}

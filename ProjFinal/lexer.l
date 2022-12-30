@@ -14,10 +14,6 @@ int firstTime = 1;
 int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
-PONTEIRONO parse(void);
-void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* escopo);
-void mostrarErroSemantico(erroSemantico erro, char* nome, int linha);
-int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice, char* escopo);
 
 %}
 
@@ -63,7 +59,7 @@ LETRA [a-zA-Z]
 		  	return NUM; 
 		 }
 		  
-{LETRA}{LETRA}* {	
+{LETRA}({LETRA}|{DIGIT})* {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
 				printf("\t%d: ID, %s\n", qntLinhas, yytext);
@@ -179,12 +175,14 @@ LETRA [a-zA-Z]
 !N {if(arquivoEntrada == stdin) return 0;}
 
 . {
-	printf(ANSI_COLOR_RED "ERRO LEXICO: '%s' LINHA %d\n" ANSI_COLOR_RESET, yytext, qntLinhas);
+	printf(ANSI_COLOR_RED "\nERRO LEXICO, LINHA: %d" ANSI_COLOR_RESET, qntLinhas);
+	printf(": %s não identificado na linguagem\n", yytext);
 	return ERRO;
   }
 
 %%
 
+//Funcao que verifica se o id eh uma palavra reservada
 int tabelaNomes(enum yytokentype *token){
 	char aux[20];
 	int flag = 0;
@@ -225,6 +223,7 @@ int tabelaNomes(enum yytokentype *token){
 	return flag;
 }
 
+//Mostra a linha inteira na tela
 void mostrarTela(char palavra[]){
 	int i = 0;
 	char ch;
@@ -241,6 +240,7 @@ void mostrarTela(char palavra[]){
 	printf("\n");
 }
 
+//Funcao que copia o arquivo de entrada para um arquivo de saida extra
 void copiar(FILE* velho){
 	FILE *novo;
 	novo=fopen("copia.txt","w");
@@ -256,6 +256,7 @@ void copiar(FILE* velho){
 	return;
 }
 
+//Funcao que retorna o proximo token
 enum yytokentype getToken(void)
 { 	
 	if(firstTime == 1){
@@ -263,6 +264,8 @@ enum yytokentype getToken(void)
 		yyin = arquivoEntrada;
 
 		if(arquivoEntrada == stdin){
+			printf("Bem vindo ao compilador de C-!\n");
+			printf("Para sair, digite !N e aperte enter\n(O valor sera identificado como um token para finalizar as entradas)\n");
 			printf("Digite o codigo fonte: \n");
 			copiaArquivo = NULL;
 		}
