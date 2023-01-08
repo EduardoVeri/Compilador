@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+#define MAXLEXEMA 26 // Tamanho máximo do lexema
+
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
