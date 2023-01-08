@@ -240,21 +240,6 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     indiceVetor++;
 }
 
-
-PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador){
-    int indice = longhash(nomeIdentificador);
-    PONTEIROITEM item = tabelaHash[indice];
-
-    while(item != NULL){
-        if(strcmp(item->nomeIdentificador, nomeIdentificador) == 0)
-            return item;
-        item = item->proximo;
-    }
-
-    return NULL;
-}
-
-
 void codIntDeclVarDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* var = NULL;
     INSTRUCAO* param = NULL;
@@ -409,20 +394,6 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     codigoIntermediario[indiceVetor] = instrucaoId;
     indiceVetor++;
-}
-
-PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema){
-    int indice = longhash(lexema);
-    PONTEIROITEM item = tabelaHash[indice];
-
-    while(item != NULL){
-        if(item->tipoIdentificador == FunDeclK && strcmp(item->nomeIdentificador, lexema) == 0){
-            return item;
-        }
-        item = item->proximo;
-    }
-
-    return item;
 }
 
 void codIntExpCall(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){

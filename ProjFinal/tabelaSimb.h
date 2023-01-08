@@ -47,4 +47,8 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]);
 //Procura um item na tabela de simbolos, especifico para a analise semantica de expressoes
 PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoEXP tipoIdentificador);
 
+PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
+
+PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador);
+
 #endif

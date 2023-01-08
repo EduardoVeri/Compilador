@@ -127,6 +127,5 @@ int main(int argc, char *argv[]){
     if(copiaArquivo != NULL)
         fclose(copiaArquivo);
 
-
     return 0;
 }
