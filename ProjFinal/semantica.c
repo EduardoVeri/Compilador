@@ -5,6 +5,8 @@
 #include "semantica.h"
 #include "global.h"
 
+int teveErroSemantico = 0;
+
 /*
 Funcoes para percorrer todos os nos da arvore sintatica e adicionar os itens de declaracao, como variaveis e funcoes,
 na tabela de simbolos 
@@ -185,6 +187,8 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice,
 
 //Mostra uma mensagem de erro sobre o determinado erro semantico
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
+	teveErroSemantico++;
+	
 	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_RESET, linha);
 	switch (erro){
 		case DeclVoidVar:

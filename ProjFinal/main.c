@@ -50,6 +50,11 @@ int main(int argc, char *argv[]){
 
     //Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
+        printf(ANSI_COLOR_RED);
+        printf("\nNao foi possivel realizar a analise semantica.\n");
+        printf("Existem erros sintaticos ou lexicos no codigo.\n");
+        printf(ANSI_COLOR_RESET);
+
         if(arquivoEntrada != stdin)
             fclose(arquivoEntrada);
         fclose(copiaArquivo);
@@ -82,27 +87,39 @@ int main(int argc, char *argv[]){
 	//imprime a tabela de simbolos
 	imprimirTabela(tabelaHash);
 
-    /* TODO: Caso tenha algum erro semantico, nao mostrar o codigo intermediario*/
-    
+    /* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
     printf("============== Codigo Intermediario ===============\n");
     
-    //Cria o codigo intermediario
-    codigoIntermediario = inicializaVetor();
-    criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
-    //Adiciona o HALT no final do codigo intermediario
-    codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
+    if(teveErroSemantico == 0){    
+        //Cria o codigo intermediario
+        codigoIntermediario = inicializaVetor();
+        criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
+        
+        //Adiciona o HALT no final do codigo intermediario
+        codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
+        
+        //Imprime o codigo intermediario
+        imprimeCodigoIntermediario();
 
-    //Imprime o codigo intermediario
-    imprimeCodigoIntermediario();
+        //Libera a memoria alocada para o codigo intermediario
+        desalocaVetor();
+    }
+    else{
+        //Mostrar uma mensagem de erro sobre os erros semanticos
+        printf(ANSI_COLOR_RED);
+        //Verifica se teve apenas um erro semantico para a escrita no singular ou plural
+        if(teveErroSemantico == 1)
+            printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erro semantico.\n", teveErroSemantico);
+        else if(teveErroSemantico > 1)
+            printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erros semanticos.\n", teveErroSemantico);
+        printf(ANSI_COLOR_RESET);
+    }
 
 	//libera a memória alocada para a arvore sintatica
 	desalocaArvore(arvoreSintatica);
 
 	//libera a memoria alocada para a tabela de simbolos
 	apagarTabela(tabelaHash);
-
-    //Libera a memoria alocada para o codigo intermediario
-    desalocaVetor();
 
     //Fecha os arquivos abertos
     if(arquivoEntrada != stdin)
