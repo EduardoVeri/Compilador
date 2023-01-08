@@ -353,14 +353,20 @@ void codIntExpOpRel(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         instrucaoOp = criaInstrucao("EQ");
     }
     else if(strcmp(arvoreSintatica->lexema, "!=") == 0){
-        instrucaoOp = criaInstrucao("NE");
+        instrucaoOp = criaInstrucao("NEQ");
     }
     else if(strcmp(arvoreSintatica->lexema, ">") == 0){
         instrucaoOp = criaInstrucao("GT");
     }
     else if(strcmp(arvoreSintatica->lexema, "<") == 0){
         instrucaoOp = criaInstrucao("LT");
-    } /*TODO: Adicionar as demais operacoes.*/
+    }
+    else if(strcmp(arvoreSintatica->lexema, ">=") == 0){
+        instrucaoOp = criaInstrucao("GET");
+    }
+    else if(strcmp(arvoreSintatica->lexema, "<=") == 0){
+        instrucaoOp = criaInstrucao("LET");
+    } 
     
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
     instrucaoOp->arg1 = criaEndereco(IntConst, numReg-1, NULL, 1);
@@ -462,7 +468,7 @@ void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 }
 
 void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
-    INSTRUCAO* instrucaoIFF= NULL;
+    INSTRUCAO* instrucaoIFF = NULL;
     INSTRUCAO* instrucaoGOTO = NULL;
     INSTRUCAO* instrucaoLabel1 = NULL;
     INSTRUCAO* instrucaoLabel2 = NULL;
@@ -488,12 +494,14 @@ void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     instrucaoLabel2->arg3 = criaEndereco(Vazio, 0, NULL, 0);
     numLabel++;
 
+    instrucaoIFF = criaInstrucao("IFF");
+
+    instrucaoIFF->arg2 = criaEndereco(IntConst, numLabel-1, NULL, 2);
+    instrucaoIFF->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
 
-    instrucaoIFF = criaInstrucao("IFF");
     instrucaoIFF->arg1 = criaEndereco(IntConst, numReg - 1, NULL, 1);
-    instrucaoIFF->arg2 = criaEndereco(IntConst, numLabel, NULL, 2);
-    instrucaoIFF->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 
     codigoIntermediario[indiceVetor] = instrucaoIFF;
     indiceVetor++;
