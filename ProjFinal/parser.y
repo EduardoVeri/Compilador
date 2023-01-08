@@ -104,14 +104,16 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 
 						strcpy(aux->lexema, pilha[indPilha--]);
 
-						nos[qntNos++] = aux;
+						nos[qntNos] = aux;
+						qntNos++;
 
 						strcpy(aux2->lexema, pilha[indPilha--]);
 						
 						adicionaFilho($$, aux2);
 						adicionaFilho($$, aux);
 
-						nos[qntNos++] = aux;
+						nos[qntNos] = aux2;
+						qntNos++;
 					}
 					;
 

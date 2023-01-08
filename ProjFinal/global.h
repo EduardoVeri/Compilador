@@ -24,7 +24,8 @@ typedef enum {
     FuncaoNaoDeclarada, //Quando uma função é usada sem ser declarada.
     AtribFuncVoid, //Quando uma função do tipo void é atribuída a uma variável.
     FuncMainNaoDeclarada, //Quando a função main não é declarada.
-    VetorNaoDeclarado //Quando um vetor é usado sem ser declarado.
+    VetorNaoDeclarado, //Quando um vetor é usado sem ser declarado.
+    ChamadaFuncao //Quando uma funcao gostaria de ser chamada, porem faltou os ()
 } erroSemantico;
 
 typedef enum {DECLARACAO, EXPRESSAO, NENHUM} tipoNo; // Tipo de nó.
