@@ -150,7 +150,11 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	}
 
     //Percorre o irmao do no atual
-	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
+
+	if(strcmp(escopo, "global") == 0)
+		percorrerArvore(arvoreSintatica->irmao, tabelaHash, escopo);
+	else
+		percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
 
 //Funcao que verifica se a declaracao de uma funcao ou var ja existe
