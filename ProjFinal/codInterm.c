@@ -9,6 +9,8 @@ int numReg = 1; //Numero do registrador
 int indiceVetor = 0; //Indice do vetor de codigo intermediario
 int numLabel = 0; //Numero do label
 
+INSTRUCAO* funcLabel = NULL;
+
 ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     ENDERECO* endereco = (ENDERECO*) malloc(sizeof(ENDERECO));
     
@@ -65,60 +67,68 @@ INSTRUCAO** inicializaVetor(){
 }
 
 void imprimeCodigoIntermediario(){
-    for(int i = 0; i < 1000 && codigoIntermediario[i] != NULL; i++){
-        if(codigoIntermediario[i] != NULL){
-            printf("%s, ", codigoIntermediario[i]->op);
-            if(codigoIntermediario[i]->arg1 != NULL){
-                if(codigoIntermediario[i]->arg1->tipo == IntConst){
-                    if(codigoIntermediario[i]->arg1->boolReg == 1)
-                        printf("$t%d, ", codigoIntermediario[i]->arg1->val);
-                    else
-                        printf("%d, ", codigoIntermediario[i]->arg1->val);
+    for(int i = 0; i < MAX_INSTRUCTION && codigoIntermediario[i] != NULL; i++){
+        printf("%s, ", codigoIntermediario[i]->op);
+        if(codigoIntermediario[i]->arg1 != NULL){
+            if(codigoIntermediario[i]->arg1->tipo == IntConst){
+                if(codigoIntermediario[i]->arg1->boolReg == 1){
+                    printf("$t%d, ", codigoIntermediario[i]->arg1->val);
                 }
-                else if(codigoIntermediario[i]->arg1->tipo == String){
-                    printf("%s, ", codigoIntermediario[i]->arg1->nome);
+                else if(codigoIntermediario[i]->arg1->boolReg == 2){
+                    printf("L%d, ", codigoIntermediario[i]->arg1->val);
                 }
                 else{
-                    printf("-, ");
+                    printf("%d, ", codigoIntermediario[i]->arg1->val);
                 }
+            }
+            else if(codigoIntermediario[i]->arg1->tipo == String){
+                printf("%s, ", codigoIntermediario[i]->arg1->nome);
             }
             else{
                 printf("-, ");
             }
-            if(codigoIntermediario[i]->arg2 != NULL){
-                if(codigoIntermediario[i]->arg2->tipo == IntConst){
-                    if(codigoIntermediario[i]->arg2->boolReg == 1)
-                        printf("$t%d, ", codigoIntermediario[i]->arg2->val);
-                    else
-                        printf("%d, ", codigoIntermediario[i]->arg2->val);
+        }
+        else{
+            printf("-, ");
+        }
+        if(codigoIntermediario[i]->arg2 != NULL){
+            if(codigoIntermediario[i]->arg2->tipo == IntConst){
+                if(codigoIntermediario[i]->arg2->boolReg == 1){
+                    printf("$t%d, ", codigoIntermediario[i]->arg2->val);
                 }
-                else if(codigoIntermediario[i]->arg2->tipo == String){
-                    printf("%s, ", codigoIntermediario[i]->arg2->nome);
+                else if(codigoIntermediario[i]->arg2->boolReg == 2){
+                    printf("L%d, ", codigoIntermediario[i]->arg2->val);
                 }
                 else{
-                    printf("-, ");
+                    printf("%d, ", codigoIntermediario[i]->arg2->val);
                 }
+            }
+            else if(codigoIntermediario[i]->arg2->tipo == String){
+                printf("%s, ", codigoIntermediario[i]->arg2->nome);
             }
             else{
                 printf("-, ");
             }
-            if(codigoIntermediario[i]->arg3 != NULL){
-                if(codigoIntermediario[i]->arg3->tipo == IntConst){
-                    if(codigoIntermediario[i]->arg3->boolReg == 1)
-                        printf("$t%d\n", codigoIntermediario[i]->arg3->val);
-                    else
-                        printf("%d\n", codigoIntermediario[i]->arg3->val);
-                }
-                else if(codigoIntermediario[i]->arg3->tipo == String){
-                    printf("%s\n", codigoIntermediario[i]->arg3->nome);
-                }
-                else{
-                    printf("-\n");
-                }
+        }
+        else{
+            printf("-, ");
+        }
+        if(codigoIntermediario[i]->arg3 != NULL){
+            if(codigoIntermediario[i]->arg3->tipo == IntConst){
+                if(codigoIntermediario[i]->arg3->boolReg == 1)
+                    printf("$t%d\n", codigoIntermediario[i]->arg3->val);
+                else
+                    printf("%d\n", codigoIntermediario[i]->arg3->val);
+            }
+            else if(codigoIntermediario[i]->arg3->tipo == String){
+                printf("%s\n", codigoIntermediario[i]->arg3->nome);
             }
             else{
                 printf("-\n");
             }
+        }
+        else{
+            printf("-\n");
         }
     }
 }
@@ -131,8 +141,6 @@ void codIntDeclIF(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* instrucaoIF = NULL;
 
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
-
-    /*TODO: Arrumar o numero dos registradores em variaveis ja salvas*/
 
     /* Cria a instrucao para o IF false */
     instrucaoIF = criaInstrucao("IFF");
@@ -150,17 +158,8 @@ void codIntDeclIF(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     numLabel++;
 
-    /* Cria a instrucao para o GOTO */
-    instrucaoGoto = criaInstrucao("GOTO");
-    instrucaoGoto->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
-    instrucaoGoto->arg2 = criaEndereco(Vazio, 0, NULL, 0);
-    instrucaoGoto->arg3 = criaEndereco(Vazio, 0, NULL, 0);
-
     /* Avanca para o filho do IF caso a operacao seja verdadeira */
     criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
-
-    codigoIntermediario[indiceVetor] = instrucaoGoto;
-    indiceVetor++;
 
     codigoIntermediario[indiceVetor] = instrucaoLabel;
     indiceVetor++;
@@ -183,9 +182,21 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     func->arg3 = criaEndereco(Vazio, 0, NULL, 0);
     codigoIntermediario[indiceVetor] = func;
     indiceVetor++;
+    
+    funcLabel = criaInstrucao("LABEL");
+    funcLabel->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    funcLabel->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    funcLabel->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+    numLabel++;
+
 
     if(arvoreSintatica->filho[0]->tipoDeclaracao == ParamVoid){
         criarCodigoIntermediario(arvoreSintatica->filho[1]->filho[0], tabelaHash, 1);
+
+        codigoIntermediario[indiceVetor] = funcLabel;
+        indiceVetor++;
+
         codigoIntermediario[indiceVetor] = criaInstrucao("END");
         codigoIntermediario[indiceVetor]->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
         indiceVetor++;
@@ -216,8 +227,10 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         noParam = noParam->irmao;
     }
 
-
     criarCodigoIntermediario(arvoreSintatica->filho[1]->filho[0], tabelaHash, 1);
+
+    codigoIntermediario[indiceVetor] = funcLabel;
+    indiceVetor++;
 
     codigoIntermediario[indiceVetor] = criaInstrucao("END");
     codigoIntermediario[indiceVetor]->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
@@ -245,7 +258,8 @@ void codIntDeclVarDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
 void codIntDeclReturn(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* ret = NULL;
-    
+    INSTRUCAO* GOTO = NULL;
+
     ret = criaInstrucao("RET");
     if(arvoreSintatica->tipoDeclaracao == ReturnINT){
         criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
@@ -258,6 +272,14 @@ void codIntDeclReturn(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     ret->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 
     codigoIntermediario[indiceVetor] = ret;
+    indiceVetor++;
+
+    GOTO = criaInstrucao("GOTO");
+    GOTO->arg1 = criaEndereco(IntConst, funcLabel->arg1->val, NULL, 2);
+    GOTO->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    GOTO->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+    codigoIntermediario[indiceVetor] = GOTO;
     indiceVetor++;
 
 }
