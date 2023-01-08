@@ -15,6 +15,10 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 
+
+int indPilha = -1;
+char pilha[10][MAXLEXEMA];
+
 %}
 
 DIGIT [0-9]
@@ -64,7 +68,12 @@ LETRA [a-zA-Z]
 				printf("valor reduzido para apenas %s\n", yytext);
 			}
 			
-			strcpy(auxNome, yytext);
+			//strcpy(auxNome, yytext);
+			
+			indPilha++;
+			strcpy(pilha[indPilha], yytext);
+			
+
 		  	return NUM; 
 		 }
 		  
@@ -83,7 +92,11 @@ LETRA [a-zA-Z]
 				printf("nome reduzido para '%s'\n", yytext);
 			}
 
-			strcpy(auxNome, yytext);
+			//strcpy(auxNome, yytext);
+
+			indPilha++;
+			strcpy(pilha[indPilha], yytext);
+
 			return token;
 		 }
 		

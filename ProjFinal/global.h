@@ -5,6 +5,8 @@
 
 #define MAXLEXEMA 31 // Tamanho máximo do lexema
 
+extern int indPilha;
+extern char pilha[10][MAXLEXEMA]; 
 extern int qntLinhas; // Contador de linhas
 extern char auxNome[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador

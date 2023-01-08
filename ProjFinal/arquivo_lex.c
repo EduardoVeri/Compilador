@@ -403,7 +403,11 @@ int tabelaNomes(enum yytokentype *token);
 void copiar(FILE* velho);
 void mostrarTela(char palavra[]);
 
-#line 407 "arquivo_lex.c"
+
+int indPilha = -1;
+char pilha[10][MAXLEXEMA];
+
+#line 411 "arquivo_lex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -565,10 +569,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 23 "lexer.l"
+#line 27 "lexer.l"
 
 
-#line 572 "arquivo_lex.c"
+#line 576 "arquivo_lex.c"
 
 	if ( yy_init )
 		{
@@ -653,12 +657,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 29 "lexer.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 31 "lexer.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -679,7 +683,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 49 "lexer.l"
 {
 	qntLinhas++;
 	if (copiaArquivo != NULL){
@@ -692,7 +696,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "lexer.l"
+#line 60 "lexer.l"
 {
 			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
 			
@@ -704,13 +708,18 @@ YY_RULE_SETUP
 				printf("valor reduzido para apenas %s\n", yytext);
 			}
 			
-			strcpy(auxNome, yytext);
+			//strcpy(auxNome, yytext);
+			
+			indPilha++;
+			strcpy(pilha[indPilha], yytext);
+			
+
 		  	return NUM; 
 		 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "lexer.l"
+#line 80 "lexer.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
@@ -726,13 +735,17 @@ YY_RULE_SETUP
 				printf("nome reduzido para '%s'\n", yytext);
 			}
 
-			strcpy(auxNome, yytext);
+			//strcpy(auxNome, yytext);
+
+			indPilha++;
+			strcpy(pilha[indPilha], yytext);
+
 			return token;
 		 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 90 "lexer.l"
+#line 103 "lexer.l"
 {
 	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
@@ -740,7 +753,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 95 "lexer.l"
+#line 108 "lexer.l"
 {
 	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
@@ -748,7 +761,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 100 "lexer.l"
+#line 113 "lexer.l"
 {
 	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
@@ -756,7 +769,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 106 "lexer.l"
+#line 119 "lexer.l"
 {
 	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
@@ -764,7 +777,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 112 "lexer.l"
+#line 125 "lexer.l"
 {
 	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
@@ -772,7 +785,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 117 "lexer.l"
+#line 130 "lexer.l"
 {
 	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
@@ -780,7 +793,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 123 "lexer.l"
+#line 136 "lexer.l"
 {
 	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
@@ -788,7 +801,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 128 "lexer.l"
+#line 141 "lexer.l"
 {
 	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
@@ -796,7 +809,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 133 "lexer.l"
+#line 146 "lexer.l"
 {
 	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
@@ -804,7 +817,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 138 "lexer.l"
+#line 151 "lexer.l"
 {
 	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
@@ -812,7 +825,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 143 "lexer.l"
+#line 156 "lexer.l"
 {
 	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
@@ -820,7 +833,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 148 "lexer.l"
+#line 161 "lexer.l"
 {
 	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
@@ -828,7 +841,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 153 "lexer.l"
+#line 166 "lexer.l"
 {
 	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
@@ -836,7 +849,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 158 "lexer.l"
+#line 171 "lexer.l"
 {
 	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
@@ -844,7 +857,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 163 "lexer.l"
+#line 176 "lexer.l"
 {
 	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
@@ -852,7 +865,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 168 "lexer.l"
+#line 181 "lexer.l"
 {
 	printf("\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
@@ -860,7 +873,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 173 "lexer.l"
+#line 186 "lexer.l"
 {
 	printf("\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
@@ -868,7 +881,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 178 "lexer.l"
+#line 191 "lexer.l"
 {
 		printf("\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
@@ -876,14 +889,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 183 "lexer.l"
+#line 196 "lexer.l"
 {
 		printf("\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 188 "lexer.l"
+#line 201 "lexer.l"
 {
 		printf("\t%d: EOF\n", qntLinhas);
 		return 0;
@@ -891,12 +904,12 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 193 "lexer.l"
+#line 206 "lexer.l"
 {if(arquivoEntrada == stdin) return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 195 "lexer.l"
+#line 208 "lexer.l"
 {
 	printf(ANSI_COLOR_RED "\nERRO LEXICO, LINHA: %d" ANSI_COLOR_RESET, qntLinhas);
 	printf(": %s não identificado na linguagem\n", yytext);
@@ -905,10 +918,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 201 "lexer.l"
+#line 214 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 912 "arquivo_lex.c"
+#line 925 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1796,7 +1809,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 201 "lexer.l"
+#line 214 "lexer.l"
 
 
 //Funcao que verifica se o id eh uma palavra reservada

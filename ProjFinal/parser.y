@@ -82,7 +82,11 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$->numLinha = qntLinhas;
 					
 						PONTEIRONO aux = novoNo();
-						strcpy(aux->lexema, id);
+
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
 						nos[qntNos] = aux;
@@ -96,14 +100,22 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$->numLinha = qntLinhas;
 
 						PONTEIRONO aux = novoNo();
-						strcpy(aux->lexema, id);
+
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
 						nos[qntNos] = aux;
 						qntNos++;
 
 						aux = novoNo();
-						strcpy(aux->lexema, auxNome);
+
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy(aux->lexema, auxNome);
 						adicionaFilho($$, aux);
 
 						nos[qntNos] = aux;
@@ -145,7 +157,11 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 
 fun_id				: ID {
 						$$ = novoNo();
-						strcpy($$->lexema, auxNome);
+
+						strcpy($$->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy($$->lexema, auxNome);
 						$$->numLinha = qntLinhas;
 
 						nos[qntNos] = $$;
@@ -185,7 +201,11 @@ param				: tipo_especificador ID {
 						$$->tipoDeclaracao = VarParamK;
 
 						PONTEIRONO aux = novoNo();
-						strcpy(aux->lexema, id);
+
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
 						nos[qntNos] = aux;
@@ -198,7 +218,11 @@ param				: tipo_especificador ID {
 						$$->numLinha = qntLinhas;
 						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
-						strcpy(aux->lexema, id);
+
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);		
 
 						nos[qntNos] = aux;
@@ -338,43 +362,33 @@ var 				: ID {
 						$$->tipo = EXPRESSAO;
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = IdK;
-						strcpy($$->lexema, id);
+						
+						strcpy($$->lexema, pilha[indPilha]);
+						indPilha--;
+						//strcpy($$->lexema, id);
 
 						nos[qntNos] = $$;
 						qntNos++;
 
 					}
-					| ID regra_teste {
+					| ID ABRECOLCHETES expressao FECHACOLCHETES{
 						$$ = novoNo();
+
 						$$->tipo = EXPRESSAO;
-						$$->tipoExpressao = VetorK;
-						$$->numLinha = qntLinhas;
-						
-						strcpy($$->lexema, id);
-						adicionaFilho($$, $2);
-
-						printf("\n\n----->ID %d: %s\n", teste, $$->lexema);
-						teste++;
-						nos[qntNos] = $$;
-						qntNos++;
-
-						/*$$->tipo = EXPRESSAO;
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = VetorK;
 						
-						strcpy($$->lexema, id);
+						//strcpy($$->lexema, id);
+						strcpy($$->lexema, pilha[indPilha]);
+						indPilha--;
+
 						adicionaFilho($$, $3);
 
 						nos[qntNos] = $$;
-						qntNos++;*/
+						qntNos++;
 						
 					}
 					;
-
-regra_teste			: ABRECOLCHETES expressao FECHACOLCHETES{
-						$$ = $2;
-						
-}
 			
 simples_expressao	: soma_expressao relacional soma_expressao {
 						$$ = $2;
@@ -514,7 +528,11 @@ fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = $2;}
 						$$->tipo = EXPRESSAO;
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = ConstK;
-						strcpy($$->lexema, auxNome);
+
+						strcpy($$->lexema, pilha[indPilha]);
+						indPilha--;
+
+						//strcpy($$->lexema, auxNome);
 
 						nos[qntNos] = $$;
 						qntNos++;
