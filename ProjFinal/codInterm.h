@@ -33,6 +33,7 @@ INSTRUCAO** codigoIntermediario;
 extern int numReg; //Numero do registrador
 extern int indiceVetor; //Indice do vetor de codigo intermediario
 extern int numLabel; //Numero do label
+extern char funcName[MAXLEXEMA]; //Nome da funcao
 
 //Funcao principal para a criacao do codigo intermediario
 void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], int boolean);
@@ -42,5 +43,6 @@ INSTRUCAO** inicializaVetor();
 void desalocaVetor();
 INSTRUCAO* criaInstrucao(char* op);
 void imprimeCodigoIntermediario();
+PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
 
 #endif

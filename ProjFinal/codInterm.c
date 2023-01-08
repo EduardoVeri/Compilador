@@ -10,6 +10,7 @@ int indiceVetor = 0; //Indice do vetor de codigo intermediario
 int numLabel = 0; //Numero do label
 
 INSTRUCAO* funcLabel = NULL;
+char funcName[MAXLEXEMA] = "global"; 
 
 ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     ENDERECO* endereco = (ENDERECO*) malloc(sizeof(ENDERECO));
@@ -176,6 +177,8 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* func = NULL;
     INSTRUCAO* param = NULL;
 
+    strcpy(funcName, arvoreSintatica->filho[1]->lexema);
+
     func = criaInstrucao("FUN");
     func->arg1 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
     func->arg2 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
@@ -237,13 +240,40 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     indiceVetor++;
 }
 
+
+PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador){
+    int indice = longhash(nomeIdentificador);
+    PONTEIROITEM item = tabelaHash[indice];
+
+    while(item != NULL){
+        if(strcmp(item->nomeIdentificador, nomeIdentificador) == 0)
+            return item;
+        item = item->proximo;
+    }
+
+    return NULL;
+}
+
+
 void codIntDeclVarDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* var = NULL;
     INSTRUCAO* param = NULL;
     
     var = criaInstrucao("ALLOC");
     var->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[0]->lexema, 0);
-    var->arg2 = criaEndereco(String, 0, "Escopo", 0); //TODO: Adicionar o nome do escopo
+
+    PONTEIROITEM itemFunc = buscarItemTabelaId(tabelaHash, arvoreSintatica->filho[0]->lexema);
+
+    if(itemFunc == NULL){
+        var->arg2 = criaEndereco(String, 0, "escopo", 0);
+    }
+    else if(strcmp(itemFunc->escopo, "global") == 0){
+        var->arg2 = criaEndereco(String, 0, "global", 0);
+    }
+    else{
+        var->arg2 = criaEndereco(String, 0, itemFunc->escopo, 0);
+    }
+    
     var->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 
     if(arvoreSintatica->tipoDeclaracao == VetDeclK){

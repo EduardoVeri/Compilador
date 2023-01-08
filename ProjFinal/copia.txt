@@ -1,12 +1,17 @@
 /* Um programa para calcular o mdc
     segundo o algoritmo de euclides. */
 
+int d;
+
 int gcd (int u, int v)
 { 	
+	int batata;
 	if (v == 0) return u ;
 	else return gcd(v,u-u/v*v);
 	/* u-u/v*v == u mod v */
 }
+
+int c; /*TODO: Arrumar erro com o escopo de globais apos funcao*/
 
 void main(void)
 {	int x; int y;

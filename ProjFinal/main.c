@@ -8,7 +8,8 @@
  *  Desenvolvido por: Eduardo Verissimo Faccio
  *  RA: 148859
  *  Data: 15/01/2023
-*/
+ * 
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -59,7 +60,7 @@ int main(int argc, char *argv[]){
             fclose(arquivoEntrada);
         fclose(copiaArquivo);
         return 0;
-        //TODO - Desalocar a memoria alocada para os nos da arvore sintatica no parser
+
     }
 
     //Imprime a arvore sintatica
@@ -73,10 +74,8 @@ int main(int argc, char *argv[]){
 	inserirTabela(tabelaHash, FunDeclK, Type_Int, "input", "global", 0);
 	inserirTabela(tabelaHash, FunDeclK, Type_Void, "output", "global", 0);
 
-	char escopo[26] = "global"; 
-
 	//Percorre a arvore sintatica e adiciona os itens de declaracao na tabela de simbolos
-	percorrerArvore(arvoreSintatica, tabelaHash, escopo);
+	percorrerArvore(arvoreSintatica, tabelaHash, "global");
 
     //Verifica se a funcao main foi declarada
 	if(procuraTabelaExp(tabelaHash, "main", "global", AtivK) == NULL){
@@ -127,6 +126,7 @@ int main(int argc, char *argv[]){
     
     if(copiaArquivo != NULL)
         fclose(copiaArquivo);
+
 
     return 0;
 }
