@@ -100,26 +100,18 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						$$->numLinha = qntLinhas;
 
 						PONTEIRONO aux = novoNo();
+						PONTEIRONO aux2 = novoNo();
 
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
+						strcpy(aux->lexema, pilha[indPilha--]);
 
-						//strcpy(aux->lexema, id);
+						nos[qntNos++] = aux;
+
+						strcpy(aux2->lexema, pilha[indPilha--]);
+						
+						adicionaFilho($$, aux2);
 						adicionaFilho($$, aux);
 
-						nos[qntNos] = aux;
-						qntNos++;
-
-						aux = novoNo();
-
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
-
-						//strcpy(aux->lexema, auxNome);
-						adicionaFilho($$, aux);
-
-						nos[qntNos] = aux;
-						qntNos++;
+						nos[qntNos++] = aux;
 					}
 					;
 
