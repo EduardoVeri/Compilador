@@ -68,6 +68,7 @@ INSTRUCAO** inicializaVetor(){
 }
 
 void imprimeCodigoIntermediario(){
+    printf("============== Codigo Intermediario ===============\n");
     for(int i = 0; i < MAX_INSTRUCTION && codigoIntermediario[i] != NULL; i++){
         printf("%s, ", codigoIntermediario[i]->op);
         if(codigoIntermediario[i]->arg1 != NULL){

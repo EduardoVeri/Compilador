@@ -82,12 +82,10 @@ int main(int argc, char *argv[]){
 		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
 	}
 
-    printf("============== Tabela de Simbolos ===============\n");
 	//imprime a tabela de simbolos
 	imprimirTabela(tabelaHash);
 
     /* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
-    printf("============== Codigo Intermediario ===============\n");
     
     if(teveErroSemantico == 0){    
         //Cria o codigo intermediario

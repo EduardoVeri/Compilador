@@ -126,7 +126,7 @@ void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
 
 /*  Uma funcao de busca especifica para ser utilizada durante a 
 analise semantica, ao ser encontrado uma declaracao de expressao.
-    A Ideia dessa funcao eh buscar na tabela de simbolos se aquele
+A Ideia dessa funcao eh buscar na tabela de simbolos se aquele
 item que foi encontrado na arvore, com o tipo EXPRESSAO, foi declarado
 para ser devidademente usado. Isso corresponde a chamadas de funcoes e
 uso de parametros ou variaveis. */
@@ -283,6 +283,8 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROITEM aux = NULL;
     PONTEIROLINHA auxLinhas = NULL;
 
+    printf("============== Tabela de Simbolos ===============\n");
+    
     for(int i = 0; i < MAX; i++){
         if(tabelaHash[i] != NULL){
             aux = tabelaHash[i];
