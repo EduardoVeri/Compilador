@@ -48,7 +48,7 @@ PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema){
 }
 
 /* Funcao para inserir um item na tabela de simbolos */
-void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
+void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[MAXLEXEMA], char escopo[MAXLEXEMA], int linha){
     PONTEIROITEM aux, auxAnterior;
 
     int indice = longhash(nomeIdentificador);
@@ -284,7 +284,7 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROLINHA auxLinhas = NULL;
 
     printf("============== Tabela de Simbolos ===============\n");
-    
+
     for(int i = 0; i < MAX; i++){
         if(tabelaHash[i] != NULL){
             aux = tabelaHash[i];

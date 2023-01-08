@@ -27,7 +27,7 @@ PONTEIRONO novoNo(){
 }
 
 
-PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao){
+PONTEIRONO criaNo(char lexema[MAXLEXEMA], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao){
     PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
 
     novoNo->filho[0] = NULL;

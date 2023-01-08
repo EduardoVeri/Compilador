@@ -124,7 +124,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	PONTEIRONO auxNo = NULL;
 	PONTEIROITEM auxItem = NULL;
 
-	char auxEscopo[250];
+	char auxEscopo[MAXLEXEMA];
 
 	strcpy(auxEscopo, escopo);
 

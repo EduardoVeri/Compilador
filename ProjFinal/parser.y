@@ -11,8 +11,8 @@ static int yylex(void);
 void yyerror(char* s);
 int yyparse(void);
 
-char auxNome[26];
-char id[26];
+char auxNome[MAXLEXEMA];
+char id[MAXLEXEMA];
 int qntLinhas;
 enum yytokentype auxErro;
 
@@ -32,7 +32,7 @@ void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 PONTEIRONO parse(void);
 
-char auxLexema[26];
+char auxLexema[MAXLEXEMA];
 
 %}
 /*
@@ -620,7 +620,6 @@ void yyerror (char *s){
 			break;
 	}
 	printf("\n");
-
 
 	//Desaloca os nos ate o momento
 	for(int i = 0; i < qntNos; i++){

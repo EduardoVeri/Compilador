@@ -3,11 +3,11 @@
 
 #include <stdio.h>
 
-#define MAXLEXEMA 26 // Tamanho máximo do lexema
+#define MAXLEXEMA 31 // Tamanho máximo do lexema
 
 extern int qntLinhas; // Contador de linhas
-extern char auxNome[26]; // Variável auxiliar para guardar o nome de um identificador
-extern char id[26]; // Variável auxiliar para guardar o nome de um identificador
+extern char auxNome[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
+extern char id[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
 extern char* yytext;
 FILE * arquivoEntrada; // Arquivo de entrada
 FILE * copiaArquivo; // Cópia do arquivo de entrada
@@ -62,7 +62,7 @@ typedef struct NoArvore{
 	tipoNo tipo; // Declaracao ou Expressao
 	tipoDECL tipoDeclaracao; // Tipo da declaracao
 	tipoEXP tipoExpressao; // Tipo da Expressão
-	char lexema[26]; // Tamanho máximo lexema é de 25
+	char lexema[MAXLEXEMA]; // Tamanho máximo lexema é de 25
 	struct NoArvore * filho[3]; // Ponteiro para os filhos. No maximo três filhos
 	struct NoArvore * irmao; // Ponteiro para o irmão
 } NoArvore;
@@ -70,7 +70,7 @@ typedef struct NoArvore{
 typedef NoArvore * PONTEIRONO;
 
 //Cria um no para a arvore. Recebe os valores como parametro.
-PONTEIRONO criaNo(char lexema[26], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao);
+PONTEIRONO criaNo(char lexema[MAXLEXEMA], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao);
 
 //Funcoes para adicionar filhos e irmaos na arvore
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no);
@@ -96,4 +96,5 @@ PONTEIRONO parse(void);
 #define ANSI_COLOR_GRAY     "\e[0;37m"
 #define ANSI_COLOR_WHITE    "\e[1;37m" 
 #define ANSI_COLOR_RESET    "\e[0m"	
+#define ANSI_COLOR_PURPLE    "\e[0;35m"
 #endif

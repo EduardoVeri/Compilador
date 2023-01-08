@@ -58,9 +58,11 @@ int main(int argc, char *argv[]){
 
         if(arquivoEntrada != stdin)
             fclose(arquivoEntrada);
-        fclose(copiaArquivo);
+        if(copiaArquivo != NULL){
+            fclose(copiaArquivo);
+        }
+        
         return 0;
-
     }
 
     //Imprime a arvore sintatica
