@@ -111,7 +111,10 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 	if(tipo == IdK){
         //Verifica se a variavel foi declarada
 		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
-			mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+			if(procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, AtivK) != NULL)
+				mostrarErroSemantico(ChamadaFuncao, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+			else
+				mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
 		}
 		else{
             //Adiciona a linha na lista de linhas do item
