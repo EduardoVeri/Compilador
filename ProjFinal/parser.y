@@ -6,15 +6,27 @@
 #include "global.h"
 
 #define YYSTYPE PONTEIRONO
+
 static int yylex(void);
 void yyerror(char* s);
 int yyparse(void);
+
 char auxNome[26];
 char id[26];
 int qntLinhas;
 enum yytokentype auxErro;
 
+//No raiz da arvore sintatica
 PONTEIRONO arvoreSintatica;
+
+/* Vetor com os nos alocados da arvore, que sera utilizado
+caso um erro aconteca durante a criacao da mesma.
+Apos ocorrer um erro, o parser interrompe seu funcionamento
+voltando para a main() sem adicionar o seu no raiz ao ponteiro acima.
+Isso faz com que os nos alocados sejam perdidos e esse vetor fara
+com que eles possam ser apagados mesmo assim. */
+PONTEIRONO nos[1000];
+int qntNos = 0;
 
 void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
@@ -71,6 +83,9 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
+						nos[qntNos] = aux;
+						qntNos++;
+
 						}
 					| tipo_especificador ID ABRECOLCHETES NUM FECHACOLCHETES SEMICOLON {
 						$$ = $1;
@@ -81,11 +96,16 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
-						
+
+						nos[qntNos] = aux;
+						qntNos++;
+
 						aux = novoNo();
 						strcpy(aux->lexema, auxNome);
 						adicionaFilho($$, aux);
-					
+
+						nos[qntNos] = aux;
+						qntNos++;
 					}
 					;
 
@@ -93,11 +113,17 @@ tipo_especificador 	: INT {
 						$$ = novoNo();
 						strcpy($$->lexema, "INT");
 						$$->numLinha = qntLinhas;
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					| VOID {
 						$$ = novoNo();
 						strcpy($$->lexema, "VOID");
 						$$->numLinha = qntLinhas;
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 					
@@ -119,6 +145,9 @@ fun_id				: ID {
 						$$ = novoNo();
 						strcpy($$->lexema, auxNome);
 						$$->numLinha = qntLinhas;
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;	
 
@@ -129,6 +158,9 @@ params				: param_lista {$$ = $1;}
 						$$->numLinha = qntLinhas;
 						$$->tipoDeclaracao = ParamVoid;
 						strcpy($$->lexema, "VOID");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 
@@ -154,6 +186,9 @@ param				: tipo_especificador ID {
 						strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
+						nos[qntNos] = aux;
+						qntNos++;
+
 					}
 					| tipo_especificador ID ABRECOLCHETES FECHACOLCHETES {
 						$$ = $1;
@@ -162,7 +197,10 @@ param				: tipo_especificador ID {
 						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 						strcpy(aux->lexema, id);
-						adicionaFilho($$, aux);			
+						adicionaFilho($$, aux);		
+
+						nos[qntNos] = aux;
+						qntNos++;	
 					}
 					;
 
@@ -225,6 +263,9 @@ selecao_decl		: IF ABREPARENTESES expressao FECHAPARENTESES statement fatoracao{
 						if($6 != NULL){
 							adicionaFilho($$, $6);
 						}
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 
@@ -242,6 +283,9 @@ iteracao_decl		: WHILE ABREPARENTESES expressao FECHAPARENTESES statement {
 						adicionaFilho($$, $3);
 						adicionaFilho($$, $5);
 
+						nos[qntNos] = $$;
+						qntNos++;
+
 					}
 					;
 			
@@ -251,6 +295,9 @@ retorno_decl		: RETURN SEMICOLON {
 						$$->numLinha = qntLinhas;
 						$$->tipoDeclaracao = ReturnVOID;
 						strcpy($$->lexema, "ReturnVOID");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 					| RETURN expressao SEMICOLON {
@@ -261,6 +308,9 @@ retorno_decl		: RETURN SEMICOLON {
 						strcpy($$->lexema, "ReturnINT");
 
 						adicionaFilho($$, $2);
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 
@@ -274,6 +324,9 @@ expressao			: var ATRIB expressao {
 						adicionaFilho($$, $1);
 						adicionaFilho($$, $3);
 
+						nos[qntNos] = $$;
+						qntNos++;
+
 					}
 					| simples_expressao {$$ = $1;}
 					;
@@ -285,6 +338,9 @@ var 				: ID {
 						$$->tipoExpressao = IdK;
 						strcpy($$->lexema, id);
 
+						nos[qntNos] = $$;
+						qntNos++;
+
 					}
 					| ID ABRECOLCHETES expressao FECHACOLCHETES {
 						$$ = novoNo();
@@ -294,6 +350,9 @@ var 				: ID {
 						
 						strcpy($$->lexema, id);
 						adicionaFilho($$, $3);
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 					;
@@ -319,36 +378,54 @@ relacional			: operador_relacional {
 operador_relacional	: EQ {
 						$$ = novoNo();
 						strcpy($$->lexema, "==");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 
 					| NEQ {
 						$$ = novoNo();
 						strcpy($$->lexema, "!=");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 
 					| LT {
 						$$ = novoNo();
 						strcpy($$->lexema, "<");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 					
 					| GT {
 						$$ = novoNo();
 						strcpy($$->lexema, ">");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 					
 					| LET {
 						$$ = novoNo();
 						strcpy($$->lexema, "<=");
+
+						nos[qntNos] = $$;
+						qntNos++;
 						
 					}
 
 					| GET {
 						$$ = novoNo();
 						strcpy($$->lexema, ">=");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 
@@ -368,10 +445,16 @@ soma_expressao		: soma_expressao soma termo {
 soma				: SOMA {
 						$$ = novoNo();
 						strcpy($$->lexema, "+");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					| SUB {
 						$$ = novoNo();
 						strcpy($$->lexema, "-");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					} 
 					;
 			
@@ -391,10 +474,16 @@ termo				: termo mult fator {
 mult				: MULT {
 						$$ = novoNo();
 						strcpy($$->lexema, "*");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					| DIV {
 						$$ = novoNo();
 						strcpy($$->lexema, "/");
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 			
@@ -407,6 +496,9 @@ fator				: ABREPARENTESES expressao FECHAPARENTESES  {$$ = $2;}
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = ConstK;
 						strcpy($$->lexema, auxNome);
+
+						nos[qntNos] = $$;
+						qntNos++;
 					}
 					;
 
@@ -528,6 +620,13 @@ void yyerror (char *s){
 			break;
 	}
 	printf("\n");
+
+
+	//Desaloca os nos ate o momento
+	for(int i = 0; i < qntNos; i++){
+		free(nos[i]);
+	}
+
 }
 
 int yylex(void)
