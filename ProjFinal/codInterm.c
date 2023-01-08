@@ -461,6 +461,52 @@ void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     indiceVetor++;
 }
 
+void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
+    INSTRUCAO* instrucaoIFF= NULL;
+    INSTRUCAO* instrucaoGOTO = NULL;
+    INSTRUCAO* instrucaoLabel1 = NULL;
+    INSTRUCAO* instrucaoLabel2 = NULL;
+    
+    instrucaoLabel1 = criaInstrucao("LABEL");
+    instrucaoLabel1->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoLabel1->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoLabel1->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+    codigoIntermediario[indiceVetor] = instrucaoLabel1;
+    indiceVetor++;
+
+    instrucaoGOTO = criaInstrucao("GOTO");
+    instrucaoGOTO->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoGOTO->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoGOTO->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+    numLabel++;
+
+    instrucaoLabel2 = criaInstrucao("LABEL");
+    instrucaoLabel2->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoLabel2->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoLabel2->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+    numLabel++;
+
+    criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
+
+    instrucaoIFF = criaInstrucao("IFF");
+    instrucaoIFF->arg1 = criaEndereco(IntConst, numReg - 1, NULL, 1);
+    instrucaoIFF->arg2 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoIFF->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+    codigoIntermediario[indiceVetor] = instrucaoIFF;
+    indiceVetor++;
+
+    criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 0);
+
+    codigoIntermediario[indiceVetor] = instrucaoGOTO;
+    indiceVetor++;
+
+    codigoIntermediario[indiceVetor] = instrucaoLabel2;
+    indiceVetor++;
+}
+
 //Funcao que analisa a arvore sintatica e a tabela de simbolos e gera o codigo intermediario de tres enderecos
 void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], int boolean){
     if(arvoreSintatica == NULL){
@@ -478,7 +524,7 @@ void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHas
             codIntDeclIF(arvoreSintatica, tabelaHash);
         }
         else if(arvoreSintatica->tipoDeclaracao == WhileK){
-           // codIntDeclWhile(arvoreSintatica, tabelaHash);
+            codIntDeclWhile(arvoreSintatica, tabelaHash);
         }
         else if(arvoreSintatica->tipoDeclaracao == ReturnINT || arvoreSintatica->tipoDeclaracao == ReturnVOID){
             codIntDeclReturn(arvoreSintatica, tabelaHash);

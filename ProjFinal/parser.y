@@ -16,6 +16,8 @@ char id[MAXLEXEMA];
 int qntLinhas;
 enum yytokentype auxErro;
 
+int teste = 0;
+
 //No raiz da arvore sintatica
 PONTEIRONO arvoreSintatica;
 
@@ -342,9 +344,21 @@ var 				: ID {
 						qntNos++;
 
 					}
-					| ID ABRECOLCHETES expressao FECHACOLCHETES {
+					| ID regra_teste {
 						$$ = novoNo();
 						$$->tipo = EXPRESSAO;
+						$$->tipoExpressao = VetorK;
+						$$->numLinha = qntLinhas;
+						
+						strcpy($$->lexema, id);
+						adicionaFilho($$, $2);
+
+						printf("\n\n----->ID %d: %s\n", teste, $$->lexema);
+						teste++;
+						nos[qntNos] = $$;
+						qntNos++;
+
+						/*$$->tipo = EXPRESSAO;
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = VetorK;
 						
@@ -352,10 +366,15 @@ var 				: ID {
 						adicionaFilho($$, $3);
 
 						nos[qntNos] = $$;
-						qntNos++;
+						qntNos++;*/
 						
 					}
 					;
+
+regra_teste			: ABRECOLCHETES expressao FECHACOLCHETES{
+						$$ = $2;
+						
+}
 			
 simples_expressao	: soma_expressao relacional soma_expressao {
 						$$ = $2;
