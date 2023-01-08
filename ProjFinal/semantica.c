@@ -5,6 +5,8 @@
 #include "semantica.h"
 #include "global.h"
 
+int teveErroSemantico = 0;
+
 /*
 Funcoes para percorrer todos os nos da arvore sintatica e adicionar os itens de declaracao, como variaveis e funcoes,
 na tabela de simbolos 
@@ -60,6 +62,44 @@ void percorrerDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char* a
 	}
 }
 
+void chamadaFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]){
+	PONTEIROITEM auxItem = NULL;
+
+	//Verificar se o no atual e uma chamada de funcao
+	if(arvoreSintatica->tipoExpressao == AtivK){
+		//Verificar se a funcao foi declarada
+		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
+			mostrarErroSemantico(FuncaoNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+		}
+		else{
+			adicionaLinha(auxItem, arvoreSintatica->numLinha);
+		}
+	}
+	else if(arvoreSintatica->tipoExpressao == IdK){
+		//Verificar se a variavel foi declarada
+		
+		int indice = longhash(arvoreSintatica->lexema);
+		PONTEIROITEM auxItem = tabelaHash[indice];
+
+		while(auxItem != NULL){
+			if(strcmp(auxItem->nomeIdentificador, arvoreSintatica->lexema) == 0 && auxItem->tipoIdentificador == FunDeclK){
+				mostrarErroSemantico(ChamadaFuncao, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+				return;
+			}
+			if((strcmp(auxItem->nomeIdentificador, arvoreSintatica->lexema) == 0) && (strcmp(auxItem->escopo, escopo) == 0 || strcmp(auxItem->escopo, "global") == 0)){
+				
+				adicionaLinha(auxItem, arvoreSintatica->numLinha);
+				return;
+			}
+			auxItem = auxItem->proximo;
+		}
+
+		mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+	}
+
+}
+
+
 //Funcao que percorre a arvore sintatica e chama as funcoes verificar erros com as expressoes
 void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char escopo[]){
 	PONTEIRONO auxNo = NULL;
@@ -71,7 +111,10 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
 	if(tipo == IdK){
         //Verifica se a variavel foi declarada
 		if((auxItem = procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, arvoreSintatica->tipoExpressao)) == NULL){
-			mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+			if(procuraTabelaExp(tabelaHash, arvoreSintatica->lexema, escopo, AtivK) != NULL)
+				mostrarErroSemantico(ChamadaFuncao, arvoreSintatica->lexema, arvoreSintatica->numLinha);
+			else
+				mostrarErroSemantico(VarNaoDeclarada, arvoreSintatica->lexema, arvoreSintatica->numLinha);
 		}
 		else{
             //Adiciona a linha na lista de linhas do item
@@ -88,6 +131,18 @@ void percorrerExp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], char es
             //Adiciona a linha na lista de linhas do item
 			adicionaLinha(auxItem, arvoreSintatica->numLinha);
 		}
+		
+		PONTEIRONO filhoFunc = arvoreSintatica->filho[0];
+		while(filhoFunc != NULL){
+			if(filhoFunc->filho[0] != NULL){
+				percorrerArvore(filhoFunc, tabelaHash, escopo);
+			}
+			else{
+				chamadaFunc(filhoFunc, tabelaHash, escopo);
+			}
+			filhoFunc = filhoFunc->irmao;
+		}
+
 	}
     //Verifica se o no atual eh uma expressao de atribuicao
 	else if(tipo == AssignK){
@@ -122,7 +177,7 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	PONTEIRONO auxNo = NULL;
 	PONTEIROITEM auxItem = NULL;
 
-	char auxEscopo[250];
+	char auxEscopo[MAXLEXEMA];
 
 	strcpy(auxEscopo, escopo);
 
@@ -140,6 +195,10 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 		percorrerExp(arvoreSintatica, tabelaHash, auxEscopo);
 	}
 
+	//Necessario pois a arvore ja foi percorrida dentro da funcao percorrerExp
+	if(arvoreSintatica->tipo == EXPRESSAO && arvoreSintatica->tipoExpressao == AtivK)
+		return;
+
     //Percorre os filhos do no atual
 	for(int i = 0; i < 3; i++){
 		if(arvoreSintatica->filho[i] != NULL){
@@ -148,7 +207,11 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	}
 
     //Percorre o irmao do no atual
-	percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
+
+	if(strcmp(escopo, "global") == 0)
+		percorrerArvore(arvoreSintatica->irmao, tabelaHash, escopo);
+	else
+		percorrerArvore(arvoreSintatica->irmao, tabelaHash, auxEscopo);
 }
 
 //Funcao que verifica se a declaracao de uma funcao ou var ja existe
@@ -185,6 +248,8 @@ int buscaIgual(PONTEIROITEM* tabelaHash, PONTEIRONO arvoreSintatica, int indice,
 
 //Mostra uma mensagem de erro sobre o determinado erro semantico
 void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
+	teveErroSemantico++;
+	
 	printf(ANSI_COLOR_RED "ERRO SEMANTICO, LINHA: %d" ANSI_COLOR_RESET, linha);
 	switch (erro){
 		case DeclVoidVar:
@@ -217,5 +282,7 @@ void mostrarErroSemantico(erroSemantico erro, char* nome, int linha){
 		case VetorNaoDeclarado:
 			printf(": Vetor '%s' nao declarado\n\n", nome);
 			break;
+		case ChamadaFuncao:
+			printf(": Chamada de funcao '%s' invalida, utilizar os ()\n\n", nome);
 	}
 }

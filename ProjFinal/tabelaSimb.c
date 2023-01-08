@@ -5,6 +5,8 @@
 #include <string.h>
 #include "tabelaSimb.h"
 
+/* Funcao para alocar, inicializar e retornar a tabela de simbolos a 
+ser utilizado pelo compilador */
 PONTEIROITEM* inicializaTabela(){
     int i;
     PONTEIROITEM* tabelaHash = (PONTEIROITEM*)malloc(MAX*sizeof(ITEM*));
@@ -13,26 +15,40 @@ PONTEIROITEM* inicializaTabela(){
     }
     return tabelaHash;
 }
-/*
-void inserirFuncTabela(PONTEIROITEM tabelaHash[], char nomeIdentificador[], int linha){
-    PONTEIROITEM aux;
-    int indice = longhash(nomeIdentificador);
-    aux = tabelaHash[indice];
 
-    while(aux != NULL){
-        if(strcmp(aux->nomeIdentificador, nomeIdentificador) == 0){
-            adicionaLinha(aux, linha);
-            return;
-        }
-        else{
-            aux = aux->proximo;
-        }
+/* Busca um item na tabela de simbolos
+Utilizada por funcoes no codigo intermediario */
+PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador){
+    int indice = longhash(nomeIdentificador);
+    PONTEIROITEM item = tabelaHash[indice];
+
+    while(item != NULL){
+        if(strcmp(item->nomeIdentificador, nomeIdentificador) == 0)
+            return item;
+        item = item->proximo;
     }
 
+    return NULL;
 }
-*/
 
-void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[26], char escopo[26], int linha){
+/* Busca uma funcao na tabela de simbolos
+Utilizada por funcoes no codigo intermediario */
+PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema){
+    int indice = longhash(lexema);
+    PONTEIROITEM item = tabelaHash[indice];
+
+    while(item != NULL){
+        if(item->tipoIdentificador == FunDeclK && strcmp(item->nomeIdentificador, lexema) == 0){
+            return item;
+        }
+        item = item->proximo;
+    }
+
+    return item;
+}
+
+/* Funcao para inserir um item na tabela de simbolos */
+void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTipo tipoDado, char nomeIdentificador[MAXLEXEMA], char escopo[MAXLEXEMA], int linha){
     PONTEIROITEM aux, auxAnterior;
 
     int indice = longhash(nomeIdentificador);
@@ -83,6 +99,7 @@ void inserirTabela(PONTEIROITEM tabelaHash[], tipoDECL tipoIdentificador, tipoTi
     }
 }
 
+/* Funcao para remover um item da tabela de simbolos */
 void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     unsigned int indice = longhash(num->nomeIdentificador);
 
@@ -107,6 +124,12 @@ void remover(PONTEIROITEM tabelaHash[], PONTEIROITEM num){
     free(num);
 }
 
+/*  Uma funcao de busca especifica para ser utilizada durante a 
+analise semantica, ao ser encontrado uma declaracao de expressao.
+A Ideia dessa funcao eh buscar na tabela de simbolos se aquele
+item que foi encontrado na arvore, com o tipo EXPRESSAO, foi declarado
+para ser devidademente usado. Isso corresponde a chamadas de funcoes e
+uso de parametros ou variaveis. */
 PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoEXP tipoIdentificador){
     unsigned int indice = longhash(identificador);
 
@@ -114,18 +137,23 @@ PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], c
 
     tipoDECL tipoDeclara = tipoIdentificador == VetorK ? VetDeclK : VarDeclK;
 
+    // Se for uma chamada de funcao, busca apenas declaracoes de funcoes
     if(tipoIdentificador == AtivK){
+        // Busca na tabela de simbolos o nome correspondente
         while(aux != NULL){
             if(strcmp(identificador, aux->nomeIdentificador) == 0 && aux->tipoIdentificador == FunDeclK){
                 break;
             }
             aux = aux->proximo;
         }
+        // Se nao encontrar, retorna NULL e causara um erro semantico
         return aux;
     }
 
+    // Busca na tabela de simbolos o nome correspondente
     while(aux != NULL){
         if(strcmp(identificador, aux->nomeIdentificador) == 0){
+            // Se for um vetor, busca apenas declaracoes de vetores
             if(tipoDeclara == VetDeclK){
                 if(aux->tipoIdentificador == VetDeclK || aux->tipoIdentificador == VetParamK){
                     if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
@@ -133,6 +161,7 @@ PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], c
                     }
                 }
             }
+            // Se for uma variavel, busca apenas declaracoes de variaveis
             else{
                 if(aux->tipoIdentificador == VarDeclK || aux->tipoIdentificador == VarParamK){
                     if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
@@ -144,10 +173,13 @@ PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], c
         aux = aux->proximo;
     }
 
+    // Se nao encontrar, retorna NULL e causara um erro semantico
     return aux;
 
 }
 
+/* Uma funcao de busca especifica para ser utilizada durante a 
+analise semantica, ao ser encontrado uma declaracao de declaracao */
 PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoDECL tipoIdentificador){
     unsigned int indice = longhash(identificador);
 
@@ -179,6 +211,7 @@ PONTEIROITEM procuraTabela(PONTEIROITEM tabelaHash[], char identificador[], char
     return aux;
 }
 
+//Desaloca os nos da tabela de simbolos
 void apagarTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROITEM aux1 = NULL;
     PONTEIROLINHA auxLinhas = NULL;
@@ -205,6 +238,7 @@ void apagarTabela(PONTEIROITEM tabelaHash[]){
     }
 }
 
+//Adiciona uma nova linha a um item na tabela de simbolos
 void adicionaLinha(PONTEIROITEM num, int valorLinha){
     NOLINHA* novaLinha = (NOLINHA*)malloc(sizeof(NOLINHA));
     novaLinha->numlinha = valorLinha;
@@ -228,6 +262,7 @@ void adicionaLinha(PONTEIROITEM num, int valorLinha){
     return;
 }
 
+//Calcula o valor do hash para encontrar a posicao do item na tabela
 unsigned longhash(char *str){
     unsigned long hash = 0, alpha = 1;
     char c;
@@ -247,6 +282,8 @@ unsigned longhash(char *str){
 void imprimirTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROITEM aux = NULL;
     PONTEIROLINHA auxLinhas = NULL;
+
+    printf("============== Tabela de Simbolos ===============\n");
 
     for(int i = 0; i < MAX; i++){
         if(tabelaHash[i] != NULL){
@@ -289,28 +326,3 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
         }
     }
 }
-
-/*
-int main(){
-    char n[26], escopo[50];
-    int linha;
-    char paragrafo[1000];
-    
-    PONTEIROITEM* tabelaHash = inicializa();
-
-    for(int i = 0; i < 3; i++){
-        printf("Digite o nome do identificador, o escopo e a linha: ");
-        fgets(paragrafo, 1000, stdin);
-        if(sscanf(paragrafo, "%s %s %d", n, escopo, &linha) == 3){
-            inserir(tabelaHash, MAX, 1, 1, n, escopo, linha);
-        }
-        else{
-            printf("Erro na leitura\n");
-        }
-    }
-
-    imprimirTabela(tabelaHash);
-
-    return 0;
-}
-*/

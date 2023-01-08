@@ -11,8 +11,8 @@ typedef struct nolinha{
 typedef struct item{
     tipoDECL tipoIdentificador; //Variavel ou funcao 
     tipoTipo tipoDado; //Inteiro ou void
-    char nomeIdentificador[26]; //Um identificador deve ter no maximo 25 caracteres
-    char escopo[26]; //Nome do escopo em que a var se encontra
+    char nomeIdentificador[MAXLEXEMA]; //Um identificador deve ter no maximo 25 caracteres
+    char escopo[MAXLEXEMA]; //Nome do escopo em que a var se encontra
     NOLINHA *linhas; //Lista encadeada para o valor das linhas
     struct item *proximo, *anterior; //Lista encadeada para o tratamento de colisoes
 } ITEM;
@@ -46,5 +46,9 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]);
 
 //Procura um item na tabela de simbolos, especifico para a analise semantica de expressoes
 PONTEIROITEM procuraTabelaExp(PONTEIROITEM tabelaHash[], char identificador[], char escopo[], tipoEXP tipoIdentificador);
+
+PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
+
+PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador);
 
 #endif
