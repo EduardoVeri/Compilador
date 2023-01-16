@@ -599,7 +599,7 @@ void yyerror (char *s){
 			printf(": '%s' não era esperado (IF)", yytext);
 			break;
 		case ABREPARENTESES:
-			printf(": '%s' não era esperado (RETURN)", yytext);
+			printf(": '%s' não era esperado (ABREPARENTESES)", yytext);
 			break;
 		case FECHAPARENTESES:
 			printf(": '%s' não era esperado (FECHAPARENTESES)", yytext);

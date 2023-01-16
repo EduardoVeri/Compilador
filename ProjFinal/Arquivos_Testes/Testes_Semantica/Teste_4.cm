@@ -7,15 +7,15 @@ int main(int a){
     a = 10;
 }
 
-int pteste(void){
+int teste1(void){
     int a;
 }
 
-int steste(void){
+int teste2(void){
     int b;
     int b;
 }
 
-int tteste(int c){
+int tteste3(int c){
     int c;
 }

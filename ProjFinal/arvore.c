@@ -3,7 +3,7 @@
 #include <string.h>
 #include "global.h"
 
-
+//Cria um novo nó para a árvore, mas com os campos vazios.
 PONTEIRONO novoNo(){
     PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
 
@@ -26,7 +26,7 @@ PONTEIRONO novoNo(){
     return novoNo;
 }
 
-
+//Cria um nó para a árvore, com os campos preenchidos.
 PONTEIRONO criaNo(char lexema[MAXLEXEMA], int numLinha, tipoNo tipoNo, tipoDECL tipoDeclaracao, tipoEXP tipoExpressao){
     PONTEIRONO novoNo = (PONTEIRONO)malloc(sizeof(NoArvore));
 
@@ -49,7 +49,7 @@ PONTEIRONO criaNo(char lexema[MAXLEXEMA], int numLinha, tipoNo tipoNo, tipoDECL 
     return novoNo;
 }
 
-
+//Adiciona um irmão ao nó raiz.
 PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no){
     PONTEIRONO aux = raiz;
 
@@ -66,6 +66,7 @@ PONTEIRONO adicionaIrmao(PONTEIRONO raiz, PONTEIRONO no){
     return raiz;
 }
 
+//Adiciona um filho ao nó raiz.
 PONTEIRONO adicionaFilho(PONTEIRONO raiz, PONTEIRONO no){
     PONTEIRONO aux = raiz;
     int i;
@@ -95,7 +96,8 @@ void desalocaArvore(PONTEIRONO raiz){
     free(raiz);
 }
 
-int flagMA = 0;
+//Mostra a árvore
+int flagMA = 0; //Flag para mostrar o primeiro print apenas uma vez.
 void mostraArvore(PONTEIRONO raiz, int num){
 	if(flagMA == 0){
 		flagMA = 1;

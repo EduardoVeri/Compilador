@@ -12,6 +12,7 @@ int numLabel = 0; //Numero do label
 INSTRUCAO* funcLabel = NULL;
 char funcName[MAXLEXEMA] = "global"; 
 
+//Cria um novo endereco
 ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     ENDERECO* endereco = (ENDERECO*) malloc(sizeof(ENDERECO));
     
@@ -35,6 +36,7 @@ ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     return endereco;
 }
 
+//Cria uma nova instrucao
 INSTRUCAO* criaInstrucao(char* op){
     INSTRUCAO* instrucao = (INSTRUCAO*) malloc(sizeof(INSTRUCAO));
     instrucao->op = op;
@@ -44,6 +46,7 @@ INSTRUCAO* criaInstrucao(char* op){
     return instrucao;
 }
 
+//Desaloca o vetor de codigo intermediario
 void desalocaVetor(){
     for(int i = 0; i < MAX_INSTRUCTION && (codigoIntermediario[i] != NULL); i++){
         if(codigoIntermediario[i]->arg1 != NULL)
@@ -57,6 +60,7 @@ void desalocaVetor(){
     }
 }
 
+//Cria o vetor de codigo intermediario
 INSTRUCAO** inicializaVetor(){
     INSTRUCAO** codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION);
     
@@ -67,6 +71,7 @@ INSTRUCAO** inicializaVetor(){
     return codigoIntermediario;
 }
 
+//Imprime o vetor de codigo intermediario
 void imprimeCodigoIntermediario(){
     printf("============== Codigo Intermediario ===============\n");
     for(int i = 0; i < MAX_INSTRUCTION && codigoIntermediario[i] != NULL; i++){
