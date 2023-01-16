@@ -12,6 +12,7 @@ int numLabel = 0; //Numero do label
 INSTRUCAO* funcLabel = NULL;
 char funcName[MAXLEXEMA] = "global"; 
 
+//Cria um novo endereco
 ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     ENDERECO* endereco = (ENDERECO*) malloc(sizeof(ENDERECO));
     
@@ -35,6 +36,7 @@ ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     return endereco;
 }
 
+//Cria uma nova instrucao
 INSTRUCAO* criaInstrucao(char* op){
     INSTRUCAO* instrucao = (INSTRUCAO*) malloc(sizeof(INSTRUCAO));
     instrucao->op = op;
@@ -44,6 +46,7 @@ INSTRUCAO* criaInstrucao(char* op){
     return instrucao;
 }
 
+//Desaloca o vetor de codigo intermediario
 void desalocaVetor(){
     for(int i = 0; i < MAX_INSTRUCTION && (codigoIntermediario[i] != NULL); i++){
         if(codigoIntermediario[i]->arg1 != NULL)
@@ -57,6 +60,7 @@ void desalocaVetor(){
     }
 }
 
+//Cria o vetor de codigo intermediario
 INSTRUCAO** inicializaVetor(){
     INSTRUCAO** codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION);
     
@@ -67,6 +71,7 @@ INSTRUCAO** inicializaVetor(){
     return codigoIntermediario;
 }
 
+//Imprime o vetor de codigo intermediario
 void imprimeCodigoIntermediario(){
     printf("============== Codigo Intermediario ===============\n");
     for(int i = 0; i < MAX_INSTRUCTION && codigoIntermediario[i] != NULL; i++){
@@ -353,14 +358,20 @@ void codIntExpOpRel(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         instrucaoOp = criaInstrucao("EQ");
     }
     else if(strcmp(arvoreSintatica->lexema, "!=") == 0){
-        instrucaoOp = criaInstrucao("NE");
+        instrucaoOp = criaInstrucao("NEQ");
     }
     else if(strcmp(arvoreSintatica->lexema, ">") == 0){
         instrucaoOp = criaInstrucao("GT");
     }
     else if(strcmp(arvoreSintatica->lexema, "<") == 0){
         instrucaoOp = criaInstrucao("LT");
-    } /*TODO: Adicionar as demais operacoes.*/
+    }
+    else if(strcmp(arvoreSintatica->lexema, ">=") == 0){
+        instrucaoOp = criaInstrucao("GET");
+    }
+    else if(strcmp(arvoreSintatica->lexema, "<=") == 0){
+        instrucaoOp = criaInstrucao("LET");
+    } 
     
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
     instrucaoOp->arg1 = criaEndereco(IntConst, numReg-1, NULL, 1);
@@ -462,7 +473,7 @@ void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 }
 
 void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
-    INSTRUCAO* instrucaoIFF= NULL;
+    INSTRUCAO* instrucaoIFF = NULL;
     INSTRUCAO* instrucaoGOTO = NULL;
     INSTRUCAO* instrucaoLabel1 = NULL;
     INSTRUCAO* instrucaoLabel2 = NULL;
@@ -488,12 +499,14 @@ void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     instrucaoLabel2->arg3 = criaEndereco(Vazio, 0, NULL, 0);
     numLabel++;
 
+    instrucaoIFF = criaInstrucao("IFF");
+
+    instrucaoIFF->arg2 = criaEndereco(IntConst, numLabel-1, NULL, 2);
+    instrucaoIFF->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
 
-    instrucaoIFF = criaInstrucao("IFF");
     instrucaoIFF->arg1 = criaEndereco(IntConst, numReg - 1, NULL, 1);
-    instrucaoIFF->arg2 = criaEndereco(IntConst, numLabel, NULL, 2);
-    instrucaoIFF->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 
     codigoIntermediario[indiceVetor] = instrucaoIFF;
     indiceVetor++;
