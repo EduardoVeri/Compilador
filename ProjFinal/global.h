@@ -37,9 +37,9 @@ typedef enum {
     WhileK, // While.
     ReturnINT, // Retorno de função inteira.
     ReturnVOID, // Retorno de função void.
-	NuloDecl, // Nulo
+    NuloDecl, // Nulo
     VarDeclK, // Declaração de variável.
-    VetDeclK, // Declaração de vetor.
+	VetDeclK, // Declaração de vetor.
     FunDeclK, // Declaração de função.
     VarParamK, // Declaração de variável parâmetro.
     VetParamK, // Declaração de vetro parâmetro.
@@ -54,7 +54,7 @@ typedef enum {
     AtivK, // Chamada de função.
     VetorK, // Uso de parâmetro vetor.
     AssignK, // Atribuição.
-	NuloExp // Nulo.
+    NuloExp // Nulo.
 } tipoEXP;
 
 /* Declaracao da arvore de analise sintatica */
