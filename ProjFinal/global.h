@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define MAXLEXEMA 31 // Tamanho máximo do lexema
+#define MAXLEXEMA 21 // Tamanho máximo do lexema
 
 extern int indPilha;
 extern char pilha[10][MAXLEXEMA]; 
