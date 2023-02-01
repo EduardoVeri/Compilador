@@ -89,8 +89,8 @@ int main(int argc, char *argv[]){
 
     /* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
     
-    if(teveErroSemantico == 0){    
-        //Cria o codigo intermediario
+	if(teveErroSemantico == 0){    
+       //Cria o codigo intermediario
         codigoIntermediario = inicializaVetor();
         criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
         
@@ -120,12 +120,13 @@ int main(int argc, char *argv[]){
 	//libera a memoria alocada para a tabela de simbolos
 	apagarTabela(tabelaHash);
 
+
     //Fecha os arquivos abertos
-    if(arquivoEntrada != stdin)
-        fclose(arquivoEntrada);
+	if(arquivoEntrada != stdin)
+    	fclose(arquivoEntrada);
     
-    if(copiaArquivo != NULL)
-        fclose(copiaArquivo);
+	if(copiaArquivo != NULL)
+		fclose(copiaArquivo);
 
     return 0;
 }
