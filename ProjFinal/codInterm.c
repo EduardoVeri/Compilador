@@ -16,7 +16,7 @@ char stringTemp[MAXLEXEMA] = "Temporario"; //Nome da funcao
 typedef struct reg{
 	int numReg;
 	char* nomeVar;
-	char* escopo;
+	char escopo[MAXLEXEMA];
 	int descarte; //Diz se o registrador pode ser descartado (1) ou nao (0)
 }REG;
 
@@ -27,7 +27,7 @@ void inicializaReg(){
 	for(int i = 0; i < MAX_REG; i++){
 		listaReg[i].numReg = i;
 		listaReg[i].nomeVar = NULL;
-		listaReg[i].escopo = NULL;
+		strcpy(listaReg[i].escopo, "");
 		listaReg[i].descarte = 0;
 	}
 }
@@ -37,7 +37,7 @@ int adicionarVarReg(char* nomeVar, char* escopo){
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].nomeVar == NULL){
 			listaReg[i].nomeVar = nomeVar;
-			listaReg[i].escopo = escopo;
+			strcpy(listaReg[i].escopo, escopo);
 			listaReg[i].descarte = 0;
 			return i;
 		}
@@ -50,7 +50,7 @@ int adicionaTempReg(){
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].nomeVar == NULL){
 			listaReg[i].nomeVar = stringTemp;
-			listaReg[i].escopo = funcName;
+			strcpy(listaReg[i].escopo, funcName);
 			listaReg[i].descarte = 1;
 			return i;
 		}
