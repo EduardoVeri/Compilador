@@ -5,6 +5,52 @@
 #include "global.h"
 #include "codInterm.h"
 
+#define MAX_REG 30 //Numero maximo de registradores
+
+// TODO: Adicionar a otimização dos registradores
+// =======================================================================================
+// Lista encadeada com os numeros dos registradores e qual variavel esta armazenada nele
+typedef struct reg{
+	int numReg;
+	char* nomeVar;
+	char* escopo;
+}REG;
+
+REG listaReg[MAX_REG]; //Lista encadeada com os registradores
+
+//Funcao para inicializar o vetor de registradores
+void inicializaReg(){
+	for(int i = 0; i < MAX_REG; i++){
+		listaReg[i].numReg = i;
+		listaReg[i].nomeVar = NULL;
+		listaReg[i].escopo = NULL;
+	}
+}
+
+int adicionarVarReg(char* nomeVar, char* escopo){
+	for(int i = 0; i < MAX_REG; i++){
+		if(listaReg[i].nomeVar == NULL){
+			listaReg[i].nomeVar = nomeVar;
+			listaReg[i].escopo = escopo;
+			return i;
+		}
+	}
+	return -1; //Nao foi possivel adicionar a variavel em nenhum registrador
+}
+
+int buscarVarReg(char* nomeVar, char* escopo){
+	for(int i = 0; i < MAX_REG; i++){
+		if(listaReg[i].nomeVar != NULL){
+			if(strcmp(listaReg[i].nomeVar, nomeVar) == 0 && strcmp(listaReg[i].escopo, escopo) == 0){
+				return i;
+			}
+		}
+	}
+	return -1; //Nao foi possivel encontrar a variavel em nenhum registrador
+}
+
+// =======================================================================================
+
 int numReg = 1; //Numero do registrador
 int indiceVetor = 0; //Indice do vetor de codigo intermediario
 int numLabel = 0; //Numero do label
@@ -226,7 +272,23 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     noParam = arvoreSintatica->filho[0];
     while(noParam != NULL){
         param = criaInstrucao("LOAD");
-        param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+        
+		//param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+
+		int regAux;
+		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
+		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
+		Caso de algum erro ao adicionar, mostrar um erro */
+		if((regAux = buscarVarReg(noParam->lexema, buscarItemTabelaId(tabelaHash, noParam->lexema)->escopo)) == -1){
+			if((regAux = adicionarVarReg(noParam->lexema, arvoreSintatica->lexema)) == -1){
+				printf(ANSI_COLOR_RED);
+				printf("Erro ao adicionar variavel no vetor de registradores");
+				printf(ANSI_COLOR_RESET);
+			}
+		}
+
+		param->arg1 = criaEndereco(IntConst, regAux, NULL, 1);
+
         numReg++;
         param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
         param->arg3 = criaEndereco(Vazio, 0, NULL, 0);
@@ -391,14 +453,40 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     
     if(arvoreSintatica->tipoExpressao == VetorK){
         instrucaoId = criaInstrucao("LOADVET");
-        instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+
+		int regAux;
+		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
+		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
+		Caso de algum erro ao adicionar, mostrar um erro */
+		if((regAux = buscarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
+			if((regAux = adicionarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
+				printf(ANSI_COLOR_RED);
+				printf("Erro ao adicionar variavel no vetor de registradores");
+				printf(ANSI_COLOR_RESET);
+			}
+		}
+		
+        instrucaoId->arg1 = criaEndereco(IntConst, regAux, NULL, 1); // Valor do registrador alterado
         numReg++;
         instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
         instrucaoId->arg3 = criaEndereco(IntConst, atoi(arvoreSintatica->filho[0]->lexema), NULL, 0);
     }
     else if(arvoreSintatica->tipoExpressao == IdK){
         instrucaoId = criaInstrucao("LOAD");
-        instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+
+		int regAux;
+		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
+		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
+		Caso de algum erro ao adicionar, mostrar um erro */
+		if((regAux = buscarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
+			if((regAux = adicionarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
+				printf(ANSI_COLOR_RED);
+				printf("Erro ao adicionar variavel no vetor de registradores");
+				printf(ANSI_COLOR_RESET);
+			}
+		}
+		
+        instrucaoId->arg1 = criaEndereco(IntConst, regAux, NULL, 1);
         numReg++;
         instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
         instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
