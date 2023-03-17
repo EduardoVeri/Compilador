@@ -99,6 +99,9 @@ int main(int argc, char *argv[]){
         
 		//Imprime o codigo intermediario
 		imprimeCodigoIntermediario();
+		
+		//Mostra os registradores em uso
+		mostrarReg();
 
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();

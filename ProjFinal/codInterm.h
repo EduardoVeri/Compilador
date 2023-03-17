@@ -44,5 +44,6 @@ void desalocaVetor();
 INSTRUCAO* criaInstrucao(char* op);
 void imprimeCodigoIntermediario();
 PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
+void mostrarReg();
 
 #endif
