@@ -1,7 +1,10 @@
 #!/bin/bash
 
 clear
+cd ./src
 bison -d parser.y
 flex -oarquivo_lex.c lexer.l
-gcc parser.tab.c arquivo_lex.c arvore.c tabelaSimb.c main.c semantica.c codInterm.c registradores.c -o compilador.exe -lfl
-./compilador.exe ./Arquivos_Testes/mdc.cm
+mv parser.tab.h ../include
+cd ..
+gcc src/parser.tab.c src/arquivo_lex.c src/arvore.c src/tabelaSimb.c src/main.c src/semantica.c src/codInterm.c src/registradores.c -o bin/compilador.exe -lfl  -Iinclude
+./bin/compilador.exe ./testes/sort.cm
