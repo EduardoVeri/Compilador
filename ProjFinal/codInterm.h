@@ -38,12 +38,19 @@ extern char funcName[MAXLEXEMA]; //Nome da funcao
 //Funcao principal para a criacao do codigo intermediario
 void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], int boolean);
 
+//Funcoes para registradores
+void inicializaReg();
+int adicionarVarReg(char* nomeVar, char* escopo);
+int adicionaTempReg();
+int buscarVarReg(char* nomeVar, char* escopo);
+void mostrarReg();
+
 //Funcoes auxiliares
 INSTRUCAO** inicializaVetor(); 
 void desalocaVetor();
 INSTRUCAO* criaInstrucao(char* op);
 void imprimeCodigoIntermediario();
 PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
-void mostrarReg();
+
 
 #endif
