@@ -15,7 +15,7 @@ valor determinado pelo mesmo, ou seja, numero ou char* */
 typedef struct endereco{
     tipoEndereco tipo;
     int val;
-    int boolReg; //Diz se o endereco eh um numero (0), num (1) ou label (2)
+    int boolReg; //Diz se o endereco eh um numero (0), Reg (1) ou label (2)
     char* nome;
 } ENDERECO;
 

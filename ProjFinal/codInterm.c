@@ -450,16 +450,21 @@ void codIntExpOp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
 void codIntExpConst(PONTEIRONO arvoreSintativa, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* constante = NULL;
-    constante = criaInstrucao("LOADI");
+
 	
+	if(strcmp(arvoreSintativa->lexema, "0") == 0){
+		numReg = 31;
+		return;
+	}
+
 	if((numReg = adicionaTempReg()) == -1){
 		printf(ANSI_COLOR_RED);
 		printf("Erro ao adicionar temporario - LOADI\n");
 		printf(ANSI_COLOR_RESET);
 	}
-
+		
+	constante = criaInstrucao("LOADI");
     constante->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-    // numReg++;
     constante->arg2 = criaEndereco(IntConst, atoi(arvoreSintativa->lexema), NULL, 0);
     constante->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 
