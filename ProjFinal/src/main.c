@@ -131,5 +131,8 @@ int main(int argc, char *argv[]){
 	if(copiaArquivo != NULL)
 		fclose(copiaArquivo);
 
+	// Remove o arquivo de copia
+	remove("src/copia.txt");
+
 	return 0;
 }
