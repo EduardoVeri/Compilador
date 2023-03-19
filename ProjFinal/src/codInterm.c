@@ -242,22 +242,15 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 			printf("Erro ao buscar escopo da variavel");
 			printf(ANSI_COLOR_RESET);
 		}
-		else if((numReg = buscarVarReg(noParam->filho[0]->lexema, escopoAux->escopo)) == -1){
-			if((numReg = adicionarVarReg(noParam->filho[0]->lexema, arvoreSintatica->filho[1]->lexema)) == -1){
-				printf(ANSI_COLOR_RED);
-				printf("Erro ao adicionar variavel no vetor de registradores");
-				printf(ANSI_COLOR_RESET);
-			}
-
+		else{
+			numReg = verificacaoRegistradores(noParam->filho[0]->lexema, escopoAux->escopo, 0);
+		
 			param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-			//numReg++;
 			param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
 			param->arg3 = criaEndereco(Vazio, 0, NULL, 0);
 			codigoIntermediario[indiceVetor] = param;
 			indiceVetor++;
 		}
-
-
 
         noParam = noParam->irmao;
     }
@@ -357,11 +350,8 @@ void codIntExpOp(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
     op->arg2 = criaEndereco(IntConst, numReg, NULL, 1);
 
-	if((numReg = adicionaTempReg()) == -1){
-		printf(ANSI_COLOR_RED);
-		printf("Erro ao adicionar temporario - OP Aritmeticos\n");
-		printf(ANSI_COLOR_RESET);
-	}
+	numReg = verificacaoRegistradores(NULL, NULL, 1);
+
     op->arg3 = criaEndereco(IntConst, numReg, NULL, 1);
     // numReg++;
 
@@ -379,11 +369,7 @@ void codIntExpConst(PONTEIRONO arvoreSintativa, PONTEIROITEM tabelaHash[]){
 		return;
 	}
 
-	if((numReg = adicionaTempReg()) == -1){
-		printf(ANSI_COLOR_RED);
-		printf("Erro ao adicionar temporario - LOADI\n");
-		printf(ANSI_COLOR_RESET);
-	}
+	numReg = verificacaoRegistradores(NULL, NULL, 1);
 		
 	constante = criaInstrucao("LOADI");
     constante->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
@@ -423,11 +409,7 @@ void codIntExpOpRel(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
     instrucaoOp->arg2 = criaEndereco(IntConst, numReg, NULL, 1);
 
-	if((numReg = adicionaTempReg()) == -1){
-		printf(ANSI_COLOR_RED);
-		printf("Erro ao adicionar temporario - %s\n", instrucaoOp->op);
-		printf(ANSI_COLOR_RESET);
-	}
+	numReg = verificacaoRegistradores(NULL, NULL, 1);
 
     instrucaoOp->arg3 = criaEndereco(IntConst, numReg, NULL, 1);
     // numReg++;
@@ -444,18 +426,15 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
-		if((numReg = buscarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
-			if((numReg = adicionarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
-				printf(ANSI_COLOR_RED);
-				printf("Erro ao adicionar variavel no vetor de registradores");
-				printf(ANSI_COLOR_RESET);
-			}
-			instrucaoId = criaInstrucao("LOADVET");
-			instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1); // Valor do registrador alterado
-			//numReg++;
-			instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
-			instrucaoId->arg3 = criaEndereco(IntConst, atoi(arvoreSintatica->filho[0]->lexema), NULL, 0);
-		}
+
+		numReg = verificacaoRegistradores(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo, 0);
+		
+		instrucaoId = criaInstrucao("LOADVET");
+		instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1); // Valor do registrador alterado
+		//numReg++;
+		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
+		instrucaoId->arg3 = criaEndereco(IntConst, atoi(arvoreSintatica->filho[0]->lexema), NULL, 0);
+		
 		
         
     }
@@ -464,18 +443,15 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
-		if((numReg = buscarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
-			if((numReg = adicionarVarReg(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo)) == -1){
-				printf(ANSI_COLOR_RED);
-				printf("Erro ao adicionar variavel no vetor de registradores");
-				printf(ANSI_COLOR_RESET);
-			}
-			instrucaoId = criaInstrucao("LOAD");
-			instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-			//numReg++;
-			instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
-			instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
-		}
+		
+		numReg = verificacaoRegistradores(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo, 0);
+
+		instrucaoId = criaInstrucao("LOAD");
+		instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+		//numReg++;
+		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
+		instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+		
 		
     }
 
@@ -517,11 +493,7 @@ void codIntExpCall(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         instrucaoCall->arg3 = criaEndereco(Vazio, 0, NULL, 0);
     }
     else if(itemAux != NULL && itemAux->tipoDado == Type_Int){
-		if((numReg = adicionaTempReg()) == -1){
-			printf(ANSI_COLOR_RED);
-			printf("Erro ao adicionar temporario - CALL\n");
-			printf(ANSI_COLOR_RESET);
-		}
+		numReg = verificacaoRegistradores(NULL, NULL, 1);
 
         instrucaoCall->arg3 = criaEndereco(IntConst, numReg, NULL, 1);
         // numReg++;

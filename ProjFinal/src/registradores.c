@@ -41,7 +41,7 @@ int adicionarVarReg(char* nomeVar, char* escopo){
 			listaReg[i].nomeVar = nomeVar;
 			strcpy(listaReg[i].escopo, escopo);
 			listaReg[i].descarte = 0;
-
+			totalReg++;
 			totalRegEmUso++;
 			return i;
 		}
@@ -95,7 +95,8 @@ int descartarReg(){
 			listaReg[i].nomeVar = NULL;
 			strcpy(listaReg[i].escopo, "");
 			listaReg[i].descarte = 0;
-			
+			totalRegEmUso--;
+
 			if(maior > i)
 				maior = i;
 		}
@@ -113,6 +114,45 @@ int descartarReg(){
 
 }
 
-int totalRegistradores(){
-	return totalRegEmUso;
+int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
+	int reg;
+
+	if(boolTemp == 0){
+		if(reg = (buscarVarReg(lexema, escopo)) == -1){
+			if(totalRegEmUso == MAX_REG){
+				if((reg = descartarReg()) == -1){
+					printf(ANSI_COLOR_RED);
+					printf("ERRO: Nao foi possivel descartar nenhum registrador\n");
+					printf(ANSI_COLOR_RESET);
+					return -1;
+				}
+			}
+			
+			if((reg = adicionarVarReg(lexema, escopo)) == -1){
+				printf(ANSI_COLOR_RED);
+				printf("Erro ao adicionar variavel no vetor de registradores");
+				printf(ANSI_COLOR_RESET);
+			}
+		}
+
+		return reg;
+	}
+
+	if(totalRegEmUso == MAX_REG){
+		if((reg = descartarReg()) == -1){
+			printf(ANSI_COLOR_RED);
+			printf("ERRO: Nao foi possivel descartar nenhum registrador\n");
+			printf(ANSI_COLOR_RESET);
+			return -1;
+		}
+	}
+	if((reg = adicionaTempReg()) == -1){
+		printf(ANSI_COLOR_RED);
+		printf("Erro ao adicionar variavel no vetor de registradores");
+		printf(ANSI_COLOR_RESET);
+	}
+
+	return reg;
+
+	
 }
