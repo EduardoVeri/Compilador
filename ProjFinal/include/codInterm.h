@@ -44,6 +44,7 @@ int adicionarVarReg(char* nomeVar, char* escopo);
 int adicionaTempReg();
 int buscarVarReg(char* nomeVar, char* escopo);
 void mostrarReg();
+int descartarReg();
 
 //Funcoes auxiliares
 INSTRUCAO** inicializaVetor(); 

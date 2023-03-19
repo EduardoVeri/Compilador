@@ -6,6 +6,7 @@
 #include "global.h"
 
 #define YYSTYPE PONTEIRONO
+#define MAX_NOS 1000
 
 static int yylex(void);
 void yyerror(char* s);
@@ -27,7 +28,7 @@ Apos ocorrer um erro, o parser interrompe seu funcionamento
 voltando para a main() sem adicionar o seu no raiz ao ponteiro acima.
 Isso faz com que os nos alocados sejam perdidos e esse vetor fara
 com que eles possam ser apagados mesmo assim. */
-PONTEIRONO nos[1000];
+PONTEIRONO nos[MAX_NOS];
 int qntNos = 0;
 
 void mostraArvore(PONTEIRONO raiz, int num);
