@@ -88,21 +88,19 @@ void mostrarReg(){
 
 //Funcao para descartar registradores
 int descartarReg(){
-	int maior = 1000000; // Marca se houve descarte de registrador
-	
-	for(int i = 0; i < MAX_REG; i++){
-		if(listaReg[i].descarte > 0){
-			listaReg[i].nomeVar = NULL;
-			strcpy(listaReg[i].escopo, "");
-			listaReg[i].descarte = 0;
-			totalRegEmUso--;
+	int menor = 1000000; // Marca se houve descarte de registrador
+	int regDescartado = -1;
 
-			if(maior > i)
-				maior = i;
+	for(int i = 0; i < MAX_REG; i++){	
+		if(listaReg[i].descarte > 0){
+			if(menor > listaReg[i].descarte){
+				menor = listaReg[i].descarte;
+				regDescartado = i;
+			}
 		}
 	}
 
-	if(maior == MAX_REG_DESCARTE){
+	if(menor == MAX_REG_DESCARTE){
 		printf(ANSI_COLOR_RED);
 		printf("ERRO: Nao foi possivel descartar nenhum registrador\n");
 		printf(ANSI_COLOR_RESET);
@@ -110,7 +108,16 @@ int descartarReg(){
 		return -1;
 	}
 
-	return maior;
+	listaReg[regDescartado].nomeVar = NULL;
+	strcpy(listaReg[regDescartado].escopo, "");
+	listaReg[regDescartado].descarte = 0;
+	totalRegEmUso--;
+
+	printf(ANSI_COLOR_PURPLE);
+	printf("Descartado registrador t%d\n", regDescartado);
+	printf(ANSI_COLOR_RESET);
+
+	return regDescartado;
 
 }
 

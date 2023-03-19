@@ -142,7 +142,6 @@ void imprimeCodigoIntermediario(){
     }
 }
 
-
 void codIntDeclIF(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* instrucaoOp = NULL;
     INSTRUCAO* instrucaoGoto = NULL;
