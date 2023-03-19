@@ -282,7 +282,7 @@ void codIntDeclVarDecl(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         var->arg2 = criaEndereco(String, 0, "global", 0);
     }
     else{
-        var->arg2 = criaEndereco(String, 0, itemFunc->escopo, 0);
+        var->arg2 = criaEndereco(String, 0, funcName, 0);
     }
     
     var->arg3 = criaEndereco(Vazio, 0, NULL, 0);
