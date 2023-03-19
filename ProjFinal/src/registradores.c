@@ -83,7 +83,9 @@ void mostrarReg(){
 			printf("t%d: %s, %s, %d\n", listaReg[i].numReg, listaReg[i].nomeVar, listaReg[i].escopo, listaReg[i].descarte);
 		}
 	}
+	printf(ANSI_COLOR_PURPLE);
 	printf("%d Registradores Livres\n\n", MAX_REG - totalRegEmUso);
+	printf(ANSI_COLOR_RESET);
 }
 
 //Funcao para descartar registradores
@@ -161,5 +163,4 @@ int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 
 	return reg;
 
-	
 }
