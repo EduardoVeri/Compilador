@@ -3,16 +3,17 @@
 #include "global.h"
 #include "codInterm.h"
 
-#define MAX_REG 30 //Numero maximo de registradores
-#define MAX_REG_DESCARTE 10000000 //Numero maximo de registradores que podem ser descartados
+#define MAX_REG 30 // Numero maximo de registradores
+#define MAX_REG_DESCARTE 10000000 // Numero maximo de registradores que podem ser descartados
 
-char stringTemp[MAXLEXEMA] = "Temporario"; //Nome da funcao
+char stringTemp[MAXLEXEMA] = "Temporario"; // Nome para identificar variaveis temporarias
 
 /* Essa variavel sera importante para o discarte dos registradores, ja
 que registradores usados pela ultima vez a algum tempo serao eliminados primeiro
 do que os usados recentemente, para tentar evitar conflitos em instrucoes */
-int totalReg = 1; 
+int totalReg = 1;
 
+int totalRegEmUso = 0; 
 
 typedef struct reg{
 	int numReg;
@@ -40,6 +41,8 @@ int adicionarVarReg(char* nomeVar, char* escopo){
 			listaReg[i].nomeVar = nomeVar;
 			strcpy(listaReg[i].escopo, escopo);
 			listaReg[i].descarte = 0;
+
+			totalRegEmUso++;
 			return i;
 		}
 	}
@@ -54,6 +57,7 @@ int adicionaTempReg(){
 			strcpy(listaReg[i].escopo, funcName);
 			listaReg[i].descarte = totalReg;
 			totalReg++;
+			totalRegEmUso++;
 			return i;
 		}
 	}
@@ -77,10 +81,9 @@ void mostrarReg(){
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].nomeVar != NULL){
 			printf("t%d: %s, %s, %d\n", listaReg[i].numReg, listaReg[i].nomeVar, listaReg[i].escopo, listaReg[i].descarte);
-			cont++;
 		}
 	}
-	printf("%d Registradores Livres\n\n", MAX_REG - cont);
+	printf("%d Registradores Livres\n\n", MAX_REG - totalRegEmUso);
 }
 
 //Funcao para descartar registradores
@@ -102,8 +105,14 @@ int descartarReg(){
 		printf(ANSI_COLOR_RED);
 		printf("ERRO: Nao foi possivel descartar nenhum registrador\n");
 		printf(ANSI_COLOR_RESET);
+
+		return -1;
 	}
 
 	return maior;
 
+}
+
+int totalRegistradores(){
+	return totalRegEmUso;
 }
