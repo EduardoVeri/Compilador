@@ -31,6 +31,8 @@ void sort( int a[], int low, int high)
 	}
 }
 
+int pop;
+
 void main(void)
 {
 	int i;

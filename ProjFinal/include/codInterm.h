@@ -15,7 +15,7 @@ valor determinado pelo mesmo, ou seja, numero ou char* */
 typedef struct endereco{
     tipoEndereco tipo;
     int val;
-    int boolReg; //Diz se o endereco eh um numero (0), num (1) ou label (2)
+    int boolReg; //Diz se o endereco eh um numero (0), Reg (1) ou label (2)
     char* nome;
 } ENDERECO;
 
@@ -28,7 +28,7 @@ typedef struct instrucao{
 } INSTRUCAO;
 
 //Vetor que armazena o codigo intermediario
-INSTRUCAO** codigoIntermediario;
+extern INSTRUCAO** codigoIntermediario;
 
 extern int numReg; //Numero do registrador
 extern int indiceVetor; //Indice do vetor de codigo intermediario
@@ -38,11 +38,22 @@ extern char funcName[MAXLEXEMA]; //Nome da funcao
 //Funcao principal para a criacao do codigo intermediario
 void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], int boolean);
 
+//Funcoes para registradores
+void inicializaReg();
+int adicionarVarReg(char* nomeVar, char* escopo);
+int adicionaTempReg();
+int buscarVarReg(char* nomeVar, char* escopo);
+void mostrarReg();
+int descartarReg();
+int totalRegistradores();
+int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp);
+
 //Funcoes auxiliares
 INSTRUCAO** inicializaVetor(); 
 void desalocaVetor();
 INSTRUCAO* criaInstrucao(char* op);
 void imprimeCodigoIntermediario();
 PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
+
 
 #endif

@@ -19,7 +19,7 @@
 #include "global.h"
 #include "semantica.h"
 #include "codInterm.h"
-
+#include "assembly.h"
 
 //Funcao Principal do Compilador 
 int main(int argc, char *argv[]){
@@ -99,6 +99,11 @@ int main(int argc, char *argv[]){
         
 		//Imprime o codigo intermediario
 		imprimeCodigoIntermediario();
+		
+		//Mostra os registradores em uso
+		mostrarReg();
+
+		//assembly();
 
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
@@ -127,6 +132,9 @@ int main(int argc, char *argv[]){
 		
 	if(copiaArquivo != NULL)
 		fclose(copiaArquivo);
+
+	// Remove o arquivo de copia
+	remove("src/copia.txt");
 
 	return 0;
 }

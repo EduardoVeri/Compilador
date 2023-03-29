@@ -274,7 +274,7 @@ void mostrarTela(char palavra[]){
 //Funcao que copia o arquivo de entrada para um arquivo de saida extra
 void copiar(FILE* velho){
 	FILE *novo;
-	novo=fopen("copia.txt","w");
+	novo=fopen("src/copia.txt","w");
 	if (novo==NULL){
 		printf("Erro de abertura\n");
 		exit(1);
@@ -303,7 +303,7 @@ enum yytokentype getToken(void)
 		else{
 			copiar(arquivoEntrada);
 			rewind(arquivoEntrada);
-			copiaArquivo = fopen("copia.txt", "r");
+			copiaArquivo = fopen("src/copia.txt", "r");
 			
 			fgets(stringAux, 1000, copiaArquivo);
 			mostrarTela(stringAux);
