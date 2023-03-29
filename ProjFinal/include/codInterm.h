@@ -28,7 +28,7 @@ typedef struct instrucao{
 } INSTRUCAO;
 
 //Vetor que armazena o codigo intermediario
-INSTRUCAO** codigoIntermediario;
+extern INSTRUCAO** codigoIntermediario;
 
 extern int numReg; //Numero do registrador
 extern int indiceVetor; //Indice do vetor de codigo intermediario

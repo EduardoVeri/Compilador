@@ -19,7 +19,7 @@
 #include "global.h"
 #include "semantica.h"
 #include "codInterm.h"
-
+#include "assembly.h"
 
 //Funcao Principal do Compilador 
 int main(int argc, char *argv[]){
@@ -102,6 +102,8 @@ int main(int argc, char *argv[]){
 		
 		//Mostra os registradores em uso
 		mostrarReg();
+
+		//assembly();
 
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();

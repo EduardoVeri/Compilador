@@ -5,6 +5,7 @@
 #include "global.h"
 #include "codInterm.h"
 
+INSTRUCAO** codigoIntermediario = NULL;
 int numReg = 1; //Numero do registrador
 int indiceVetor = 0; //Indice do vetor de codigo intermediario
 int numLabel = 0; //Numero do label
