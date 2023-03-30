@@ -2,7 +2,7 @@
 #define Assembly_H 1
 
 // Capacidade maxima para o vetor dos nomes das instrucoes
-#define MAX_CHAR_NOME 4 
+#define MAX_CHAR_NOME 5
 #define MAX_ASSEMBLY 1000
 
 typedef enum{
@@ -49,5 +49,6 @@ extern ASSEMBLY ** instrucoesAssembly;
 // Funcoes para a geracao do codigo assembly
 void assembly();
 void geraAssembly(INSTRUCAO* instrucao);
+void mostraAssembly();
 
 #endif
