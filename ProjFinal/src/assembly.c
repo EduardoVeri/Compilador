@@ -16,8 +16,31 @@ void inicializaAssembly(){
     }
 }
 
-INSTRUCAO * criarNoAssembly(type_){
+ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char* nome){
+	ASSEMBLY * novoNoAssembly = (ASSEMBLY *)malloc(sizeof(ASSEMBLY));
+	TIPO_R * novoTipoR = NULL;
+	TIPO_I * novoTipoI = NULL;
+	TIPO_J * novoTipoJ = NULL;
+	
+	switch (tipo){
+	case typeR:
+		novoTipoR = (TIPO_R *)malloc(sizeof(TIPO_R));
+		novoNoAssembly->tipoR = novoTipoR;
+		break;
 
+	case typeI:
+		novoTipoI = (TIPO_I *)malloc(sizeof(TIPO_I));
+		novoNoAssembly->tipoI = novoTipoI;
+		break;
+
+	case typeJ:
+		novoTipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
+		novoNoAssembly->tipoJ = novoTipoJ;
+		break;
+	}
+	
+	novoNoAssembly->tipo = tipo;
+	return novoNoAssembly;
 }
 
 

@@ -11,7 +11,6 @@ typedef enum{
 	typeJ // Instrucoes do tipo J
 } tipoInstrucao;
 
-
 /* Struct para armazenar as informacoes
 de instrucoes do tipo R */
 typedef struct tipoR{
