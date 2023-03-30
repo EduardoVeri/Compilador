@@ -6,14 +6,14 @@
 #include "codInterm.h"
 
 INSTRUCAO** codigoIntermediario = NULL;
-int numReg = 1; //Numero do registrador
-int indiceVetor = 0; //Indice do vetor de codigo intermediario
-int numLabel = 0; //Numero do label
+int numReg = 1; // Numero do registrador
+int indiceVetor = 0; // Indice do vetor de codigo intermediario
+int numLabel = 0; // Numero do label
 
 INSTRUCAO* funcLabel = NULL;
 char funcName[MAXLEXEMA] = "global"; 
 
-//Cria um novo endereco
+// Cria um novo endereco
 ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     ENDERECO* endereco = (ENDERECO*) malloc(sizeof(ENDERECO));
     

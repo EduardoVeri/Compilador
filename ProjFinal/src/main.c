@@ -107,6 +107,7 @@ int main(int argc, char *argv[]){
 
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
+		free(codigoIntermediario);
 	}
 	else{
 		//Mostrar uma mensagem de erro sobre os erros semanticos
