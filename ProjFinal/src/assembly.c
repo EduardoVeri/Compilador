@@ -3,7 +3,6 @@
 #include <string.h>
 #include "codInterm.h"
 #include "assembly.h"
-#include "label.h"
 
 // TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
 
@@ -72,7 +71,7 @@ void liberarAssembly(){
 }
 
 // Mostrar as instrucoes em assembly
-void mostraAssembly(){
+void imprimirAssembly(){
 	int i = 0;
 	TIPO_I * tipoI = NULL;
 	TIPO_R * tipoR = NULL;
@@ -82,15 +81,15 @@ void mostraAssembly(){
 	while(i < indiceAssembly){
 		if(instrucoesAssembly[i]->tipo == typeI){
 			tipoI = instrucoesAssembly[i]->tipoI;		
-			printf("%s t%d t%d %d\n", tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
+			printf("%d: %s t%d t%d %d\n", i, tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeR){
 			tipoR = instrucoesAssembly[i]->tipoR;
-			printf("%s t%d t%d t%d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
+			printf("%d: %s t%d t%d t%d\n", i, tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeJ){
 			tipoJ = instrucoesAssembly[i]->tipoJ;
-			printf("%s %d\n", tipoJ->nome, tipoJ->imediato);
+			printf("%d: %s %d\n", i, tipoJ->nome, tipoJ->imediato);
 		}
 		i++;
 	}

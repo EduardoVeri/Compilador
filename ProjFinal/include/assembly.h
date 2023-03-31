@@ -1,6 +1,9 @@
 #ifndef Assembly_H
 #define Assembly_H 1
 
+// Inclusao de bibliotecas
+#include "label.h"
+
 // Capacidade maxima para o vetor dos nomes das instrucoes
 #define MAX_CHAR_NOME 5
 #define MAX_ASSEMBLY 1000
@@ -49,7 +52,7 @@ extern ASSEMBLY ** instrucoesAssembly;
 // Funcoes para a geracao do codigo assembly
 void assembly();
 void geraAssembly(INSTRUCAO* instrucao);
-void mostraAssembly();
+void imprimirAssembly();
 void liberarAssembly();
 
 #endif

@@ -59,6 +59,7 @@ void desalocaVetor(){
         
         free(codigoIntermediario[i]);
     }
+	free(codigoIntermediario);
 }
 
 //Cria o vetor de codigo intermediario

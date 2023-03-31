@@ -97,30 +97,33 @@ int main(int argc, char *argv[]){
 		//Adiciona o HALT no final do codigo intermediario
 		codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
         indiceVetor++;
-		//Imprime o codigo intermediario
+		// Imprime o codigo intermediario
 		imprimeCodigoIntermediario();
 		
-		//Mostra os registradores em uso
+		// Mostra os registradores em uso
 		mostrarReg();
 
+		// Inicia o processo de montagem do codigo assembly
 		assembly();
-		mostraAssembly();
+		imprimirAssembly();
+		imprimirLabels();
+		// Libera a memoria alocada para o codigo assembly
 		liberarAssembly();
-		//Libera a memoria alocada para o codigo intermediario
+
+		// Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
-		free(codigoIntermediario);
 	}
 	else{
-		//Mostrar uma mensagem de erro sobre os erros semanticos
+		// Mostrar uma mensagem de erro sobre os erros semanticos
 		printf(ANSI_COLOR_RED);
-		//Verifica se teve apenas um erro semantico para a escrita no singular ou plural
+		// Verifica se teve apenas um erro semantico para a escrita no singular ou plural
 		if(teveErroSemantico == 1)
 			printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erro semantico.\n", teveErroSemantico);
 		else if(teveErroSemantico > 1)
 			printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erros semanticos.\n", teveErroSemantico);
 		printf(ANSI_COLOR_RESET);
 	}
-
+	
 	//libera a memória alocada para a arvore sintatica
 	desalocaArvore(arvoreSintatica);
 

@@ -69,7 +69,7 @@ void liberarLabels(){
 void imprimirLabels(){
 	LABEL * aux = vetorLabel->vetor;
 
-	printf("============= Vetor de labels =============\n");
+	printf("\n============= Vetor de labels =============\n");
 	while(aux != NULL){
 		printf("Label: %d, Endereco: %d\n", aux->id, aux->endereco);
 		aux = aux->prox;
