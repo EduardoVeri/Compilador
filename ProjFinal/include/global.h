@@ -11,8 +11,10 @@ extern int qntLinhas; // Contador de linhas
 extern char auxNome[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
 extern char id[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
 extern char* yytext; //
+extern int flagVerbose; // Flag para ativar o modo verbose
 FILE * arquivoEntrada; // Arquivo de entrada
 FILE * copiaArquivo; // Cópia do arquivo de entrada
+FILE * arquivoSaida; // Arquivo de saída
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.

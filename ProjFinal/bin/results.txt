@@ -1,0 +1,177 @@
+1: /* Um programa para calcular o mdc
+2: segundo o algoritmo de euclides. */
+3: 
+4: 
+5: int gcd (int u, int v)
+	5: reserved word , int
+	5: ID, gcd
+	5: ABREPARENTESES, (
+	5: reserved word , int
+	5: ID, u
+	5: COMMA, ,
+	5: reserved word , int
+	5: ID, v
+	5: FECHAPARENTESES, )
+6: { 	
+	6: ABRECHAVES, {
+7: if (v == 4) {return u;}
+	7: reserved word , if
+	7: ABREPARENTESES, (
+	7: ID, v
+	7: EQ, ==
+	7: NUM, 4
+	7: FECHAPARENTESES, )
+	7: ABRECHAVES, {
+	7: reserved word , return
+	7: ID, u
+	7: SEMICOLON, ;
+	7: FECHACHAVES, }
+8: else return gcd(v,u-u/v*v);
+	8: reserved word , else
+	8: reserved word , return
+	8: ID, gcd
+	8: ABREPARENTESES, (
+	8: ID, v
+	8: COMMA, ,
+	8: ID, u
+	8: SUB, -
+	8: ID, u
+	8: DIV, /
+	8: ID, v
+	8: MULT, *
+	8: ID, v
+	8: FECHAPARENTESES, )
+	8: SEMICOLON, ;
+9: /* u-u/v*v == u mod v */
+10: }
+	10: FECHACHAVES, }
+11: 
+12: void main(void)
+	12: reserved word , void
+	12: ID, main
+	12: ABREPARENTESES, (
+	12: reserved word , void
+	12: FECHAPARENTESES, )
+13: {	int x; int y;
+	13: ABRECHAVES, {
+	13: reserved word , int
+	13: ID, x
+	13: SEMICOLON, ;
+	13: reserved word , int
+	13: ID, y
+	13: SEMICOLON, ;
+14: x = input(); y = input();
+	14: ID, x
+	14: ATRIB, =
+	14: ID, input
+	14: ABREPARENTESES, (
+	14: FECHAPARENTESES, )
+	14: SEMICOLON, ;
+	14: ID, y
+	14: ATRIB, =
+	14: ID, input
+	14: ABREPARENTESES, (
+	14: FECHAPARENTESES, )
+	14: SEMICOLON, ;
+15: output(gcd(x,y));
+	15: ID, output
+	15: ABREPARENTESES, (
+	15: ID, gcd
+	15: ABREPARENTESES, (
+	15: ID, x
+	15: COMMA, ,
+	15: ID, y
+	15: FECHAPARENTESES, )
+	15: FECHAPARENTESES, )
+	15: SEMICOLON, ;
+16: }
+	16: FECHACHAVES, }
+	17: EOF
+
+========== Arvore de Analise Sintatica ========== 
+INT
+	INT
+		u
+	INT
+		v
+	gcd
+		IF
+			==
+				v
+				4
+			ReturnINT
+				u
+			ReturnINT
+				gcd
+					v
+					-
+						u
+						*
+							/
+								u
+								v
+							v
+VOID
+	VOID
+	main
+		INT
+			x
+		INT
+			y
+		=
+			x
+			input
+		=
+			y
+			input
+		output
+			gcd
+				x
+				y
+
+
+============== Tabela de Simbolos ===============
+Nome: main
+Tipo de dado: VOID
+Tipo de identificador: FUN
+Linhas: 12 
+
+Nome: input
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 0 14 14 
+
+Nome: output
+Tipo de dado: VOID
+Tipo de identificador: FUN
+Linhas: 0 15 
+
+Nome: u
+Escopo: gcd
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 5 7 8 8 
+
+Nome: v
+Escopo: gcd
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 5 7 8 8 8 
+
+Nome: x
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 13 14 15 
+
+Nome: y
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 13 14 15 
+
+Nome: gcd
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 5 8 15 
+
