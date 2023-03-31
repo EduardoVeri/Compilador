@@ -14,7 +14,7 @@ typedef enum{
 /* Struct para armazenar as informacoes
 de instrucoes do tipo R */
 typedef struct tipoR{
-	char nome[MAX_CHAR_NOME]; // Nome da instrucao
+	char *nome; // Nome da instrucao
 	int rd; // Registrador destino
 	int rt; // Registrador fonte
 	int rs; // Registrador fonte
@@ -23,7 +23,7 @@ typedef struct tipoR{
 /* Struct para armazenar as informacoes
 de instrucoes do tipo I */
 typedef struct tipoI{
-	char nome[MAX_CHAR_NOME]; // Nome da instrucao
+	char *nome; // Nome da instrucao
 	int rs; // Registrador fonte
 	int rt; // Registrador destino
 	int imediato; // Valor imediato
@@ -32,7 +32,7 @@ typedef struct tipoI{
 /* Struct para armazenar as informacoes 
 de instrucoes do tipo J */
 typedef struct tipoJ{
-	char nome[MAX_CHAR_NOME]; // Nome da instrucao
+	char *nome; // Nome da instrucao
 	int imediato; // Valor imediato
 } TIPO_J;
 

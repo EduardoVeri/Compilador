@@ -96,15 +96,15 @@ int main(int argc, char *argv[]){
         
 		//Adiciona o HALT no final do codigo intermediario
 		codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
-        
+        indiceVetor++;
 		//Imprime o codigo intermediario
 		imprimeCodigoIntermediario();
 		
 		//Mostra os registradores em uso
 		mostrarReg();
 
-		//assembly();
-
+		assembly();
+		mostraAssembly();
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
 		free(codigoIntermediario);

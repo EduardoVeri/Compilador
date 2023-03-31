@@ -127,7 +127,7 @@ int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 	int reg;
 
 	if(boolTemp == 0){
-		if(reg = (buscarVarReg(lexema, escopo)) == -1){
+		if((reg = (buscarVarReg(lexema, escopo))) == -1){
 			if(totalRegEmUso == MAX_REG){
 				if((reg = descartarReg()) == -1){
 					printf(ANSI_COLOR_RED);
