@@ -62,16 +62,14 @@ void desalocaVetor(){
 }
 
 //Cria o vetor de codigo intermediario
-INSTRUCAO** inicializaVetor(){
-    INSTRUCAO** codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION);
+void inicializaVetor(){
+    codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION);
     
     for(int i = 0; i < MAX_INSTRUCTION; i++){
         codigoIntermediario[i] = NULL;
     }
 
 	inicializaReg();
-
-    return codigoIntermediario;
 }
 
 //Imprime o vetor de codigo intermediario

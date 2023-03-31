@@ -54,25 +54,18 @@ ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
 	return novoNoAssembly;
 }
 
-void mostrarUmaInstrucao(ASSEMBLY * instrucoesAssembly){
-	TIPO_I * tipoI = NULL;
-	TIPO_R * tipoR = NULL;
-	TIPO_J * tipoJ = NULL;
-	if(instrucoesAssembly->tipo == typeI){
-		printf("Tipo I: %s\n", instrucoesAssembly->tipoI->nome);
-		
-		tipoI = instrucoesAssembly->tipoI;
-		
-		printf("%s %d %d %d\n", tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
+// Liberar vetor de instrucoes assembly
+void liberarAssembly(){
+	for(int i = 0; i < indiceAssembly; i++){
+		if(instrucoesAssembly[i]->tipo == typeR)
+			free(instrucoesAssembly[i]->tipoR);
+		else if(instrucoesAssembly[i]->tipo == typeI)
+			free(instrucoesAssembly[i]->tipoI);
+		else if(instrucoesAssembly[i]->tipo == typeJ)
+			free(instrucoesAssembly[i]->tipoJ);
+		free(instrucoesAssembly[i]);
 	}
-	else if(instrucoesAssembly->tipo == typeR){
-		tipoR = instrucoesAssembly->tipoR;
-		printf("%s %d %d %d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
-	}
-	else if(instrucoesAssembly->tipo == typeJ){
-		tipoJ = instrucoesAssembly->tipoJ;
-		printf("%s %d\n", tipoJ->nome, tipoJ->imediato);
-	}
+	free(instrucoesAssembly);
 }
 
 // Mostrar as instrucoes em assembly
@@ -188,7 +181,12 @@ void geraAssembly(INSTRUCAO* instrucao){
 		//printf("BNQ R%d, L%d\n", instrucao->arg1->val, getLabel(instrucao->arg2->val));
 	}
 	else if(strcmp(instrucao->op, "LABEL") == 0){
-		return;
+		novaInstrucao = criarNoAssembly(typeR, "add"); // Instrucao de NOP
+		novaInstrucao->tipoR->rd = 31;
+		novaInstrucao->tipoR->rs = 31;
+		novaInstrucao->tipoR->rt = 31;
+
+
 		//criaLabel()
 	}
 	else{

@@ -49,7 +49,7 @@ int totalRegistradores();
 int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp);
 
 //Funcoes auxiliares
-INSTRUCAO** inicializaVetor(); 
+void inicializaVetor(); 
 void desalocaVetor();
 INSTRUCAO* criaInstrucao(char* op);
 void imprimeCodigoIntermediario();

@@ -50,5 +50,6 @@ extern ASSEMBLY ** instrucoesAssembly;
 void assembly();
 void geraAssembly(INSTRUCAO* instrucao);
 void mostraAssembly();
+void liberarAssembly();
 
 #endif

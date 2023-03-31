@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
     
 	if(teveErroSemantico == 0){    
 		//Cria o codigo intermediario
-		codigoIntermediario = inicializaVetor();
+		inicializaVetor();
 		criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
         
 		//Adiciona o HALT no final do codigo intermediario
@@ -105,6 +105,7 @@ int main(int argc, char *argv[]){
 
 		assembly();
 		mostraAssembly();
+		liberarAssembly();
 		//Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
 		free(codigoIntermediario);
