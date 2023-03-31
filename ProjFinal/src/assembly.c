@@ -3,6 +3,7 @@
 #include <string.h>
 #include "codInterm.h"
 #include "assembly.h"
+#include "label.h"
 
 // TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
 
@@ -16,6 +17,8 @@ void inicializaAssembly(){
 	for(int i = 0; i < MAX_INSTRUCTION; i++){
         instrucoesAssembly[i] = NULL;
     }
+
+	inicializaLabels();
 }
 
 ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
@@ -185,6 +188,9 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoR->rd = 31;
 		novaInstrucao->tipoR->rs = 31;
 		novaInstrucao->tipoR->rt = 31;
+
+		adicionarLabel(instrucao->arg1->val, indiceAssembly);
+
 
 
 		//criaLabel()
