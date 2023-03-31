@@ -9,7 +9,6 @@
 ASSEMBLY ** instrucoesAssembly = NULL;
 int indiceAssembly = 0;
 
-
 void inicializaAssembly(){
 	instrucoesAssembly = (ASSEMBLY **)malloc(sizeof(ASSEMBLY*)*MAX_ASSEMBLY);
 
@@ -189,8 +188,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoR->rt = 31;
 
 		adicionarLabel(instrucao->arg1->val, indiceAssembly);
-
-
 
 		//criaLabel()
 	}
