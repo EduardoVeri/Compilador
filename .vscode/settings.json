@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"codinterm.h": "c"
+		"codinterm.h": "c",
+		"string.h": "c"
 	}
 }
