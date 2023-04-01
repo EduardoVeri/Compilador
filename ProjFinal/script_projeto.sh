@@ -6,5 +6,5 @@ bison -d parser.y
 flex -oarquivo_lex.c lexer.l
 mv parser.tab.h ../include
 cd ..
-gcc src/*.c -o bin/compilador.exe -lfl -Iinclude
-./bin/compilador.exe ./testes/mdc.cm -V
+gcc src/*.c -o bin/compilador.exe -lfl -Iinclude 
+./bin/compilador.exe ./testes/mdc.cm -v

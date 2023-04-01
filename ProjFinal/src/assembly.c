@@ -21,22 +21,19 @@ void inicializaAssembly(){
 
 ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
 	ASSEMBLY * novoNoAssembly = (ASSEMBLY *)malloc(sizeof(ASSEMBLY));
-	TIPO_R * novoTipoR = NULL;
-	TIPO_I * novoTipoI = NULL;
-	TIPO_J * novoTipoJ = NULL;
+	novoNoAssembly->tipo = tipo;
+
 	switch (tipo){
 	case typeR:
-		novoTipoR = (TIPO_R *)malloc(sizeof(TIPO_R));
-		novoNoAssembly->tipoR = novoTipoR;
-		novoNoAssembly->tipoR->nome =  nome;
+		novoNoAssembly->tipoR = (TIPO_R *)malloc(sizeof(TIPO_R));
+		novoNoAssembly->tipoR->nome = nome;
 		novoNoAssembly->tipoR->rd = -1;
 		novoNoAssembly->tipoR->rs = -1;
 		novoNoAssembly->tipoR->rt = -1;
 		break;
 
 	case typeI:
-		novoTipoI = (TIPO_I *)malloc(sizeof(TIPO_I));
-		novoNoAssembly->tipoI = novoTipoI;
+		novoNoAssembly->tipoI = (TIPO_I *)malloc(sizeof(TIPO_I));
 		novoNoAssembly->tipoI->nome = nome;
 		novoNoAssembly->tipoI->rs = -1;
 		novoNoAssembly->tipoI->rt = -1;
@@ -44,14 +41,19 @@ ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
 		break;
 
 	case typeJ:
-		novoTipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
-		novoNoAssembly->tipoJ = novoTipoJ;
+		novoNoAssembly->tipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
 		novoNoAssembly->tipoJ->nome = nome;
 		novoNoAssembly->tipoJ->imediato = -1;
 		break;
+	
+	case typeLabel:
+		novoNoAssembly->tipoLabel = (TIPO_LABEL *)malloc(sizeof(TIPO_LABEL));
+		novoNoAssembly->tipoLabel->nome = nome;
+		novoNoAssembly->tipoLabel->endereco = -1;
+		novoNoAssembly->tipoLabel->boolean = -1;
+		break;
 	}
 
-	novoNoAssembly->tipo = tipo;
 	return novoNoAssembly;
 }
 
@@ -64,6 +66,11 @@ void liberarAssembly(){
 			free(instrucoesAssembly[i]->tipoI);
 		else if(instrucoesAssembly[i]->tipo == typeJ)
 			free(instrucoesAssembly[i]->tipoJ);
+		else if(instrucoesAssembly[i]->tipo == typeLabel){
+			free(instrucoesAssembly[i]->tipoLabel);
+			if(instrucoesAssembly[i]->tipoLabel->boolean == 1)
+				free(instrucoesAssembly[i]->tipoLabel->nome);
+		}
 		free(instrucoesAssembly[i]);
 	}
 	free(instrucoesAssembly);
@@ -75,23 +82,28 @@ void imprimirAssembly(){
 	TIPO_I * tipoI = NULL;
 	TIPO_R * tipoR = NULL;
 	TIPO_J * tipoJ = NULL;
+	TIPO_LABEL * tipoLabel = NULL;
 
 	printf("============== Assembly ==============\n");
 	while(i < indiceAssembly){
 		if(instrucoesAssembly[i]->tipo == typeI){
 			tipoI = instrucoesAssembly[i]->tipoI;		
-			printf("%d: %s t%d t%d %d\n", i, tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
+			printf("%s t%d t%d %d\n", tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeR){
 			tipoR = instrucoesAssembly[i]->tipoR;
-			printf("%d: %s t%d t%d t%d\n", i, tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
+			printf("%s t%d t%d t%d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeJ){
 			tipoJ = instrucoesAssembly[i]->tipoJ;
-			printf("%d: %s %d\n", i, tipoJ->nome, tipoJ->imediato);
+			printf("%s %d\n", tipoJ->nome, tipoJ->imediato);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeLabel){
+			tipoLabel = instrucoesAssembly[i]->tipoLabel;
+			printf("%s:\n", tipoLabel->nome);
 		}
 		i++;
-	}
+	}	
 }
 
 void assembly(){
@@ -182,14 +194,21 @@ void geraAssembly(INSTRUCAO* instrucao){
 		//printf("BNQ R%d, L%d\n", instrucao->arg1->val, getLabel(instrucao->arg2->val));
 	}
 	else if(strcmp(instrucao->op, "LABEL") == 0){
-		novaInstrucao = criarNoAssembly(typeR, "add"); // Instrucao de NOP
-		novaInstrucao->tipoR->rd = 31;
-		novaInstrucao->tipoR->rs = 31;
-		novaInstrucao->tipoR->rt = 31;
+		char* auxLabel = (char*) malloc(sizeof(char) * 10);
+		sprintf(auxLabel, "Label %d", instrucao->arg1->val);
+		novaInstrucao = criarNoAssembly(typeLabel, auxLabel); 
+		novaInstrucao->tipoLabel->endereco = instrucao->arg1->val;
+		novaInstrucao->tipoLabel->boolean = 1;
 
 		adicionarLabel(instrucao->arg1->val, indiceAssembly);
 
 		//criaLabel()
+	}
+	else if(strcmp(instrucao->op, "FUN") == 0){
+		novaInstrucao = criarNoAssembly(typeLabel, instrucao->arg2->val); 
+		novaInstrucao->tipoLabel->boolean = 0;
+
+		adicionarLabel(instrucao->arg2->val, indiceAssembly);
 	}
 	else{
 		//printf("Erro: Instrucao nao reconhecida\n");

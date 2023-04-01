@@ -4,6 +4,7 @@
 
 int gcd (int u, int v)
 { 	
+	u = u + 4;
 	if (v == 4) {return u;}
 	else return gcd(v,u-u/v*v);
 	/* u-u/v*v == u mod v */

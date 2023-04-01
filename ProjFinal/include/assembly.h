@@ -11,7 +11,8 @@
 typedef enum{
 	typeR, // Instrucoes do tipo R
 	typeI, // Instrucoes do tipo I
-	typeJ // Instrucoes do tipo J
+	typeJ, // Instrucoes do tipo J
+	typeLabel // Label de funcoes ou de pulos
 } tipoInstrucao;
 
 /* Struct para armazenar as informacoes
@@ -39,11 +40,19 @@ typedef struct tipoJ{
 	int imediato; // Valor imediato
 } TIPO_J;
 
+typedef struct tipoLabel{
+	int boolean; // Booleano para verificar se eh label(1) ou funcao(0)
+	char *nome; // Nome da label
+	int endereco; // Endereco da label
+} TIPO_LABEL;
+
+
 typedef struct assembly{
 	tipoInstrucao tipo; // Tipo da instrucao
 	TIPO_I * tipoI; // Ponteiro para a struct do tipo I
 	TIPO_R * tipoR; // Ponteiro para a struct do tipo R
 	TIPO_J * tipoJ; // Ponteiro para a struct do tipo J
+	TIPO_LABEL * tipoLabel; // Ponteiro para a struct do tipo Label
 } ASSEMBLY;
 
 // Vetor para armazenar as instrucoes em assembly

@@ -1,6 +1,17 @@
 #ifndef _LABEL_H_ 
 #define _LABEL_H_ 1
 
+/* 
+typedef struct linhas{
+	int numLabel;
+	int linha;
+} LINHAS;
+
+typedef struct filaLinhas{
+	int qntd;
+	LINHAS linhas[20];
+} FILA_LINHAS; */
+
 typedef struct label{
 	int id;
 	int endereco;
@@ -12,6 +23,7 @@ typedef struct vetorLabel{
 	int tamanho;
 } VETOR_LABEL;
 
+// extern FILA_LINHAS filaLinhas;
 extern VETOR_LABEL *vetorLabel;
 
 void inicializaLabels();

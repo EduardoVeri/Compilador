@@ -14,79 +14,86 @@
 	5: FECHAPARENTESES, )
 6: { 	
 	6: ABRECHAVES, {
-7: if (v == 4) {return u;}
-	7: reserved word , if
-	7: ABREPARENTESES, (
-	7: ID, v
-	7: EQ, ==
-	7: NUM, 4
-	7: FECHAPARENTESES, )
-	7: ABRECHAVES, {
-	7: reserved word , return
+7: u = u + 4;
 	7: ID, u
+	7: ATRIB, =
+	7: ID, u
+	7: SOMA, +
+	7: NUM, 4
 	7: SEMICOLON, ;
-	7: FECHACHAVES, }
-8: else return gcd(v,u-u/v*v);
-	8: reserved word , else
-	8: reserved word , return
-	8: ID, gcd
+8: if (v == 4) {return u;}
+	8: reserved word , if
 	8: ABREPARENTESES, (
 	8: ID, v
-	8: COMMA, ,
-	8: ID, u
-	8: SUB, -
-	8: ID, u
-	8: DIV, /
-	8: ID, v
-	8: MULT, *
-	8: ID, v
+	8: EQ, ==
+	8: NUM, 4
 	8: FECHAPARENTESES, )
+	8: ABRECHAVES, {
+	8: reserved word , return
+	8: ID, u
 	8: SEMICOLON, ;
-9: /* u-u/v*v == u mod v */
-10: }
-	10: FECHACHAVES, }
-11: 
-12: void main(void)
-	12: reserved word , void
-	12: ID, main
-	12: ABREPARENTESES, (
-	12: reserved word , void
-	12: FECHAPARENTESES, )
-13: {	int x; int y;
-	13: ABRECHAVES, {
-	13: reserved word , int
-	13: ID, x
-	13: SEMICOLON, ;
-	13: reserved word , int
-	13: ID, y
-	13: SEMICOLON, ;
-14: x = input(); y = input();
+	8: FECHACHAVES, }
+9: else return gcd(v,u-u/v*v);
+	9: reserved word , else
+	9: reserved word , return
+	9: ID, gcd
+	9: ABREPARENTESES, (
+	9: ID, v
+	9: COMMA, ,
+	9: ID, u
+	9: SUB, -
+	9: ID, u
+	9: DIV, /
+	9: ID, v
+	9: MULT, *
+	9: ID, v
+	9: FECHAPARENTESES, )
+	9: SEMICOLON, ;
+10: /* u-u/v*v == u mod v */
+11: }
+	11: FECHACHAVES, }
+12: 
+13: void main(void)
+	13: reserved word , void
+	13: ID, main
+	13: ABREPARENTESES, (
+	13: reserved word , void
+	13: FECHAPARENTESES, )
+14: {	int x; int y;
+	14: ABRECHAVES, {
+	14: reserved word , int
 	14: ID, x
-	14: ATRIB, =
-	14: ID, input
-	14: ABREPARENTESES, (
-	14: FECHAPARENTESES, )
 	14: SEMICOLON, ;
+	14: reserved word , int
 	14: ID, y
-	14: ATRIB, =
-	14: ID, input
-	14: ABREPARENTESES, (
-	14: FECHAPARENTESES, )
 	14: SEMICOLON, ;
-15: output(gcd(x,y));
-	15: ID, output
-	15: ABREPARENTESES, (
-	15: ID, gcd
-	15: ABREPARENTESES, (
+15: x = input(); y = input();
 	15: ID, x
-	15: COMMA, ,
-	15: ID, y
-	15: FECHAPARENTESES, )
+	15: ATRIB, =
+	15: ID, input
+	15: ABREPARENTESES, (
 	15: FECHAPARENTESES, )
 	15: SEMICOLON, ;
-16: }
-	16: FECHACHAVES, }
-	17: EOF
+	15: ID, y
+	15: ATRIB, =
+	15: ID, input
+	15: ABREPARENTESES, (
+	15: FECHAPARENTESES, )
+	15: SEMICOLON, ;
+16: output(gcd(x,y));
+	16: ID, output
+	16: ABREPARENTESES, (
+	16: ID, gcd
+	16: ABREPARENTESES, (
+	16: ID, x
+	16: COMMA, ,
+	16: ID, y
+	16: FECHAPARENTESES, )
+	16: FECHAPARENTESES, )
+	16: SEMICOLON, ;
+17: }
+	17: FECHACHAVES, }
+	18: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
@@ -95,6 +102,11 @@ INT
 	INT
 		v
 	gcd
+		=
+			u
+			+
+				u
+				4
 		IF
 			==
 				v
@@ -134,44 +146,44 @@ VOID
 Nome: main
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 12 
+Linhas: 13 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 14 14 
+Linhas: 0 15 15 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 15 
+Linhas: 0 16 
 
 Nome: u
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 5 7 8 8 
+Linhas: 5 7 7 8 9 9 
 
 Nome: v
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 5 7 8 8 8 
+Linhas: 5 8 9 9 9 
 
 Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 13 14 15 
+Linhas: 14 15 16 
 
 Nome: y
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 13 14 15 
+Linhas: 14 15 16 
 
 Nome: gcd
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 5 8 15 
+Linhas: 5 9 16 
 
