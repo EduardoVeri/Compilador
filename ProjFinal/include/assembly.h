@@ -33,6 +33,8 @@ typedef struct tipoI{
 	int imediato; // Valor imediato
 } TIPO_I;
 
+
+
 /* Struct para armazenar as informacoes 
 de instrucoes do tipo J */
 typedef struct tipoJ{
