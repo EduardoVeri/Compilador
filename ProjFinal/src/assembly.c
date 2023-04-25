@@ -43,7 +43,7 @@ ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
 	case typeJ:
 		novoNoAssembly->tipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
 		novoNoAssembly->tipoJ->nome = nome;
-		novoNoAssembly->tipoJ->imediato = -1;
+		novoNoAssembly->tipoJ->labelImediato = NULL;
 		break;
 	
 	case typeLabel:
@@ -96,7 +96,7 @@ void imprimirAssembly(){
 		}
 		else if(instrucoesAssembly[i]->tipo == typeJ){
 			tipoJ = instrucoesAssembly[i]->tipoJ;
-			printf("%s %d\n", tipoJ->nome, tipoJ->imediato);
+			printf("%s %s\n", tipoJ->nome, tipoJ->labelImediato);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeLabel){
 			tipoLabel = instrucoesAssembly[i]->tipoLabel;
@@ -205,12 +205,23 @@ void geraAssembly(INSTRUCAO* instrucao){
 		//criaLabel()
 	}
 	else if(strcmp(instrucao->op, "FUN") == 0){
-		novaInstrucao = criarNoAssembly(typeLabel, instrucao->arg2->val); 
+		novaInstrucao = criarNoAssembly(typeLabel, instrucao->arg2->nome); 
 		novaInstrucao->tipoLabel->boolean = 0;
 
 		adicionarLabel(instrucao->arg2->val, indiceAssembly);
 	}
+	else if(strcmp(instrucao->op, "RET") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "jr");
+		novaInstrucao->tipoR->rd = 31;
+		novaInstrucao->tipoR->rs = 30;
+		novaInstrucao->tipoR->rt = 31;
+	}
+	else if(strcmp(instrucao->op, "CALL") == 0){
+		novaInstrucao = criarNoAssembly(typeJ, "jal");
+		novaInstrucao->tipoJ->labelImediato = instrucao->arg1->nome;
+	}
 	else{
+
 		//printf("Erro: Instrucao nao reconhecida\n");
 		return;
 	}

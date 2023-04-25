@@ -9,6 +9,7 @@ INSTRUCAO** codigoIntermediario = NULL;
 int numReg = 1; // Numero do registrador
 int indiceVetor = 0; // Indice do vetor de codigo intermediario
 int numLabel = 0; // Numero do label
+int vetorIndice = 0; 
 
 INSTRUCAO* funcLabel = NULL;
 char funcName[MAXLEXEMA] = "global"; 
@@ -145,7 +146,9 @@ void imprimeCodigoIntermediario(){
 void codIntDeclIF(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* instrucaoOp = NULL;
     INSTRUCAO* instrucaoGoto = NULL;
-    INSTRUCAO* instrucaoLabel = NULL;
+    INSTRUCAO* instrucaoLabel1 = NULL;
+	INSTRUCAO* instrucaoLabel2 = NULL;
+	INSTRUCAO* instrucaoLabel3 = NULL;
     INSTRUCAO* instrucaoIF = NULL;
 
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
@@ -159,24 +162,42 @@ void codIntDeclIF(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     indiceVetor++;
 
     /* Cria a instrucao para o label */
-    instrucaoLabel = criaInstrucao("LABEL");
-    instrucaoLabel->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
-    instrucaoLabel->arg2 = criaEndereco(Vazio, 0, NULL, 0);
-    instrucaoLabel->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoLabel1 = criaInstrucao("LABEL");
+    instrucaoLabel1->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoLabel1->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoLabel1->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+	numLabel++;
 
-    numLabel++;
+	instrucaoGoto = criaInstrucao("GOTO");
+	instrucaoGoto->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+	instrucaoGoto->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+	instrucaoGoto->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+
+	instrucaoLabel2 = criaInstrucao("LABEL");
+    instrucaoLabel2->arg1 = criaEndereco(IntConst, numLabel, NULL, 2);
+    instrucaoLabel2->arg2 = criaEndereco(Vazio, 0, NULL, 0);
+    instrucaoLabel2->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+	
+	numLabel++;
 
     /* Avanca para o filho do IF caso a operacao seja verdadeira */
     criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
 
-    codigoIntermediario[indiceVetor] = instrucaoLabel;
-    indiceVetor++;
+	if(arvoreSintatica->filho[2] != NULL){
 
-    /*  Avanca para o filho do ELSE caso a operacao seja falsa (Else) 
-        Se nao tiver nenhum Else, ela logo ira dar um return de volta para 
-        essa funcao */
-    criarCodigoIntermediario(arvoreSintatica->filho[2], tabelaHash, 1);
+		codigoIntermediario[indiceVetor++] = instrucaoGoto;
+		codigoIntermediario[indiceVetor++] = instrucaoLabel1;
 
+		/*  Avanca para o filho do ELSE caso a operacao seja falsa (Else) 
+			Se nao tiver nenhum Else, ela logo ira dar um return de volta para 
+			essa funcao */
+		criarCodigoIntermediario(arvoreSintatica->filho[2], tabelaHash, 1);
+
+		codigoIntermediario[indiceVetor++] = instrucaoLabel2;
+	}
+	else{
+		codigoIntermediario[indiceVetor++] = instrucaoLabel1;
+	}
 }
 
 void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
@@ -421,24 +442,24 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* instrucaoId = NULL;
     
     if(arvoreSintatica->tipoExpressao == VetorK){
-        
+        instrucaoId = criaInstrucao("LOADVET");
+
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
+		criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
+		instrucaoId->arg3 = criaEndereco(IntConst, numReg, NULL, 1);
+		vetorIndice = numReg;
 
-		numReg = verificacaoRegistradores(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo, 0);
+		numReg = verificacaoRegistradores(NULL, NULL, 1);
 		
-		instrucaoId = criaInstrucao("LOADVET");
 		instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1); // Valor do registrador alterado
-		//numReg++;
 		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
-		instrucaoId->arg3 = criaEndereco(IntConst, atoi(arvoreSintatica->filho[0]->lexema), NULL, 0);
 		
-		
+
         
     }
-    else if(arvoreSintatica->tipoExpressao == IdK){
-        
+    else if(arvoreSintatica->tipoExpressao == IdK){  
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
@@ -450,8 +471,6 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 		//numReg++;
 		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
 		instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
-		
-		
     }
 
 	if(instrucaoId != NULL){
@@ -511,16 +530,24 @@ void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
     instrucaoAtrib->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
 
+	if(arvoreSintatica->filho[0]->tipoExpressao == VetorK){
+		instrucaoStore = criaInstrucao("STOREVET");
+		instrucaoStore->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[0]->lexema, 0);
+		instrucaoStore->arg2 = criaEndereco(IntConst, instrucaoAtrib->arg1->val, NULL, 1);
+		instrucaoStore->arg3 = criaEndereco(IntConst, vetorIndice, NULL, 1);
+	}
+	else{
+		instrucaoStore = criaInstrucao("STORE");
+		instrucaoStore->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[0]->lexema, 0);
+		instrucaoStore->arg2 = criaEndereco(IntConst, instrucaoAtrib->arg1->val, NULL, 1);
+		instrucaoStore->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+	}
+
     criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
     instrucaoAtrib->arg2 = criaEndereco(IntConst, numReg, NULL, 1);
 
     codigoIntermediario[indiceVetor] = instrucaoAtrib;
-    indiceVetor++;
-
-    instrucaoStore = criaInstrucao("STORE");
-    instrucaoStore->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[0]->lexema, 0);
-    instrucaoStore->arg2 = criaEndereco(IntConst, instrucaoAtrib->arg1->val, NULL, 1);
-    instrucaoStore->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+    indiceVetor++;    
 
     codigoIntermediario[indiceVetor] = instrucaoStore;
     indiceVetor++;
@@ -574,6 +601,15 @@ void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     indiceVetor++;
 }
 
+/* void codIntExpVetor(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
+	INSTRUCAO* instrucaoLoad = NULL;
+	
+
+
+	criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
+} */
+
+
 //Funcao que analisa a arvore sintatica e a tabela de simbolos e gera o codigo intermediario de tres enderecos
 void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[], int boolean){
     if(arvoreSintatica == NULL){
@@ -616,6 +652,9 @@ void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHas
         else if(arvoreSintatica->tipoExpressao == AssignK){
             codIntExpAtrib(arvoreSintatica, tabelaHash);
         }
+		else if(arvoreSintatica->tipoExpressao == VetorK){
+			//codIntExpVetor(arvoreSintatica, tabelaHash);
+		}
     }
     
     if(boolean == 1){

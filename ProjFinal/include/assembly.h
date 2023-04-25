@@ -39,7 +39,7 @@ typedef struct tipoI{
 de instrucoes do tipo J */
 typedef struct tipoJ{
 	char *nome; // Nome da instrucao
-	int imediato; // Valor imediato
+	char *labelImediato; // Nome da Label para o jump
 } TIPO_J;
 
 typedef struct tipoLabel{
