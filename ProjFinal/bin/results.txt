@@ -1,51 +1,42 @@
-1: int main(void){	
+1: int main(void){
 	1: reserved word , int
 	1: ID, main
 	1: ABREPARENTESES, (
 	1: reserved word , void
 	1: FECHAPARENTESES, )
 	1: ABRECHAVES, {
-2: int x; int y;
+2: int x[10];
 	2: reserved word , int
 	2: ID, x
-	2: SEMICOLON, ;
-	2: reserved word , int
-	2: ID, y
+	2: ABRECOLCHETES, [
+	2: NUM, 10
+	2: FECHACOLCHETES, ]
 	2: SEMICOLON, ;
 3: 
-4: if(x == 10){
-	4: reserved word , if
-	4: ABREPARENTESES, (
-	4: ID, x
-	4: EQ, ==
-	4: NUM, 10
-	4: FECHAPARENTESES, )
-	4: ABRECHAVES, {
-5: x = 20;
-	5: ID, x
-	5: ATRIB, =
-	5: NUM, 20
-	5: SEMICOLON, ;
-6: }
-	6: FECHACHAVES, }
-7: else{
-	7: reserved word , else
-	7: ABRECHAVES, {
-8: x = 11;
-	8: ID, x
-	8: ATRIB, =
-	8: NUM, 11
+4: /*x[10 + 20] = 20 + 30;*/
+5: 
+6: x[1+2] = x[10] + 20;
+	6: ID, x
+	6: ABRECOLCHETES, [
+	6: NUM, 1
+	6: SOMA, +
+	6: NUM, 2
+	6: FECHACOLCHETES, ]
+	6: ATRIB, =
+	6: ID, x
+	6: ABRECOLCHETES, [
+	6: NUM, 10
+	6: FECHACOLCHETES, ]
+	6: SOMA, +
+	6: NUM, 20
+	6: SEMICOLON, ;
+7: 
+8: return 0;
+	8: reserved word , return
+	8: NUM, 0
 	8: SEMICOLON, ;
-9: }
 	9: FECHACHAVES, }
-10: 
-11: 
-12: return 0;
-	12: reserved word , return
-	12: NUM, 0
-	12: SEMICOLON, ;
-	13: FECHACHAVES, }
-	13: EOF
+	9: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
@@ -53,18 +44,16 @@ INT
 	main
 		INT
 			x
-		INT
-			y
-		IF
-			==
+			10
+		=
+			x
+				+
+					1
+					2
+			+
 				x
-				10
-			=
-				x
+					10
 				20
-			=
-				x
-				11
 		ReturnINT
 			0
 
@@ -88,12 +77,6 @@ Linhas: 0
 Nome: x
 Escopo: main
 Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 2 4 5 8 
-
-Nome: y
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 2 
+Tipo de identificador: VET
+Linhas: 2 6 6 
 

@@ -19,12 +19,12 @@ typedef struct reg{
 	int numReg;
 	char* nomeVar;
 	char escopo[MAXLEXEMA];
-	int descarte; //Diz se o registrador pode ser descartado (1, 2, ..., n) ou nao (0)
+	int descarte; // Diz se o registrador pode ser descartado (1, 2, ..., n) ou nao (0)
 }REG;
 
-REG listaReg[MAX_REG]; //Lista encadeada com os registradores
+REG listaReg[MAX_REG]; // Lista encadeada com os registradores
 
-//Funcao para inicializar o vetor de registradores
+// Funcao para inicializar o vetor de registradores
 void inicializaReg(){
 	for(int i = 0; i < MAX_REG; i++){
 		listaReg[i].numReg = i;
@@ -34,7 +34,7 @@ void inicializaReg(){
 	}
 }
 
-//Adiciona uma variavel em um registrador
+// Adiciona uma variavel em um registrador
 int adicionarVarReg(char* nomeVar, char* escopo){
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].nomeVar == NULL){
@@ -46,10 +46,10 @@ int adicionarVarReg(char* nomeVar, char* escopo){
 			return i;
 		}
 	}
-	return -1; //Nao foi possivel adicionar a variavel em nenhum registrador
+	return -1; // Nao foi possivel adicionar a variavel em nenhum registrador
 }
 
-//Adiciona uma variavel temporaria em um registrador, normalmente utilizada em operacoes
+// Adiciona uma variavel temporaria em um registrador, normalmente utilizada em operacoes
 int adicionaTempReg(){
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].nomeVar == NULL){
@@ -61,7 +61,7 @@ int adicionaTempReg(){
 			return i;
 		}
 	}
-	return -1; //Nao foi possivel adicionar a variavel em nenhum registrador
+	return -1; // Nao foi possivel adicionar a variavel em nenhum registrador
 }
 
 int buscarVarReg(char* nomeVar, char* escopo){
@@ -72,9 +72,10 @@ int buscarVarReg(char* nomeVar, char* escopo){
 			}
 		}
 	}
-	return -1; //Nao foi possivel encontrar a variavel em nenhum registrador
+	return -1; // Nao foi possivel encontrar a variavel em nenhum registrador
 }
 
+// Funcao para mostrar os registradores e suas informacoes na tela do usuario
 void mostrarReg(){
 	int cont = 0;
 	printf("\n============== Registradores ===============\n");
@@ -88,7 +89,7 @@ void mostrarReg(){
 	printf(ANSI_COLOR_RESET);
 }
 
-//Funcao para descartar registradores
+// Funcao para descartar um registrador que nao esta sendo mais utilizado no momento
 int descartarReg(){
 	int menor = 1000000; // Marca se houve descarte de registrador
 	int regDescartado = -1;
@@ -123,6 +124,10 @@ int descartarReg(){
 
 }
 
+/* Funcao para verificar se a variavel ja esta em um registrador
+Se nao estiver, adiciona a variavel em um registrador
+Se estiver, retorna o numero do registrador em que a variavel esta
+Se nao for possivel adicionar a variavel em um registrador, retorna -1 */
 int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 	int reg;
 
