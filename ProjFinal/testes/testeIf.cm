@@ -1,0 +1,13 @@
+int main(void){	
+	int x; int y;
+	
+	if(x == 10){
+		x = 20;
+		return 1;
+	}
+	else{
+		x = 11;
+	}
+	x = 5;
+	return 0;
+}

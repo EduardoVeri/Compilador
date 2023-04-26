@@ -3,7 +3,7 @@
 
 int vet[ 10 ];
 
-int minloc ( int a[], int low, int high )
+int minloc ( int a[], int low, int high)
 {	int i; int x; int k;
 	k = low;
 	x = a[low];
@@ -18,7 +18,7 @@ int minloc ( int a[], int low, int high )
 	return k;
 }
 
-void sort( int a[], int low, int high)
+void sort(int a[], int low, int high)
 {	int i; int k;
 	i = low;
 	while (i < high-1){
@@ -30,8 +30,6 @@ void sort( int a[], int low, int high)
 		i = i + 1;
 	}
 }
-
-int pop;
 
 void main(void)
 {

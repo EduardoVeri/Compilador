@@ -468,10 +468,11 @@ char *yytext;
 #include "global.h"
 #include "tabelaSimb.h"
 
-char stringAux[1000];
+int qntLinhas;
+char stringAux[500];
 char auxNome[MAXLEXEMA];
 char id[MAXLEXEMA];
-FILE * copiaArquivo = NULL;
+//FILE * copiaArquivo = NULL;
 int firstTime = 1;
 
 int tabelaNomes(enum yytokentype *token);
@@ -480,10 +481,10 @@ void mostrarTela(char palavra[]);
 
 
 int indPilha = -1;
-char pilha[10][MAXLEXEMA];
+char pilha[5][MAXLEXEMA];
 
-#line 486 "arquivo_lex.c"
 #line 487 "arquivo_lex.c"
+#line 488 "arquivo_lex.c"
 
 #define INITIAL 0
 
@@ -700,10 +701,10 @@ YY_DECL
 		}
 
 	{
-#line 27 "lexer.l"
+#line 28 "lexer.l"
 
 
-#line 707 "arquivo_lex.c"
+#line 708 "arquivo_lex.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -762,12 +763,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 30 "lexer.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 32 "lexer.l"
 {
 		  char c, aux = 'x'; 
 		  do
@@ -775,9 +776,9 @@ YY_RULE_SETUP
 		    if (c == EOF) break;
 		    if (c == '\n') {
 		    	qntLinhas++;
-		    	if (copiaArquivo != NULL){
+		    	if (flagVerbose == 1 && copiaArquivo != NULL){
 		    		fgets(stringAux, 1000, copiaArquivo);
-				mostrarTela(stringAux);
+					mostrarTela(stringAux);
 		    	}
 		    }
 		    if (c == '*'){
@@ -789,10 +790,10 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 49 "lexer.l"
+#line 50 "lexer.l"
 {
 	qntLinhas++;
-	if (copiaArquivo != NULL){
+	if (flagVerbose == 1 && copiaArquivo != NULL){
 		fgets(stringAux, 1000, copiaArquivo);
 		if(feof(copiaArquivo) == 0)
 			mostrarTela(stringAux);
@@ -802,9 +803,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 61 "lexer.l"
 {
-			printf("\t%d: NUM, %s\n", qntLinhas, yytext);
+			if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: NUM, %s\n", qntLinhas, yytext);
 			
 			/* Caso o NUM possua um tamanho maior do que o valor trabalhado,
 			seu conteudo sera cortado para poder ser utilizado na linguagem */
@@ -825,11 +826,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 80 "lexer.l"
+#line 81 "lexer.l"
 {	
 			enum yytokentype token;
 			if((tabelaNomes(&token)) == 0){
-				printf("\t%d: ID, %s\n", qntLinhas, yytext);
+				if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ID, %s\n", qntLinhas, yytext);
 				token = ID;
 			}
 			
@@ -841,6 +842,8 @@ YY_RULE_SETUP
 				printf("nome reduzido para '%s'\n", yytext);
 			}
 
+
+
 			//strcpy(auxNome, yytext);
 
 			indPilha++;
@@ -851,171 +854,171 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 103 "lexer.l"
+#line 106 "lexer.l"
 {
-	printf("\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
 	return ABREPARENTESES;
    }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 108 "lexer.l"
+#line 111 "lexer.l"
 {
-	printf("\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
 	return FECHAPARENTESES;
    } 
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 113 "lexer.l"
+#line 116 "lexer.l"
 {
-	printf("\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
 	return ABRECOLCHETES;
    }	      
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 119 "lexer.l"
+#line 122 "lexer.l"
 {
-	printf("\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
 	return FECHACOLCHETES;
    }	      
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 125 "lexer.l"
+#line 128 "lexer.l"
 {
-	printf("\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
 	return ABRECHAVES;
    }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 130 "lexer.l"
+#line 133 "lexer.l"
 {
-	printf("\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
 	return FECHACHAVES;	
    }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 136 "lexer.l"
+#line 139 "lexer.l"
 {
-	printf("\t%d: ATRIB, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ATRIB, %s\n", qntLinhas, yytext);
 	return ATRIB;
   }	
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 141 "lexer.l"
+#line 144 "lexer.l"
 {
-	printf("\t%d: COMMA, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: COMMA, %s\n", qntLinhas, yytext);
 	return COMMA;
   }	
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 146 "lexer.l"
+#line 149 "lexer.l"
 {
-	printf("\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
 	return SEMICOLON;
   }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 151 "lexer.l"
+#line 154 "lexer.l"
 {
-	printf("\t%d: SOMA, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SOMA, %s\n", qntLinhas, yytext);
 	return SOMA;
    }	
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 156 "lexer.l"
+#line 159 "lexer.l"
 {
-	printf("\t%d: SUB, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SUB, %s\n", qntLinhas, yytext);
 	return SUB;
    }  
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 161 "lexer.l"
+#line 164 "lexer.l"
 {
-	printf("\t%d: MULT, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: MULT, %s\n", qntLinhas, yytext);
 	return MULT;
    }	
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 166 "lexer.l"
+#line 169 "lexer.l"
 {
-	printf("\t%d: DIV, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: DIV, %s\n", qntLinhas, yytext);
 	return DIV;
    } 
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 171 "lexer.l"
+#line 174 "lexer.l"
 {
-	printf("\t%d: EQ, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: EQ, %s\n", qntLinhas, yytext);
 	return EQ;
    }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 176 "lexer.l"
+#line 179 "lexer.l"
 {
-	printf("\t%d: NEQ, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: NEQ, %s\n", qntLinhas, yytext);
 	return NEQ;
 	}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 181 "lexer.l"
+#line 184 "lexer.l"
 {
-	printf("\t%d: LT, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: LT, %s\n", qntLinhas, yytext);
 	return LT;
   }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 186 "lexer.l"
+#line 189 "lexer.l"
 {
-	printf("\t%d: GT, %s\n", qntLinhas, yytext);
+	if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: GT, %s\n", qntLinhas, yytext);
 	return GT;
   }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 191 "lexer.l"
+#line 194 "lexer.l"
 {
-		printf("\t%d: LET, %s\n", qntLinhas, yytext);
+		if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: LET, %s\n", qntLinhas, yytext);
 		return LET;
   	}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 196 "lexer.l"
-{
-		printf("\t%d: GET, %s\n", qntLinhas, yytext);
+#line 199 "lexer.l"
+{	
+		if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: GET, %s\n", qntLinhas, yytext);
 		return GET;
   	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 201 "lexer.l"
+#line 204 "lexer.l"
 {
-		printf("\t%d: EOF\n", qntLinhas);
+		if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: EOF\n", qntLinhas);
 		return 0;
 	}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 206 "lexer.l"
+#line 209 "lexer.l"
 {if(arquivoEntrada == stdin) return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 208 "lexer.l"
+#line 211 "lexer.l"
 {
 	printf(ANSI_COLOR_RED "\nERRO LEXICO, LINHA: %d" ANSI_COLOR_RESET, qntLinhas);
 	printf(": %s não identificado na linguagem\n", yytext);
@@ -1024,10 +1027,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 214 "lexer.l"
+#line 217 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1031 "arquivo_lex.c"
+#line 1034 "arquivo_lex.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2030,7 +2033,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 214 "lexer.l"
+#line 217 "lexer.l"
 
 
 //Funcao que verifica se o id eh uma palavra reservada
@@ -2069,8 +2072,10 @@ int tabelaNomes(enum yytokentype *token){
 		flag =  1;
 	}
 	
-	if(flag == 1) printf("\t%d: reserved word , %s\n", qntLinhas, aux);
-	
+	if(flagVerbose == 1){
+		if(flag == 1) fprintf(arquivoSaida, "\t%d: reserved word , %s\n", qntLinhas, aux);
+	}
+
 	return flag;
 }
 
@@ -2078,7 +2083,8 @@ int tabelaNomes(enum yytokentype *token){
 void mostrarTela(char palavra[]){
 	int i = 0;
 	char ch;
-	printf(ANSI_COLOR_RESET "%d: ", qntLinhas);
+	
+	fprintf(arquivoSaida, "%d: ", qntLinhas);
 	ch = palavra[i];
 	while(ch == '\t' || ch == ' '){
 		i++;
@@ -2086,9 +2092,9 @@ void mostrarTela(char palavra[]){
 	}
 	for (; i < strlen(palavra); i++){
 		ch = palavra[i];
-		if(ch != '\n') printf("%c", palavra[i]);
+		if(ch != '\n') fprintf(arquivoSaida, "%c", palavra[i]);
 	}
-	printf("\n");
+	fprintf(arquivoSaida, "\n");
 }
 
 //Funcao que copia o arquivo de entrada para um arquivo de saida extra
@@ -2115,9 +2121,9 @@ enum yytokentype getToken(void)
 		yyin = arquivoEntrada;
 
 		if(arquivoEntrada == stdin){
-			printf("Bem vindo ao compilador de C-!\n");
-			printf("Para sair, digite !N e aperte enter\n(O valor sera identificado como um token para finalizar as entradas)\n");
-			printf("Digite o codigo fonte:\n\n");
+			fprintf(arquivoSaida, "Bem vindo ao compilador de C-!\n");
+			fprintf(arquivoSaida, "Para sair, digite !N e aperte enter\n(O valor sera identificado como um token para finalizar as entradas)\n");
+			fprintf(arquivoSaida, "Digite o codigo fonte:\n\n");
 			copiaArquivo = NULL;
 		}
 		else{
@@ -2125,9 +2131,16 @@ enum yytokentype getToken(void)
 			rewind(arquivoEntrada);
 			copiaArquivo = fopen("src/copia.txt", "r");
 			
-			fgets(stringAux, 1000, copiaArquivo);
-			mostrarTela(stringAux);
-		}	
+			if(flagVerbose == 1){
+				fgets(stringAux, 1000, copiaArquivo);
+				mostrarTela(stringAux);
+			}
+		}
+
+		// Inicializa pilha de ID
+		for (int i = 0; i < 5; i++){
+			bzero(pilha, MAXLEXEMA);	
+		}
 	}
 
 	enum yytokentype currentToken;

@@ -283,44 +283,44 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
     PONTEIROITEM aux = NULL;
     PONTEIROLINHA auxLinhas = NULL;
 
-    printf("============== Tabela de Simbolos ===============\n");
+    fprintf(arquivoSaida, "============== Tabela de Simbolos ===============\n");
 
     for(int i = 0; i < MAX; i++){
         if(tabelaHash[i] != NULL){
             aux = tabelaHash[i];
             while(aux != NULL){
-                printf("Nome: %s\n", aux->nomeIdentificador);
+                fprintf(arquivoSaida, "Nome: %s\n", aux->nomeIdentificador);
                 
                 if(aux->tipoIdentificador != FunDeclK)
-                    printf("Escopo: %s\n", aux->escopo);
+                    fprintf(arquivoSaida, "Escopo: %s\n", aux->escopo);
             
                 if(aux->tipoDado == Type_Int){
-                    printf("Tipo de dado: INT\n");
+                    fprintf(arquivoSaida, "Tipo de dado: INT\n");
                 }
                 else{
-                    printf("Tipo de dado: VOID\n");
+                    fprintf(arquivoSaida, "Tipo de dado: VOID\n");
                 }
                 
                 if(aux->tipoIdentificador == VarDeclK){
-                    printf("Tipo de identificador: VAR\n");
+                    fprintf(arquivoSaida, "Tipo de identificador: VAR\n");
                 }
                 else if(aux->tipoIdentificador == FunDeclK){
-                    printf("Tipo de identificador: FUN\n");
+                    fprintf(arquivoSaida, "Tipo de identificador: FUN\n");
                 }
                 else if(aux->tipoIdentificador == VetDeclK){
-                    printf("Tipo de identificador: VET\n");
+                    fprintf(arquivoSaida, "Tipo de identificador: VET\n");
                 }
                 else{
-                    printf("Tipo de identificador: PARAM\n");
+                    fprintf(arquivoSaida, "Tipo de identificador: PARAM\n");
                 }
 
-                printf("Linhas: ");
+                fprintf(arquivoSaida, "Linhas: ");
                 auxLinhas = aux->linhas;
                 while(auxLinhas != NULL){
-                    printf("%d ", auxLinhas->numlinha);
+                    fprintf(arquivoSaida, "%d ", auxLinhas->numlinha);
                     auxLinhas = auxLinhas->proximo;
                 }
-                printf("\n\n");
+                fprintf(arquivoSaida, "\n\n");
                 aux = aux->proximo;
             }
         }

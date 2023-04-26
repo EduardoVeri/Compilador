@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "global.h"
+#include <strings.h>
 
 //Cria um novo nó para a árvore, mas com os campos vazios.
 PONTEIRONO novoNo(){
@@ -13,7 +14,7 @@ PONTEIRONO novoNo(){
 
     novoNo->irmao = NULL;
 
-    strcpy(novoNo->lexema, "");
+    bzero(novoNo->lexema, MAXLEXEMA);
 
     novoNo->numLinha = 0;
 
@@ -101,7 +102,7 @@ int flagMA = 0; //Flag para mostrar o primeiro print apenas uma vez.
 void mostraArvore(PONTEIRONO raiz, int num){
 	if(flagMA == 0){
 		flagMA = 1;
-		printf("\n========== Arvore de Analise Sintatica ========== \n");
+		fprintf(arquivoSaida, "\n========== Arvore de Analise Sintatica ========== \n");
 	}
 	
 	if(raiz == NULL){
@@ -109,9 +110,9 @@ void mostraArvore(PONTEIRONO raiz, int num){
 	}
 
 	for(int i = 0; i < num; i++){
-		printf("\t");
+		fprintf(arquivoSaida, "\t");
 	}
-	printf("%s\n", raiz->lexema);
+	fprintf(arquivoSaida, "%s\n", raiz->lexema);
 	
 	for(int i = 0; i < 3; i++){
 		mostraArvore(raiz->filho[i], num + 1);

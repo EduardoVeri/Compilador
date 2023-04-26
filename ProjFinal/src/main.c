@@ -21,24 +21,37 @@
 #include "codInterm.h"
 #include "assembly.h"
 
+int flagVerbose = 0;
+FILE * arquivoEntrada = NULL; // Arquivo de entrada
+FILE * copiaArquivo = NULL; // Cópia do arquivo de entrada
+FILE * arquivoSaida = NULL; // Arquivo de saída
+
 //Funcao Principal do Compilador 
-int main(int argc, char *argv[]){
-    qntLinhas = 1;
+int main(int argc, char *argv[]){	
+	arquivoSaida = stdout;
+
+	qntLinhas = 1;
     arquivoEntrada = NULL;
     copiaArquivo = NULL;
-
+	
     //Verifica se o numero de argumentos passados é valido
     if(argc == 1){
         //Caso nao seja passado nenhum argumento, o arquivo de entrada é o stdin
         arquivoEntrada = stdin;
+		flagVerbose = 1;
     }
-    else if (argc == 2){
+    else if (argc >= 2 && argc <= 3){
         //Caso seja passado um argumento, o arquivo de entrada é o arquivo passado como argumento
         arquivoEntrada = fopen(argv[1], "r");
         if(arquivoEntrada == NULL){
             printf("Erro: Arquivo não encontrado.\n");
             return 0;
         }
+		
+		if(argc == 3 && ((strcmp (argv[2], "-V") == 0) || (strcmp(argv[2], "-v") == 0))){
+			flagVerbose = 1;
+			arquivoSaida = fopen("bin/results.txt", "w");
+		}
     }
     else {
         //Caso seja passado mais de um argumento, o numero de argumentos é invalido
@@ -66,9 +79,11 @@ int main(int argc, char *argv[]){
 	}
 
 	//Imprime a arvore sintatica
-	mostraArvore(arvoreSintatica, 0);
-	printf("\n\n");
-    
+	if(flagVerbose == 1){
+		mostraArvore(arvoreSintatica, 0);
+		fprintf(arquivoSaida, "\n\n");
+	}
+
 	//Inicializa a tabela de simbolos
 	PONTEIROITEM* tabelaHash = inicializaTabela();
 
@@ -85,40 +100,45 @@ int main(int argc, char *argv[]){
 	}
 
 	//imprime a tabela de simbolos
-	imprimirTabela(tabelaHash);
+	if(flagVerbose == 1) imprimirTabela(tabelaHash);
 
 	/* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
     
 	if(teveErroSemantico == 0){    
 		//Cria o codigo intermediario
-		codigoIntermediario = inicializaVetor();
+		inicializaVetor();
 		criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
         
 		//Adiciona o HALT no final do codigo intermediario
 		codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
-        
-		//Imprime o codigo intermediario
+        indiceVetor++;
+		// Imprime o codigo intermediario
 		imprimeCodigoIntermediario();
 		
-		//Mostra os registradores em uso
+		// Mostra os registradores em uso
 		mostrarReg();
 
-		//assembly();
+		// Inicia o processo de montagem do codigo assembly
+		assembly();
+		imprimirAssembly();
+		imprimirLabels();
+		// Libera a memoria alocada para o codigo assembly
+		liberarAssembly();
 
-		//Libera a memoria alocada para o codigo intermediario
+		// Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
 	}
 	else{
-		//Mostrar uma mensagem de erro sobre os erros semanticos
+		// Mostrar uma mensagem de erro sobre os erros semanticos
 		printf(ANSI_COLOR_RED);
-		//Verifica se teve apenas um erro semantico para a escrita no singular ou plural
+		// Verifica se teve apenas um erro semantico para a escrita no singular ou plural
 		if(teveErroSemantico == 1)
 			printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erro semantico.\n", teveErroSemantico);
 		else if(teveErroSemantico > 1)
 			printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erros semanticos.\n", teveErroSemantico);
 		printf(ANSI_COLOR_RESET);
 	}
-
+	
 	//libera a memória alocada para a arvore sintatica
 	desalocaArvore(arvoreSintatica);
 
@@ -135,6 +155,10 @@ int main(int argc, char *argv[]){
 
 	// Remove o arquivo de copia
 	remove("src/copia.txt");
+
+	if(flagVerbose == 0)
+		remove("bin/results.txt");
+
 
 	return 0;
 }

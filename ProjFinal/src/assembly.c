@@ -2,40 +2,232 @@
 #include <stdlib.h>
 #include <string.h>
 #include "codInterm.h"
+#include "assembly.h"
 
 // TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
 
+ASSEMBLY ** instrucoesAssembly = NULL;
+int indiceAssembly = 0;
 
+void inicializaAssembly(){
+	instrucoesAssembly = (ASSEMBLY **)malloc(sizeof(ASSEMBLY*)*MAX_ASSEMBLY);
 
+	for(int i = 0; i < MAX_INSTRUCTION; i++){
+        instrucoesAssembly[i] = NULL;
+    }
 
+	inicializaLabels();
+}
 
-void geraAssembly(INSTRUCAO* instrucao);
+ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
+	ASSEMBLY * novoNoAssembly = (ASSEMBLY *)malloc(sizeof(ASSEMBLY));
+	novoNoAssembly->tipo = tipo;
+
+	switch (tipo){
+	case typeR:
+		novoNoAssembly->tipoR = (TIPO_R *)malloc(sizeof(TIPO_R));
+		novoNoAssembly->tipoR->nome = nome;
+		novoNoAssembly->tipoR->rd = -1;
+		novoNoAssembly->tipoR->rs = -1;
+		novoNoAssembly->tipoR->rt = -1;
+		break;
+
+	case typeI:
+		novoNoAssembly->tipoI = (TIPO_I *)malloc(sizeof(TIPO_I));
+		novoNoAssembly->tipoI->nome = nome;
+		novoNoAssembly->tipoI->rs = -1;
+		novoNoAssembly->tipoI->rt = -1;
+		novoNoAssembly->tipoI->imediato = -1;
+		break;
+
+	case typeJ:
+		novoNoAssembly->tipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
+		novoNoAssembly->tipoJ->nome = nome;
+		novoNoAssembly->tipoJ->labelImediato = NULL;
+		break;
+	
+	case typeLabel:
+		novoNoAssembly->tipoLabel = (TIPO_LABEL *)malloc(sizeof(TIPO_LABEL));
+		novoNoAssembly->tipoLabel->nome = nome;
+		novoNoAssembly->tipoLabel->endereco = -1;
+		novoNoAssembly->tipoLabel->boolean = -1;
+		break;
+	}
+
+	return novoNoAssembly;
+}
+
+// Liberar vetor de instrucoes assembly
+void liberarAssembly(){
+	for(int i = 0; i < indiceAssembly; i++){
+		if(instrucoesAssembly[i]->tipo == typeR)
+			free(instrucoesAssembly[i]->tipoR);
+		else if(instrucoesAssembly[i]->tipo == typeI)
+			free(instrucoesAssembly[i]->tipoI);
+		else if(instrucoesAssembly[i]->tipo == typeJ)
+			free(instrucoesAssembly[i]->tipoJ);
+		else if(instrucoesAssembly[i]->tipo == typeLabel){
+			free(instrucoesAssembly[i]->tipoLabel);
+			if(instrucoesAssembly[i]->tipoLabel->boolean == 1)
+				free(instrucoesAssembly[i]->tipoLabel->nome);
+		}
+		free(instrucoesAssembly[i]);
+	}
+	free(instrucoesAssembly);
+}
+
+// Mostrar as instrucoes em assembly
+void imprimirAssembly(){
+	int i = 0;
+	TIPO_I * tipoI = NULL;
+	TIPO_R * tipoR = NULL;
+	TIPO_J * tipoJ = NULL;
+	TIPO_LABEL * tipoLabel = NULL;
+
+	printf("============== Assembly ==============\n");
+	while(i < indiceAssembly){
+		if(instrucoesAssembly[i]->tipo == typeI){
+			tipoI = instrucoesAssembly[i]->tipoI;		
+			printf("%s t%d t%d %d\n", tipoI->nome, tipoI->rt, tipoI->rs, tipoI->imediato);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeR){
+			tipoR = instrucoesAssembly[i]->tipoR;
+			printf("%s t%d t%d t%d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeJ){
+			tipoJ = instrucoesAssembly[i]->tipoJ;
+			printf("%s %s\n", tipoJ->nome, tipoJ->labelImediato);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeLabel){
+			tipoLabel = instrucoesAssembly[i]->tipoLabel;
+			printf("%s:\n", tipoLabel->nome);
+		}
+		i++;
+	}	
+}
 
 void assembly(){
-	int i = 0;
-	while(i < indiceVetor){
+	inicializaAssembly();
+	for(int i = 0; i < indiceVetor; i++)
 		geraAssembly(codigoIntermediario[i]);
-		i++;
-	}
 }
 
 void geraAssembly(INSTRUCAO* instrucao){
-	if(strcmp(instrucao->op, "ADD") == 0){
-		printf("ADD R%d, R%d, R%d\n", instrucao->arg3->val, instrucao->arg1->val, instrucao->arg2->val);
+	ASSEMBLY* novaInstrucao = NULL;
+
+	if(strcmp(instrucao->op, "LOAD") == 0){
+		//novaInstrucao = criarNoAssembly(typeI, "lw");
+		//novaInstrucao->tipoI->rt = instrucao->arg1->val;
+		
+		// Calcular qual sera o imediato
+		return;
+	}
+	else if(strcmp(instrucao->op, "LOADI") == 0){
+		novaInstrucao = criarNoAssembly(typeI, "ori");
+		novaInstrucao->tipoI->rt = instrucao->arg1->val;
+		novaInstrucao->tipoI->rs = 31; // Registrador 0;
+		novaInstrucao->tipoI->imediato = instrucao->arg2->val;
+	}
+	else if(strcmp(instrucao->op, "STORE") == 0){
+		return;
+		//printf("STORE R%d, %d\n", instrucao->arg1->val, instrucao->arg2->val);
+	}
+	else if(strcmp(instrucao->op, "READ") == 0){
+		return;
+		//printf("READ R%d\n", instrucao->arg1->val);
+	}
+	else if(strcmp(instrucao->op, "WRITE") == 0){
+		return;
+		//printf("WRITE R%d\n", instrucao->arg1->val);
+	}
+	else if(strcmp(instrucao->op, "ADD") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "add");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "SUB") == 0){
-		printf("ADD R%d, R%d, R%d\n", instrucao->arg3->val, instrucao->arg1->val, instrucao->arg2->val);
+		novaInstrucao = criarNoAssembly(typeR, "sub");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "MULT") == 0){
-		printf("MULT R%d, R%d, R%d\n", instrucao->arg3->val, instrucao->arg1->val, instrucao->arg2->val);
+		novaInstrucao = criarNoAssembly(typeR, "mult");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "DIV") == 0){
-		printf("DIV R%d, R%d, R%d\n", instrucao->arg3->val, instrucao->arg1->val, instrucao->arg2->val);
+		novaInstrucao = criarNoAssembly(typeR, "div");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
+	}
+	else if(strcmp(instrucao->op, "AND") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "and");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
+	}
+	else if(strcmp(instrucao->op, "EQ") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "slt");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
+
+		instrucoesAssembly[indiceAssembly] = novaInstrucao;
+		indiceAssembly++;
+
+		novaInstrucao = criarNoAssembly(typeR, "slt");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg2->val;
+		novaInstrucao->tipoR->rt = instrucao->arg1->val;
+	}
+	else if(strcmp(instrucao->op, "OR") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "and");
+		novaInstrucao->tipoR->rd = instrucao->arg3->val;
+		novaInstrucao->tipoR->rs = instrucao->arg1->val;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "IFF") == 0){
+		return;
 		//printf("BNQ R%d, L%d\n", instrucao->arg1->val, getLabel(instrucao->arg2->val));
 	}
-	else if(strcmp(instrucao->op, "LABEL")){
+	else if(strcmp(instrucao->op, "LABEL") == 0){
+		char* auxLabel = (char*) malloc(sizeof(char) * 10);
+		sprintf(auxLabel, "Label %d", instrucao->arg1->val);
+		novaInstrucao = criarNoAssembly(typeLabel, auxLabel); 
+		novaInstrucao->tipoLabel->endereco = instrucao->arg1->val;
+		novaInstrucao->tipoLabel->boolean = 1;
+
+		adicionarLabel(instrucao->arg1->val, indiceAssembly);
+
 		//criaLabel()
 	}
+	else if(strcmp(instrucao->op, "FUN") == 0){
+		novaInstrucao = criarNoAssembly(typeLabel, instrucao->arg2->nome); 
+		novaInstrucao->tipoLabel->boolean = 0;
+
+		adicionarLabel(instrucao->arg2->val, indiceAssembly);
+	}
+	else if(strcmp(instrucao->op, "RET") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "jr");
+		novaInstrucao->tipoR->rd = 31;
+		novaInstrucao->tipoR->rs = 30;
+		novaInstrucao->tipoR->rt = 31;
+	}
+	else if(strcmp(instrucao->op, "CALL") == 0){
+		novaInstrucao = criarNoAssembly(typeJ, "jal");
+		novaInstrucao->tipoJ->labelImediato = instrucao->arg1->nome;
+	}
+	else{
+
+		//printf("Erro: Instrucao nao reconhecida\n");
+		return;
+	}
+
+	//mostrarUmaInstrucao(novaInstrucao);
+	instrucoesAssembly[indiceAssembly] = novaInstrucao;
+	indiceAssembly++;
 }
