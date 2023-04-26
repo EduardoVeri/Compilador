@@ -14,7 +14,6 @@ int yyparse(void);
 
 char auxNome[MAXLEXEMA];
 char id[MAXLEXEMA];
-int qntLinhas;
 enum yytokentype auxErro;
 
 int teste = 0;
@@ -199,7 +198,7 @@ param				: tipo_especificador ID {
 
 						strcpy(aux->lexema, pilha[indPilha]);
 						indPilha--;
-
+					
 						//strcpy(aux->lexema, id);
 						adicionaFilho($$, aux);
 
@@ -358,7 +357,13 @@ var 				: ID {
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = IdK;
 						
+						
 						strcpy($$->lexema, pilha[indPilha]);
+						/*
+						FILE * arquivoAux = fopen("arquivoAux.txt", "a+");
+						fprintf(arquivoAux, "%s\n", $$->lexema);
+						fclose(arquivoAux);
+						*/
 						indPilha--;
 						//strcpy($$->lexema, id);
 

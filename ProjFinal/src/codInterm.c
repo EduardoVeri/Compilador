@@ -57,7 +57,6 @@ void desalocaVetor(){
             free(codigoIntermediario[i]->arg2);
         if(codigoIntermediario[i]->arg3 != NULL)
             free(codigoIntermediario[i]->arg3);
-        
         free(codigoIntermediario[i]);
     }
 	free(codigoIntermediario);
@@ -250,7 +249,6 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         param = criaInstrucao("LOAD");
         
 		//param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-
 		
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada

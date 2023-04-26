@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "global.h"
+#include <strings.h>
 
 //Cria um novo nó para a árvore, mas com os campos vazios.
 PONTEIRONO novoNo(){
@@ -13,7 +14,7 @@ PONTEIRONO novoNo(){
 
     novoNo->irmao = NULL;
 
-    strcpy(novoNo->lexema, "");
+    bzero(novoNo->lexema, MAXLEXEMA);
 
     novoNo->numLinha = 0;
 

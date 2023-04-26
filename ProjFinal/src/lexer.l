@@ -5,7 +5,8 @@
 #include "global.h"
 #include "tabelaSimb.h"
 
-char stringAux[1000];
+int qntLinhas;
+char stringAux[500];
 char auxNome[MAXLEXEMA];
 char id[MAXLEXEMA];
 //FILE * copiaArquivo = NULL;
@@ -17,7 +18,7 @@ void mostrarTela(char palavra[]);
 
 
 int indPilha = -1;
-char pilha[10][MAXLEXEMA];
+char pilha[5][MAXLEXEMA];
 
 %}
 
@@ -91,6 +92,8 @@ LETRA [a-zA-Z]
 				yytext[MAXLEXEMA-1] = '\0';
 				printf("nome reduzido para '%s'\n", yytext);
 			}
+
+
 
 			//strcpy(auxNome, yytext);
 
@@ -312,7 +315,12 @@ enum yytokentype getToken(void)
 				fgets(stringAux, 1000, copiaArquivo);
 				mostrarTela(stringAux);
 			}
-		}	
+		}
+
+		// Inicializa pilha de ID
+		for (int i = 0; i < 5; i++){
+			bzero(pilha, MAXLEXEMA);	
+		}
 	}
 
 	enum yytokentype currentToken;

@@ -116,10 +116,11 @@ void geraAssembly(INSTRUCAO* instrucao){
 	ASSEMBLY* novaInstrucao = NULL;
 
 	if(strcmp(instrucao->op, "LOAD") == 0){
-		novaInstrucao = criarNoAssembly(typeI, "lw");
+		//novaInstrucao = criarNoAssembly(typeI, "lw");
 		//novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		
 		// Calcular qual sera o imediato
+		return;
 	}
 	else if(strcmp(instrucao->op, "LOADI") == 0){
 		novaInstrucao = criarNoAssembly(typeI, "ori");

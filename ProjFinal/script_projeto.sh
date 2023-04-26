@@ -7,4 +7,4 @@ flex -oarquivo_lex.c lexer.l
 mv parser.tab.h ../include
 cd ..
 gcc src/*.c -o bin/compilador.exe -lfl -Iinclude 
-./bin/compilador.exe ./testes/testeVetor.cm -v
+./bin/compilador.exe ./testes/sort.cm -v
