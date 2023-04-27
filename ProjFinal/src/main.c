@@ -119,11 +119,11 @@ int main(int argc, char *argv[]){
 		mostrarReg();
 
 		// Inicia o processo de montagem do codigo assembly
-		assembly();
-		imprimirAssembly();
-		imprimirLabels();
+		//assembly();
+		//imprimirAssembly();
+		//imprimirLabels();
 		// Libera a memoria alocada para o codigo assembly
-		liberarAssembly();
+		//liberarAssembly();
 
 		// Libera a memoria alocada para o codigo intermediario
 		desalocaVetor();
@@ -158,7 +158,6 @@ int main(int argc, char *argv[]){
 
 	if(flagVerbose == 0)
 		remove("bin/results.txt");
-
 
 	return 0;
 }
