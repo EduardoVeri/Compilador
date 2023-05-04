@@ -31,9 +31,8 @@ typedef struct tipoI{
 	int rs; // Registrador fonte
 	int rt; // Registrador destino
 	int imediato; // Valor imediato
+	int label; // Label para o branch
 } TIPO_I;
-
-
 
 /* Struct para armazenar as informacoes 
 de instrucoes do tipo J */

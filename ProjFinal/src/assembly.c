@@ -38,6 +38,7 @@ ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
 		novoNoAssembly->tipoI->rs = -1;
 		novoNoAssembly->tipoI->rt = -1;
 		novoNoAssembly->tipoI->imediato = -1;
+		novoNoAssembly->tipoI->label = -1;
 		break;
 
 	case typeJ:
@@ -191,8 +192,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "IFF") == 0){
-		return;
-		//printf("BNQ R%d, L%d\n", instrucao->arg1->val, getLabel(instrucao->arg2->val));
+		novaInstrucao = criarNoAssembly(typeI, "beq");
+		novaInstrucao->tipoI->rs = 31;
+		novaInstrucao->tipoI->rt = instrucao->arg1->val;
+		novaInstrucao->tipoI->label = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "LABEL") == 0){
 		char* auxLabel = (char*) malloc(sizeof(char) * 10);

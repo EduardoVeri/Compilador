@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "tabelaSimb.h"
 #include "global.h"
+#include "tabelaSimb.h"
 #include "codInterm.h"
 
 INSTRUCAO** codigoIntermediario = NULL;
@@ -75,69 +75,69 @@ void inicializaVetor(){
 
 //Imprime o vetor de codigo intermediario
 void imprimeCodigoIntermediario(){
-    printf("============== Codigo Intermediario ===============\n");
+    fprintf(arquivoSaida_Intermediario, "============== Codigo Intermediario ===============\n");
     for(int i = 0; i < MAX_INSTRUCTION && codigoIntermediario[i] != NULL; i++){
-        printf("%s, ", codigoIntermediario[i]->op);
+        fprintf(arquivoSaida_Intermediario, "%s, ", codigoIntermediario[i]->op);
         if(codigoIntermediario[i]->arg1 != NULL){
             if(codigoIntermediario[i]->arg1->tipo == IntConst){
                 if(codigoIntermediario[i]->arg1->boolReg == 1){
-                    printf("$t%d, ", codigoIntermediario[i]->arg1->val);
+                    fprintf(arquivoSaida_Intermediario, "$t%d, ", codigoIntermediario[i]->arg1->val);
                 }
                 else if(codigoIntermediario[i]->arg1->boolReg == 2){
-                    printf("L%d, ", codigoIntermediario[i]->arg1->val);
+                    fprintf(arquivoSaida_Intermediario, "L%d, ", codigoIntermediario[i]->arg1->val);
                 }
                 else{
-                    printf("%d, ", codigoIntermediario[i]->arg1->val);
+                    fprintf(arquivoSaida_Intermediario, "%d, ", codigoIntermediario[i]->arg1->val);
                 }
             }
             else if(codigoIntermediario[i]->arg1->tipo == String){
-                printf("%s, ", codigoIntermediario[i]->arg1->nome);
+                fprintf(arquivoSaida_Intermediario, "%s, ", codigoIntermediario[i]->arg1->nome);
             }
             else{
-                printf("-, ");
+                fprintf(arquivoSaida_Intermediario, "-, ");
             }
         }
         else{
-            printf("-, ");
+            fprintf(arquivoSaida_Intermediario, "-, ");
         }
         if(codigoIntermediario[i]->arg2 != NULL){
             if(codigoIntermediario[i]->arg2->tipo == IntConst){
                 if(codigoIntermediario[i]->arg2->boolReg == 1){
-                    printf("$t%d, ", codigoIntermediario[i]->arg2->val);
+                    fprintf(arquivoSaida_Intermediario, "$t%d, ", codigoIntermediario[i]->arg2->val);
                 }
                 else if(codigoIntermediario[i]->arg2->boolReg == 2){
-                    printf("L%d, ", codigoIntermediario[i]->arg2->val);
+                    fprintf(arquivoSaida_Intermediario, "L%d, ", codigoIntermediario[i]->arg2->val);
                 }
                 else{
-                    printf("%d, ", codigoIntermediario[i]->arg2->val);
+                    fprintf(arquivoSaida_Intermediario, "%d, ", codigoIntermediario[i]->arg2->val);
                 }
             }
             else if(codigoIntermediario[i]->arg2->tipo == String){
-                printf("%s, ", codigoIntermediario[i]->arg2->nome);
+                fprintf(arquivoSaida_Intermediario, "%s, ", codigoIntermediario[i]->arg2->nome);
             }
             else{
-                printf("-, ");
+                fprintf(arquivoSaida_Intermediario, "-, ");
             }
         }
         else{
-            printf("-, ");
+            fprintf(arquivoSaida_Intermediario, "-, ");
         }
         if(codigoIntermediario[i]->arg3 != NULL){
             if(codigoIntermediario[i]->arg3->tipo == IntConst){
                 if(codigoIntermediario[i]->arg3->boolReg == 1)
-                    printf("$t%d\n", codigoIntermediario[i]->arg3->val);
+                    fprintf(arquivoSaida_Intermediario, "$t%d\n", codigoIntermediario[i]->arg3->val);
                 else
-                    printf("%d\n", codigoIntermediario[i]->arg3->val);
+                    fprintf(arquivoSaida_Intermediario, "%d\n", codigoIntermediario[i]->arg3->val);
             }
             else if(codigoIntermediario[i]->arg3->tipo == String){
-                printf("%s\n", codigoIntermediario[i]->arg3->nome);
+                fprintf(arquivoSaida_Intermediario, "%s\n", codigoIntermediario[i]->arg3->nome);
             }
             else{
-                printf("-\n");
+                fprintf(arquivoSaida_Intermediario, "-\n");
             }
         }
         else{
-            printf("-\n");
+            fprintf(arquivoSaida_Intermediario, "-\n");
         }
     }
 }

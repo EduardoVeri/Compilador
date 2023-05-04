@@ -1,8 +1,6 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_ 1
 
-#include <stdio.h>
-
 #define MAXLEXEMA 21 // Tamanho máximo do lexema
 
 extern int indPilha;
@@ -12,9 +10,10 @@ extern char id[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um ident
 extern char* yytext; //
 extern int flagVerbose; // Flag para ativar o modo verbose
 extern char pilha[5][MAXLEXEMA]; 
-FILE * arquivoEntrada; // Arquivo de entrada
-FILE * copiaArquivo; // Cópia do arquivo de entrada
-FILE * arquivoSaida; // Arquivo de saída
+extern FILE * arquivoEntrada; // Arquivo de entrada
+extern FILE * copiaArquivo; // Cópia do arquivo de entrada
+extern FILE * arquivoSaida; // Arquivo de saída
+extern FILE * arquivoSaida_Intermediario; // Arquivo de saída do código intermediário
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.
