@@ -243,3 +243,300 @@
 41: }
 	41: FECHACHAVES, }
 42: sort(vet,0,10);
+	42: ID, sort
+	42: ABREPARENTESES, (
+	42: ID, vet
+	42: COMMA, ,
+	42: NUM, 0
+	42: COMMA, ,
+	42: NUM, 10
+	42: FECHAPARENTESES, )
+	42: SEMICOLON, ;
+43: i = 0;
+	43: ID, i
+	43: ATRIB, =
+	43: NUM, 0
+	43: SEMICOLON, ;
+44: while (i < 10){
+	44: reserved word , while
+	44: ABREPARENTESES, (
+	44: ID, i
+	44: LT, <
+	44: NUM, 10
+	44: FECHAPARENTESES, )
+	44: ABRECHAVES, {
+45: output(vet[i]);
+	45: ID, output
+	45: ABREPARENTESES, (
+	45: ID, vet
+	45: ABRECOLCHETES, [
+	45: ID, i
+	45: FECHACOLCHETES, ]
+	45: FECHAPARENTESES, )
+	45: SEMICOLON, ;
+46: i = i + 1;
+	46: ID, i
+	46: ATRIB, =
+	46: ID, i
+	46: SOMA, +
+	46: NUM, 1
+	46: SEMICOLON, ;
+47: }
+	47: FECHACHAVES, }
+48: }
+	48: FECHACHAVES, }
+49: 
+	50: EOF
+
+========== Arvore de Analise Sintatica ========== 
+INT
+	vet
+	10
+INT
+	INT
+		a
+	INT
+		low
+	INT
+		high
+	minloc
+		INT
+			i
+		INT
+			x
+		INT
+			k
+		=
+			k
+			low
+		=
+			x
+			a
+				low
+		=
+			i
+			+
+				low
+				1
+		WHILE
+			<
+				i
+				high
+			IF
+				<
+					a
+						i
+					x
+				=
+					x
+					a
+						i
+				=
+					k
+					i
+			=
+				i
+				+
+					i
+					1
+		ReturnINT
+			k
+VOID
+	INT
+		a
+	INT
+		low
+	INT
+		high
+	sort
+		INT
+			i
+		INT
+			k
+		=
+			i
+			low
+		WHILE
+			<
+				i
+				-
+					high
+					1
+			INT
+				t
+			=
+				k
+				minloc
+					a
+					i
+					high
+			=
+				t
+				a
+					k
+			=
+				a
+					k
+				a
+					i
+			=
+				a
+					i
+				t
+			=
+				i
+				+
+					i
+					1
+VOID
+	VOID
+	main
+		INT
+			i
+		=
+			i
+			0
+		WHILE
+			<
+				i
+				10
+			=
+				vet
+					i
+				input
+			=
+				i
+				+
+					i
+					1
+		sort
+			vet
+			0
+			10
+		=
+			i
+			0
+		WHILE
+			<
+				i
+				10
+			output
+				vet
+					i
+			=
+				i
+				+
+					i
+					1
+
+
+============== Tabela de Simbolos ===============
+Nome: low
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 6 8 9 10 
+
+Nome: low
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 21 23 
+
+Nome: main
+Tipo de dado: VOID
+Tipo de identificador: FUN
+Linhas: 34 
+
+Nome: sort
+Tipo de dado: VOID
+Tipo de identificador: FUN
+Linhas: 21 42 
+
+Nome: input
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 0 39 
+
+Nome: vet
+Escopo: global
+Tipo de dado: INT
+Tipo de identificador: VET
+Linhas: 4 39 42 
+
+Nome: minloc
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 6 26 
+
+Nome: a
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 6 9 12 13 
+
+Nome: a
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 21 26 27 28 28 29 
+
+Nome: i
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 7 10 11 12 13 14 16 16 
+
+Nome: i
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 22 23 24 26 28 29 30 30 
+
+Nome: i
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 36 37 38 39 40 40 
+
+Nome: k
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 7 8 14 18 
+
+Nome: k
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 22 26 27 28 
+
+Nome: t
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 25 27 29 
+
+Nome: output
+Tipo de dado: VOID
+Tipo de identificador: FUN
+Linhas: 0 
+
+Nome: x
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 7 9 12 13 
+
+Nome: high
+Escopo: minloc
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 6 11 
+
+Nome: high
+Escopo: sort
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 21 24 26 
+

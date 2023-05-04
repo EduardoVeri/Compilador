@@ -167,5 +167,6 @@ int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 	}
 
 	return reg;
+	
 
 }

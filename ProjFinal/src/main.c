@@ -164,7 +164,7 @@ int main(int argc, char *argv[]){
 	// Libera a memoria alocada para a tabela de simbolos
 	apagarTabela(tabelaHash);
 
-    // Fecha os arquivos abertos
+    //Fecha os arquivos abertos
 	if(arquivoEntrada != stdin) fclose(arquivoEntrada);
 	
 	// Fecha e remove o arquivo de copia 
