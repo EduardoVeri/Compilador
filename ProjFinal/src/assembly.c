@@ -171,6 +171,36 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 		(*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
 		(*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
 	}
+	else if(strcmp(instrucao->op, "GET") == 0){
+		(*novaInstrucao) = criarNoAssembly(typeR, "slt");
+		(*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
+		(*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
+		(*novaInstrucao)->tipoR->rt = instrucao->arg2->val;
+
+		instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
+
+		int rd = (*novaInstrucao)->tipoR->rd;
+
+		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
+		(*novaInstrucao)->tipoR->rd = rd;
+		(*novaInstrucao)->tipoR->rs = rd;
+		(*novaInstrucao)->tipoR->rt = 31;
+	}
+	else if(strcmp(instrucao->op, "LET") == 0){
+		(*novaInstrucao) = criarNoAssembly(typeR, "slt");
+		(*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
+		(*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
+		(*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
+
+		instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
+
+		int rd = (*novaInstrucao)->tipoR->rd;
+
+		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
+		(*novaInstrucao)->tipoR->rd = rd;
+		(*novaInstrucao)->tipoR->rs = rd;
+		(*novaInstrucao)->tipoR->rt = 31;
+	}
 	else{
 		return 0;
 	}
@@ -213,7 +243,7 @@ int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 		(*novaInstrucao)->tipoR->rt = instrucao->arg2->val;
 	}
 	else if(strcmp(instrucao->op, "OR") == 0){
-		(*novaInstrucao) = criarNoAssembly(typeR, "and");
+		(*novaInstrucao) = criarNoAssembly(typeR, "or");
 		(*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
 		(*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
 		(*novaInstrucao)->tipoR->rt = instrucao->arg2->val;
@@ -304,6 +334,19 @@ void geraAssembly(INSTRUCAO* instrucao){
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
+	else if(strcmp(instrucao->op, "GOTO") == 0){
+		novaInstrucao = criarNoAssembly(typeJ, "j");
+		novaInstrucao->tipoJ->labelImediato = strdup("Label ########");
+		sprintf(novaInstrucao->tipoJ->labelImediato, "Label %d", instrucao->arg1->val);
+		flag = 1;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+	}
+	else if(strcmp(instrucao->op, "HALT") == 0){
+		novaInstrucao = criarNoAssembly(typeJ, "halt");
+		flag = 1;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	}
 	else if(opAritmeticos(instrucao, &novaInstrucao, flag)){
 		flag = 1; 
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
@@ -313,7 +356,9 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else{
-		//printf("Erro: Instrucao nao reconhecida\n");
+		printf(ANSI_COLOR_PURPLE);
+		printf("Erro: Instrucao nao reconhecida (%s)\n", instrucao->op);
+		printf(ANSI_COLOR_RESET);
 		return;
 	}
 	

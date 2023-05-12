@@ -126,26 +126,22 @@ int main(int argc, char *argv[]){
 		criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
         
 		// Adiciona o HALT no final do codigo intermediario
-		codigoIntermediario[indiceVetor] = criaInstrucao("HALT"); 
-        indiceVetor++;
+		codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
 
-		// Imprime o codigo intermediario
-		imprimeCodigoIntermediario();
+		imprimeCodigoIntermediario(); // Imprime o codigo intermediario
 		
 		// Mostra os registradores em uso
 		// mostrarReg();
 
-		// Inicia o processo de montagem do codigo assembly
-		assembly();
+		assembly(); // Inicia o processo de montagem do codigo assembly
 
 		// Imprime o codigo assembly e os labels
 		imprimirAssembly();
 		imprimirLabels();
-		// Libera a memoria alocada para o codigo assembly
-		liberarAssembly();
 
-		// Libera a memoria alocada para o codigo intermediario
-		desalocaVetor();
+		liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+		liberarLabels(); // Libera a memoria alocada para os labels
+		desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	}
 	else{
 		// Mostrar uma mensagem de erro sobre os erros semanticos
