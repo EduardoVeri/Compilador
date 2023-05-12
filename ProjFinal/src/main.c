@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
 		imprimeCodigoIntermediario();
 		
 		// Mostra os registradores em uso
-		mostrarReg();
+		// mostrarReg();
 
 		// Inicia o processo de montagem do codigo assembly
 		assembly();
