@@ -127,8 +127,8 @@ int main(int argc, char *argv[]){
         
 		// Adiciona o HALT no final do codigo intermediario
 		codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
-
-		imprimeCodigoIntermediario(); // Imprime o codigo intermediario
+		
+		if(flagCI) imprimeCodigoIntermediario(); // Imprime o codigo intermediario
 		
 		// Mostra os registradores em uso
 		// mostrarReg();
