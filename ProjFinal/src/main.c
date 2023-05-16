@@ -131,16 +131,16 @@ int main(int argc, char *argv[]){
 		if(flagCI) imprimeCodigoIntermediario(); // Imprime o codigo intermediario
 		
 		// Mostra os registradores em uso
-		// mostrarReg();
+		mostrarReg();
 
-		assembly(); // Inicia o processo de montagem do codigo assembly
+		//assembly(); // Inicia o processo de montagem do codigo assembly
 
 		// Imprime o codigo assembly e os labels
-		imprimirAssembly();
-		imprimirLabels();
+		//imprimirAssembly();
+		//imprimirLabels();
 
-		liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-		liberarLabels(); // Libera a memoria alocada para os labels
+		//liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+		//liberarLabels(); // Libera a memoria alocada para os labels
 		desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	}
 	else{

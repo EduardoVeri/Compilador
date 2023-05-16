@@ -576,12 +576,12 @@ void codIntDeclWhile(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
 
-    instrucaoIFF->arg1 = criaEndereco(IntConst, numReg - 1, NULL, 1);
+    instrucaoIFF->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
 
     codigoIntermediario[indiceVetor] = instrucaoIFF;
     indiceVetor++;
 
-    criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 0);
+    criarCodigoIntermediario(arvoreSintatica->filho[1], tabelaHash, 1);
 
     codigoIntermediario[indiceVetor] = instrucaoGOTO;
     indiceVetor++;
