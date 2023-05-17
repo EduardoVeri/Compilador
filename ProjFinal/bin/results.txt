@@ -1,542 +1,232 @@
-1: /* programa para ordenacao por selecao de 
-2: uma matriz com dez elementos. */
+1: /* Um programa para calcular o mdc
+2: segundo o algoritmo de euclides. */
 3: 
-4: int vet[ 10 ];
-	4: reserved word , int
-	4: ID, vet
-	4: ABRECOLCHETES, [
-	4: NUM, 10
-	4: FECHACOLCHETES, ]
-	4: SEMICOLON, ;
-5: 
-6: int minloc (int a[], int low, int high)
-	6: reserved word , int
-	6: ID, minloc
-	6: ABREPARENTESES, (
-	6: reserved word , int
-	6: ID, a
-	6: ABRECOLCHETES, [
-	6: FECHACOLCHETES, ]
-	6: COMMA, ,
-	6: reserved word , int
-	6: ID, low
-	6: COMMA, ,
-	6: reserved word , int
-	6: ID, high
-	6: FECHAPARENTESES, )
-7: {	int i; int x; int k;
-	7: ABRECHAVES, {
+4: 
+5: int vetor[10];
+	5: reserved word , int
+	5: ID, vetor
+	5: ABRECOLCHETES, [
+	5: NUM, 10
+	5: FECHACOLCHETES, ]
+	5: SEMICOLON, ;
+6: 
+7: int gcd (int u, int v)
 	7: reserved word , int
-	7: ID, i
-	7: SEMICOLON, ;
+	7: ID, gcd
+	7: ABREPARENTESES, (
 	7: reserved word , int
-	7: ID, x
-	7: SEMICOLON, ;
+	7: ID, u
+	7: COMMA, ,
 	7: reserved word , int
-	7: ID, k
-	7: SEMICOLON, ;
-8: k = low;
-	8: ID, k
-	8: ATRIB, =
-	8: ID, low
-	8: SEMICOLON, ;
-9: x = a[low];
-	9: ID, x
-	9: ATRIB, =
-	9: ID, a
+	7: ID, v
+	7: FECHAPARENTESES, )
+8: { 	
+	8: ABRECHAVES, {
+9: vetor[u] = vetor[10+10+20];
+	9: ID, vetor
 	9: ABRECOLCHETES, [
-	9: ID, low
+	9: ID, u
+	9: FECHACOLCHETES, ]
+	9: ATRIB, =
+	9: ID, vetor
+	9: ABRECOLCHETES, [
+	9: NUM, 10
+	9: SOMA, +
+	9: NUM, 10
+	9: SOMA, +
+	9: NUM, 20
 	9: FECHACOLCHETES, ]
 	9: SEMICOLON, ;
-10: i = low + 1;
-	10: ID, i
+10: u = u + 4;
+	10: ID, u
 	10: ATRIB, =
-	10: ID, low
+	10: ID, u
 	10: SOMA, +
-	10: NUM, 1
+	10: NUM, 4
 	10: SEMICOLON, ;
-11: while (i < high){
-	11: reserved word , while
+11: if (v != 4) {u = 10;}
+	11: reserved word , if
 	11: ABREPARENTESES, (
-	11: ID, i
-	11: LT, <
-	11: ID, high
+	11: ID, v
+	11: NEQ, !=
+	11: NUM, 4
 	11: FECHAPARENTESES, )
 	11: ABRECHAVES, {
-12: if (a[i] < x){
-	12: reserved word , if
+	11: ID, u
+	11: ATRIB, =
+	11: NUM, 10
+	11: SEMICOLON, ;
+	11: FECHACHAVES, }
+12: else return gcd(v,u-u/v*v);
+	12: reserved word , else
+	12: reserved word , return
+	12: ID, gcd
 	12: ABREPARENTESES, (
-	12: ID, a
-	12: ABRECOLCHETES, [
-	12: ID, i
-	12: FECHACOLCHETES, ]
-	12: LT, <
-	12: ID, x
+	12: ID, v
+	12: COMMA, ,
+	12: ID, u
+	12: SUB, -
+	12: ID, u
+	12: DIV, /
+	12: ID, v
+	12: MULT, *
+	12: ID, v
 	12: FECHAPARENTESES, )
-	12: ABRECHAVES, {
-13: x = a[i];
-	13: ID, x
-	13: ATRIB, =
-	13: ID, a
-	13: ABRECOLCHETES, [
-	13: ID, i
-	13: FECHACOLCHETES, ]
-	13: SEMICOLON, ;
-14: k = i;
-	14: ID, k
-	14: ATRIB, =
-	14: ID, i
-	14: SEMICOLON, ;
-15: }
-	15: FECHACHAVES, }
-16: i = i + 1;
-	16: ID, i
-	16: ATRIB, =
-	16: ID, i
-	16: SOMA, +
-	16: NUM, 1
-	16: SEMICOLON, ;
-17: }
-	17: FECHACHAVES, }
-18: return k;
-	18: reserved word , return
-	18: ID, k
+	12: SEMICOLON, ;
+13: /* u-u/v*v == u mod v */
+14: }
+	14: FECHACHAVES, }
+15: 
+16: void main(void)
+	16: reserved word , void
+	16: ID, main
+	16: ABREPARENTESES, (
+	16: reserved word , void
+	16: FECHAPARENTESES, )
+17: {	int x; int y;
+	17: ABRECHAVES, {
+	17: reserved word , int
+	17: ID, x
+	17: SEMICOLON, ;
+	17: reserved word , int
+	17: ID, y
+	17: SEMICOLON, ;
+18: x = input(); y = input();
+	18: ID, x
+	18: ATRIB, =
+	18: ID, input
+	18: ABREPARENTESES, (
+	18: FECHAPARENTESES, )
 	18: SEMICOLON, ;
-19: }
-	19: FECHACHAVES, }
-20: 
-21: void sort(int a[], int low, int high)
-	21: reserved word , void
-	21: ID, sort
-	21: ABREPARENTESES, (
-	21: reserved word , int
-	21: ID, a
-	21: ABRECOLCHETES, [
-	21: FECHACOLCHETES, ]
-	21: COMMA, ,
-	21: reserved word , int
-	21: ID, low
-	21: COMMA, ,
-	21: reserved word , int
-	21: ID, high
-	21: FECHAPARENTESES, )
-22: {	int i; int k;
-	22: ABRECHAVES, {
-	22: reserved word , int
-	22: ID, i
-	22: SEMICOLON, ;
-	22: reserved word , int
-	22: ID, k
-	22: SEMICOLON, ;
-23: i = low;
-	23: ID, i
-	23: ATRIB, =
-	23: ID, low
-	23: SEMICOLON, ;
-24: while (i < high-1){
-	24: reserved word , while
-	24: ABREPARENTESES, (
-	24: ID, i
-	24: LT, <
-	24: ID, high
-	24: SUB, -
-	24: NUM, 1
-	24: FECHAPARENTESES, )
-	24: ABRECHAVES, {
-25: int t;
-	25: reserved word , int
-	25: ID, t
-	25: SEMICOLON, ;
-26: k = minloc(a,i,high);
-	26: ID, k
-	26: ATRIB, =
-	26: ID, minloc
-	26: ABREPARENTESES, (
-	26: ID, a
-	26: COMMA, ,
-	26: ID, i
-	26: COMMA, ,
-	26: ID, high
-	26: FECHAPARENTESES, )
-	26: SEMICOLON, ;
-27: t = a[k];
-	27: ID, t
-	27: ATRIB, =
-	27: ID, a
-	27: ABRECOLCHETES, [
-	27: ID, k
-	27: FECHACOLCHETES, ]
-	27: SEMICOLON, ;
-28: a[k] = a[i];
-	28: ID, a
-	28: ABRECOLCHETES, [
-	28: ID, k
-	28: FECHACOLCHETES, ]
-	28: ATRIB, =
-	28: ID, a
-	28: ABRECOLCHETES, [
-	28: ID, i
-	28: FECHACOLCHETES, ]
-	28: SEMICOLON, ;
-29: a[i] = t;
-	29: ID, a
-	29: ABRECOLCHETES, [
-	29: ID, i
-	29: FECHACOLCHETES, ]
-	29: ATRIB, =
-	29: ID, t
-	29: SEMICOLON, ;
-30: i = i + 1;
-	30: ID, i
-	30: ATRIB, =
-	30: ID, i
-	30: SOMA, +
-	30: NUM, 1
-	30: SEMICOLON, ;
-31: }
-	31: FECHACHAVES, }
-32: }
-	32: FECHACHAVES, }
-33: 
-34: void main(void)
-	34: reserved word , void
-	34: ID, main
-	34: ABREPARENTESES, (
-	34: reserved word , void
-	34: FECHAPARENTESES, )
-35: {
-	35: ABRECHAVES, {
-36: int i;
-	36: reserved word , int
-	36: ID, i
-	36: SEMICOLON, ;
-37: i = 0;
-	37: ID, i
-	37: ATRIB, =
-	37: NUM, 0
-	37: SEMICOLON, ;
-38: while (i < 10){
-	38: reserved word , while
-	38: ABREPARENTESES, (
-	38: ID, i
-	38: LT, <
-	38: NUM, 10
-	38: FECHAPARENTESES, )
-	38: ABRECHAVES, {
-39: vet[i] = input();
-	39: ID, vet
-	39: ABRECOLCHETES, [
-	39: ID, i
-	39: FECHACOLCHETES, ]
-	39: ATRIB, =
-	39: ID, input
-	39: ABREPARENTESES, (
-	39: FECHAPARENTESES, )
-	39: SEMICOLON, ;
-40: i = i + 1;
-	40: ID, i
-	40: ATRIB, =
-	40: ID, i
-	40: SOMA, +
-	40: NUM, 1
-	40: SEMICOLON, ;
-41: }
-	41: FECHACHAVES, }
-42: sort(vet,0,10);
-	42: ID, sort
-	42: ABREPARENTESES, (
-	42: ID, vet
-	42: COMMA, ,
-	42: NUM, 0
-	42: COMMA, ,
-	42: NUM, 10
-	42: FECHAPARENTESES, )
-	42: SEMICOLON, ;
-43: i = 0;
-	43: ID, i
-	43: ATRIB, =
-	43: NUM, 0
-	43: SEMICOLON, ;
-44: while (i < 10){
-	44: reserved word , while
-	44: ABREPARENTESES, (
-	44: ID, i
-	44: LT, <
-	44: NUM, 10
-	44: FECHAPARENTESES, )
-	44: ABRECHAVES, {
-45: output(vet[i]);
-	45: ID, output
-	45: ABREPARENTESES, (
-	45: ID, vet
-	45: ABRECOLCHETES, [
-	45: ID, i
-	45: FECHACOLCHETES, ]
-	45: FECHAPARENTESES, )
-	45: SEMICOLON, ;
-46: i = i + 1;
-	46: ID, i
-	46: ATRIB, =
-	46: ID, i
-	46: SOMA, +
-	46: NUM, 1
-	46: SEMICOLON, ;
-47: }
-	47: FECHACHAVES, }
-48: }
-	48: FECHACHAVES, }
-49: 
-	50: EOF
+	18: ID, y
+	18: ATRIB, =
+	18: ID, input
+	18: ABREPARENTESES, (
+	18: FECHAPARENTESES, )
+	18: SEMICOLON, ;
+19: output(gcd(x,y));
+	19: ID, output
+	19: ABREPARENTESES, (
+	19: ID, gcd
+	19: ABREPARENTESES, (
+	19: ID, x
+	19: COMMA, ,
+	19: ID, y
+	19: FECHAPARENTESES, )
+	19: FECHAPARENTESES, )
+	19: SEMICOLON, ;
+20: }
+	20: FECHACHAVES, }
+	21: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
-	vet
+	vetor
 	10
 INT
 	INT
-		a
+		u
 	INT
-		low
-	INT
-		high
-	minloc
-		INT
-			i
-		INT
-			x
-		INT
-			k
+		v
+	gcd
 		=
-			k
-			low
+			vetor
+				u
+			vetor
+				+
+					+
+						10
+						10
+					20
 		=
-			x
-			a
-				low
-		=
-			i
+			u
 			+
-				low
-				1
-		WHILE
-			<
-				i
-				high
-			IF
-				<
-					a
-						i
-					x
-				=
-					x
-					a
-						i
-				=
-					k
-					i
+				u
+				4
+		IF
+			!=
+				v
+				4
 			=
-				i
-				+
-					i
-					1
-		ReturnINT
-			k
-VOID
-	INT
-		a
-	INT
-		low
-	INT
-		high
-	sort
-		INT
-			i
-		INT
-			k
-		=
-			i
-			low
-		WHILE
-			<
-				i
-				-
-					high
-					1
-			INT
-				t
-			=
-				k
-				minloc
-					a
-					i
-					high
-			=
-				t
-				a
-					k
-			=
-				a
-					k
-				a
-					i
-			=
-				a
-					i
-				t
-			=
-				i
-				+
-					i
-					1
+				u
+				10
+			ReturnINT
+				gcd
+					v
+					-
+						u
+						*
+							/
+								u
+								v
+							v
 VOID
 	VOID
 	main
 		INT
-			i
+			x
+		INT
+			y
 		=
-			i
-			0
-		WHILE
-			<
-				i
-				10
-			=
-				vet
-					i
-				input
-			=
-				i
-				+
-					i
-					1
-		sort
-			vet
-			0
-			10
+			x
+			input
 		=
-			i
-			0
-		WHILE
-			<
-				i
-				10
-			output
-				vet
-					i
-			=
-				i
-				+
-					i
-					1
+			y
+			input
+		output
+			gcd
+				x
+				y
 
 
 ============== Tabela de Simbolos ===============
-Nome: low
-Escopo: minloc
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 6 8 9 10 
-
-Nome: low
-Escopo: sort
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 21 23 
-
 Nome: main
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 34 
-
-Nome: sort
-Tipo de dado: VOID
-Tipo de identificador: FUN
-Linhas: 21 42 
+Linhas: 16 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 39 
-
-Nome: vet
-Escopo: global
-Tipo de dado: INT
-Tipo de identificador: VET
-Linhas: 4 39 42 
-
-Nome: minloc
-Tipo de dado: INT
-Tipo de identificador: FUN
-Linhas: 6 26 
-
-Nome: a
-Escopo: minloc
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 6 9 12 13 
-
-Nome: a
-Escopo: sort
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 21 26 27 28 28 29 
-
-Nome: i
-Escopo: minloc
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 7 10 11 12 13 14 16 16 
-
-Nome: i
-Escopo: sort
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 22 23 24 26 28 29 30 30 
-
-Nome: i
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 36 37 38 39 40 40 
-
-Nome: k
-Escopo: minloc
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 7 8 14 18 
-
-Nome: k
-Escopo: sort
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 22 26 27 28 
-
-Nome: t
-Escopo: sort
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 25 27 29 
+Linhas: 0 18 18 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 
+Linhas: 0 19 
+
+Nome: u
+Escopo: gcd
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 7 9 10 10 11 12 12 
+
+Nome: v
+Escopo: gcd
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 7 11 12 12 12 
 
 Nome: x
-Escopo: minloc
+Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 7 9 12 13 
+Linhas: 17 18 19 
 
-Nome: high
-Escopo: minloc
+Nome: y
+Escopo: main
 Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 6 11 
+Tipo de identificador: VAR
+Linhas: 17 18 19 
 
-Nome: high
-Escopo: sort
+Nome: vetor
+Escopo: global
 Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 21 24 26 
+Tipo de identificador: VET
+Linhas: 5 9 9 
+
+Nome: gcd
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 7 12 19 
 

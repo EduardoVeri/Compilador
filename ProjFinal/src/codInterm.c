@@ -235,9 +235,15 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     while(noParam != NULL){
         param = criaInstrucao("ARG");
-        param->arg1 = criaEndereco(String, 0, noParam->lexema, 0);
+
+        if(noParam->tipoDeclaracao == VarParamK)
+            param->arg1 = criaEndereco(String, 0, "INT", 0);
+        else 
+            param->arg1 = criaEndereco(String, 0, "VET", 0);
+
         param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
         param->arg3 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
+
         codigoIntermediario[indiceVetor] = param;
         indiceVetor++;
         

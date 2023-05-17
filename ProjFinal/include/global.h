@@ -43,7 +43,7 @@ typedef enum {
 	VetDeclK, // Declaração de vetor.
     FunDeclK, // Declaração de função.
     VarParamK, // Declaração de variável parâmetro.
-    VetParamK, // Declaração de vetro parâmetro.
+    VetParamK, // Declaração de vetor parâmetro.
     ParamVoid // Declaração de função com parâmetro void.
 } tipoDECL;
 
