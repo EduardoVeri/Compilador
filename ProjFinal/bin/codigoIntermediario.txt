@@ -48,6 +48,8 @@ LABEL, L2, -, -
 LABEL, L0, -, -
 END, gcd, -, -
 FUN, VOID, main, -
+ARG, INT, u, main
+LOAD, $t0, u, -
 ALLOC, x, main, -
 ALLOC, y, main, -
 LOAD, $t18, x, -

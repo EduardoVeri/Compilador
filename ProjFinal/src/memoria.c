@@ -7,9 +7,9 @@ as variaveis estaticas */
 #include <stdlib.h>
 #include "memoria.h"
 
-void inicializa_memoria(MEMORIA memoria){
-	memoria.tamanho = 0;
-	memoria.funcoes = NULL;
+void inicializa_memoria(MEMORIA *memoria){
+	memoria->tamanho = 0;
+	memoria->funcoes = NULL;
 }
 
 void insere_funcao(MEMORIA *memoria, char * nome_funcao){
@@ -18,26 +18,29 @@ void insere_funcao(MEMORIA *memoria, char * nome_funcao){
 	funcao->nome = nome_funcao;
 	funcao->prox = NULL;
 	funcao->tabelaVar = NULL;
-
 	MEMORIA_FUNCOES* aux = NULL;
+
+	insere_variavel(funcao, "Vinculo Controle", controle);
+	insere_variavel(funcao, "Endereco Retorno", retorno);
+
 
 	if(memoria->tamanho == 0){
 		memoria->funcoes = funcao;
 		memoria->tamanho++;
 		return;
 	}
-	
+
 	aux = memoria->funcoes;
 	while(aux->prox != NULL){
 		aux = aux->prox;
 	}
+
 	aux->prox = funcao;
-	
-	memoria->funcoes = funcao;
 	memoria->tamanho++;
+
 }
 
-void insere_variavel(MEMORIA *memoria, char * nome_variavel, TIPO_VAR tipo){
+void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tipo){
 	VARIAVEL* variavel = (VARIAVEL *) malloc(sizeof(VARIAVEL));
 	variavel->tipo = tipo;
 	variavel->nome = nome_variavel;
@@ -45,22 +48,20 @@ void insere_variavel(MEMORIA *memoria, char * nome_variavel, TIPO_VAR tipo){
 
 	VARIAVEL* aux = NULL;
 
-	if(memoria->funcoes->tabelaVar == NULL){
-		memoria->funcoes->tabelaVar = variavel;
-		variavel->indice = memoria->funcoes->tamanho;
-		memoria->funcoes->tamanho++;
+	if(funcao->tabelaVar == NULL){
+		funcao->tabelaVar = variavel;
+		variavel->indice = funcao->tamanho;
+		funcao->tamanho++;
 		return;
 	}
 	
-	aux = memoria->funcoes->tabelaVar;
+	aux = funcao->tabelaVar;
 	while(aux->prox != NULL){
 		aux = aux->prox;
 	}
 	aux->prox = variavel;
-	
-    variavel->indice = memoria->funcoes->tamanho;
-
-	memoria->funcoes->tamanho++;
+    variavel->indice = funcao->tamanho;
+	funcao->tamanho++;
 }
 
 VARIAVEL* get_variavel(MEMORIA memoria, char * nome_variavel){
@@ -83,18 +84,18 @@ void imprime_memoria(MEMORIA memoria){
 	MEMORIA_FUNCOES* aux = memoria.funcoes;
 	VARIAVEL* aux2 = NULL;
 	while(aux != NULL){
+		printf("=============================\n");
 		printf("Funcao: %s\n", aux->nome);
-		printf("Tamanho: %d\n", aux->tamanho);
+		printf("=============================\n");
 		aux2 = aux->tabelaVar;
 		while(aux2 != NULL){
-			printf("Variavel: %s\n", aux2->nome);
-			printf("Tipo: %d\n", aux2->tipo);
+			printf("%d: %s --> $fp + %d ou $sp - %d\n",aux2->indice, aux2->nome, aux2->indice, aux->tamanho - aux2->indice - 1);
 			aux2 = aux2->prox;
 		}
 		aux = aux->prox;
+		printf("\n");
 	}
 }
-
 
 
 int get_sp(MEMORIA memoria, char * nome_funcao){

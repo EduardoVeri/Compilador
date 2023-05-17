@@ -77,11 +77,12 @@
 14: }
 	14: FECHACHAVES, }
 15: 
-16: void main(void)
+16: void main(int u)
 	16: reserved word , void
 	16: ID, main
 	16: ABREPARENTESES, (
-	16: reserved word , void
+	16: reserved word , int
+	16: ID, u
 	16: FECHAPARENTESES, )
 17: {	int x; int y;
 	17: ABRECHAVES, {
@@ -161,7 +162,8 @@ INT
 								v
 							v
 VOID
-	VOID
+	INT
+		u
 	main
 		INT
 			x
@@ -200,6 +202,12 @@ Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
 Linhas: 7 9 10 10 11 12 12 
+
+Nome: u
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 16 
 
 Nome: v
 Escopo: gcd

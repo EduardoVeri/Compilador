@@ -6,7 +6,9 @@ typedef enum tipo{
 	inteiro,
 	vetor,
 	inteiroParam,
-	vetorParam
+	vetorParam,
+	controle,
+	retorno
 } TIPO_VAR;
 
 typedef struct variavel{
@@ -30,9 +32,9 @@ typedef struct{
 
 // Funcoes para a manipulacao da memoria
 
-void inicializa_memoria(MEMORIA memoria);
+void inicializa_memoria(MEMORIA* memoria);
 void insere_funcao(MEMORIA *memoria, char * nome_funcao);
-void insere_variavel(MEMORIA *memoria, char * nome_variavel, TIPO_VAR tipo);
+void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tipo);
 VARIAVEL* get_variavel(MEMORIA memoria, char * nome_variavel);
 void imprime_memoria(MEMORIA memoria);
 

@@ -20,7 +20,7 @@ void inicializaAssembly(){
     }
 
 	inicializaLabels();
-	inicializa_memoria(vetorMemoria);
+	inicializa_memoria(&vetorMemoria);
 }
 
 ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
@@ -122,6 +122,7 @@ void assembly(){
 	inicializaAssembly();
 	for(int i = 0; i < indiceVetor; i++)
 		geraAssembly(codigoIntermediario[i]);
+	imprime_memoria(vetorMemoria);
 }
 
 int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
@@ -262,13 +263,10 @@ int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 void geraAssembly(INSTRUCAO* instrucao){
 	ASSEMBLY* novaInstrucao = NULL;
 	int flag = 0;
-/* 	if(strcmp(instrucao->op, "LOAD") == 0){
-		//novaInstrucao = criarNoAssembly(typeI, "lw");
-		//novaInstrucao->tipoI->rt = instrucao->arg1->val;
-		
-		// Calcular qual sera o imediato
+/* 	if(strcmp(instrucao->op, "FUN") == 0){
+		insere_funcao(&vetorMemoria, instrucao->arg2->nome);
 		return;
-	} */
+	}  */
 	if(strcmp(instrucao->op, "ASSIGN") == 0){
 		novaInstrucao = criarNoAssembly(typeR, "add");
 		novaInstrucao->tipoR->rd = instrucao->arg1->val;
@@ -335,6 +333,8 @@ void geraAssembly(INSTRUCAO* instrucao){
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+		insere_funcao(&vetorMemoria, instrucao->arg2->nome);
+
 	}
 	else if(strcmp(instrucao->op, "RET") == 0){
 		novaInstrucao = criarNoAssembly(typeR, "jr");
@@ -376,8 +376,5 @@ void geraAssembly(INSTRUCAO* instrucao){
 		printf(ANSI_COLOR_RESET);
 		return;
 	}
-	
-
-	//mostrarUmaInstrucao(novaInstrucao);
 
 }
