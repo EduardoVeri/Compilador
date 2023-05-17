@@ -45,7 +45,6 @@ int adicionaTempReg();
 int buscarVarReg(char* nomeVar, char* escopo);
 void mostrarReg();
 int descartarReg();
-int totalRegistradores();
 int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp);
 
 //Funcoes auxiliares

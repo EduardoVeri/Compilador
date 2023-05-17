@@ -8,7 +8,7 @@ int gcd (int u, int v)
 { 	
 	vetor[u] = vetor[10+10+20];
 	u = u + 4;
-	if (v == 4) {u = 10;}
+	if (v != 4) {u = 10;}
 	else return gcd(v,u-u/v*v);
 	/* u-u/v*v == u mod v */
 }

@@ -2526,6 +2526,7 @@ void yyerror (char *s){
 	for(int i = 0; i < qntNos; i++){
 		free(nos[i]);
 	}
+	arvoreSintatica = NULL;
 
 }
 
