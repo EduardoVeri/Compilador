@@ -3,10 +3,13 @@
 #include <string.h>
 #include "codInterm.h"
 #include "assembly.h"
+#include "memoria.h"
 
 // TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
 
 ASSEMBLY ** instrucoesAssembly = NULL;
+MEMORIA vetorMemoria;
+
 int indiceAssembly = 0;
 
 void inicializaAssembly(){
@@ -17,6 +20,7 @@ void inicializaAssembly(){
     }
 
 	inicializaLabels();
+	inicializa_memoria(vetorMemoria);
 }
 
 ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
@@ -286,10 +290,12 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 	}
-	/* else if(strcmp(instrucao->op, "STORE") == 0){
-		return;
-		//printf("STORE R%d, %d\n", instrucao->arg1->val, instrucao->arg2->val);
-	} */
+/* 	else if(strcmp(instrucao->op, "STORE") == 0){
+		
+		
+		novaInstrucao = 
+		
+	}  */
 	/* else if(strcmp(instrucao->op, "READ") == 0){
 		return;
 		//printf("READ R%d\n", instrucao->arg1->val);

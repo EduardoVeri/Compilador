@@ -47,6 +47,7 @@ void insere_variavel(MEMORIA *memoria, char * nome_variavel, TIPO_VAR tipo){
 
 	if(memoria->funcoes->tabelaVar == NULL){
 		memoria->funcoes->tabelaVar = variavel;
+		variavel->indice = memoria->funcoes->tamanho;
 		memoria->funcoes->tamanho++;
 		return;
 	}
@@ -57,6 +58,8 @@ void insere_variavel(MEMORIA *memoria, char * nome_variavel, TIPO_VAR tipo){
 	}
 	aux->prox = variavel;
 	
+    variavel->indice = memoria->funcoes->tamanho;
+
 	memoria->funcoes->tamanho++;
 }
 

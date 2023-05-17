@@ -6,7 +6,7 @@
 
 // Capacidade maxima para o vetor dos nomes das instrucoes
 #define MAX_CHAR_NOME 5
-#define MAX_ASSEMBLY 1000
+#define MAX_ASSEMBLY 10000
 
 typedef enum{
 	typeR, // Instrucoes do tipo R

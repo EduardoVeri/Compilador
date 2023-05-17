@@ -4,12 +4,14 @@
 
 typedef enum tipo{
 	inteiro,
-	vetor
+	vetor,
+	inteiroParam,
+	vetorParam
 } TIPO_VAR;
 
 typedef struct variavel{
 	TIPO_VAR tipo;
-	int endereco;
+	int indice;
 	char *nome;
 	struct variavel *prox;
 } VARIAVEL;
