@@ -259,22 +259,15 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
-		PONTEIROITEM escopoAux = NULL;
 
-		if((escopoAux = buscarItemTabelaId(tabelaHash, noParam->filho[0]->lexema)) == NULL){
-			printf(ANSI_COLOR_RED);
-			printf("Erro ao buscar escopo da variavel");
-			printf(ANSI_COLOR_RESET);
-		}
-		else{
-			numReg = verificacaoRegistradores(noParam->filho[0]->lexema, escopoAux->escopo, 0);
+        numReg = verificacaoRegistradores(noParam->filho[0]->lexema, arvoreSintatica->filho[1]->lexema, 0);
+    
+        param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+        param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
+        param->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+        codigoIntermediario[indiceVetor] = param;
+        indiceVetor++;
 		
-			param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-			param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
-			param->arg3 = criaEndereco(Vazio, 0, NULL, 0);
-			codigoIntermediario[indiceVetor] = param;
-			indiceVetor++;
-		}
 
         noParam = noParam->irmao;
     }
