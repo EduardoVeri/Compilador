@@ -28,6 +28,9 @@ FILE * copiaArquivo = NULL; // Cópia do arquivo de entrada
 FILE * arquivoSaida = NULL; // Arquivo de saída
 FILE * arquivoSaida_Intermediario = NULL; // Arquivo de saída do código intermediário
 
+
+void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
+
 // Funcao Principal do Compilador 
 int main(int argc, char *argv[]){	
 	arquivoSaida = stdout;
@@ -133,6 +136,9 @@ int main(int argc, char *argv[]){
 		// Mostra os registradores em uso
 		mostrarReg();
 
+		// Desaloca as estruturas de analise
+		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+
 		assembly(); // Inicia o processo de montagem do codigo assembly
 
 		// Imprime o codigo assembly e os labels
@@ -152,13 +158,9 @@ int main(int argc, char *argv[]){
 		else if(teveErroSemantico > 1)
 			printf("Nao foi possivel gerar o codigo intermediario, pois o codigo fonte possui %d erros semanticos.\n", teveErroSemantico);
 		printf(ANSI_COLOR_RESET);
-	}
-	
-	// Libera a memória alocada para a arvore sintatica
-	desalocaArvore(arvoreSintatica);
 
-	// Libera a memoria alocada para a tabela de simbolos
-	apagarTabela(tabelaHash);
+		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+	}
 
     //Fecha os arquivos abertos
 	if(arquivoEntrada != stdin) fclose(arquivoEntrada);
@@ -176,4 +178,9 @@ int main(int argc, char *argv[]){
 	else fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
 
 	return 0;
+}
+
+void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash){
+	desalocaArvore(arvoreSintatica);
+	apagarTabela(tabelaHash);
 }
