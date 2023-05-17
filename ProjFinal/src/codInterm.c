@@ -27,7 +27,7 @@ ENDERECO* criaEndereco(tipoEndereco tipo, int val, char* nome, int boolReg){
     else if(tipo == String){
         endereco->tipo = String;
         endereco->val = 0;
-        endereco->nome = nome;
+        endereco->nome = strdup(nome);
     }
     else{
         endereco->tipo = Vazio;
