@@ -258,12 +258,22 @@ int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 void geraAssembly(INSTRUCAO* instrucao){
 	ASSEMBLY* novaInstrucao = NULL;
 	int flag = 0;
-	if(strcmp(instrucao->op, "LOAD") == 0){
+/* 	if(strcmp(instrucao->op, "LOAD") == 0){
 		//novaInstrucao = criarNoAssembly(typeI, "lw");
 		//novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		
 		// Calcular qual sera o imediato
 		return;
+	} */
+	if(strcmp(instrucao->op, "ASSIGN") == 0){
+		novaInstrucao = criarNoAssembly(typeR, "add");
+		novaInstrucao->tipoR->rd = instrucao->arg1->val;
+		novaInstrucao->tipoR->rs = 31; // Registrador 0;
+		novaInstrucao->tipoR->rt = instrucao->arg2->val;
+
+		flag = 1;
+
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(strcmp(instrucao->op, "LOADI") == 0){
 		novaInstrucao = criarNoAssembly(typeI, "ori");
@@ -276,18 +286,18 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 	}
-	else if(strcmp(instrucao->op, "STORE") == 0){
+	/* else if(strcmp(instrucao->op, "STORE") == 0){
 		return;
 		//printf("STORE R%d, %d\n", instrucao->arg1->val, instrucao->arg2->val);
-	}
-	else if(strcmp(instrucao->op, "READ") == 0){
+	} */
+	/* else if(strcmp(instrucao->op, "READ") == 0){
 		return;
 		//printf("READ R%d\n", instrucao->arg1->val);
-	}
-	else if(strcmp(instrucao->op, "WRITE") == 0){
+	} */
+	/* else if(strcmp(instrucao->op, "WRITE") == 0){
 		return;
 		//printf("WRITE R%d\n", instrucao->arg1->val);
-	}
+	} */
 	else if(strcmp(instrucao->op, "IFF") == 0){
 		novaInstrucao = criarNoAssembly(typeI, "bne");
 		novaInstrucao->tipoI->rs = 31;
@@ -340,7 +350,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		sprintf(novaInstrucao->tipoJ->labelImediato, "Label %d", instrucao->arg1->val);
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-
 	}
 	else if(strcmp(instrucao->op, "HALT") == 0){
 		novaInstrucao = criarNoAssembly(typeJ, "halt");

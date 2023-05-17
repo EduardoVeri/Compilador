@@ -133,14 +133,14 @@ int main(int argc, char *argv[]){
 		// Mostra os registradores em uso
 		mostrarReg();
 
-		//assembly(); // Inicia o processo de montagem do codigo assembly
+		assembly(); // Inicia o processo de montagem do codigo assembly
 
 		// Imprime o codigo assembly e os labels
-		//imprimirAssembly();
-		//imprimirLabels();
+		imprimirAssembly();
+		imprimirLabels();
 
-		//liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-		//liberarLabels(); // Libera a memoria alocada para os labels
+		liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+		liberarLabels(); // Libera a memoria alocada para os labels
 		desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	}
 	else{

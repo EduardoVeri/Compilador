@@ -117,7 +117,7 @@ int descartarReg(){
 	totalRegEmUso--;
 
 	printf(ANSI_COLOR_PURPLE);
-	printf("Descartado registrador t%d\n", regDescartado);
+	printf("WARNING: Descartado registrador t%d\n", regDescartado);
 	printf(ANSI_COLOR_RESET);
 
 	return regDescartado;
