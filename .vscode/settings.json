@@ -2,6 +2,7 @@
 	"files.associations": {
 		"codinterm.h": "c",
 		"string.h": "c",
-		"memoria.h": "c"
+		"memoria.h": "c",
+		"stdlib.h": "c"
 	}
 }

@@ -7,117 +7,11 @@
 
 // TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
 MEMORIA vetorMemoria; // Variavel global que guarda a memoria
-int indiceAssembly = 0; // Indice para o vetor de instrucoes assembly
 MEMORIA_FUNCOES *funcaoAtual = NULL; // Ponteiro para a funcao atual
-ASSEMBLY ** instrucoesAssembly = NULL; // Vetor de instrucoes assembly
-
-
-void inicializaAssembly(){
-	instrucoesAssembly = (ASSEMBLY **)malloc(sizeof(ASSEMBLY*)*MAX_ASSEMBLY);
-
-	for(int i = 0; i < MAX_INSTRUCTION; i++){
-        instrucoesAssembly[i] = NULL;
-    }
-
-	inicializaLabels();
-	inicializa_memoria(&vetorMemoria);
-	funcaoAtual = vetorMemoria.funcoes;
-}
-
-ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
-	ASSEMBLY * novoNoAssembly = (ASSEMBLY *)malloc(sizeof(ASSEMBLY));
-	novoNoAssembly->tipo = tipo;
-
-	switch (tipo){
-	case typeR:
-		novoNoAssembly->tipoR = (TIPO_R *)malloc(sizeof(TIPO_R));
-		novoNoAssembly->tipoR->nome = nome;
-		novoNoAssembly->tipoR->rd = -1;
-		novoNoAssembly->tipoR->rs = -1;
-		novoNoAssembly->tipoR->rt = -1;
-		break;
-
-	case typeI:
-		novoNoAssembly->tipoI = (TIPO_I *)malloc(sizeof(TIPO_I));
-		novoNoAssembly->tipoI->nome = nome;
-		novoNoAssembly->tipoI->rs = -1;
-		novoNoAssembly->tipoI->rt = -1;
-		novoNoAssembly->tipoI->imediato = -1;
-		novoNoAssembly->tipoI->label = -1;
-		break;
-
-	case typeJ:
-		novoNoAssembly->tipoJ = (TIPO_J *)malloc(sizeof(TIPO_J));
-		novoNoAssembly->tipoJ->nome = nome;
-		novoNoAssembly->tipoJ->labelImediato = NULL;
-		break;
-	
-	case typeLabel:
-		novoNoAssembly->tipoLabel = (TIPO_LABEL *)malloc(sizeof(TIPO_LABEL));
-		novoNoAssembly->tipoLabel->nome = nome;
-		novoNoAssembly->tipoLabel->endereco = -1;
-		novoNoAssembly->tipoLabel->boolean = -1;
-		break;
-	}
-
-	return novoNoAssembly;
-}
-
-// Liberar vetor de instrucoes assembly
-void liberarAssembly(){
-	for(int i = 0; i < indiceAssembly; i++){
-		if(instrucoesAssembly[i]->tipo == typeR)
-			free(instrucoesAssembly[i]->tipoR);
-		else if(instrucoesAssembly[i]->tipo == typeI)
-			free(instrucoesAssembly[i]->tipoI);
-		else if(instrucoesAssembly[i]->tipo == typeJ)
-			free(instrucoesAssembly[i]->tipoJ);
-		else if(instrucoesAssembly[i]->tipo == typeLabel){
-			free(instrucoesAssembly[i]->tipoLabel);
-			if(instrucoesAssembly[i]->tipoLabel->boolean == 1)
-				free(instrucoesAssembly[i]->tipoLabel->nome);
-		}
-		free(instrucoesAssembly[i]);
-	}
-	free(instrucoesAssembly);
-}
-
-// Mostrar as instrucoes em assembly
-void imprimirAssembly(){
-	int i = 0;
-	TIPO_I * tipoI = NULL;
-	TIPO_R * tipoR = NULL;
-	TIPO_J * tipoJ = NULL;
-	TIPO_LABEL * tipoLabel = NULL;
-
-	printf("============== Assembly ==============\n");
-	while(i < indiceAssembly){
-		if(instrucoesAssembly[i]->tipo == typeI){
-			tipoI = instrucoesAssembly[i]->tipoI;		
-			printf("\t%s t%d t%d ", tipoI->nome, tipoI->rt, tipoI->rs);
-			
-			if(tipoI->label != -1) printf("Label %d\n", tipoI->label);
-			else printf("%d\n", tipoI->imediato);
-			
-		}
-		else if(instrucoesAssembly[i]->tipo == typeR){
-			tipoR = instrucoesAssembly[i]->tipoR;
-			printf("\t%s t%d t%d t%d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
-		}
-		else if(instrucoesAssembly[i]->tipo == typeJ){
-			tipoJ = instrucoesAssembly[i]->tipoJ;
-			printf("\t%s %s\n", tipoJ->nome, tipoJ->labelImediato);
-		}
-		else if(instrucoesAssembly[i]->tipo == typeLabel){
-			tipoLabel = instrucoesAssembly[i]->tipoLabel;
-			printf("%s:\n", tipoLabel->nome);
-		}
-		i++;
-	}	
-}
-
 
 // ======================== Gerar Codigo Assembly ========================
+
+void geraAssembly(INSTRUCAO* instrucao);
 
 void assembly(){
 	inicializaAssembly();

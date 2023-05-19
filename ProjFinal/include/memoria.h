@@ -44,4 +44,8 @@ int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var);
 int get_sp(MEMORIA_FUNCOES* funcao);
 int get_fp(MEMORIA_FUNCOES* funcao);
 
+
+extern MEMORIA vetorMemoria;
+extern MEMORIA_FUNCOES* funcaoAtual;
+
 #endif

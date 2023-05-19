@@ -58,10 +58,12 @@ typedef struct assembly{
 
 // Vetor para armazenar as instrucoes em assembly
 extern ASSEMBLY ** instrucoesAssembly;
+extern int indiceAssembly; // Indice para o vetor de instrucoes assembly
 
 // Funcoes para a geracao do codigo assembly
 void assembly();
-void geraAssembly(INSTRUCAO* instrucao);
+void inicializaAssembly();
+ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome);
 void imprimirAssembly();
 void liberarAssembly();
 
