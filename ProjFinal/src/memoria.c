@@ -6,13 +6,20 @@ as variaveis estaticas */
 #include <string.h>
 #include <stdlib.h>
 #include "memoria.h"
+#include "global.h"
 
 void inicializa_memoria(MEMORIA *memoria){
-	memoria->tamanho = 0;
-	memoria->funcoes = NULL;
+	MEMORIA_FUNCOES* global = (MEMORIA_FUNCOES *) malloc(sizeof(MEMORIA_FUNCOES));
+	global->tamanho = 0;
+	global->nome = strdup("global");
+	global->prox = NULL;
+	global->tabelaVar = NULL;
+	
+	memoria->tamanho = 1;
+	memoria->funcoes = global;
 }
 
-void insere_funcao(MEMORIA *memoria, char * nome_funcao){
+MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
 	MEMORIA_FUNCOES* funcao = (MEMORIA_FUNCOES *) malloc(sizeof(MEMORIA_FUNCOES));
 	funcao->tamanho = 0;
 	funcao->nome = nome_funcao;
@@ -27,7 +34,7 @@ void insere_funcao(MEMORIA *memoria, char * nome_funcao){
 	if(memoria->tamanho == 0){
 		memoria->funcoes = funcao;
 		memoria->tamanho++;
-		return;
+		return funcao;
 	}
 
 	aux = memoria->funcoes;
@@ -37,6 +44,8 @@ void insere_funcao(MEMORIA *memoria, char * nome_funcao){
 
 	aux->prox = funcao;
 	memoria->tamanho++;
+
+	return funcao;
 
 }
 
@@ -64,8 +73,8 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 	funcao->tamanho++;
 }
 
-VARIAVEL* get_variavel(MEMORIA memoria, char * nome_variavel){
-	MEMORIA_FUNCOES* aux = memoria.funcoes;
+VARIAVEL* get_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel){
+	MEMORIA_FUNCOES* aux = funcao;
 	VARIAVEL* aux2 = NULL;
 	while(aux != NULL){
 		aux2 = aux->tabelaVar;
@@ -84,12 +93,16 @@ void imprime_memoria(MEMORIA memoria){
 	MEMORIA_FUNCOES* aux = memoria.funcoes;
 	VARIAVEL* aux2 = NULL;
 	while(aux != NULL){
-		printf("=============================\n");
-		printf("Funcao: %s\n", aux->nome);
-		printf("=============================\n");
+		printf("===============================================\n");
+		printf("\t\t%s\n", aux->nome);
+		printf("===============================================\n");
 		aux2 = aux->tabelaVar;
+		printf("$fp ->");
 		while(aux2 != NULL){
-			printf("%d: %s --> $fp + %d ou $sp - %d\n",aux2->indice, aux2->nome, aux2->indice, aux->tamanho - aux2->indice - 1);
+			if(aux2->prox == NULL)
+				printf("$sp -> ");
+			printf("\t%d: %s [$fp + %d] [$sp - %d]\n",
+					aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
 			aux2 = aux2->prox;
 		}
 		aux = aux->prox;
@@ -97,18 +110,35 @@ void imprime_memoria(MEMORIA memoria){
 	}
 }
 
-
-int get_sp(MEMORIA memoria, char * nome_funcao){
-	MEMORIA_FUNCOES* aux = memoria.funcoes;
+MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
+	MEMORIA_FUNCOES* aux = memoria->funcoes;
 	while(aux != NULL){
 		if(strcmp(aux->nome, nome_funcao) == 0){
-			return aux->tamanho;
+			return aux;
 		}
 		aux = aux->prox;
 	}
-	return -1;
+	printf(ANSI_COLOR_RED);
+	printf("ERRO: ");
+	printf(ANSI_COLOR_RESET);
+	printf("Funcao %s nao encontrada\n", nome_funcao);
+
+	return NULL;
 }
 
-int get_fp(MEMORIA memoria, char* nome_funcao){
+
+int get_sp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
+	return funcao->tamanho - var->indice - 1;
+}
+
+int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
+	return var->indice;
+}
+
+int get_sp(MEMORIA_FUNCOES* funcao){
+	return funcao->tamanho;
+}
+
+int get_fp(MEMORIA_FUNCOES* funcao){
 	return 0;
 }

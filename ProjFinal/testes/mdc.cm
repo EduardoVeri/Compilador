@@ -13,7 +13,7 @@ int gcd (int u, int v)
 	/* u-u/v*v == u mod v */
 }
 
-void main(int u)
+void main(void)
 {	int x; int y;
 	x = input(); y = input();
 	output(gcd(x,y));
