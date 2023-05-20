@@ -328,7 +328,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg1->nome));
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		}
-		
 	}
 	else if(!strcmp(instrucao->op, "GOTO")){
 		novaInstrucao = criarNoAssembly(typeJ, "j");
@@ -340,6 +339,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao = criarNoAssembly(typeJ, "halt");
 		novaInstrucao->tipoJ->labelImediato = strdup("$zero");
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	}
+	else if(!strcmp(instrucao->op, "CALL")){
+		
+		novaInstrucao = criarNoAssembly(typeJ, "jal");
 	}
 	else{
 		printf(ANSI_COLOR_RED);
