@@ -156,29 +156,6 @@ int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 }
 
 
-void carregar_fp(){
-	ASSEMBLY* novaInstrucao = NULL;
-
-	// Carregar o valor do registrador para o $fp
-	novaInstrucao = criarNoAssembly(typeI, "ori");
-	novaInstrucao->tipoI->rt = $fp;
-	novaInstrucao->tipoI->rs = $zero;
-	novaInstrucao->tipoI->imediato = get_fp(funcaoAtual);
-
-	instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-}
-
-void carregar_sp(){
-	ASSEMBLY* novaInstrucao = NULL;
-
-	// Carregar o valor do registrador para o $sp
-	novaInstrucao = criarNoAssembly(typeI, "ori");
-	novaInstrucao->tipoI->rt = $sp;
-	novaInstrucao->tipoI->rs = $zero;
-	novaInstrucao->tipoI->imediato = get_sp(funcaoAtual);
-
-	instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-}
 
 void geraAssembly(INSTRUCAO* instrucao){
 	ASSEMBLY* novaInstrucao = NULL;
@@ -217,15 +194,15 @@ void geraAssembly(INSTRUCAO* instrucao){
 			}
 		}
 	}
-	else if(strcmp(instrucao->op, "STORE") == 0){
-		carregar_fp();
+/* 	else if(strcmp(instrucao->op, "STORE") == 0){
 
-		/* if(instrucao->arg3->tipo != Vazio){
+		if(instrucao->arg3->tipo != Vazio){
+
 			// Somar o valor do offset com o valor do fp para obter o endereço de memoria
 			novaInstrucao = criarNoAssembly(typeR, "add");
 			novaInstrucao->tipoR->rd = $fp; // Aqui eu uso o registrador $fp apenas para não ter que criar outro registrador reservado
 			novaInstrucao->tipoR->rs = instrucao->arg3->val;
-			novaInstrucao->tipoR->rt = $fp; 
+			novaInstrucao->tipoR->rt = get; 
 
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -233,18 +210,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "sw");
 			novaInstrucao->tipoI->rt = instrucao->arg1->val;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-		} */
+		}
 		flag = 1;
 		
-	} 
-	/* else if(strcmp(instrucao->op, "READ") == 0){
-		return;
-		//printf("READ R%d\n", instrucao->arg1->val);
-	} */
-	/* else if(strcmp(instrucao->op, "WRITE") == 0){
-		return;
-		//printf("WRITE R%d\n", instrucao->arg1->val);
-	} */
+	}  */
 	else if(!strcmp(instrucao->op, "ARG")){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg3->nome);
 		
@@ -284,24 +253,35 @@ void geraAssembly(INSTRUCAO* instrucao){
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+		/* Carrega os registradores $fp e $sp com seus valores iniciais */
+		if(!strcmp(instrucao->arg2->nome, "main")){
+			novaInstrucao = criarNoAssembly(typeI, "ori");
+			novaInstrucao->tipoI->rt = $fp;
+			novaInstrucao->tipoI->rs = $zero; 
+			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + 1;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			novaInstrucao = criarNoAssembly(typeI, "ori");
+			novaInstrucao->tipoI->rt = $sp;
+			novaInstrucao->tipoI->rs = $zero;
+			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + 1;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		}
+
 		funcaoAtual = insere_funcao(&vetorMemoria, instrucao->arg2->nome);
 
 	}
 	else if(!strcmp(instrucao->op, "RET")){
-		carregar_fp();
-
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $fp;
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		novaInstrucao->tipoI->imediato = get_fp_relation(vetorMemoria.funcoes, get_variavel(vetorMemoria.funcoes, "Endereco Retorno"));
 
-		printf("%d\n", novaInstrucao->tipoI->imediato);
 
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(!strcmp(instrucao->op, "PARAM")){
-		carregar_sp();
 
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $sp;
@@ -322,7 +302,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
-	else if(strcmp(instrucao->op, "HALT") == 0){
+	else if(!strcmp(instrucao->op, "HALT")){
 		novaInstrucao = criarNoAssembly(typeJ, "halt");
 		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;

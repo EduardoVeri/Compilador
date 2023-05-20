@@ -136,7 +136,7 @@ int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
 }
 
 int get_sp(MEMORIA_FUNCOES* funcao){
-	return funcao->tamanho;
+	return funcao->tamanho-1;
 }
 
 int get_fp(MEMORIA_FUNCOES* funcao){
