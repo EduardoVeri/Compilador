@@ -2,98 +2,92 @@
 2: segundo o algoritmo de euclides. */
 3: 
 4: 
-5: int vetor[10];
-	5: reserved word , int
-	5: ID, vetor
-	5: ABRECOLCHETES, [
-	5: NUM, 10
-	5: FECHACOLCHETES, ]
-	5: SEMICOLON, ;
-6: 
-7: int gcd (int u, int v)
-	7: reserved word , int
-	7: ID, gcd
-	7: ABREPARENTESES, (
-	7: reserved word , int
-	7: ID, u
-	7: COMMA, ,
-	7: reserved word , int
-	7: ID, v
-	7: FECHAPARENTESES, )
-8: { 	
-	8: ABRECHAVES, {
-9: vetor[u] = vetor[10+10+20];
-	9: ID, vetor
-	9: ABRECOLCHETES, [
+5: 
+6: int gcd (int u, int v)
+	6: reserved word , int
+	6: ID, gcd
+	6: ABREPARENTESES, (
+	6: reserved word , int
+	6: ID, u
+	6: COMMA, ,
+	6: reserved word , int
+	6: ID, v
+	6: FECHAPARENTESES, )
+7: { 	
+	7: ABRECHAVES, {
+8: vetor[u] = vetor[10+10+20];
+	8: ID, vetor
+	8: ABRECOLCHETES, [
+	8: ID, u
+	8: FECHACOLCHETES, ]
+	8: ATRIB, =
+	8: ID, vetor
+	8: ABRECOLCHETES, [
+	8: NUM, 10
+	8: SOMA, +
+	8: NUM, 10
+	8: SOMA, +
+	8: NUM, 20
+	8: FECHACOLCHETES, ]
+	8: SEMICOLON, ;
+9: u = u + 4;
 	9: ID, u
-	9: FECHACOLCHETES, ]
 	9: ATRIB, =
-	9: ID, vetor
-	9: ABRECOLCHETES, [
-	9: NUM, 10
+	9: ID, u
 	9: SOMA, +
-	9: NUM, 10
-	9: SOMA, +
-	9: NUM, 20
-	9: FECHACOLCHETES, ]
+	9: NUM, 4
 	9: SEMICOLON, ;
-10: u = u + 4;
+10: if (v != 4) {u = 10;}
+	10: reserved word , if
+	10: ABREPARENTESES, (
+	10: ID, v
+	10: NEQ, !=
+	10: NUM, 4
+	10: FECHAPARENTESES, )
+	10: ABRECHAVES, {
 	10: ID, u
 	10: ATRIB, =
-	10: ID, u
-	10: SOMA, +
-	10: NUM, 4
+	10: NUM, 10
 	10: SEMICOLON, ;
-11: if (v != 4) {u = 10;}
-	11: reserved word , if
+	10: FECHACHAVES, }
+11: else return gcd(vetor[u],u-u/v*v);
+	11: reserved word , else
+	11: reserved word , return
+	11: ID, gcd
 	11: ABREPARENTESES, (
-	11: ID, v
-	11: NEQ, !=
-	11: NUM, 4
-	11: FECHAPARENTESES, )
-	11: ABRECHAVES, {
+	11: ID, vetor
+	11: ABRECOLCHETES, [
 	11: ID, u
-	11: ATRIB, =
-	11: NUM, 10
+	11: FECHACOLCHETES, ]
+	11: COMMA, ,
+	11: ID, u
+	11: SUB, -
+	11: ID, u
+	11: DIV, /
+	11: ID, v
+	11: MULT, *
+	11: ID, v
+	11: FECHAPARENTESES, )
 	11: SEMICOLON, ;
-	11: FECHACHAVES, }
-12: else return gcd(vetor[u],u-u/v*v);
-	12: reserved word , else
-	12: reserved word , return
-	12: ID, gcd
-	12: ABREPARENTESES, (
-	12: ID, vetor
-	12: ABRECOLCHETES, [
-	12: ID, u
-	12: FECHACOLCHETES, ]
-	12: COMMA, ,
-	12: ID, u
-	12: SUB, -
-	12: ID, u
-	12: DIV, /
-	12: ID, v
-	12: MULT, *
-	12: ID, v
-	12: FECHAPARENTESES, )
-	12: SEMICOLON, ;
-13: /* u-u/v*v == u mod v */
-14: }
-	14: FECHACHAVES, }
-15: 
-16: void main(void)
-	16: reserved word , void
-	16: ID, main
-	16: ABREPARENTESES, (
-	16: reserved word , void
-	16: FECHAPARENTESES, )
-17: {	int x; int y;
-	17: ABRECHAVES, {
-	17: reserved word , int
-	17: ID, x
-	17: SEMICOLON, ;
-	17: reserved word , int
-	17: ID, y
-	17: SEMICOLON, ;
+12: /* u-u/v*v == u mod v */
+13: }
+	13: FECHACHAVES, }
+14: 
+15: void main(void)
+	15: reserved word , void
+	15: ID, main
+	15: ABREPARENTESES, (
+	15: reserved word , void
+	15: FECHAPARENTESES, )
+16: {	int x; int y;
+	16: ABRECHAVES, {
+	16: reserved word , int
+	16: ID, x
+	16: SEMICOLON, ;
+	16: reserved word , int
+	16: ID, y
+	16: SEMICOLON, ;
+17: 
 18: int vetor2[5];
 	18: reserved word , int
 	18: ID, vetor2
@@ -101,11 +95,7 @@
 	18: NUM, 5
 	18: FECHACOLCHETES, ]
 	18: SEMICOLON, ;
-19: x = 10;
-	19: ID, x
-	19: ATRIB, =
-	19: NUM, 10
-	19: SEMICOLON, ;
+19: 
 20: x = input(); y = input();
 	20: ID, x
 	20: ATRIB, =
@@ -135,9 +125,6 @@
 	23: EOF
 
 ========== Arvore de Analise Sintatica ========== 
-INT
-	vetor
-	10
 INT
 	INT
 		u
@@ -188,9 +175,6 @@ VOID
 			5
 		=
 			x
-			10
-		=
-			x
 			input
 		=
 			y
@@ -205,7 +189,7 @@ VOID
 Nome: main
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 16 
+Linhas: 15 
 
 Nome: vetor2
 Escopo: main
@@ -227,34 +211,28 @@ Nome: u
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 7 9 10 10 11 12 12 12 12 12 
+Linhas: 6 8 9 9 10 11 11 11 11 11 
 
 Nome: v
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 7 11 12 12 12 12 
+Linhas: 6 10 11 11 11 11 
 
 Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 19 20 21 
+Linhas: 16 20 21 
 
 Nome: y
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 20 21 
-
-Nome: vetor
-Escopo: global
-Tipo de dado: INT
-Tipo de identificador: VET
-Linhas: 5 9 9 12 
+Linhas: 16 20 21 
 
 Nome: gcd
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 7 12 21 
+Linhas: 6 11 21 
 

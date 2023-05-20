@@ -21,20 +21,14 @@ int teste = 0;
 //No raiz da arvore sintatica
 PONTEIRONO arvoreSintatica;
 
-/* Vetor com os nos alocados da arvore, que sera utilizado
-caso um erro aconteca durante a criacao da mesma.
-Apos ocorrer um erro, o parser interrompe seu funcionamento
-voltando para a main() sem adicionar o seu no raiz ao ponteiro acima.
-Isso faz com que os nos alocados sejam perdidos e esse vetor fara
-com que eles possam ser apagados mesmo assim. */
-PONTEIRONO nos[MAX_NOS];
-int qntNos = 0;
 
 void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 PONTEIRONO parse(void);
 
 char auxLexema[MAXLEXEMA];
+PONTEIRONO nos[MAX_NOS];
+int qntNos = 0;
 
 %}
 /*
@@ -658,10 +652,13 @@ void yyerror (char *s){
 	}
 	printf("\n");
 
+/* 	char *aux = (char*) malloc(100*sizeof(char));
 	//Desaloca os nos ate o momento
 	for(int i = 0; i < qntNos; i++){
+		strcpy(aux, nos[i]->lexema);
 		free(nos[i]);
-	}
+		printf("%d: %s\n", i, aux);
+	}  */
 	arvoreSintatica = NULL;
 
 }
