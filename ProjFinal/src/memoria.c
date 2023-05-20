@@ -8,15 +8,20 @@ as variaveis estaticas */
 #include "memoria.h"
 #include "global.h"
 
+
+MEMORIA_FUNCOES* global = NULL;
+
 void inicializa_memoria(MEMORIA *memoria){
-	MEMORIA_FUNCOES* global = (MEMORIA_FUNCOES *) malloc(sizeof(MEMORIA_FUNCOES));
-	global->tamanho = 0;
-	global->nome = strdup("global");
-	global->prox = NULL;
-	global->tabelaVar = NULL;
+	MEMORIA_FUNCOES* func_global = (MEMORIA_FUNCOES *) malloc(sizeof(MEMORIA_FUNCOES));
+	func_global->tamanho = 0;
+	func_global->nome = strdup("global");
+	func_global->prox = NULL;
+	func_global->tabelaVar = NULL;
 	
+	global = func_global; // Variavel global para a funcao get_variavel
+
 	memoria->tamanho = 1;
-	memoria->funcoes = global;
+	memoria->funcoes = func_global;
 }
 
 MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
@@ -29,6 +34,7 @@ MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
 
 	insere_variavel(funcao, "Vinculo Controle", controle);
 	insere_variavel(funcao, "Endereco Retorno", retorno);
+	insere_variavel(funcao, "Temporario", inteiro);
 
 
 	if(memoria->tamanho == 0){
@@ -75,6 +81,13 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 
 VARIAVEL* get_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel){
 	MEMORIA_FUNCOES* aux = funcao;
+
+	if(aux == NULL){
+		printf(ANSI_COLOR_RED); printf("ERRO: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_variavel\n");
+		return NULL;
+	}
+
 	VARIAVEL* aux2 = NULL;
 	while(aux != NULL){
 		aux2 = aux->tabelaVar;
@@ -86,8 +99,47 @@ VARIAVEL* get_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel){
 		}
 		aux = aux->prox;
 	}
+
+	// Se nao estiver na funcao, procurar na tabela de globais
+	aux = global;
+	while(aux != NULL){
+		aux2 = aux->tabelaVar;
+		while(aux2 != NULL){
+			if(strcmp(aux2->nome, nome_variavel) == 0){
+				return aux2;
+			}
+			aux2 = aux2->prox;
+		}
+		aux = aux->prox;
+	}
+
+	printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+	printf("Variavel %s nao encontrada\n", nome_variavel);
+
 	return NULL;
 }
+
+void apagar_temp(MEMORIA_FUNCOES* funcao, int total_temp){
+	VARIAVEL* aux = funcao->tabelaVar;
+	VARIAVEL* aux2 = NULL;
+
+	for(int i = funcao->tamanho - 1; i >= 0 && total_temp != 0; i--){
+		for(int j = 0; i < funcao->tamanho; i++){
+			aux2 = aux;
+			aux = aux->prox;
+		}
+		if(aux->tipo == temp){
+			total_temp--;
+			aux2->prox == NULL;
+			free(aux);
+
+		}
+	}
+	
+	printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+	printf("Param's nao apagados! %d\n", total_temp);
+}
+
 
 void imprime_memoria(MEMORIA memoria){
 	MEMORIA_FUNCOES* aux = memoria.funcoes;
@@ -111,6 +163,12 @@ void imprime_memoria(MEMORIA memoria){
 }
 
 MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
+	if(memoria == NULL || nome_funcao == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em buscar_funcao\n");
+		return NULL;
+	}
+	
 	MEMORIA_FUNCOES* aux = memoria->funcoes;
 	while(aux != NULL){
 		if(strcmp(aux->nome, nome_funcao) == 0){
@@ -118,9 +176,8 @@ MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
 		}
 		aux = aux->prox;
 	}
-	printf(ANSI_COLOR_RED);
-	printf("ERRO: ");
-	printf(ANSI_COLOR_RESET);
+
+	printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
 	printf("Funcao %s nao encontrada\n", nome_funcao);
 
 	return NULL;
@@ -128,17 +185,42 @@ MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
 
 
 int get_sp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
+	if(funcao == NULL || var == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_sp_relation\n");
+		return -1;
+	}
+	
 	return funcao->tamanho - var->indice - 1;
 }
 
 int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
+	if(funcao == NULL || var == NULL){
+		printf(ANSI_COLOR_RED);
+		printf("Erro: ");
+		printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_fp_relation\n");
+		return -1;
+	}
 	return var->indice;
 }
 
 int get_sp(MEMORIA_FUNCOES* funcao){
+	if(funcao == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_sp\n");
+		return -1;
+	}
+	
 	return funcao->tamanho-1;
 }
 
 int get_fp(MEMORIA_FUNCOES* funcao){
+	if(funcao == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_fp\n");
+		return -1;
+	}
+
 	return 0;
 }

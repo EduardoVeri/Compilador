@@ -21,8 +21,7 @@ void assembly(){
 	imprime_memoria(vetorMemoria);
 }
 
-int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
-	if (flag == 1) return 0; // Se flag esta em 1, operacao ja foi feita
+int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 
 	if(strcmp(instrucao->op, "EQ") == 0){
 		(*novaInstrucao) = criarNoAssembly(typeR, "slt");
@@ -110,8 +109,7 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 
 }
 
-int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
-	if (flag == 1) return 0;
+int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 	
 	if(strcmp(instrucao->op, "ADD") == 0){
 		*novaInstrucao = criarNoAssembly(typeR, "add");
@@ -156,29 +154,27 @@ int opAritmeticos(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao, int flag){
 }
 
 
-
 void geraAssembly(INSTRUCAO* instrucao){
 	ASSEMBLY* novaInstrucao = NULL;
-	int flag = 0;
 
-	if(!strcmp(instrucao->op, "ASSIGN")){
+	if(opAritmeticos(instrucao, &novaInstrucao)){
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	}
+	else if(opRelacionais(instrucao, &novaInstrucao)){
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	}
+	else if(!strcmp(instrucao->op, "ASSIGN")){
 		novaInstrucao = criarNoAssembly(typeR, "add");
 		novaInstrucao->tipoR->rd = instrucao->arg1->val;
-		novaInstrucao->tipoR->rs = $zero; // Registrador 0;
+		novaInstrucao->tipoR->rs = $zero;
 		novaInstrucao->tipoR->rt = instrucao->arg2->val;
-
-		flag = 1;
-
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(!strcmp(instrucao->op, "LOADI")){
 		novaInstrucao = criarNoAssembly(typeI, "ori");
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
-		novaInstrucao->tipoI->rs = $zero; // Registrador 0;
+		novaInstrucao->tipoI->rs = $zero;
 		novaInstrucao->tipoI->imediato = instrucao->arg2->val;
-
-		flag = 1;
-
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 	}
@@ -194,33 +190,18 @@ void geraAssembly(INSTRUCAO* instrucao){
 			}
 		}
 	}
-/* 	else if(strcmp(instrucao->op, "STORE") == 0){
-
-		if(instrucao->arg3->tipo != Vazio){
-
-			// Somar o valor do offset com o valor do fp para obter o endereço de memoria
-			novaInstrucao = criarNoAssembly(typeR, "add");
-			novaInstrucao->tipoR->rd = $fp; // Aqui eu uso o registrador $fp apenas para não ter que criar outro registrador reservado
-			novaInstrucao->tipoR->rs = instrucao->arg3->val;
-			novaInstrucao->tipoR->rt = get; 
-
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-
-			// Armazenar o valor no endereço de memoria
-			novaInstrucao = criarNoAssembly(typeI, "sw");
-			novaInstrucao->tipoI->rt = instrucao->arg1->val;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-		}
-		flag = 1;
-		
-	}  */
 	else if(!strcmp(instrucao->op, "ARG")){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg3->nome);
 		
 		if(!strcmp(instrucao->arg1->nome, "INT")) 
 			insere_variavel(funcao, instrucao->arg2->nome, inteiroArg);
-		else
-			insere_variavel(funcao, instrucao->arg2->nome, vetorArg);
+		else insere_variavel(funcao, instrucao->arg2->nome, vetorArg);
+		
+		novaInstrucao = criarNoAssembly(typeI, "addi");
+		novaInstrucao->tipoI->rt = $sp;
+		novaInstrucao->tipoI->rs = $sp;
+		novaInstrucao->tipoI->imediato = 1;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}	
 	else if(!strcmp(instrucao->op, "IFF")){
 		novaInstrucao = criarNoAssembly(typeI, "bne");
@@ -228,7 +209,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		novaInstrucao->tipoI->label = instrucao->arg2->val;
 
-		flag = 1;
 
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
@@ -240,7 +220,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoLabel->boolean = 1;
 
 		adicionarLabel(instrucao->arg1->val, indiceAssembly);
-		flag = 1;
 
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -250,7 +229,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoLabel->boolean = 0;
 
 		adicionarLabel(instrucao->arg2->val, indiceAssembly);
-		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		/* Carrega os registradores $fp e $sp com seus valores iniciais */
@@ -277,8 +255,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		novaInstrucao->tipoI->imediato = get_fp_relation(vetorMemoria.funcoes, get_variavel(vetorMemoria.funcoes, "Endereco Retorno"));
 
-
-		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(!strcmp(instrucao->op, "PARAM")){
@@ -286,33 +262,83 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $sp;
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
-		novaInstrucao->tipoI->imediato = 1;
+		novaInstrucao->tipoI->imediato = 3; // (1+2) 1 para avancar para a proxima memoria e 2 para pular o endereco de retorno e controle
 
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		insere_variavel(funcaoAtual, "Param", temp); // Apenas para incrementar o sp
 
-		flag = 1;
-
 	} 
+	else if(!strcmp(instrucao->op, "LOAD")){
+
+		if(instrucao->arg3->tipo != Vazio || instrucao->arg3 != NULL){
+			// Load de um indice de um vetor
+			novaInstrucao = criarNoAssembly(typeI, "addi");
+			novaInstrucao->tipoI->rt = $temp;
+			novaInstrucao->tipoI->rs = $fp;
+			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			novaInstrucao = criarNoAssembly(typeR, "add");
+			novaInstrucao->tipoR->rd = $temp;
+			novaInstrucao->tipoR->rs = $temp;
+			novaInstrucao->tipoR->rt = instrucao->arg3->val;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			novaInstrucao = criarNoAssembly(typeI, "lw");
+			novaInstrucao->tipoI->rt = instrucao->arg1->val;
+			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->imediato = 0;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		}
+		else{
+			// Load de um inteiro
+			novaInstrucao = criarNoAssembly(typeI, "lw");
+			novaInstrucao->tipoI->rt = instrucao->arg1->val;
+			novaInstrucao->tipoI->rs = $fp;
+			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
+		}
+	}
+	else if(!strcmp(instrucao->op, "STORE")){
+
+		if(instrucao->arg3->tipo != Vazio || instrucao->arg3 != NULL){
+			// Store de um valor em um vetor
+			novaInstrucao = criarNoAssembly(typeI, "addi");
+			novaInstrucao->tipoI->rt = $temp;
+			novaInstrucao->tipoI->rs = $fp;
+			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg1->nome));
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			novaInstrucao = criarNoAssembly(typeR, "add");
+			novaInstrucao->tipoR->rd = $temp;
+			novaInstrucao->tipoR->rs = $temp;
+			novaInstrucao->tipoR->rt = instrucao->arg3->val;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			novaInstrucao = criarNoAssembly(typeI, "sw");
+			novaInstrucao->tipoI->rt = instrucao->arg2->val;
+			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->imediato = 0;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		}
+		else{
+			novaInstrucao = criarNoAssembly(typeI, "sw");
+			novaInstrucao->tipoI->rt = instrucao->arg2->val;
+			novaInstrucao->tipoI->rs = $fp;
+			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg1->nome));
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		}
+		
+	}
 	else if(!strcmp(instrucao->op, "GOTO")){
 		novaInstrucao = criarNoAssembly(typeJ, "j");
 		novaInstrucao->tipoJ->labelImediato = strdup("Label ########");
 		sprintf(novaInstrucao->tipoJ->labelImediato, "Label %d", instrucao->arg1->val);
-		flag = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(!strcmp(instrucao->op, "HALT")){
 		novaInstrucao = criarNoAssembly(typeJ, "halt");
-		flag = 1;
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-	}
-	else if(opAritmeticos(instrucao, &novaInstrucao, flag)){
-		flag = 1; 
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-	}
-	else if(opRelacionais(instrucao, &novaInstrucao, flag)){
-		flag = 1;
+		novaInstrucao->tipoJ->labelImediato = strdup("$zero");
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else{

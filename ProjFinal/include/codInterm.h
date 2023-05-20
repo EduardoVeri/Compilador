@@ -7,6 +7,7 @@
 #define $ra 30
 #define $fp 29
 #define $sp 28
+#define $temp 27
 
 #include "tabelaSimb.h"
 #include "global.h"

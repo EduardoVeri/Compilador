@@ -57,12 +57,15 @@
 	11: NUM, 10
 	11: SEMICOLON, ;
 	11: FECHACHAVES, }
-12: else return gcd(v,u-u/v*v);
+12: else return gcd(vetor[u],u-u/v*v);
 	12: reserved word , else
 	12: reserved word , return
 	12: ID, gcd
 	12: ABREPARENTESES, (
-	12: ID, v
+	12: ID, vetor
+	12: ABRECOLCHETES, [
+	12: ID, u
+	12: FECHACOLCHETES, ]
 	12: COMMA, ,
 	12: ID, u
 	12: SUB, -
@@ -91,33 +94,40 @@
 	17: reserved word , int
 	17: ID, y
 	17: SEMICOLON, ;
-18: x = input(); y = input();
-	18: ID, x
-	18: ATRIB, =
-	18: ID, input
-	18: ABREPARENTESES, (
-	18: FECHAPARENTESES, )
+18: int vetor2[5];
+	18: reserved word , int
+	18: ID, vetor2
+	18: ABRECOLCHETES, [
+	18: NUM, 5
+	18: FECHACOLCHETES, ]
 	18: SEMICOLON, ;
-	18: ID, y
-	18: ATRIB, =
-	18: ID, input
-	18: ABREPARENTESES, (
-	18: FECHAPARENTESES, )
-	18: SEMICOLON, ;
-19: output(gcd(x,y));
-	19: ID, output
-	19: ABREPARENTESES, (
-	19: ID, gcd
-	19: ABREPARENTESES, (
+19: x = input(); y = input();
 	19: ID, x
-	19: COMMA, ,
-	19: ID, y
-	19: FECHAPARENTESES, )
+	19: ATRIB, =
+	19: ID, input
+	19: ABREPARENTESES, (
 	19: FECHAPARENTESES, )
 	19: SEMICOLON, ;
-20: }
-	20: FECHACHAVES, }
-	21: EOF
+	19: ID, y
+	19: ATRIB, =
+	19: ID, input
+	19: ABREPARENTESES, (
+	19: FECHAPARENTESES, )
+	19: SEMICOLON, ;
+20: output(gcd(x,y));
+	20: ID, output
+	20: ABREPARENTESES, (
+	20: ID, gcd
+	20: ABREPARENTESES, (
+	20: ID, x
+	20: COMMA, ,
+	20: ID, y
+	20: FECHAPARENTESES, )
+	20: FECHAPARENTESES, )
+	20: SEMICOLON, ;
+21: }
+	21: FECHACHAVES, }
+	22: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
@@ -152,7 +162,8 @@ INT
 				10
 			ReturnINT
 				gcd
-					v
+					vetor
+						u
 					-
 						u
 						*
@@ -167,6 +178,9 @@ VOID
 			x
 		INT
 			y
+		INT
+			vetor2
+			5
 		=
 			x
 			input
@@ -185,48 +199,54 @@ Tipo de dado: VOID
 Tipo de identificador: FUN
 Linhas: 16 
 
+Nome: vetor2
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VET
+Linhas: 18 
+
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 18 18 
+Linhas: 0 19 19 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 19 
+Linhas: 0 20 
 
 Nome: u
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 7 9 10 10 11 12 12 
+Linhas: 7 9 10 10 11 12 12 12 12 12 
 
 Nome: v
 Escopo: gcd
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 7 11 12 12 12 
+Linhas: 7 11 12 12 12 12 
 
 Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 18 19 
+Linhas: 17 19 20 
 
 Nome: y
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 18 19 
+Linhas: 17 19 20 
 
 Nome: vetor
 Escopo: global
 Tipo de dado: INT
 Tipo de identificador: VET
-Linhas: 5 9 9 
+Linhas: 5 9 9 12 
 
 Nome: gcd
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 7 12 19 
+Linhas: 7 12 20 
 
