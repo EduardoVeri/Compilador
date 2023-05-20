@@ -340,10 +340,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoJ->labelImediato = strdup("$zero");
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
-	else if(!strcmp(instrucao->op, "CALL")){
-		
+/* 	else if(!strcmp(instrucao->op, "CALL")){
+
 		novaInstrucao = criarNoAssembly(typeJ, "jal");
-	}
+	} */
 	else{
 		printf(ANSI_COLOR_RED);
 		printf("Erro: ");

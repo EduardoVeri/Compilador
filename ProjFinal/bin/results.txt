@@ -101,33 +101,38 @@
 	18: NUM, 5
 	18: FECHACOLCHETES, ]
 	18: SEMICOLON, ;
-19: x = input(); y = input();
+19: x = 10;
 	19: ID, x
 	19: ATRIB, =
-	19: ID, input
-	19: ABREPARENTESES, (
-	19: FECHAPARENTESES, )
+	19: NUM, 10
 	19: SEMICOLON, ;
-	19: ID, y
-	19: ATRIB, =
-	19: ID, input
-	19: ABREPARENTESES, (
-	19: FECHAPARENTESES, )
-	19: SEMICOLON, ;
-20: output(gcd(x,y));
-	20: ID, output
-	20: ABREPARENTESES, (
-	20: ID, gcd
-	20: ABREPARENTESES, (
+20: x = input(); y = input();
 	20: ID, x
-	20: COMMA, ,
-	20: ID, y
-	20: FECHAPARENTESES, )
+	20: ATRIB, =
+	20: ID, input
+	20: ABREPARENTESES, (
 	20: FECHAPARENTESES, )
 	20: SEMICOLON, ;
-21: }
-	21: FECHACHAVES, }
-	22: EOF
+	20: ID, y
+	20: ATRIB, =
+	20: ID, input
+	20: ABREPARENTESES, (
+	20: FECHAPARENTESES, )
+	20: SEMICOLON, ;
+21: output(gcd(x,y));
+	21: ID, output
+	21: ABREPARENTESES, (
+	21: ID, gcd
+	21: ABREPARENTESES, (
+	21: ID, x
+	21: COMMA, ,
+	21: ID, y
+	21: FECHAPARENTESES, )
+	21: FECHAPARENTESES, )
+	21: SEMICOLON, ;
+22: }
+	22: FECHACHAVES, }
+	23: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
@@ -183,6 +188,9 @@ VOID
 			5
 		=
 			x
+			10
+		=
+			x
 			input
 		=
 			y
@@ -208,12 +216,12 @@ Linhas: 18
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 19 19 
+Linhas: 0 20 20 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 20 
+Linhas: 0 21 
 
 Nome: u
 Escopo: gcd
@@ -231,13 +239,13 @@ Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 19 20 
+Linhas: 17 19 20 21 
 
 Nome: y
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 17 19 20 
+Linhas: 17 20 21 
 
 Nome: vetor
 Escopo: global
@@ -248,5 +256,5 @@ Linhas: 5 9 9 12
 Nome: gcd
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 7 12 20 
+Linhas: 7 12 21 
 
