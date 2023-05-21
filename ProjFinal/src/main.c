@@ -21,18 +21,18 @@
 #include "codInterm.h"
 #include "assembly.h"
 
-int flagCI = 0;
 int flagVerbose = 0;
 FILE * arquivoEntrada = NULL; // Arquivo de entrada
 FILE * copiaArquivo = NULL; // Cópia do arquivo de entrada
 FILE * arquivoSaida = NULL; // Arquivo de saída
 FILE * arquivoSaida_Intermediario = NULL; // Arquivo de saída do código intermediário
 
-
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
 
 // Funcao Principal do Compilador 
 int main(int argc, char *argv[]){	
+	int flagCI = 0;
+	int flagCA = 0;
 	arquivoSaida = stdout;
 	arquivoSaida_Intermediario = stdout;
 	qntLinhas = 1;
@@ -52,12 +52,26 @@ int main(int argc, char *argv[]){
 			else if((strcmp(argv[i], "-CI") == 0) || (strcmp(argv[i], "-ci") == 0)){
 				flagCI = 1;
 				arquivoSaida_Intermediario = fopen("bin/codigoIntermediario.txt", "w");
+				if(arquivoSaida_Intermediario == NULL){
+					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+					printf("Nao foi possivel criar o arquivo de codigo intermediario.\n");
+					flagCI = 0;
+				}
 			}
-			// Argumento no input (para não precisar ler arquivo)
+			// Argumento para não precisar ler arquivo (No Input)
 			else if((strcmp(argv[i], "-NI") == 0) || (strcmp(argv[i], "-ni") == 0)){
 				arquivoEntrada = stdin;
 				flagVerbose = 0;
-				i = argc; // Para sair do loop
+				i = argc; // Para sair do loop for, ja que os demais argumentos nao importam
+			}
+			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
+				flagCA = 1;
+				copiaArquivo = fopen("bin/codigoAssembly.txt", "w");
+				if(copiaArquivo == NULL){
+					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+					printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
+					flagCA = 0;
+				}
 			}
 			else{
 				arquivoEntrada = fopen(argv[i], "r");
@@ -79,8 +93,11 @@ int main(int argc, char *argv[]){
         return 1;
     }
     
-    // Chama a funcao do parser, para iniciar a analise do codigo
-	PONTEIRONO arvoreSintatica = parse();
+	PONTEIRONO arvoreSintatica = parse(); // Chama a funcao do parser, para iniciar a analise do codigo
+
+	if(arquivoEntrada != stdin) fclose(arquivoEntrada); //Fecha os arquivos abertos
+	if(copiaArquivo != NULL) fclose(copiaArquivo); // Fecha e remove o arquivo de copia 
+	remove("src/copia.txt");
 
     // Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
@@ -95,12 +112,6 @@ int main(int argc, char *argv[]){
 		if(flagVerbose) fclose(arquivoSaida);
         
 		return 0;
-	}
-
-	// Imprime a arvore sintatica
-	if(flagVerbose == 1){
-		mostraArvore(arvoreSintatica, 0);
-		fprintf(arquivoSaida, "\n\n");
 	}
 
 	// Inicializa a tabela de simbolos
@@ -118,38 +129,19 @@ int main(int argc, char *argv[]){
 		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
 	}
 
-	// Imprime a tabela de simbolos
-	if(flagVerbose == 1) imprimirTabela(tabelaHash);
+	// Mostra os resultados obtidos na fase de analise 
+	if(flagVerbose){
+		mostraArvore(arvoreSintatica, 0); // Imprime a arvore sintatica
+		fprintf(arquivoSaida, "\n\n");
+		imprimirTabela(tabelaHash); // Imprime a tabela de simbolos
+		fclose(arquivoSaida); // Fecha o arquivo de saida
+	} 
+	else{
+		remove("bin/results.txt");
+	}
 
 	/* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
-    
-	if(teveErroSemantico == 0){    
-		//Cria o codigo intermediario
-		inicializaVetor();
-		criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
-        
-		// Adiciona o HALT no final do codigo intermediario
-		codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
-		
-		if(flagCI) imprimeCodigoIntermediario(); // Imprime o codigo intermediario
-		
-		// Mostra os registradores em uso
-		mostrarReg();
-
-		// Desaloca as estruturas de analise
-		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
-
-		assembly(); // Inicia o processo de montagem do codigo assembly
-
-		// Imprime o codigo assembly e os labels
-		imprimirAssembly();
-		imprimirLabels();
-
-		liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-		liberarLabels(); // Libera a memoria alocada para os labels
-		desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
-	}
-	else{
+	if(teveErroSemantico != 0){    
 		// Mostrar uma mensagem de erro sobre os erros semanticos
 		printf(ANSI_COLOR_RED);
 		// Verifica se teve apenas um erro semantico para a escrita no singular ou plural
@@ -160,23 +152,40 @@ int main(int argc, char *argv[]){
 		printf(ANSI_COLOR_RESET);
 
 		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+
+		return 0;
 	}
 
-    //Fecha os arquivos abertos
-	if(arquivoEntrada != stdin) fclose(arquivoEntrada);
+	inicializaVetor(); // Inicializa a estrutura de codigo intermediario
+	criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1); 
 	
-	// Fecha e remove o arquivo de copia 
-	if(copiaArquivo != NULL) fclose(copiaArquivo);
-	remove("src/copia.txt");
-
-	// Remove os arquivos de saida
-	if(flagVerbose == 0) remove("bin/results.txt");
-	else fclose(arquivoSaida); // Fecha o arquivo de saida
+	// Adiciona o HALT no final do codigo intermediario
+	codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
 	
-	// Remove o arquivo de codigo intermediario
-	if(flagCI == 0) remove("bin/codigoIntermediario.txt");
-	else fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
+	if(flagCI){ 
+		imprimeCodigoIntermediario(); // Imprime o codigo intermediario
+		fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
+	} 
+	else{
+		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
+	}
+	
+	// Mostra os registradores em uso
+	mostrarReg();
 
+	// Desaloca as estruturas de analise
+	desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+
+	assembly(); // Inicia o processo de montagem do codigo assembly
+
+	// Imprime o codigo assembly e os labels
+	imprimirAssembly();
+	imprimirLabels();
+
+	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+	liberarLabels(); // Libera a memoria alocada para os labels
+	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
+	
 	return 0;
 }
 

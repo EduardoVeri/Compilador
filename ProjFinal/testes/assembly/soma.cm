@@ -6,6 +6,8 @@ int soma(int x, int y){
 
 int main(void){
 	int x; int y; int resposta;
+	x = 10;
+	y = 5;
 	resposta = soma(x, y);
 	output(resposta);
 

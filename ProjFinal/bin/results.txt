@@ -44,29 +44,39 @@
 	8: reserved word , int
 	8: ID, resposta
 	8: SEMICOLON, ;
-9: resposta = soma(x, y);
-	9: ID, resposta
-	9: ATRIB, =
-	9: ID, soma
-	9: ABREPARENTESES, (
+9: x = 10;
 	9: ID, x
-	9: COMMA, ,
-	9: ID, y
-	9: FECHAPARENTESES, )
+	9: ATRIB, =
+	9: NUM, 10
 	9: SEMICOLON, ;
-10: output(resposta);
-	10: ID, output
-	10: ABREPARENTESES, (
-	10: ID, resposta
-	10: FECHAPARENTESES, )
+10: y = 5;
+	10: ID, y
+	10: ATRIB, =
+	10: NUM, 5
 	10: SEMICOLON, ;
-11: 
-12: return 0;
-	12: reserved word , return
-	12: NUM, 0
+11: resposta = soma(x, y);
+	11: ID, resposta
+	11: ATRIB, =
+	11: ID, soma
+	11: ABREPARENTESES, (
+	11: ID, x
+	11: COMMA, ,
+	11: ID, y
+	11: FECHAPARENTESES, )
+	11: SEMICOLON, ;
+12: output(resposta);
+	12: ID, output
+	12: ABREPARENTESES, (
+	12: ID, resposta
+	12: FECHAPARENTESES, )
 	12: SEMICOLON, ;
-	13: FECHACHAVES, }
-	13: EOF
+13: 
+14: return 0;
+	14: reserved word , return
+	14: NUM, 0
+	14: SEMICOLON, ;
+	15: FECHACHAVES, }
+	15: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
@@ -93,6 +103,12 @@ INT
 			y
 		INT
 			resposta
+		=
+			x
+			10
+		=
+			y
+			5
 		=
 			resposta
 			soma
@@ -124,7 +140,7 @@ Linhas: 0
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 10 
+Linhas: 0 12 
 
 Nome: x
 Escopo: soma
@@ -136,7 +152,7 @@ Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 8 9 
+Linhas: 8 9 11 
 
 Nome: y
 Escopo: soma
@@ -148,16 +164,16 @@ Nome: y
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 8 9 
+Linhas: 8 10 11 
 
 Nome: soma
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 1 9 
+Linhas: 1 11 
 
 Nome: resposta
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 8 9 10 
+Linhas: 8 11 12 
 
