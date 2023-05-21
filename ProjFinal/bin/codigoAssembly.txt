@@ -1,0 +1,21 @@
+soma:
+        addi $sp $sp 1
+        addi $sp $sp 1
+        add $t3 $t0 $t1 
+        add $t2 $zero $t3 
+        sw $t2 $fp 7
+        sw $t2 $fp 3
+        j Label 0
+Label 0:
+main:
+        ori $fp $zero 0
+        ori $sp $zero 0
+        sw $t0 $sp 3
+        sw $t1 $sp 3
+        add $t4 $zero $t5 
+        sw $t4 $fp 7
+        sw $t4 $sp 3
+        sw $zero $fp 3
+        j Label 1
+Label 1:
+        halt $zero

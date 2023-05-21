@@ -271,8 +271,13 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 	} 
 	else if(!strcmp(instrucao->op, "LOAD")){
+		if(!instrucao->arg3){
+			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+			printf("NULL no argumento 3\n");
+			return;
+		}
 
-		if(instrucao->arg3->tipo != Vazio || instrucao->arg3 != NULL){
+		if(instrucao->arg3->tipo != Vazio){
 			// Load de um indice de um vetor
 			novaInstrucao = criarNoAssembly(typeI, "addi");
 			novaInstrucao->tipoI->rt = $temp;
@@ -302,7 +307,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 	}
 	else if(!strcmp(instrucao->op, "STORE")){
 
-		if(instrucao->arg3->tipo != Vazio || instrucao->arg3 != NULL){
+		if(instrucao->arg3->tipo != Vazio){
 			// Store de um valor em um vetor
 			novaInstrucao = criarNoAssembly(typeI, "addi");
 			novaInstrucao->tipoI->rt = $temp;
@@ -366,7 +371,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		printf("Erro: ");
 		printf(ANSI_COLOR_RESET);
 		printf("Instrucao nao reconhecida (%s)\n", instrucao->op);
-		return;
 	}
 
 }

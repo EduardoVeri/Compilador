@@ -96,6 +96,10 @@ void tipo_reg(int reg){
 		printf("$ra ");
 		break;
 
+	case $temp:
+		printf("$temp ");
+		break;
+		
 	default:
 		printf("$t%d ", reg);
 		break;
