@@ -4,9 +4,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "global.h"
+#include "lexico.h"
 
 #define YYSTYPE PONTEIRONO
-#define MAX_NOS 1000
+#define MAX_NOS 100
 
 static int yylex(void);
 void yyerror(char* s);
@@ -95,13 +96,15 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 
 						PONTEIRONO aux = novoNo();
 						PONTEIRONO aux2 = novoNo();
-
-						strcpy(aux->lexema, pilha[indPilha--]);
+						
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
 
 						nos[qntNos] = aux;
 						qntNos++;
 
-						strcpy(aux2->lexema, pilha[indPilha--]);
+						strcpy(aux2->lexema, pilha[indPilha]);
+						indPilha--;
 						
 						adicionaFilho($$, aux2);
 						adicionaFilho($$, aux);
@@ -145,7 +148,7 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 
 fun_id				: ID {
 						$$ = novoNo();
-
+						
 						strcpy($$->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -207,6 +210,7 @@ param				: tipo_especificador ID {
 						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 
+	
 						strcpy(aux->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -351,7 +355,7 @@ var 				: ID {
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = IdK;
 						
-						
+
 						strcpy($$->lexema, pilha[indPilha]);
 						/*
 						FILE * arquivoAux = fopen("arquivoAux.txt", "a+");

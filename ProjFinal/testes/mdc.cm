@@ -1,7 +1,7 @@
 /* Um programa para calcular o mdc
     segundo o algoritmo de euclides. */
 
-
+int vetor[10];
 
 int gcd (int u, int v)
 { 	

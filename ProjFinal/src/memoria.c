@@ -34,7 +34,9 @@ MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
 
 	insere_variavel(funcao, "Vinculo Controle", controle);
 	insere_variavel(funcao, "Endereco Retorno", retorno);
-	insere_variavel(funcao, "Temporario", inteiro);
+	insere_variavel(funcao, "Registrador Temporario", inteiro);
+	insere_variavel(funcao, "Registrador $fp", inteiro);
+	insere_variavel(funcao, "Registrador $sp", inteiro);
 
 
 	if(memoria->tamanho == 0){
@@ -264,5 +266,6 @@ int get_fp(MEMORIA_FUNCOES* funcao){
 		return -1;
 	}
 	if (funcao == global) return 0;
-	return (get_variavel(funcao, "Vinculo Controle")->indice);
+	//return (get_variavel(funcao, "Vinculo Controle")->indice);
+	return 0;
 }

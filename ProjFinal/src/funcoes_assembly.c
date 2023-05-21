@@ -78,6 +78,31 @@ void liberarAssembly(){
 	free(instrucoesAssembly);
 }
 
+void tipo_reg(int reg){
+	switch (reg){
+	case $zero:
+		printf("$zero ");
+		break;
+	
+	case $fp:
+		printf("$fp ");
+		break;
+
+	case $sp:
+		printf("$sp ");
+		break;
+
+	case $ra:
+		printf("$ra ");
+		break;
+
+	default:
+		printf("$t%d ", reg);
+		break;
+	}
+}
+
+
 // Mostrar as instrucoes em assembly
 void imprimirAssembly(){
 	int i = 0;
@@ -87,10 +112,12 @@ void imprimirAssembly(){
 	TIPO_LABEL * tipoLabel = NULL;
 
 	printf("============== Assembly ==============\n");
-	while(i < indiceAssembly){
+	for(int i = 0; i < indiceAssembly; i++){
 		if(instrucoesAssembly[i]->tipo == typeI){
 			tipoI = instrucoesAssembly[i]->tipoI;		
-			printf("\t%s t%d t%d ", tipoI->nome, tipoI->rt, tipoI->rs);
+			printf("\t%s ", tipoI->nome);
+			tipo_reg(tipoI->rt);
+			tipo_reg(tipoI->rs);
 			
 			if(tipoI->label != -1) printf("Label %d\n", tipoI->label);
 			else printf("%d\n", tipoI->imediato);
@@ -98,7 +125,11 @@ void imprimirAssembly(){
 		}
 		else if(instrucoesAssembly[i]->tipo == typeR){
 			tipoR = instrucoesAssembly[i]->tipoR;
-			printf("\t%s t%d t%d t%d\n", tipoR->nome, tipoR->rd, tipoR->rs, tipoR->rt);
+			printf("\t%s ", tipoR->nome);
+			tipo_reg(tipoR->rd);
+			tipo_reg(tipoR->rs);
+			tipo_reg(tipoR->rt);
+			printf("\n");
 		}
 		else if(instrucoesAssembly[i]->tipo == typeJ){
 			tipoJ = instrucoesAssembly[i]->tipoJ;
@@ -108,6 +139,5 @@ void imprimirAssembly(){
 			tipoLabel = instrucoesAssembly[i]->tipoLabel;
 			printf("%s:\n", tipoLabel->nome);
 		}
-		i++;
 	}	
 }

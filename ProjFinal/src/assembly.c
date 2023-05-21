@@ -5,7 +5,9 @@
 #include "assembly.h"
 #include "memoria.h"
 
-// TODO: Onde tiver Label, adicionar um NOP, com o endereço dele sendo o da Label
+// TODO: Onde adicionar uma variavel ou param na tabela, aumentar o valor real de $sp e armazenar o seu valor
+// TODO: Arrumar o $sp e $fp para ficarem com o valor referencia mesmo
+
 MEMORIA vetorMemoria; // Variavel global que guarda a memoria
 MEMORIA_FUNCOES *funcaoAtual = NULL; // Ponteiro para a funcao atual
 
@@ -231,6 +233,8 @@ void geraAssembly(INSTRUCAO* instrucao){
 		adicionarLabel(instrucao->arg2->val, indiceAssembly);
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+		funcaoAtual = insere_funcao(&vetorMemoria, instrucao->arg2->nome);
+
 		/* Carrega os registradores $fp e $sp com seus valores iniciais */
 		if(!strcmp(instrucao->arg2->nome, "main")){
 			novaInstrucao = criarNoAssembly(typeI, "ori");
@@ -245,9 +249,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + 1;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		}
-
-		funcaoAtual = insere_funcao(&vetorMemoria, instrucao->arg2->nome);
-
 	}
 	else if(!strcmp(instrucao->op, "RET")){
 		novaInstrucao = criarNoAssembly(typeI, "sw");
@@ -340,10 +341,26 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoJ->labelImediato = strdup("$zero");
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
-/* 	else if(!strcmp(instrucao->op, "CALL")){
+	else if(!strcmp(instrucao->op, "CALL")){
+		// Armarzena os valores de $fp, $sp e $ra
+		novaInstrucao = criarNoAssembly(typeI, "sw");
+		novaInstrucao->tipoI->rs = $fp;
+		novaInstrucao->tipoI->rt = $fp;
+		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $fp"));
+
+		novaInstrucao = criarNoAssembly(typeI, "sw");
+		novaInstrucao->tipoI->rs = $fp;
+		novaInstrucao->tipoI->rt = $sp;
+		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $sp"));
 
 		novaInstrucao = criarNoAssembly(typeJ, "jal");
-	} */
+		novaInstrucao->tipoJ->labelImediato = strdup(instrucao->arg1->nome);
+
+		novaInstrucao = criarNoAssembly(typeI, "sw");
+		novaInstrucao->tipoI->rt = $ra;
+		novaInstrucao->tipoI->rs = $sp;
+		novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1; 
+	} 
 	else{
 		printf(ANSI_COLOR_RED);
 		printf("Erro: ");
