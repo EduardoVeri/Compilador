@@ -10,11 +10,11 @@ Label 0:
 main:
         ori $fp $zero 0
         ori $sp $zero 0
-        sw $t0 $sp 3
-        sw $t1 $sp 3
-        add $t4 $zero $t5 
+        sw $t5 $sp 1
+        sw $t6 $sp 1
+        add $t4 $zero $t7 
         sw $t4 $fp 7
-        sw $t4 $sp 3
+        sw $t4 $sp 1
         sw $zero $fp 3
         j Label 1
 Label 1:

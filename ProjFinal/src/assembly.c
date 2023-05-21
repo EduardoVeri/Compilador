@@ -263,12 +263,17 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $sp;
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
-		novaInstrucao->tipoI->imediato = 3; // (1+2) 1 para avancar para a proxima memoria e 2 para pular o endereco de retorno e controle
-
+		novaInstrucao->tipoI->imediato = 1; // 1 para avancar para a proxima memoria
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		insere_variavel(funcaoAtual, "Param", temp); // Apenas para incrementar o sp
 
+		novaInstrucao = criarNoAssembly(typeI, "addi");
+		novaInstrucao->tipoI->rt = $sp;
+		novaInstrucao->tipoI->rs = $sp;
+		novaInstrucao->tipoI->imediato = 1;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		
 	} 
 	else if(!strcmp(instrucao->op, "LOAD")){
 		if(!instrucao->arg3){
@@ -347,7 +352,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}
 	else if(!strcmp(instrucao->op, "CALL")){
-		// Armarzena os valores de $fp, $sp e $ra
+		//TODO: Voltar o $sp pelo valor do numero de param no call
+		//TODO: Avancar $fp e $sp para seus novos valores
+
+		// Armazena os valores de $fp, $sp e $ra
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $fp;
 		novaInstrucao->tipoI->rt = $fp;
@@ -364,7 +372,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rt = $ra;
 		novaInstrucao->tipoI->rs = $sp;
-		novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1; 
+		novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1; //TODO: Avancar pela quantidade de param
 	} 
 	else{
 		printf(ANSI_COLOR_RED);
