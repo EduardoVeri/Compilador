@@ -9,5 +9,5 @@ int main(void){
 	resposta = soma(x, y);
 	output(resposta);
 
-	return 0;
+	return 0
 }

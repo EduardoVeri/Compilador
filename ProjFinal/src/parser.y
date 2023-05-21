@@ -4,10 +4,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "global.h"
-#include "lexico.h"
 
 #define YYSTYPE PONTEIRONO
-#define MAX_NOS 100
+#define MAX_NOS 1000
 
 static int yylex(void);
 void yyerror(char* s);
@@ -656,13 +655,12 @@ void yyerror (char *s){
 	}
 	printf("\n");
 
-/* 	char *aux = (char*) malloc(100*sizeof(char));
+
+	
 	//Desaloca os nos ate o momento
 	for(int i = 0; i < qntNos; i++){
-		strcpy(aux, nos[i]->lexema);
 		free(nos[i]);
-		printf("%d: %s\n", i, aux);
-	}  */
+	} 
 	arvoreSintatica = NULL;
 
 }

@@ -4,6 +4,10 @@
 #define MAXLEXEMA 21 // Tamanho máximo do lexema
 
 extern int flagVerbose; // Flag para ativar o modo verbose
+extern int indPilha; // Índice da pilha de lexemas
+extern int qntLinhas; // Contador de linhas
+extern char* yytext; // Texto do lexema
+extern char pilha[4][MAXLEXEMA]; // Pilha de lexemas
 extern FILE * arquivoEntrada; // Arquivo de entrada
 extern FILE * copiaArquivo; // Cópia do arquivo de entrada
 extern FILE * arquivoSaida; // Arquivo de saída

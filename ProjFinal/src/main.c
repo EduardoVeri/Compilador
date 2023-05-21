@@ -20,7 +20,6 @@
 #include "semantica.h"
 #include "codInterm.h"
 #include "assembly.h"
-#include "lexico.h"
 
 int flagCI = 0;
 int flagVerbose = 0;

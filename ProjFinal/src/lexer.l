@@ -4,7 +4,6 @@
 #include "parser.tab.h"
 #include "global.h"
 #include "tabelaSimb.h"
-#include "lexico.h"
 
 int qntLinhas;
 char stringAux[500];
