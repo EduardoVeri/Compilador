@@ -453,9 +453,19 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 		//Otimizacao: Adicionando variavel no vetor de variaveis de registradores
 		/* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
 		Caso de algum erro ao adicionar, mostrar um erro */
+		PONTEIROITEM varEscopo = NULL;
+        if(!(varEscopo = buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema))){
+            printf(ANSI_COLOR_RED "ERRO: " ANSI_COLOR_RESET);
+            printf("Escopo da variavel '%s' nao encontrada", arvoreSintatica->lexema);
+            numReg = -1;
+        }
+        if(!strcmp(varEscopo->escopo, "global")){
+            numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 0);
+        }
+        else{
+            numReg = verificacaoRegistradores(arvoreSintatica->lexema, funcName, 0);
+        }
 		
-		numReg = verificacaoRegistradores(arvoreSintatica->lexema, buscarItemTabelaId(tabelaHash, arvoreSintatica->lexema)->escopo, 0);
-
 		instrucaoId = criaInstrucao("LOAD");
 		instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
 		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);

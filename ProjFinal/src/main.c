@@ -134,7 +134,7 @@ int main(int argc, char *argv[]){
 		if(flagCI) imprimeCodigoIntermediario(); // Imprime o codigo intermediario
 		
 		// Mostra os registradores em uso
-		//mostrarReg();
+		mostrarReg();
 
 		// Desaloca as estruturas de analise
 		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);

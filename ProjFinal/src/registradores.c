@@ -72,6 +72,7 @@ int buscarVarReg(char* nomeVar, char* escopo){
 			}
 		}
 	}
+
 	return -1; // Nao foi possivel encontrar a variavel em nenhum registrador
 }
 
@@ -116,9 +117,8 @@ int descartarReg(){
 	listaReg[regDescartado].descarte = 0;
 	totalRegEmUso--;
 
-	printf(ANSI_COLOR_PURPLE);
-	printf("WARNING: Descartado registrador t%d\n", regDescartado);
-	printf(ANSI_COLOR_RESET);
+	printf(ANSI_COLOR_PURPLE "WARNING: " ANSI_COLOR_RESET); 
+	printf("Descartado registrador t%d\n", regDescartado);
 
 	return regDescartado;
 
