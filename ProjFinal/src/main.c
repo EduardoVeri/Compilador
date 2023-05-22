@@ -1,13 +1,16 @@
 /*
- *  Projeto compilador desenvolvido para a disciplina de compiladores
- *  do curso de Bacharelado em Ciencia e Tecnologia na Universidade 
- *  Federal de Sao Paulo (UNIFESP)
- *  
+ *  Projeto compilador desenvolvido para o trabalho final de disciplinas
+ *  do curso de Engenharia da Computacao na Universidade Federal de Sao Paulo (UNIFESP)
+ * 
+ * 	Fase de Analise desenvolvida na disciplina de Compiladores
+ *  Fase de Montagem desenvolvida na disciplina de Lab. de Compiladores
+ * 
  *  Docente: Prof. Dr. Luis Augusto Martins Pereira
+ *  Docente: Profa. Dra. Taina Aparecida Azevedo Tosta
  * 
  *  Desenvolvido por: Eduardo Verissimo Faccio
  *  RA: 148859
- *  Data: 15/01/2023
+ *  Data: 21/05/2023
  * 
  */
 
@@ -20,6 +23,8 @@
 #include "semantica.h"
 #include "codInterm.h"
 #include "assembly.h"
+
+#define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
 
 int flagVerbose = 0;
 FILE * arquivoEntrada = NULL; // Arquivo de entrada
@@ -40,7 +45,7 @@ int main(int argc, char *argv[]){
     copiaArquivo = NULL;
 	
     // Verifica se o numero de argumentos passados é valido
-    if (argc >= 2 && argc <= 5){
+    if (argc >= 2 && argc < MAX_ARG + 1){
         // Caso seja passado um argumento, o arquivo de entrada é o arquivo passado como argumento
 		for(int i=1; i<argc; i++){
 			// Para ativar o modo verbose e criar um arquivo de saída "Resultados"
@@ -61,8 +66,9 @@ int main(int argc, char *argv[]){
 			// Argumento para não precisar ler arquivo (No Input)
 			else if((strcmp(argv[i], "-NI") == 0) || (strcmp(argv[i], "-ni") == 0)){
 				arquivoEntrada = stdin;
-				flagVerbose = 0;
-				i = argc; // Para sair do loop for, ja que os demais argumentos nao importam
+				arquivoSaida = stdout;
+				flagVerbose = 1;
+				i = MAX_ARG; // Para sair do loop for, ja que os demais argumentos nao importam
 			}
 			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
 				flagCA = 1;
