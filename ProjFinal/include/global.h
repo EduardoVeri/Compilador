@@ -12,6 +12,7 @@ extern FILE * arquivoEntrada; // Arquivo de entrada
 extern FILE * copiaArquivo; // Cópia do arquivo de entrada
 extern FILE * arquivoSaida; // Arquivo de saída
 extern FILE * arquivoSaida_Intermediario; // Arquivo de saída do código intermediário
+extern FILE * arquivoSaida_Assembly; // Arquivo de saída do código assembly
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.

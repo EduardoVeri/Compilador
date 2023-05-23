@@ -1,30 +1,31 @@
+============== Assembly ==============
 soma:
-        addi $sp $sp 1
-        addi $sp $sp 1
-        add $t3 $t0 $t1 
-        add $t2 $zero $t3 
-        sw $t2 $fp 7
-        sw $t2 $fp 3
-        j Label 0
+	addi $sp $sp 1
+	addi $sp $sp 1
+	add $t3 $t0 $t1 
+	add $t2 $zero $t3 
+	sw $t2 $fp 7
+	sw $t2 $fp 3
+	j Label 0
 Label 0:
 main:
-        ori $fp $zero 0
-        ori $sp $zero 0
-        ori $t5 $zero 10
-        add $t4 $zero $t5 
-        sw $t4 $fp 5
-        ori $t7 $zero 5
-        add $t6 $zero $t7 
-        sw $t6 $fp 6
-        sw $t4 $sp 1
-        addi $sp $sp 1
-        sw $t6 $sp 1
-        addi $sp $sp 1
-        add $t8 $zero $t9 
-        sw $t8 $fp 7
-        sw $t8 $sp 1
-        addi $sp $sp 1
-        sw $zero $fp 3
-        j Label 1
+	ori $fp $zero 0
+	ori $sp $zero 0
+	ori $t5 $zero 10
+	add $t4 $zero $t5 
+	sw $t4 $fp 5
+	ori $t7 $zero 5
+	add $t6 $zero $t7 
+	sw $t6 $fp 6
+	sw $t4 $sp 1
+	addi $sp $sp 1
+	sw $t6 $sp 1
+	addi $sp $sp 1
+	add $t8 $zero $t9 
+	sw $t8 $fp 7
+	sw $t8 $sp 1
+	addi $sp $sp 1
+	sw $zero $fp 3
+	j Label 1
 Label 1:
-        halt $zero
+	halt $zero

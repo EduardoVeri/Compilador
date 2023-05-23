@@ -81,27 +81,27 @@ void liberarAssembly(){
 void tipo_reg(int reg){
 	switch (reg){
 	case $zero:
-		printf("$zero ");
+		fprintf(arquivoSaida_Assembly, "$zero ");
 		break;
 	
 	case $fp:
-		printf("$fp ");
+		fprintf(arquivoSaida_Assembly, "$fp ");
 		break;
 
 	case $sp:
-		printf("$sp ");
+		fprintf(arquivoSaida_Assembly, "$sp ");
 		break;
 
 	case $ra:
-		printf("$ra ");
+		fprintf(arquivoSaida_Assembly, "$ra ");
 		break;
 
 	case $temp:
-		printf("$temp ");
+		fprintf(arquivoSaida_Assembly, "$temp ");
 		break;
 		
 	default:
-		printf("$t%d ", reg);
+		fprintf(arquivoSaida_Assembly, "$t%d ", reg);
 		break;
 	}
 }
@@ -115,33 +115,33 @@ void imprimirAssembly(){
 	TIPO_J * tipoJ = NULL;
 	TIPO_LABEL * tipoLabel = NULL;
 
-	printf("============== Assembly ==============\n");
+	fprintf(arquivoSaida_Assembly, "============== Assembly ==============\n");
 	for(int i = 0; i < indiceAssembly; i++){
 		if(instrucoesAssembly[i]->tipo == typeI){
 			tipoI = instrucoesAssembly[i]->tipoI;		
-			printf("\t%s ", tipoI->nome);
+			fprintf(arquivoSaida_Assembly, "\t%s ", tipoI->nome);
 			tipo_reg(tipoI->rt);
 			tipo_reg(tipoI->rs);
 			
 			if(tipoI->label != -1) printf("Label %d\n", tipoI->label);
-			else printf("%d\n", tipoI->imediato);
+			else fprintf(arquivoSaida_Assembly, "%d\n", tipoI->imediato);
 			
 		}
 		else if(instrucoesAssembly[i]->tipo == typeR){
 			tipoR = instrucoesAssembly[i]->tipoR;
-			printf("\t%s ", tipoR->nome);
+			fprintf(arquivoSaida_Assembly, "\t%s ", tipoR->nome);
 			tipo_reg(tipoR->rd);
 			tipo_reg(tipoR->rs);
 			tipo_reg(tipoR->rt);
-			printf("\n");
+			fprintf(arquivoSaida_Assembly, "\n");
 		}
 		else if(instrucoesAssembly[i]->tipo == typeJ){
 			tipoJ = instrucoesAssembly[i]->tipoJ;
-			printf("\t%s %s\n", tipoJ->nome, tipoJ->labelImediato);
+			fprintf(arquivoSaida_Assembly, "\t%s %s\n", tipoJ->nome, tipoJ->labelImediato);
 		}
 		else if(instrucoesAssembly[i]->tipo == typeLabel){
 			tipoLabel = instrucoesAssembly[i]->tipoLabel;
-			printf("%s:\n", tipoLabel->nome);
+			fprintf(arquivoSaida_Assembly, "%s:\n", tipoLabel->nome);
 		}
 	}	
 }

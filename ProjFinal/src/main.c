@@ -31,6 +31,7 @@ FILE * arquivoEntrada = NULL; // Arquivo de entrada
 FILE * copiaArquivo = NULL; // Cópia do arquivo de entrada
 FILE * arquivoSaida = NULL; // Arquivo de saída
 FILE * arquivoSaida_Intermediario = NULL; // Arquivo de saída do código intermediário
+FILE * arquivoSaida_Assembly = NULL; // Arquivo de saída do código assembly
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
 
@@ -40,6 +41,7 @@ int main(int argc, char *argv[]){
 	int flagCA = 0;
 	arquivoSaida = stdout;
 	arquivoSaida_Intermediario = stdout;
+	arquivoSaida_Assembly = stdout;
 	qntLinhas = 1;
     arquivoEntrada = NULL;
     copiaArquivo = NULL;
@@ -72,11 +74,12 @@ int main(int argc, char *argv[]){
 			}
 			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
 				flagCA = 1;
-				copiaArquivo = fopen("bin/codigoAssembly.txt", "w");
-				if(copiaArquivo == NULL){
+				arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
+				if(arquivoSaida_Assembly == NULL){
 					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
 					printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
 					flagCA = 0;
+					arquivoSaida_Assembly = stdout;
 				}
 			}
 			else{
@@ -185,7 +188,14 @@ int main(int argc, char *argv[]){
 	assembly(); // Inicia o processo de montagem do codigo assembly
 
 	// Imprime o codigo assembly e os labels
-	imprimirAssembly();
+	if(flagCA){ 
+		imprimirAssembly();
+		fclose(arquivoSaida_Assembly); // Fecha o arquivo de codigo assembly
+	}
+	else{
+		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
+	}  
+
 	imprimirLabels();
 
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
