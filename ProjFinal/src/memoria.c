@@ -141,25 +141,32 @@ VARIAVEL* get_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel){
 	return NULL;
 }
 
-void apagar_temp(MEMORIA_FUNCOES* funcao, int total_temp){
-	VARIAVEL* aux = funcao->tabelaVar;
-	VARIAVEL* aux2 = NULL;
-
-	for(int i = funcao->tamanho - 1; i >= 0 && total_temp != 0; i--){
-		for(int j = 0; i < funcao->tamanho; i++){
-			aux2 = aux;
-			aux = aux->prox;
-		}
-		if(aux->tipo == temp){
-			total_temp--;
-			aux2->prox == NULL;
-			free(aux);
-
-		}
+void apagar_temp(MEMORIA_FUNCOES* funcao){
+	if(!funcao){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);	
+		printf("NULL passado como argumento em apagar_temp!\n");
+		return;
 	}
+
 	
+	VARIAVEL* aux = funcao->tabelaVar;
+	VARIAVEL* aux2 = aux;
+
+	while(aux->prox != NULL){
+		aux2 = aux;
+		aux = aux->prox;
+	}
+	printf("Apagando %s\n", aux->nome);
+
+	if(!strcmp(aux->nome, "Param")){
+		free(aux);
+		aux2->prox = NULL;
+		funcao->tamanho--;
+		return;
+	}
+
 	printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
-	printf("Param's nao apagados! %d\n", total_temp);
+	printf("Param's nao apagados!\n");
 }
 
 
@@ -188,19 +195,6 @@ void imprime_memoria(MEMORIA memoria){
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
 		}
 	}
-			
-		
-
-/* 		printf("$fp ->");
-		while(aux2 != NULL){
-			if(aux2->prox == NULL) printf("$sp -> ");
-			printf("\t%d: %s [$fp + %d] [$sp - %d]\n",
-					aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
-			aux2 = aux2->prox;
-		}
-		aux = aux->prox;
-		printf("\n"); */
-	//}
 }
 
 MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
@@ -268,4 +262,23 @@ int get_fp(MEMORIA_FUNCOES* funcao){
 	if (funcao == global) return 0;
 	//return (get_variavel(funcao, "Vinculo Controle")->indice);
 	return 0;
+}
+
+void liberarTabMemoria(MEMORIA* memoria){
+	MEMORIA_FUNCOES* aux = memoria->funcoes;
+	MEMORIA_FUNCOES* aux2 = aux;
+	VARIAVEL* aux3 = NULL;
+	VARIAVEL* aux4 = NULL;
+
+	while(aux != NULL){
+		aux3 = aux->tabelaVar;
+		while(aux3 != NULL){
+			aux4 = aux3;
+			aux3 = aux3->prox;
+			free(aux4);
+		}
+		aux2 = aux;
+		aux = aux->prox;
+		free(aux2);
+	}
 }

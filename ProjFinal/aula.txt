@@ -1,7 +1,0 @@
-C menos será feito em pilha 
-
-A memória de código armazena o código fonte do programa
-A memória de dados
-
-Estudar sobre a passagem de parâmetros por nome
-

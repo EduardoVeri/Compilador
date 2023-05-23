@@ -199,7 +199,6 @@ int main(int argc, char *argv[]){
 	imprimirLabels();
 
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-	liberarLabels(); // Libera a memoria alocada para os labels
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	
 	return 0;

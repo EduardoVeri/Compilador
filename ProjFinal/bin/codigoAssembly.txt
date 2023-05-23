@@ -21,10 +21,18 @@ main:
 	addi $sp $sp 1
 	sw $t6 $sp 1
 	addi $sp $sp 1
+	subi $sp $sp 2
+	sw $fp $fp 3
+	sw $sp $fp 4
+	sw $ra $sp 3
 	add $t8 $zero $t9 
 	sw $t8 $fp 7
 	sw $t8 $sp 1
 	addi $sp $sp 1
+	subi $sp $sp 1
+	sw $fp $fp 3
+	sw $sp $fp 4
+	sw $ra $sp 2
 	sw $zero $fp 3
 	j Label 1
 Label 1:

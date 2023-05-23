@@ -183,6 +183,18 @@ void geraAssembly(INSTRUCAO* instrucao){
 	else if(!strcmp(instrucao->op, "ALLOC")){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg2->nome);
 		
+		if(!instrucao->arg3){
+			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+			printf("NULL no argumento 3\n");
+			return;
+		}
+
+		if(!instrucao->arg3){
+			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+			printf("NULL no argumento 3\n");
+			return;
+		}
+
 		if(instrucao->arg3->tipo == Vazio){
 			insere_variavel(funcao, instrucao->arg1->nome, inteiro);
 		}
@@ -311,6 +323,11 @@ void geraAssembly(INSTRUCAO* instrucao){
 		}
 	}
 	else if(!strcmp(instrucao->op, "STORE")){
+		if(!instrucao->arg3){
+			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+			printf("NULL no argumento 3\n");
+			return;
+		}
 
 		if(instrucao->arg3->tipo != Vazio){
 			// Store de um valor em um vetor
@@ -355,24 +372,48 @@ void geraAssembly(INSTRUCAO* instrucao){
 		//TODO: Voltar o $sp pelo valor do numero de param no call
 		//TODO: Avancar $fp e $sp para seus novos valores
 
+		for(int i = 0; i < instrucao->arg2->val; i++) apagar_temp(funcaoAtual); // Apaga os temporarios usados na chamada
+
+		// Diminui o valor de $sp
+		novaInstrucao = criarNoAssembly(typeI, "subi");
+		novaInstrucao->tipoI->rt = $sp;
+		novaInstrucao->tipoI->rs = $sp;
+		novaInstrucao->tipoI->imediato = instrucao->arg2->val;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	
 		// Armazena os valores de $fp, $sp e $ra
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $fp;
 		novaInstrucao->tipoI->rt = $fp;
 		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $fp"));
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $fp;
 		novaInstrucao->tipoI->rt = $sp;
 		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $sp"));
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		novaInstrucao = criarNoAssembly(typeJ, "jal");
 		novaInstrucao->tipoJ->labelImediato = strdup(instrucao->arg1->nome);
 
+		// Guarda o valor de controle para a funcao atual
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rt = $ra;
 		novaInstrucao->tipoI->rs = $sp;
-		novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1; //TODO: Avancar pela quantidade de param
+		novaInstrucao->tipoI->imediato = instrucao->arg2->val + 1; // Avanca a quantidade de parametros + 1 para acessar o controle
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+
+
+
+
+
+
+
+
+
+
 	} 
 	else{
 		printf(ANSI_COLOR_RED);
