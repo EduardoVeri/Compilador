@@ -117,8 +117,6 @@ int main(int argc, char *argv[]){
 		printf("Existem erros sintaticos ou lexicos no codigo.\n");
 		printf(ANSI_COLOR_RESET);
 
-		if(arquivoEntrada != stdin) fclose(arquivoEntrada);
-		if(copiaArquivo != NULL) fclose(copiaArquivo);
 		if(flagCI) fclose(arquivoSaida_Intermediario);
 		if(flagVerbose) fclose(arquivoSaida);
 		if(flagCA) fclose(arquivoSaida_Assembly);
