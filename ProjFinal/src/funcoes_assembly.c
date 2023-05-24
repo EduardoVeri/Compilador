@@ -15,6 +15,8 @@ void inicializaAssembly(){
         instrucoesAssembly[i] = NULL;
     }
 
+	indiceAssembly = 0;
+
 	inicializaLabels();
 	inicializa_memoria(&vetorMemoria);
 	funcaoAtual = vetorMemoria.funcoes;
@@ -78,7 +80,7 @@ void liberarAssembly(){
 	free(instrucoesAssembly);
 
 	liberarLabels(); // Libera a memoria alocada para os labels
-	liberarTabMemoria(&vetorMemoria);
+	liberarTabMemoria(&vetorMemoria); // Libera a memoria alocada para a memoria
 }
 
 void tipo_reg(int reg){

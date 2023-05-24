@@ -148,7 +148,6 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 		return;
 	}
 
-	
 	VARIAVEL* aux = funcao->tabelaVar;
 	VARIAVEL* aux2 = aux;
 
@@ -156,7 +155,6 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 		aux2 = aux;
 		aux = aux->prox;
 	}
-	printf("Apagando %s\n", aux->nome);
 
 	if(!strcmp(aux->nome, "Param")){
 		free(aux);

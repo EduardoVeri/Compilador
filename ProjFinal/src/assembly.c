@@ -7,6 +7,7 @@
 
 // TODO: Onde adicionar uma variavel ou param na tabela, aumentar o valor real de $sp e armazenar o seu valor
 // TODO: Arrumar o $sp e $fp para ficarem com o valor referencia mesmo
+// TODO: Parar de incrementar $sp apos um parametro. Guardar a quantidade de parametros em um inteiro na struct da funcao
 
 MEMORIA vetorMemoria; // Variavel global que guarda a memoria
 MEMORIA_FUNCOES *funcaoAtual = NULL; // Ponteiro para a funcao atual
@@ -17,6 +18,11 @@ void geraAssembly(INSTRUCAO* instrucao);
 
 void assembly(){
 	inicializaAssembly();
+
+	/* Criar uma funcao Jump para a main */
+	ASSEMBLY *novaInstrucao = criarNoAssembly(typeJ, "j");
+	novaInstrucao->tipoJ->labelImediato = strdup("main");
+	instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 	for(int i = 0; i < indiceVetor; i++)
 		geraAssembly(codigoIntermediario[i]);
@@ -320,6 +326,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->rt = instrucao->arg1->val;
 			novaInstrucao->tipoI->rs = $fp;
 			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		}
 	}
 	else if(!strcmp(instrucao->op, "STORE")){
@@ -396,6 +403,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 		novaInstrucao = criarNoAssembly(typeJ, "jal");
 		novaInstrucao->tipoJ->labelImediato = strdup(instrucao->arg1->nome);
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		// Guarda o valor de controle para a funcao atual
 		novaInstrucao = criarNoAssembly(typeI, "sw");
@@ -403,16 +411,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->rs = $sp;
 		novaInstrucao->tipoI->imediato = instrucao->arg2->val + 1; // Avanca a quantidade de parametros + 1 para acessar o controle
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-
-
-
-
-
-
-
-
-
-
 
 	} 
 	else{

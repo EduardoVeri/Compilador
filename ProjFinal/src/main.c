@@ -72,6 +72,7 @@ int main(int argc, char *argv[]){
 				flagVerbose = 1;
 				i = MAX_ARG; // Para sair do loop for, ja que os demais argumentos nao importam
 			}
+			// Argumento para gerar o código assembly em um arquivo
 			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
 				flagCA = 1;
 				arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
@@ -83,6 +84,7 @@ int main(int argc, char *argv[]){
 				}
 			}
 			else{
+				// Abre o arquivo de entrada
 				arquivoEntrada = fopen(argv[i], "r");
 				if(arquivoEntrada == NULL){
 					printf("Erro: Arquivo não encontrado.\n");
@@ -119,7 +121,8 @@ int main(int argc, char *argv[]){
 		if(copiaArquivo != NULL) fclose(copiaArquivo);
 		if(flagCI) fclose(arquivoSaida_Intermediario);
 		if(flagVerbose) fclose(arquivoSaida);
-        
+		if(flagCA) fclose(arquivoSaida_Assembly);
+
 		return 0;
 	}
 
@@ -151,7 +154,6 @@ int main(int argc, char *argv[]){
 
 	/* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
 	if(teveErroSemantico != 0){    
-		// Mostrar uma mensagem de erro sobre os erros semanticos
 		printf(ANSI_COLOR_RED);
 		// Verifica se teve apenas um erro semantico para a escrita no singular ou plural
 		if(teveErroSemantico == 1)
@@ -179,11 +181,9 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
 	}
 	
-	// Mostra os registradores em uso
-	mostrarReg();
+	mostrarReg(); // Mostra os registradores em uso
 
-	// Desaloca as estruturas de analise
-	desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+	desaloca_estruturas_analise(arvoreSintatica, tabelaHash); // Desaloca as estruturas de analise
 
 	assembly(); // Inicia o processo de montagem do codigo assembly
 
@@ -196,15 +196,15 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
 	}  
 
-	imprimirLabels();
+	imprimirLabels(); // Imprime os labels
 
-	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
-	
+	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+
 	return 0;
 }
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash){
-	desalocaArvore(arvoreSintatica);
-	apagarTabela(tabelaHash);
+	desalocaArvore(arvoreSintatica); // Desaloca a arvore sintatica
+	apagarTabela(tabelaHash); // Desaloca a tabela de simbolos
 }
