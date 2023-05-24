@@ -21,20 +21,14 @@ int teste = 0;
 //No raiz da arvore sintatica
 PONTEIRONO arvoreSintatica;
 
-/* Vetor com os nos alocados da arvore, que sera utilizado
-caso um erro aconteca durante a criacao da mesma.
-Apos ocorrer um erro, o parser interrompe seu funcionamento
-voltando para a main() sem adicionar o seu no raiz ao ponteiro acima.
-Isso faz com que os nos alocados sejam perdidos e esse vetor fara
-com que eles possam ser apagados mesmo assim. */
-PONTEIRONO nos[MAX_NOS];
-int qntNos = 0;
 
 void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 PONTEIRONO parse(void);
 
 char auxLexema[MAXLEXEMA];
+PONTEIRONO nos[MAX_NOS];
+int qntNos = 0;
 
 %}
 /*
@@ -101,13 +95,15 @@ var_declaracao		: tipo_especificador ID SEMICOLON {
 
 						PONTEIRONO aux = novoNo();
 						PONTEIRONO aux2 = novoNo();
-
-						strcpy(aux->lexema, pilha[indPilha--]);
+						
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
 
 						nos[qntNos] = aux;
 						qntNos++;
 
-						strcpy(aux2->lexema, pilha[indPilha--]);
+						strcpy(aux2->lexema, pilha[indPilha]);
+						indPilha--;
 						
 						adicionaFilho($$, aux2);
 						adicionaFilho($$, aux);
@@ -151,7 +147,7 @@ fun_declaracao		: tipo_especificador fun_id ABREPARENTESES params FECHAPARENTESE
 
 fun_id				: ID {
 						$$ = novoNo();
-
+						
 						strcpy($$->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -213,6 +209,7 @@ param				: tipo_especificador ID {
 						$$->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 
+	
 						strcpy(aux->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -357,7 +354,7 @@ var 				: ID {
 						$$->numLinha = qntLinhas;
 						$$->tipoExpressao = IdK;
 						
-						
+
 						strcpy($$->lexema, pilha[indPilha]);
 						/*
 						FILE * arquivoAux = fopen("arquivoAux.txt", "a+");
@@ -658,10 +655,12 @@ void yyerror (char *s){
 	}
 	printf("\n");
 
+
+	
 	//Desaloca os nos ate o momento
 	for(int i = 0; i < qntNos; i++){
 		free(nos[i]);
-	}
+	} 
 	arvoreSintatica = NULL;
 
 }

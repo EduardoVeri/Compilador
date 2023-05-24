@@ -1,13 +1,16 @@
 /*
- *  Projeto compilador desenvolvido para a disciplina de compiladores
- *  do curso de Bacharelado em Ciencia e Tecnologia na Universidade 
- *  Federal de Sao Paulo (UNIFESP)
- *  
+ *  Projeto compilador desenvolvido para o trabalho final de disciplinas
+ *  do curso de Engenharia da Computacao na Universidade Federal de Sao Paulo (UNIFESP)
+ * 
+ * 	Fase de Analise desenvolvida na disciplina de Compiladores
+ *  Fase de Montagem desenvolvida na disciplina de Lab. de Compiladores
+ * 
  *  Docente: Prof. Dr. Luis Augusto Martins Pereira
+ *  Docente: Profa. Dra. Taina Aparecida Azevedo Tosta
  * 
  *  Desenvolvido por: Eduardo Verissimo Faccio
  *  RA: 148859
- *  Data: 15/01/2023
+ *  Data: 21/05/2023
  * 
  */
 
@@ -21,26 +24,30 @@
 #include "codInterm.h"
 #include "assembly.h"
 
-int flagCI = 0;
+#define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
+
 int flagVerbose = 0;
 FILE * arquivoEntrada = NULL; // Arquivo de entrada
 FILE * copiaArquivo = NULL; // Cópia do arquivo de entrada
 FILE * arquivoSaida = NULL; // Arquivo de saída
 FILE * arquivoSaida_Intermediario = NULL; // Arquivo de saída do código intermediário
-
+FILE * arquivoSaida_Assembly = NULL; // Arquivo de saída do código assembly
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
 
 // Funcao Principal do Compilador 
 int main(int argc, char *argv[]){	
+	int flagCI = 0;
+	int flagCA = 0;
 	arquivoSaida = stdout;
 	arquivoSaida_Intermediario = stdout;
+	arquivoSaida_Assembly = stdout;
 	qntLinhas = 1;
     arquivoEntrada = NULL;
     copiaArquivo = NULL;
 	
     // Verifica se o numero de argumentos passados é valido
-    if (argc >= 2 && argc <= 5){
+    if (argc >= 2 && argc < MAX_ARG + 1){
         // Caso seja passado um argumento, o arquivo de entrada é o arquivo passado como argumento
 		for(int i=1; i<argc; i++){
 			// Para ativar o modo verbose e criar um arquivo de saída "Resultados"
@@ -52,14 +59,32 @@ int main(int argc, char *argv[]){
 			else if((strcmp(argv[i], "-CI") == 0) || (strcmp(argv[i], "-ci") == 0)){
 				flagCI = 1;
 				arquivoSaida_Intermediario = fopen("bin/codigoIntermediario.txt", "w");
+				if(arquivoSaida_Intermediario == NULL){
+					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+					printf("Nao foi possivel criar o arquivo de codigo intermediario.\n");
+					flagCI = 0;
+				}
 			}
-			// Argumento no input (para não precisar ler arquivo)
+			// Argumento para não precisar ler arquivo (No Input)
 			else if((strcmp(argv[i], "-NI") == 0) || (strcmp(argv[i], "-ni") == 0)){
 				arquivoEntrada = stdin;
-				flagVerbose = 0;
-				i = argc; // Para sair do loop
+				arquivoSaida = stdout;
+				flagVerbose = 1;
+				i = MAX_ARG; // Para sair do loop for, ja que os demais argumentos nao importam
+			}
+			// Argumento para gerar o código assembly em um arquivo
+			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
+				flagCA = 1;
+				arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
+				if(arquivoSaida_Assembly == NULL){
+					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+					printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
+					flagCA = 0;
+					arquivoSaida_Assembly = stdout;
+				}
 			}
 			else{
+				// Abre o arquivo de entrada
 				arquivoEntrada = fopen(argv[i], "r");
 				if(arquivoEntrada == NULL){
 					printf("Erro: Arquivo não encontrado.\n");
@@ -79,8 +104,11 @@ int main(int argc, char *argv[]){
         return 1;
     }
     
-    // Chama a funcao do parser, para iniciar a analise do codigo
-	PONTEIRONO arvoreSintatica = parse();
+	PONTEIRONO arvoreSintatica = parse(); // Chama a funcao do parser, para iniciar a analise do codigo
+
+	if(arquivoEntrada != stdin) fclose(arquivoEntrada); //Fecha os arquivos abertos
+	if(copiaArquivo != NULL) fclose(copiaArquivo); // Fecha e remove o arquivo de copia 
+	remove("src/copia.txt");
 
     // Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
@@ -89,18 +117,11 @@ int main(int argc, char *argv[]){
 		printf("Existem erros sintaticos ou lexicos no codigo.\n");
 		printf(ANSI_COLOR_RESET);
 
-		if(arquivoEntrada != stdin) fclose(arquivoEntrada);
-		if(copiaArquivo != NULL) fclose(copiaArquivo);
 		if(flagCI) fclose(arquivoSaida_Intermediario);
 		if(flagVerbose) fclose(arquivoSaida);
-        
-		return 0;
-	}
+		if(flagCA) fclose(arquivoSaida_Assembly);
 
-	// Imprime a arvore sintatica
-	if(flagVerbose == 1){
-		mostraArvore(arvoreSintatica, 0);
-		fprintf(arquivoSaida, "\n\n");
+		return 0;
 	}
 
 	// Inicializa a tabela de simbolos
@@ -118,39 +139,19 @@ int main(int argc, char *argv[]){
 		mostrarErroSemantico(FuncMainNaoDeclarada, "main", qntLinhas);
 	}
 
-	// Imprime a tabela de simbolos
-	if(flagVerbose == 1) imprimirTabela(tabelaHash);
+	// Mostra os resultados obtidos na fase de analise 
+	if(flagVerbose){
+		mostraArvore(arvoreSintatica, 0); // Imprime a arvore sintatica
+		fprintf(arquivoSaida, "\n\n");
+		imprimirTabela(tabelaHash); // Imprime a tabela de simbolos
+		fclose(arquivoSaida); // Fecha o arquivo de saida
+	} 
+	else{
+		remove("bin/results.txt");
+	}
 
 	/* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
-    
-	if(teveErroSemantico == 0){    
-		//Cria o codigo intermediario
-		inicializaVetor();
-		criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1);
-        
-		// Adiciona o HALT no final do codigo intermediario
-		codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
-		
-		if(flagCI) imprimeCodigoIntermediario(); // Imprime o codigo intermediario
-		
-		// Mostra os registradores em uso
-		mostrarReg();
-
-		// Desaloca as estruturas de analise
-		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
-
-		assembly(); // Inicia o processo de montagem do codigo assembly
-
-		// Imprime o codigo assembly e os labels
-		imprimirAssembly();
-		imprimirLabels();
-
-		liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-		liberarLabels(); // Libera a memoria alocada para os labels
-		desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
-	}
-	else{
-		// Mostrar uma mensagem de erro sobre os erros semanticos
+	if(teveErroSemantico != 0){    
 		printf(ANSI_COLOR_RED);
 		// Verifica se teve apenas um erro semantico para a escrita no singular ou plural
 		if(teveErroSemantico == 1)
@@ -160,27 +161,48 @@ int main(int argc, char *argv[]){
 		printf(ANSI_COLOR_RESET);
 
 		desaloca_estruturas_analise(arvoreSintatica, tabelaHash);
+
+		return 0;
 	}
 
-    //Fecha os arquivos abertos
-	if(arquivoEntrada != stdin) fclose(arquivoEntrada);
+	inicializaVetor(); // Inicializa a estrutura de codigo intermediario
+	criarCodigoIntermediario(arvoreSintatica, tabelaHash, 1); 
 	
-	// Fecha e remove o arquivo de copia 
-	if(copiaArquivo != NULL) fclose(copiaArquivo);
-	remove("src/copia.txt");
+	// Adiciona o HALT no final do codigo intermediario
+	codigoIntermediario[indiceVetor++] = criaInstrucao("HALT"); 
+	
+	if(flagCI){ 
+		imprimeCodigoIntermediario(); // Imprime o codigo intermediario
+		fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
+	} 
+	else{
+		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
+	}
+	
+	mostrarReg(); // Mostra os registradores em uso
 
-	// Remove os arquivos de saida
-	if(flagVerbose == 0) remove("bin/results.txt");
-	else fclose(arquivoSaida); // Fecha o arquivo de saida
-	
-	// Remove o arquivo de codigo intermediario
-	if(flagCI == 0) remove("bin/codigoIntermediario.txt");
-	else fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
+	desaloca_estruturas_analise(arvoreSintatica, tabelaHash); // Desaloca as estruturas de analise
+
+	assembly(); // Inicia o processo de montagem do codigo assembly
+
+	// Imprime o codigo assembly e os labels
+	if(flagCA){ 
+		imprimirAssembly();
+		fclose(arquivoSaida_Assembly); // Fecha o arquivo de codigo assembly
+	}
+	else{
+		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
+	}  
+
+	imprimirLabels(); // Imprime os labels
+
+	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
+	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
 
 	return 0;
 }
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash){
-	desalocaArvore(arvoreSintatica);
-	apagarTabela(tabelaHash);
+	desalocaArvore(arvoreSintatica); // Desaloca a arvore sintatica
+	apagarTabela(tabelaHash); // Desaloca a tabela de simbolos
 }

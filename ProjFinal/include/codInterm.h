@@ -3,6 +3,11 @@
 
 //Define o tamanho maximo do vetor que armazena o codigo intermediario
 #define MAX_INSTRUCTION 1000
+#define $zero 31
+#define $ra 30
+#define $fp 29
+#define $sp 28
+#define $temp 27
 
 #include "tabelaSimb.h"
 #include "global.h"

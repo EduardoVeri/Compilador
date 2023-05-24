@@ -90,23 +90,17 @@ int teste = 0;
 //No raiz da arvore sintatica
 PONTEIRONO arvoreSintatica;
 
-/* Vetor com os nos alocados da arvore, que sera utilizado
-caso um erro aconteca durante a criacao da mesma.
-Apos ocorrer um erro, o parser interrompe seu funcionamento
-voltando para a main() sem adicionar o seu no raiz ao ponteiro acima.
-Isso faz com que os nos alocados sejam perdidos e esse vetor fara
-com que eles possam ser apagados mesmo assim. */
-PONTEIRONO nos[MAX_NOS];
-int qntNos = 0;
 
 void mostraArvore(PONTEIRONO raiz, int num);
 enum yytokentype getToken(void);
 PONTEIRONO parse(void);
 
 char auxLexema[MAXLEXEMA];
+PONTEIRONO nos[MAX_NOS];
+int qntNos = 0;
 
 
-#line 110 "parser.tab.c"
+#line 104 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -562,13 +556,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    56,    56,    62,    71,    74,    75,    78,    96,   120,
-     128,   139,   152,   166,   167,   179,   188,   191,   209,   227,
-     238,   248,   251,   260,   263,   264,   265,   266,   267,   270,
-     271,   274,   292,   293,   296,   312,   323,   337,   351,   354,
-     374,   393,   403,   406,   411,   420,   429,   438,   447,   456,
-     466,   475,   478,   485,   494,   504,   507,   514,   523,   524,
-     525,   526,   542,   551,   552,   555,   561
+       0,    50,    50,    56,    65,    68,    69,    72,    90,   116,
+     124,   135,   148,   162,   163,   175,   184,   187,   205,   224,
+     235,   245,   248,   257,   260,   261,   262,   263,   264,   267,
+     268,   271,   289,   290,   293,   309,   320,   334,   348,   351,
+     371,   390,   400,   403,   408,   417,   426,   435,   444,   453,
+     463,   472,   475,   482,   491,   501,   504,   511,   520,   521,
+     522,   523,   539,   548,   549,   552,   558
 };
 #endif
 
@@ -1432,15 +1426,15 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 56 "parser.y"
+#line 50 "parser.y"
                                                    {
 						arvoreSintatica = yyvsp[0];
 					}
-#line 1440 "parser.tab.c"
+#line 1434 "parser.tab.c"
     break;
 
   case 3:
-#line 62 "parser.y"
+#line 56 "parser.y"
                                                       {  
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1450,29 +1444,29 @@ yyreduce:
 							yyval = yyvsp[0];
 						}
 					  }
-#line 1454 "parser.tab.c"
+#line 1448 "parser.tab.c"
     break;
 
   case 4:
-#line 71 "parser.y"
+#line 65 "parser.y"
                                                      {yyval = yyvsp[0];}
-#line 1460 "parser.tab.c"
+#line 1454 "parser.tab.c"
     break;
 
   case 5:
-#line 74 "parser.y"
+#line 68 "parser.y"
                                                  {yyval = yyvsp[0];}
-#line 1466 "parser.tab.c"
+#line 1460 "parser.tab.c"
     break;
 
   case 6:
-#line 75 "parser.y"
+#line 69 "parser.y"
                                                          {yyval = yyvsp[0];}
-#line 1472 "parser.tab.c"
+#line 1466 "parser.tab.c"
     break;
 
   case 7:
-#line 78 "parser.y"
+#line 72 "parser.y"
                                                           {
 						yyval = yyvsp[-2];
 						yyval->tipo = DECLARACAO;
@@ -1491,11 +1485,11 @@ yyreduce:
 						qntNos++;
 
 						}
-#line 1495 "parser.tab.c"
+#line 1489 "parser.tab.c"
     break;
 
   case 8:
-#line 96 "parser.y"
+#line 90 "parser.y"
                                                                                                            {
 						yyval = yyvsp[-5];
 						yyval->tipo = DECLARACAO;
@@ -1504,13 +1498,15 @@ yyreduce:
 
 						PONTEIRONO aux = novoNo();
 						PONTEIRONO aux2 = novoNo();
-
-						strcpy(aux->lexema, pilha[indPilha--]);
+						
+						strcpy(aux->lexema, pilha[indPilha]);
+						indPilha--;
 
 						nos[qntNos] = aux;
 						qntNos++;
 
-						strcpy(aux2->lexema, pilha[indPilha--]);
+						strcpy(aux2->lexema, pilha[indPilha]);
+						indPilha--;
 						
 						adicionaFilho(yyval, aux2);
 						adicionaFilho(yyval, aux);
@@ -1518,11 +1514,11 @@ yyreduce:
 						nos[qntNos] = aux2;
 						qntNos++;
 					}
-#line 1522 "parser.tab.c"
+#line 1518 "parser.tab.c"
     break;
 
   case 9:
-#line 120 "parser.y"
+#line 116 "parser.y"
                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "INT");
@@ -1531,11 +1527,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1535 "parser.tab.c"
+#line 1531 "parser.tab.c"
     break;
 
   case 10:
-#line 128 "parser.y"
+#line 124 "parser.y"
                                                {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "VOID");
@@ -1544,11 +1540,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1548 "parser.tab.c"
+#line 1544 "parser.tab.c"
     break;
 
   case 11:
-#line 139 "parser.y"
+#line 135 "parser.y"
                                                                                                         { 
 						//strcpy(auxLexema, "")
 						yyval = yyvsp[-5];
@@ -1560,14 +1556,14 @@ yyreduce:
 						yyval->tipo = DECLARACAO;
 						yyval->tipoDeclaracao = FunDeclK;
 					}
-#line 1564 "parser.tab.c"
+#line 1560 "parser.tab.c"
     break;
 
   case 12:
-#line 152 "parser.y"
+#line 148 "parser.y"
                                      {
 						yyval = novoNo();
-
+						
 						strcpy(yyval->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -1577,17 +1573,17 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1581 "parser.tab.c"
+#line 1577 "parser.tab.c"
     break;
 
   case 13:
-#line 166 "parser.y"
+#line 162 "parser.y"
                                               {yyval = yyvsp[0];}
-#line 1587 "parser.tab.c"
+#line 1583 "parser.tab.c"
     break;
 
   case 14:
-#line 167 "parser.y"
+#line 163 "parser.y"
                                                {
 						yyval = novoNo();
 						yyval->tipo = DECLARACAO;
@@ -1598,11 +1594,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1602 "parser.tab.c"
+#line 1598 "parser.tab.c"
     break;
 
   case 15:
-#line 179 "parser.y"
+#line 175 "parser.y"
                                                           {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1612,17 +1608,17 @@ yyreduce:
 							yyval = yyvsp[0];
 						}						
 					}
-#line 1616 "parser.tab.c"
+#line 1612 "parser.tab.c"
     break;
 
   case 16:
-#line 188 "parser.y"
+#line 184 "parser.y"
                                                 {yyval = yyvsp[0];}
-#line 1622 "parser.tab.c"
+#line 1618 "parser.tab.c"
     break;
 
   case 17:
-#line 191 "parser.y"
+#line 187 "parser.y"
                                                         {
 						yyval = yyvsp[-1];
 						yyval->tipo = DECLARACAO;
@@ -1641,11 +1637,11 @@ yyreduce:
 						qntNos++;
 
 					}
-#line 1645 "parser.tab.c"
+#line 1641 "parser.tab.c"
     break;
 
   case 18:
-#line 209 "parser.y"
+#line 205 "parser.y"
                                                                                              {
 						yyval = yyvsp[-3];
 						yyval->tipo = DECLARACAO;
@@ -1653,6 +1649,7 @@ yyreduce:
 						yyval->tipoDeclaracao = VetParamK;
 						PONTEIRONO aux = novoNo();
 
+	
 						strcpy(aux->lexema, pilha[indPilha]);
 						indPilha--;
 
@@ -1662,11 +1659,11 @@ yyreduce:
 						nos[qntNos] = aux;
 						qntNos++;	
 					}
-#line 1666 "parser.tab.c"
+#line 1663 "parser.tab.c"
     break;
 
   case 19:
-#line 227 "parser.y"
+#line 224 "parser.y"
                                                                                    { 
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
@@ -1676,11 +1673,11 @@ yyreduce:
 							yyval = yyvsp[-1];
 						}
 					}
-#line 1680 "parser.tab.c"
+#line 1677 "parser.tab.c"
     break;
 
   case 20:
-#line 238 "parser.y"
+#line 235 "parser.y"
                                                            {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1691,17 +1688,17 @@ yyreduce:
 						}
 
 					}
-#line 1695 "parser.tab.c"
+#line 1692 "parser.tab.c"
     break;
 
   case 21:
-#line 248 "parser.y"
+#line 245 "parser.y"
                                                  {yyval = NULL;}
-#line 1701 "parser.tab.c"
+#line 1698 "parser.tab.c"
     break;
 
   case 22:
-#line 251 "parser.y"
+#line 248 "parser.y"
                                                     {
 						if(yyvsp[-1] != NULL){
 							yyval = yyvsp[-1];
@@ -1711,59 +1708,59 @@ yyreduce:
 							yyval = yyvsp[0];
 						}
 					}
-#line 1715 "parser.tab.c"
+#line 1712 "parser.tab.c"
     break;
 
   case 23:
-#line 260 "parser.y"
+#line 257 "parser.y"
                                                  {yyval = NULL;}
-#line 1721 "parser.tab.c"
+#line 1718 "parser.tab.c"
     break;
 
   case 24:
-#line 263 "parser.y"
+#line 260 "parser.y"
                                                  {yyval = yyvsp[0];}
-#line 1727 "parser.tab.c"
+#line 1724 "parser.tab.c"
     break;
 
   case 25:
-#line 264 "parser.y"
+#line 261 "parser.y"
                                                         {yyval = yyvsp[0];}
-#line 1733 "parser.tab.c"
+#line 1730 "parser.tab.c"
     break;
 
   case 26:
-#line 265 "parser.y"
+#line 262 "parser.y"
                                                        {yyval = yyvsp[0];}
-#line 1739 "parser.tab.c"
+#line 1736 "parser.tab.c"
     break;
 
   case 27:
-#line 266 "parser.y"
+#line 263 "parser.y"
                                                         {yyval = yyvsp[0];}
-#line 1745 "parser.tab.c"
+#line 1742 "parser.tab.c"
     break;
 
   case 28:
-#line 267 "parser.y"
+#line 264 "parser.y"
                                                        {yyval = yyvsp[0];}
-#line 1751 "parser.tab.c"
+#line 1748 "parser.tab.c"
     break;
 
   case 29:
-#line 270 "parser.y"
+#line 267 "parser.y"
                                               {yyval = yyvsp[-1];}
-#line 1757 "parser.tab.c"
+#line 1754 "parser.tab.c"
     break;
 
   case 30:
-#line 271 "parser.y"
+#line 268 "parser.y"
                                                     {yyval = NULL;}
-#line 1763 "parser.tab.c"
+#line 1760 "parser.tab.c"
     break;
 
   case 31:
-#line 274 "parser.y"
+#line 271 "parser.y"
                                                                                          {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "IF");
@@ -1780,23 +1777,23 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1784 "parser.tab.c"
+#line 1781 "parser.tab.c"
     break;
 
   case 32:
-#line 292 "parser.y"
+#line 289 "parser.y"
                                                  {yyval = yyvsp[0];}
-#line 1790 "parser.tab.c"
+#line 1787 "parser.tab.c"
     break;
 
   case 33:
-#line 293 "parser.y"
+#line 290 "parser.y"
                                                  {yyval = NULL;}
-#line 1796 "parser.tab.c"
+#line 1793 "parser.tab.c"
     break;
 
   case 34:
-#line 296 "parser.y"
+#line 293 "parser.y"
                                                                                    {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "WHILE");
@@ -1811,11 +1808,11 @@ yyreduce:
 						qntNos++;
 
 					}
-#line 1815 "parser.tab.c"
+#line 1812 "parser.tab.c"
     break;
 
   case 35:
-#line 312 "parser.y"
+#line 309 "parser.y"
                                            { 
 						yyval = novoNo();
 						yyval->tipo = DECLARACAO;
@@ -1827,11 +1824,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 1831 "parser.tab.c"
+#line 1828 "parser.tab.c"
     break;
 
   case 36:
-#line 323 "parser.y"
+#line 320 "parser.y"
                                                                      {
 						yyval = novoNo();
 						yyval->tipo = DECLARACAO;
@@ -1844,11 +1841,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 1848 "parser.tab.c"
+#line 1845 "parser.tab.c"
     break;
 
   case 37:
-#line 337 "parser.y"
+#line 334 "parser.y"
                                                       {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "=");
@@ -1863,24 +1860,24 @@ yyreduce:
 						qntNos++;
 
 					}
-#line 1867 "parser.tab.c"
+#line 1864 "parser.tab.c"
     break;
 
   case 38:
-#line 351 "parser.y"
+#line 348 "parser.y"
                                                             {yyval = yyvsp[0];}
-#line 1873 "parser.tab.c"
+#line 1870 "parser.tab.c"
     break;
 
   case 39:
-#line 354 "parser.y"
+#line 351 "parser.y"
                                      {
 						yyval = novoNo();
 						yyval->tipo = EXPRESSAO;
 						yyval->numLinha = qntLinhas;
 						yyval->tipoExpressao = IdK;
 						
-						
+
 						strcpy(yyval->lexema, pilha[indPilha]);
 						/*
 						FILE * arquivoAux = fopen("arquivoAux.txt", "a+");
@@ -1894,11 +1891,11 @@ yyreduce:
 						qntNos++;
 
 					}
-#line 1898 "parser.tab.c"
+#line 1895 "parser.tab.c"
     break;
 
   case 40:
-#line 374 "parser.y"
+#line 371 "parser.y"
                                                                                    {
 						yyval = novoNo();
 
@@ -1916,11 +1913,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 1920 "parser.tab.c"
+#line 1917 "parser.tab.c"
     break;
 
   case 41:
-#line 393 "parser.y"
+#line 390 "parser.y"
                                                                    {
 						yyval = yyvsp[-1];
 						yyval->tipo = EXPRESSAO;
@@ -1931,25 +1928,25 @@ yyreduce:
 						adicionaFilho(yyval, yyvsp[0]);	
 						
 					}
-#line 1935 "parser.tab.c"
+#line 1932 "parser.tab.c"
     break;
 
   case 42:
-#line 403 "parser.y"
+#line 400 "parser.y"
                                                          {yyval = yyvsp[0];}
-#line 1941 "parser.tab.c"
+#line 1938 "parser.tab.c"
     break;
 
   case 43:
-#line 406 "parser.y"
+#line 403 "parser.y"
                                                       {
 						yyval = yyvsp[0];
 					}
-#line 1949 "parser.tab.c"
+#line 1946 "parser.tab.c"
     break;
 
   case 44:
-#line 411 "parser.y"
+#line 408 "parser.y"
                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "==");
@@ -1958,11 +1955,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 1962 "parser.tab.c"
+#line 1959 "parser.tab.c"
     break;
 
   case 45:
-#line 420 "parser.y"
+#line 417 "parser.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "!=");
@@ -1971,11 +1968,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 1975 "parser.tab.c"
+#line 1972 "parser.tab.c"
     break;
 
   case 46:
-#line 429 "parser.y"
+#line 426 "parser.y"
                                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "<");
@@ -1984,11 +1981,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 1988 "parser.tab.c"
+#line 1985 "parser.tab.c"
     break;
 
   case 47:
-#line 438 "parser.y"
+#line 435 "parser.y"
                                              {
 						yyval = novoNo();
 						strcpy(yyval->lexema, ">");
@@ -1997,11 +1994,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 2001 "parser.tab.c"
+#line 1998 "parser.tab.c"
     break;
 
   case 48:
-#line 447 "parser.y"
+#line 444 "parser.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "<=");
@@ -2010,11 +2007,11 @@ yyreduce:
 						qntNos++;
 						
 					}
-#line 2014 "parser.tab.c"
+#line 2011 "parser.tab.c"
     break;
 
   case 49:
-#line 456 "parser.y"
+#line 453 "parser.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, ">=");
@@ -2022,11 +2019,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2026 "parser.tab.c"
+#line 2023 "parser.tab.c"
     break;
 
   case 50:
-#line 466 "parser.y"
+#line 463 "parser.y"
                                                     {
 						yyval = yyvsp[-1];
 						yyval->tipo = EXPRESSAO;
@@ -2036,17 +2033,17 @@ yyreduce:
 						adicionaFilho(yyval, yyvsp[-2]);
 						adicionaFilho(yyval, yyvsp[0]);
 					}
-#line 2040 "parser.tab.c"
+#line 2037 "parser.tab.c"
     break;
 
   case 51:
-#line 475 "parser.y"
+#line 472 "parser.y"
                                                 {yyval = yyvsp[0];}
-#line 2046 "parser.tab.c"
+#line 2043 "parser.tab.c"
     break;
 
   case 52:
-#line 478 "parser.y"
+#line 475 "parser.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "+");
@@ -2054,11 +2051,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2058 "parser.tab.c"
+#line 2055 "parser.tab.c"
     break;
 
   case 53:
-#line 485 "parser.y"
+#line 482 "parser.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "-");
@@ -2066,11 +2063,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2070 "parser.tab.c"
+#line 2067 "parser.tab.c"
     break;
 
   case 54:
-#line 494 "parser.y"
+#line 491 "parser.y"
                                                    {
 						yyval = yyvsp[-1];
 						yyval->tipo = EXPRESSAO;
@@ -2081,17 +2078,17 @@ yyreduce:
 						adicionaFilho(yyval, yyvsp[0]);
 						
 					}
-#line 2085 "parser.tab.c"
+#line 2082 "parser.tab.c"
     break;
 
   case 55:
-#line 504 "parser.y"
+#line 501 "parser.y"
                                                 {yyval = yyvsp[0];}
-#line 2091 "parser.tab.c"
+#line 2088 "parser.tab.c"
     break;
 
   case 56:
-#line 507 "parser.y"
+#line 504 "parser.y"
                                        {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "*");
@@ -2099,11 +2096,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2103 "parser.tab.c"
+#line 2100 "parser.tab.c"
     break;
 
   case 57:
-#line 514 "parser.y"
+#line 511 "parser.y"
                                               {
 						yyval = novoNo();
 						strcpy(yyval->lexema, "/");
@@ -2111,29 +2108,29 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2115 "parser.tab.c"
+#line 2112 "parser.tab.c"
     break;
 
   case 58:
-#line 523 "parser.y"
+#line 520 "parser.y"
                                                                             {yyval = yyvsp[-1];}
-#line 2121 "parser.tab.c"
+#line 2118 "parser.tab.c"
     break;
 
   case 59:
-#line 524 "parser.y"
+#line 521 "parser.y"
                                               {yyval = yyvsp[0];}
-#line 2127 "parser.tab.c"
+#line 2124 "parser.tab.c"
     break;
 
   case 60:
-#line 525 "parser.y"
+#line 522 "parser.y"
                                                    {yyval = yyvsp[0];}
-#line 2133 "parser.tab.c"
+#line 2130 "parser.tab.c"
     break;
 
   case 61:
-#line 526 "parser.y"
+#line 523 "parser.y"
                                               { 
 						yyval = novoNo();
 						yyval->tipo = EXPRESSAO;
@@ -2148,11 +2145,11 @@ yyreduce:
 						nos[qntNos] = yyval;
 						qntNos++;
 					}
-#line 2152 "parser.tab.c"
+#line 2149 "parser.tab.c"
     break;
 
   case 62:
-#line 542 "parser.y"
+#line 539 "parser.y"
                                                                              {
 						yyval = yyvsp[-3];
 						yyval->tipo = EXPRESSAO;
@@ -2160,42 +2157,42 @@ yyreduce:
 						yyval->tipoExpressao = AtivK;
 						adicionaFilho(yyval, yyvsp[-1]);
 					}
-#line 2164 "parser.tab.c"
+#line 2161 "parser.tab.c"
     break;
 
   case 63:
-#line 551 "parser.y"
+#line 548 "parser.y"
                                             {yyval = yyvsp[0];}
-#line 2170 "parser.tab.c"
+#line 2167 "parser.tab.c"
     break;
 
   case 64:
-#line 552 "parser.y"
+#line 549 "parser.y"
                                                  {yyval = NULL;}
-#line 2176 "parser.tab.c"
+#line 2173 "parser.tab.c"
     break;
 
   case 65:
-#line 555 "parser.y"
+#line 552 "parser.y"
                                                             {
 						if(yyvsp[-2] != NULL){
 							yyval = yyvsp[-2];
 							adicionaIrmao(yyval, yyvsp[0]);
 						} else yyval = yyvsp[0];
 					}
-#line 2187 "parser.tab.c"
+#line 2184 "parser.tab.c"
     break;
 
   case 66:
-#line 561 "parser.y"
+#line 558 "parser.y"
                                                     {
 						yyval = yyvsp[0];
 					}
-#line 2195 "parser.tab.c"
+#line 2192 "parser.tab.c"
     break;
 
 
-#line 2199 "parser.tab.c"
+#line 2196 "parser.tab.c"
 
       default: break;
     }
@@ -2427,7 +2424,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 567 "parser.y"
+#line 564 "parser.y"
 
 
 //Funcao para mostrar o erro sintatico do codigo
@@ -2522,10 +2519,12 @@ void yyerror (char *s){
 	}
 	printf("\n");
 
+
+	
 	//Desaloca os nos ate o momento
 	for(int i = 0; i < qntNos; i++){
 		free(nos[i]);
-	}
+	} 
 	arvoreSintatica = NULL;
 
 }

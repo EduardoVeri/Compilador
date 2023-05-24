@@ -6,7 +6,7 @@
 
 // Capacidade maxima para o vetor dos nomes das instrucoes
 #define MAX_CHAR_NOME 5
-#define MAX_ASSEMBLY 1000
+#define MAX_ASSEMBLY 10000
 
 typedef enum{
 	typeR, // Instrucoes do tipo R
@@ -58,10 +58,12 @@ typedef struct assembly{
 
 // Vetor para armazenar as instrucoes em assembly
 extern ASSEMBLY ** instrucoesAssembly;
+extern int indiceAssembly; // Indice para o vetor de instrucoes assembly
 
 // Funcoes para a geracao do codigo assembly
 void assembly();
-void geraAssembly(INSTRUCAO* instrucao);
+void inicializaAssembly();
+ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome);
 void imprimirAssembly();
 void liberarAssembly();
 

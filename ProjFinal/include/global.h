@@ -3,17 +3,16 @@
 
 #define MAXLEXEMA 21 // Tamanho máximo do lexema
 
-extern int indPilha;
-extern int qntLinhas; // Contador de linhas
-extern char auxNome[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
-extern char id[MAXLEXEMA]; // Variável auxiliar para guardar o nome de um identificador
-extern char* yytext; //
 extern int flagVerbose; // Flag para ativar o modo verbose
-extern char pilha[5][MAXLEXEMA]; 
+extern int indPilha; // Índice da pilha de lexemas
+extern int qntLinhas; // Contador de linhas
+extern char* yytext; // Texto do lexema
+extern char pilha[4][MAXLEXEMA]; // Pilha de lexemas
 extern FILE * arquivoEntrada; // Arquivo de entrada
 extern FILE * copiaArquivo; // Cópia do arquivo de entrada
 extern FILE * arquivoSaida; // Arquivo de saída
 extern FILE * arquivoSaida_Intermediario; // Arquivo de saída do código intermediário
+extern FILE * arquivoSaida_Assembly; // Arquivo de saída do código assembly
 
 typedef enum {
     DeclVoidVar, //Quando uma variavel é declarada como void.

@@ -18,7 +18,7 @@ void mostrarTela(char palavra[]);
 
 
 int indPilha = -1;
-char pilha[5][MAXLEXEMA];
+char pilha[4][MAXLEXEMA];
 
 %}
 
@@ -73,7 +73,6 @@ LETRA [a-zA-Z]
 			
 			indPilha++;
 			strcpy(pilha[indPilha], yytext);
-			
 
 		  	return NUM; 
 		 }
@@ -93,13 +92,11 @@ LETRA [a-zA-Z]
 				printf("nome reduzido para '%s'\n", yytext);
 			}
 
-
-
-			//strcpy(auxNome, yytext);
-
-			indPilha++;
-			strcpy(pilha[indPilha], yytext);
-
+			if(token == ID){
+				indPilha++;
+				bzero(pilha[indPilha], MAXLEXEMA);
+				strcpy(pilha[indPilha], yytext);
+			}
 			return token;
 		 }
 		
