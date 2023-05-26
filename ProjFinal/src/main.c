@@ -23,6 +23,7 @@
 #include "semantica.h"
 #include "codInterm.h"
 #include "assembly.h"
+#include "binario.h"
 
 #define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
 
@@ -195,6 +196,8 @@ int main(int argc, char *argv[]){
 	}  
 
 	imprimirLabels(); // Imprime os labels
+
+	binario(); // Inicia o processo de conversao do codigo assembly para binario
 
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly

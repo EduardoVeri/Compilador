@@ -2,27 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "assembly.h"
-
-typedef struct {
-	unsigned int opcode:6;
-	unsigned int rs:5;
-	unsigned int rt:5;
-	unsigned int rd:5;
-	unsigned int shamt:5;
-	unsigned int funct:6;
-} BIN_R;
-
-typedef struct {
-	unsigned int opcode:6;
-	unsigned int rs:5;
-	unsigned int rt:5;
-	unsigned int immediate:16;
-} BIN_I;
-
-typedef struct {
-	unsigned int opcode:6;
-	unsigned int address:26;
-} BIN_J;
+#include "binario.h"
 
 unsigned int get_opcode(char* nome, tipoInstrucao tipo){
     int opcode = -1;
@@ -70,7 +50,7 @@ unsigned int get_register(int reg){
 	return reg;
 }
 
-unsigned int shamt(int shamt){
+unsigned int get_shamt(int shamt){
 	return shamt;
 }
 
@@ -78,29 +58,84 @@ unsigned int get_immediate(int imediato){
 	return imediato;
 }	
 
-/* unsigned int get_address(char* label){
-	return address;
-} */
-
-
-/*
-BIN_R* binarioR(ASSEMBLY* instrucao){
-
-	return NULL;
+unsigned int get_address(char* label){
+	int endereco = getEnderecoLabel(label);
+	return endereco;
 }
 
-BIN_I* binarioI()
+BIN_R* binarioR(ASSEMBLY* instrucao){
+	BIN_R* bin = (BIN_R*)malloc(sizeof(BIN_R));
+	bin->opcode = get_opcode(instrucao->tipoR->nome, instrucao->tipo);
+	bin->rs = get_register(instrucao->tipoR->rs);
+	bin->rt = get_register(instrucao->tipoR->rt);
+	bin->rd = get_register(instrucao->tipoR->rd);
+	bin->shamt = get_shamt(0);
+	bin->funct = get_funct(instrucao->tipoR->nome);
+	return bin;
+	
+}
 
-BIN_J* binarioJ(ASSEMBLY* instrucao){
-	BIN_J* bin = malloc(sizeof(BIN_J));
-	bin->opcode = 2;
-	bin->address = instrucao->tipoJ->labelImediato;
+BIN_I* binarioI(ASSEMBLY* instrucao){
+	BIN_I* bin = (BIN_I*)malloc(sizeof(BIN_I));
+	bin->opcode = get_opcode(instrucao->tipoI->nome, instrucao->tipo);
+	bin->rs = get_register(instrucao->tipoI->rs);
+	bin->rt = get_register(instrucao->tipoI->rt);
+	bin->immediate = get_immediate(instrucao->tipoI->imediato);
 	return bin;
 }
-*/
+
+BIN_J* binarioJ(ASSEMBLY* instrucao){
+	BIN_J* bin = (BIN_J*)malloc(sizeof(BIN_J));
+	bin->opcode = get_opcode(instrucao->tipoJ->nome, instrucao->tipo);
+	bin->address = get_address(instrucao->tipoJ->labelImediato);
+	return bin;
+}		
+
+// Assumes little endian
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
+    
+    for (i = size-1; i >= 0; i--) {
+        for (j = 7; j >= 0; j--) {
+            byte = (b[i] >> j) & 1;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
+
+void mostrar_binario(tipoInstrucao tipo, void* binario){
+	
+	if(tipo == typeR){
+		BIN_R* bin = (BIN_R*)binario;
+		printBits(sizeof(*bin), &(*bin));
+	}
+	else if(tipo == typeI){
+		BIN_I* bin = (BIN_I*)binario;
+		printBits(sizeof(*bin), &(*bin));
+	}
+	else if(tipo == typeJ){
+		BIN_J* bin = (BIN_J*)binario;
+		printBits(sizeof(*bin), &(*bin));
+	}
+}
 
 void binario(){
 	for(int i = 0; i < indiceAssembly; i++){
-
+		if(instrucoesAssembly[i]->tipo == typeR){
+			BIN_R* bin = binarioR(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeI){
+			BIN_I* bin = binarioI(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
+		}
+		else if(instrucoesAssembly[i]->tipo == typeJ){
+			BIN_J* bin = binarioJ(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
+		}
 	}
 }
