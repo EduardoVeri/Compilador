@@ -22,6 +22,6 @@ typedef struct {
     unsigned int opcode:6;
 } BIN_J;
 
-void binario();
+void binario(FILE* arquivo);
 
 #endif

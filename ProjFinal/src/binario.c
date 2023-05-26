@@ -92,7 +92,7 @@ BIN_J* binarioJ(ASSEMBLY* instrucao){
 }		
 
 // Assumes little endian
-void printBits(size_t const size, void const * const ptr)
+void printBits(size_t const size, void const * const ptr, FILE* arquivo)
 {
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
@@ -101,41 +101,51 @@ void printBits(size_t const size, void const * const ptr)
     for (i = size-1; i >= 0; i--) {
         for (j = 7; j >= 0; j--) {
             byte = (b[i] >> j) & 1;
-            printf("%u", byte);
+            fprintf(arquivo, "%u", byte);
         }
     }
-    puts("");
+    fprintf(arquivo, "\n");
 }
 
-void mostrar_binario(tipoInstrucao tipo, void* binario){
+void mostrar_binario(tipoInstrucao tipo, void* binario, FILE* arquivo){
 	
 	if(tipo == typeR){
 		BIN_R* bin = (BIN_R*)binario;
-		printBits(sizeof(*bin), &(*bin));
+		printBits(sizeof(*bin), &(*bin), arquivo);
 	}
 	else if(tipo == typeI){
 		BIN_I* bin = (BIN_I*)binario;
-		printBits(sizeof(*bin), &(*bin));
+		printBits(sizeof(*bin), &(*bin), arquivo);
 	}
 	else if(tipo == typeJ){
 		BIN_J* bin = (BIN_J*)binario;
-		printBits(sizeof(*bin), &(*bin));
+		printBits(sizeof(*bin), &(*bin), arquivo);
 	}
 }
 
-void binario(){
+void binario(FILE* arquivo){
+	BIN_I* binI;
+	BIN_J* binJ;
+	BIN_R* binR;
+	
 	for(int i = 0; i < indiceAssembly; i++){
-		if(instrucoesAssembly[i]->tipo == typeR){
-			BIN_R* bin = binarioR(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
-		}
-		else if(instrucoesAssembly[i]->tipo == typeI){
-			BIN_I* bin = binarioI(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
-		}
-		else if(instrucoesAssembly[i]->tipo == typeJ){
-			BIN_J* bin = binarioJ(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, bin);
+		switch (instrucoesAssembly[i]->tipo)
+		{
+		case typeR:
+			binR = binarioR(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
+			free(binR);
+			break;
+		case typeI:
+			binI = binarioI(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
+			free(binI);
+			break;
+		case typeJ:
+			binJ = binarioJ(instrucoesAssembly[i]);
+			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
+			free(binJ);
+			break;
 		}
 	}
 }
