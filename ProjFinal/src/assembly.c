@@ -239,7 +239,9 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoLabel->endereco = instrucao->arg1->val;
 		novaInstrucao->tipoLabel->boolean = 1;
 
-		adicionarLabel(instrucao->arg1->val, indiceAssembly);
+		char label[26];
+		sprintf(label, "Label %d", instrucao->arg1->val);
+		adicionarLabel(label, indiceAssembly);
 
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -248,7 +250,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao = criarNoAssembly(typeLabel, instrucao->arg2->nome); 
 		novaInstrucao->tipoLabel->boolean = 0;
 
-		adicionarLabel(instrucao->arg2->val, indiceAssembly);
+		adicionarLabel(instrucao->arg2->nome, indiceAssembly);
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		funcaoAtual = insere_funcao(&vetorMemoria, instrucao->arg2->nome);

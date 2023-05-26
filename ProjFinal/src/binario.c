@@ -78,9 +78,9 @@ unsigned int get_immediate(int imediato){
 	return imediato;
 }	
 
-unsigned int get_address(char* label){
+/* unsigned int get_address(char* label){
 	return address;
-}
+} */
 
 
 /*

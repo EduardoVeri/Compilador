@@ -13,7 +13,7 @@ typedef struct filaLinhas{
 } FILA_LINHAS; */
 
 typedef struct label{
-	int id;
+	char* id;
 	int endereco;
 	struct label *prox;
 } LABEL;
@@ -27,9 +27,9 @@ typedef struct vetorLabel{
 extern VETOR_LABEL *vetorLabel;
 
 void inicializaLabels();
-LABEL * criarNoLabel(int id, int endereco);
-void adicionarLabel(int id, int endereco);
-int getEnderecoLabel(int id);
+LABEL * criarNoLabel(char* id, int endereco);
+void adicionarLabel(char* id, int endereco);
+int getEnderecoLabel(char* id);
 void liberarLabels();
 void imprimirLabels();
 

@@ -61,16 +61,16 @@ void inicializaLabels(){
 }
 
 // Cria um novo no de label
-LABEL * criarNoLabel(int id, int endereco){
+LABEL * criarNoLabel(char* id, int endereco){
 	LABEL * novoNoLabel = (LABEL *)malloc(sizeof(LABEL));
-	novoNoLabel->id = id;
+	novoNoLabel->id = strdup(id);
 	novoNoLabel->endereco = endereco;
 	novoNoLabel->prox = NULL;
 	return novoNoLabel;
 }
 
 // Adiciona uma label ao vetor de labels
-void adicionarLabel(int id, int endereco){
+void adicionarLabel(char* id, int endereco){
 	LABEL * novoNoLabel = criarNoLabel(id, endereco);
 	if(vetorLabel->tamanho == -1){
 		vetorLabel->vetor = novoNoLabel;
@@ -87,10 +87,10 @@ void adicionarLabel(int id, int endereco){
 }
 
 // Retorna o endereco de uma label
-int getEnderecoLabel(int id){
+int getEnderecoLabel(char* id){
 	LABEL * aux = vetorLabel->vetor;
 	while(aux != NULL){
-		if(aux->id == id){
+		if(!strcmp(aux->id, id)){
 			return aux->endereco;
 		}
 		aux = aux->prox;
@@ -115,7 +115,7 @@ void imprimirLabels(){
 
 	printf("\n============= Vetor de labels =============\n");
 	while(aux != NULL){
-		printf("Label: %d, Endereco: %d\n", aux->id, aux->endereco);
+		printf("%s, Endereco: %d\n", aux->id, aux->endereco);
 		aux = aux->prox;
 	}
 }
