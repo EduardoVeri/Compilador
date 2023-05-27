@@ -3,7 +3,7 @@
  *  do curso de Engenharia da Computacao na Universidade Federal de Sao Paulo (UNIFESP)
  * 
  * 	Fase de Analise desenvolvida na disciplina de Compiladores
- *  Fase de Montagem desenvolvida na disciplina de Lab. de Compiladores
+ *  Fase de Sintese desenvolvida na disciplina de Lab. de Compiladores
  * 
  *  Docente: Prof. Dr. Luis Augusto Martins Pereira
  *  Docente: Profa. Dra. Taina Aparecida Azevedo Tosta
@@ -23,6 +23,8 @@
 #include "semantica.h"
 #include "codInterm.h"
 #include "assembly.h"
+#include "binario.h"
+
 
 #define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
 
@@ -45,64 +47,80 @@ int main(int argc, char *argv[]){
 	qntLinhas = 1;
     arquivoEntrada = NULL;
     copiaArquivo = NULL;
-	
+	FILE * arquivoSaida_Binario = NULL; // Arquivo de saída do código binário
+
     // Verifica se o numero de argumentos passados é valido
-    if (argc >= 2 && argc < MAX_ARG + 1){
-        // Caso seja passado um argumento, o arquivo de entrada é o arquivo passado como argumento
-		for(int i=1; i<argc; i++){
-			// Para ativar o modo verbose e criar um arquivo de saída "Resultados"
-			if((strcmp(argv[i], "-V") == 0) || (strcmp(argv[i], "-v") == 0)){
-				flagVerbose = 1;
-				arquivoSaida = fopen("bin/results.txt", "w");
+	 if (argc < 2){
+       	printf("%s <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> --> Com arquivos de entrada\n", argv[0]);
+        return 0;
+    }
+
+	// Caso seja passado um argumento, o arquivo de entrada é o arquivo passado como argumento
+	for(int i=1; i<argc; i++){
+		// Para ativar o modo verbose e criar um arquivo de saída "Resultados"
+		if((strcmp(argv[i], "-V") == 0) || (strcmp(argv[i], "-v") == 0)){
+			flagVerbose = 1;
+			arquivoSaida = fopen("bin/results.txt", "w");
+		}
+		// Para gerar o código intermediário em um arquivo
+		else if((strcmp(argv[i], "-CI") == 0) || (strcmp(argv[i], "-ci") == 0)){
+			flagCI = 1;
+			arquivoSaida_Intermediario = fopen("bin/codigoIntermediario.txt", "w");
+			if(arquivoSaida_Intermediario == NULL){
+				printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+				printf("Nao foi possivel criar o arquivo de codigo intermediario.\n");
+				flagCI = 0;
 			}
-			// Para gerar o código intermediário em um arquivo
-			else if((strcmp(argv[i], "-CI") == 0) || (strcmp(argv[i], "-ci") == 0)){
-				flagCI = 1;
-				arquivoSaida_Intermediario = fopen("bin/codigoIntermediario.txt", "w");
-				if(arquivoSaida_Intermediario == NULL){
-					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
-					printf("Nao foi possivel criar o arquivo de codigo intermediario.\n");
-					flagCI = 0;
-				}
+		}
+		// Argumento para não precisar ler arquivo (No Input)
+		else if((strcmp(argv[i], "-NI") == 0) || (strcmp(argv[i], "-ni") == 0)){
+			arquivoEntrada = stdin;
+			arquivoSaida = stdout;
+			flagVerbose = 1;
+			i = MAX_ARG; // Para sair do loop for, ja que os demais argumentos nao importam
+		}
+		// Argumento para gerar o código assembly em um arquivo
+		else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
+			flagCA = 1;
+			arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
+			if(arquivoSaida_Assembly == NULL){
+				printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+				printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
+				flagCA = 0;
+				arquivoSaida_Assembly = stdout;
 			}
-			// Argumento para não precisar ler arquivo (No Input)
-			else if((strcmp(argv[i], "-NI") == 0) || (strcmp(argv[i], "-ni") == 0)){
-				arquivoEntrada = stdin;
-				arquivoSaida = stdout;
-				flagVerbose = 1;
-				i = MAX_ARG; // Para sair do loop for, ja que os demais argumentos nao importam
+		}
+		else if((!strcmp(argv[i], "-O")) || (!strcmp(argv[i], "-o"))){
+			arquivoSaida_Binario = fopen(argv[i+1], "w");
+			if(arquivoSaida_Binario == NULL){
+				printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+				printf("Nao foi possivel criar o arquivo de saida.\n");
 			}
-			// Argumento para gerar o código assembly em um arquivo
-			else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
-				flagCA = 1;
-				arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
-				if(arquivoSaida_Assembly == NULL){
-					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
-					printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
-					flagCA = 0;
-					arquivoSaida_Assembly = stdout;
-				}
+			i++;
+		}
+		else{
+			// Abre o arquivo de entrada
+			if(arquivoEntrada){
+				printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+				printf("Argumento '%s' desconsiderado.\n", argv[i]);
 			}
 			else{
-				// Abre o arquivo de entrada
 				arquivoEntrada = fopen(argv[i], "r");
 				if(arquivoEntrada == NULL){
-					printf("Erro: Arquivo não encontrado.\n");
-					return 1;
+					printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+					printf("Arquivo '%s' não encontrado.\n", argv[i]);
 				}
 			}
 		}
-		if (arquivoEntrada == NULL){
-			printf("Erro: Arquivo não fornecido.\n");
-			printf("./compilador <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> --> Com arquivos de entrada\n");
-			return 1;
-		}
-    }
-    else {
-        // Caso seja passado mais de um argumento, o numero de argumentos é invalido
-       	printf("./compilador <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> --> Com arquivos de entrada\n");
-        return 1;
-    }
+	}
+	if (arquivoEntrada == NULL){
+		printf("Erro: Arquivo não fornecido.\n");
+		printf("%s <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> --> Com arquivos de entrada\n", argv[0]);
+		if(flagCI) fclose(arquivoSaida_Intermediario);
+		if(flagVerbose) fclose(arquivoSaida);
+		if(flagCA) fclose(arquivoSaida_Assembly);
+		return 1;
+	}
     
 	PONTEIRONO arvoreSintatica = parse(); // Chama a funcao do parser, para iniciar a analise do codigo
 
@@ -195,6 +213,18 @@ int main(int argc, char *argv[]){
 	}  
 
 	imprimirLabels(); // Imprime os labels
+
+	if(!arquivoSaida_Binario){
+		arquivoSaida_Binario = fopen("bin/codigoBinario.txt", "w");
+		if(arquivoSaida == NULL){
+			printf("Erro: Nao foi possivel criar o arquivo de saida.\n");
+			desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
+			liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+			return 0;
+		}
+	}
+	binario(arquivoSaida_Binario); // Inicia o processo de conversao do codigo assembly para binario
+	fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
 
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
