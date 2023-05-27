@@ -104,7 +104,7 @@ void printBits(size_t const size, void const * const ptr, FILE* arquivo)
             fprintf(arquivo, "%u", byte);
         }
     }
-    fprintf(arquivo, "\n");
+   // fprintf(arquivo, "\n");
 }
 
 void mostrar_binario(tipoInstrucao tipo, void* binario, FILE* arquivo){
@@ -134,16 +134,19 @@ void binario(FILE* arquivo){
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
+			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoR->nome);
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
+			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoI->nome);
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
+			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoJ->nome);
 			free(binJ);
 			break;
 		}

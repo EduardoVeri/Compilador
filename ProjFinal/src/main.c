@@ -25,6 +25,7 @@
 #include "assembly.h"
 #include "binario.h"
 
+
 #define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
 
 int flagVerbose = 0;
