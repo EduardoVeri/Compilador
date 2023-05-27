@@ -1,54 +1,57 @@
 ============== Assembly ==============
 	j main
 soma:
+	sw $ra 1($fp)
+	addi $sp $fp 6
 	addi $sp $sp 1
 	addi $sp $sp 1
-	lw $t0 $fp 1
-	lw $t1 $fp 0
-	lw $t2 $fp 7
-	lw $t0 $fp 1
-	lw $t1 $fp 0
-	add $t3 $t0 $t1 
-	add $t2 $zero $t3 
-	sw $t2 $fp 7
-	lw $t2 $fp 7
-	sw $t2 $fp 3
+	lw $t0 1($fp)
+	lw $t1 0($fp)
+	lw $t2 8($fp)
+	lw $t0 1($fp)
+	lw $t1 0($fp)
+	add $t3 $t0 $t1
+	add $t2 $zero $t3
+	sw $t2 8($fp)
+	lw $t2 8($fp)
+	sw $t2 4($fp)
 	j Label 0
 Label 0:
 main:
 	ori $fp $zero 0
-	ori $sp $zero 0
-	lw $t4 $fp 5
+	ori $sp $zero 4
+	lw $t4 6($fp)
 	ori $t5 $zero 10
-	add $t4 $zero $t5 
-	sw $t4 $fp 5
-	lw $t6 $fp 6
+	add $t4 $zero $t5
+	sw $t4 6($fp)
+	lw $t6 7($fp)
 	ori $t7 $zero 5
-	add $t6 $zero $t7 
-	sw $t6 $fp 6
-	lw $t8 $fp 7
-	lw $t4 $fp 5
-	sw $t4 $sp 1
+	add $t6 $zero $t7
+	sw $t6 7($fp)
+	lw $t8 8($fp)
+	lw $t4 6($fp)
+	sw $t4 1($sp)
 	addi $sp $sp 1
-	lw $t6 $fp 6
-	sw $t6 $sp 1
+	lw $t6 7($fp)
+	sw $t6 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 2
-	sw $fp $fp 3
-	sw $sp $fp 4
+	sw $fp 4($fp)
+	sw $sp 5($fp)
+	addi $fp $sp 1
 	jal soma
-	sw $ra $sp 3
-	add $t8 $zero $t9 
-	sw $t8 $fp 7
-	lw $t8 $fp 7
-	sw $t8 $sp 1
+	lw $fp 4($fp)
+	lw $sp 5($fp)
+	lw $t9 2($fp)
+	add $t8 $zero $t9
+	sw $t8 8($fp)
+	lw $t8 8($fp)
+	sw $t8 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 1
-	sw $fp $fp 3
-	sw $sp $fp 4
-	jal output
-	sw $ra $sp 2
-	sw $zero $fp 3
+	lw $temp 1($sp)
+	out $t1 $t-1 -1
+	sw $zero 4($fp)
 	j Label 1
 Label 1:
 	halt $zero

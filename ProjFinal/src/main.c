@@ -229,6 +229,10 @@ int main(int argc, char *argv[]){
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
 
+	printf(ANSI_COLOR_GREEN);
+	printf("\nCompilacao realizada com sucesso!\n");
+	printf(ANSI_COLOR_RESET);
+
 	return 0;
 }
 

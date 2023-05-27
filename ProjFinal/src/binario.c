@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "codInterm.h"
 #include "assembly.h" // Ja inclui label.h dentro dela
 #include "binario.h"
 
@@ -66,9 +67,9 @@ unsigned int get_address(char* label){
 BIN_R* binarioNop(){
 	BIN_R* bin = (BIN_R*)malloc(sizeof(BIN_R));
 	bin->opcode = 0;
-	bin->rs = 31;
-	bin->rt = 31;
-	bin->rd = 31;
+	bin->rs = $zero;
+	bin->rt = $zero;
+	bin->rd = $zero;
 	bin->shamt = 0;
 	bin->funct = 0b100000;
 	return bin;

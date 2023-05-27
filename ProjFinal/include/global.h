@@ -98,8 +98,8 @@ PONTEIRONO parse(void);
 #define ANSI_COLOR_GRAY     "\e[0;37m"
 #define ANSI_COLOR_WHITE    "\e[1;37m" 
 #define ANSI_COLOR_RESET    "\e[0m"	
-#define ANSI_COLOR_PURPLE    "\e[0;35m"
-
+#define ANSI_COLOR_PURPLE   "\e[0;35m"
+#define ANSI_COLOR_GREEN    "\e[0;32m"
 
 
 
