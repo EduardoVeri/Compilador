@@ -3,7 +3,7 @@
  *  do curso de Engenharia da Computacao na Universidade Federal de Sao Paulo (UNIFESP)
  * 
  * 	Fase de Analise desenvolvida na disciplina de Compiladores
- *  Fase de Montagem desenvolvida na disciplina de Lab. de Compiladores
+ *  Fase de Sintese desenvolvida na disciplina de Lab. de Compiladores
  * 
  *  Docente: Prof. Dr. Luis Augusto Martins Pereira
  *  Docente: Profa. Dra. Taina Aparecida Azevedo Tosta

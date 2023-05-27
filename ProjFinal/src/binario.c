@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "assembly.h"
+#include "assembly.h" // Ja inclui label.h dentro dela
 #include "binario.h"
 
 unsigned int get_opcode(char* nome, tipoInstrucao tipo){
@@ -61,6 +61,17 @@ unsigned int get_immediate(int imediato){
 unsigned int get_address(char* label){
 	int endereco = getEnderecoLabel(label);
 	return endereco;
+}
+
+BIN_R* binarioNop(){
+	BIN_R* bin = (BIN_R*)malloc(sizeof(BIN_R));
+	bin->opcode = 0;
+	bin->rs = 31;
+	bin->rt = 31;
+	bin->rd = 31;
+	bin->shamt = 0;
+	bin->funct = 0b100000;
+	return bin;
 }
 
 BIN_R* binarioR(ASSEMBLY* instrucao){
@@ -134,20 +145,25 @@ void binario(FILE* arquivo){
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
-			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoR->nome);
+			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoR->nome);
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
-			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoI->nome);
+			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoI->nome);
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
-			fprintf(arquivo, " : %s \n", instrucoesAssembly[i]->tipoJ->nome);
+			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoJ->nome);
 			free(binJ);
+			break;
+		case typeLabel:
+			binR = binarioNop();
+			mostrar_binario(typeR, binR, arquivo);
+			fprintf(arquivo, " : nop\n");
 			break;
 		}
 	}
