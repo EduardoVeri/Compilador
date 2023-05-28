@@ -1,6 +1,7 @@
 ============== Assembly ==============
 	j main
 soma:
+	sw $temp 0($fp)
 	sw $ra 1($fp)
 	addi $sp $fp 6
 	addi $sp $sp 1
@@ -48,7 +49,6 @@ main:
 	add $temp $fp $zero
 	addi $temp $temp 0
 	addi $fp $sp 1
-	sw $temp 3($sp)
 	jal soma
 	lw $sp 5($fp)
 	lw $t9 2($fp)

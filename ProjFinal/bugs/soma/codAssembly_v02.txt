@@ -1,3 +1,5 @@
+Erros: Vinculo de controle nao armazenado
+
 ============== Assembly ==============
 	j main
 soma:
@@ -48,7 +50,6 @@ main:
 	add $temp $fp $zero
 	addi $temp $temp 0
 	addi $fp $sp 1
-	sw $temp 3($sp)
 	jal soma
 	lw $sp 5($fp)
 	lw $t9 2($fp)

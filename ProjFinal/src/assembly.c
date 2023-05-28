@@ -5,6 +5,7 @@
 #include "assembly.h"
 #include "memoria.h"
 
+// TODO: Verificar como esta sendo feita a passagem de param de um vetor e seu uso na funcao
 // TODO: Onde adicionar uma variavel ou param na tabela, aumentar o valor real de $sp e armazenar o seu valor
 // TODO: Arrumar o $sp e $fp para ficarem com o valor referencia mesmo
 // TODO: Parar de incrementar $sp apos um parametro. Guardar a quantidade de parametros em um inteiro na struct da funcao
@@ -478,6 +479,13 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->imediato = 1;
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+		// Armazena o valor de controle no seu respectivo local no novo frame
+		novaInstrucao = criarNoAssembly(typeI, "sw");
+		novaInstrucao->tipoI->rt = $temp;
+		novaInstrucao->tipoI->rs = $sp;
+		novaInstrucao->tipoI->imediato = instrucao->arg2->val + 1;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
 		novaInstrucao = criarNoAssembly(typeJ, "jal");
 		novaInstrucao->tipoJ->labelImediato = strdup(instrucao->arg1->nome);
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
@@ -506,6 +514,37 @@ void geraAssembly(INSTRUCAO* instrucao){
 		}
 	} 
 	else if(!strcmp(instrucao->op, "END")){
+		if(!strcmp(instrucao->arg1->nome, "main")){
+			return; // Nao precisa fazer mais nada, ja que a proxima instrucao eh o HALT
+		}
+		
+		// Restaura o valor de $ra da funcao anterior
+		novaInstrucao = criarNoAssembly(typeI, "lw");
+		novaInstrucao->tipoI->rs = $fp;
+		novaInstrucao->tipoI->rt = $ra;
+		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Endereco Retorno"));
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		
+		// Acessa o valor de controle da funcao anterior
+		novaInstrucao = criarNoAssembly(typeI, "lw");
+		novaInstrucao->tipoI->rt = $temp;
+		novaInstrucao->tipoI->rs = $fp;
+		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Vinculo Controle"));
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+		// Restaura o valor de $fp da funcao anterior
+		novaInstrucao = criarNoAssembly(typeI, "lw");
+		novaInstrucao->tipoI->rs = $temp;
+		novaInstrucao->tipoI->rt = $fp;
+		novaInstrucao->tipoI->imediato = 4; // 4 para avancar para "Registrador $fp"
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+	
+		// Pula para a instrucao que fez a chamada da funcao
+		novaInstrucao = criarNoAssembly(typeR, "jr");
+		novaInstrucao->tipoR->rs = $ra;
+		novaInstrucao->tipoR->rd = $zero;
+		novaInstrucao->tipoR->rt = $zero;
+		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 	}
 	else{

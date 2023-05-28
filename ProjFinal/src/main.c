@@ -213,7 +213,7 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
 	}  
 
-	//imprimir_memoria(); // Imprime a memoria
+	imprime_memoria(); // Imprime a memoria
 	//imprimirLabels(); // Imprime os labels
 	
 	if(!arquivoSaida_Binario){
@@ -232,8 +232,7 @@ int main(int argc, char *argv[]){
 	desaloca_estruturas_sintese(); 
 
 	printf(ANSI_COLOR_GREEN "Compilacao realizada com sucesso!\n" ANSI_COLOR_RESET);
-
-
+	
 	return 0;
 }
 
