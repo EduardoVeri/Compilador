@@ -146,25 +146,29 @@ void binario(FILE* arquivo){
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
-			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoR->nome);
+			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoR->nome);
+			fprintf(arquivo, "\n");
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
-			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoI->nome);
+			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoI->nome);
+			fprintf(arquivo, "\n");
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
-			fprintf(arquivo, " : %s\n", instrucoesAssembly[i]->tipoJ->nome);
+			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoJ->nome);
+			fprintf(arquivo, "\n");
 			free(binJ);
 			break;
 		case typeLabel:
 			binR = binarioNop();
 			mostrar_binario(typeR, binR, arquivo);
-			fprintf(arquivo, " : nop\n");
+			//fprintf(arquivo, " : nop");
+			fprintf(arquivo, "\n");
 			break;
 		}
 	}

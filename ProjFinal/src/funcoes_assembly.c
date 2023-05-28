@@ -132,7 +132,7 @@ void imprimirAssembly(){
 			else{
 				tipo_reg(tipoI->rs);
 				fprintf(arquivoSaida_Assembly, " ");
-				if(tipoI->label != -1) printf("Label %d\n", tipoI->label);
+				if(tipoI->label != -1) fprintf(arquivoSaida_Assembly, "Label %d\n", tipoI->label);
 				else fprintf(arquivoSaida_Assembly, "%d\n", tipoI->imediato);
 			}
 		}

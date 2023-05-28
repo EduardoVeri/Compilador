@@ -194,6 +194,7 @@ void imprime_memoria(){
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
 		}
 	}
+	printf("\n");
 }
 
 MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
