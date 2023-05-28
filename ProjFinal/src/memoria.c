@@ -169,11 +169,11 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 }
 
 
-void imprime_memoria(MEMORIA memoria){
-	MEMORIA_FUNCOES* aux = memoria.funcoes;
+void imprime_memoria(){
+	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
 	VARIAVEL* aux2 = NULL;
 
-	for(int i = 0; i < memoria.tamanho; i++, aux = aux->prox){
+	for(int i = 0; i < vetorMemoria.tamanho; i++, aux = aux->prox){
 
 		printf("===============================================\n");
 		printf("\t\t%s: %d\n", aux->nome, aux->tamanho);
@@ -263,8 +263,8 @@ int get_fp(MEMORIA_FUNCOES* funcao){
 	return 0;
 }
 
-void liberarTabMemoria(MEMORIA* memoria){
-	MEMORIA_FUNCOES* aux = memoria->funcoes;
+void liberarTabMemoria(){
+	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
 	MEMORIA_FUNCOES* aux2 = aux;
 	VARIAVEL* aux3 = NULL;
 	VARIAVEL* aux4 = NULL;

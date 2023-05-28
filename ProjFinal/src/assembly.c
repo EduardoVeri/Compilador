@@ -26,7 +26,6 @@ void assembly(){
 
 	for(int i = 0; i < indiceVetor; i++)
 		geraAssembly(codigoIntermediario[i]);
-	imprime_memoria(vetorMemoria);
 }
 
 int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){

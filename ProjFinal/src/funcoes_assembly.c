@@ -78,9 +78,6 @@ void liberarAssembly(){
 		free(instrucoesAssembly[i]);
 	}
 	free(instrucoesAssembly);
-
-	liberarLabels(); // Libera a memoria alocada para os labels
-	liberarTabMemoria(&vetorMemoria); // Libera a memoria alocada para a memoria
 }
 
 void tipo_reg(int reg){
