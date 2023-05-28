@@ -274,7 +274,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "sw");
 			novaInstrucao->tipoI->rt = $ra;
 			novaInstrucao->tipoI->rs = $fp;
-			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Endereco Retorno"));
+			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Endereco Retorno")) + instrucao->arg3->val;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 			// Atualiza o valor de $sp

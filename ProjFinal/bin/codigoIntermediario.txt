@@ -1,5 +1,5 @@
 ============== Codigo Intermediario ===============
-FUN, INT, soma, -
+FUN, INT, soma, 2
 ARG, INT, x, soma
 ARG, INT, y, soma
 LOAD, $t0, x, -
@@ -16,7 +16,7 @@ RET, $t2, -, -
 GOTO, L0, -, -
 LABEL, L0, -, -
 END, soma, -, -
-FUN, INT, main, -
+FUN, INT, main, 0
 ALLOC, x, main, -
 ALLOC, y, main, -
 ALLOC, resposta, main, -

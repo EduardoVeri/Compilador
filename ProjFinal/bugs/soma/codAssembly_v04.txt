@@ -1,7 +1,7 @@
 ============== Assembly ==============
 	j main
 soma:
-	sw $ra 3($fp)
+	sw $ra 1($fp)
 	addi $sp $fp 6
 	addi $sp $sp 1
 	addi $sp $sp 1

@@ -204,12 +204,14 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     INSTRUCAO* func = NULL;
     INSTRUCAO* param = NULL;
 
+    int numParam = 0;
+
     strcpy(funcName, arvoreSintatica->filho[1]->lexema);
 
     func = criaInstrucao("FUN");
     func->arg1 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
     func->arg2 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
-    func->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+    //func->arg3 = criaEndereco(Vazio, 0, NULL, 0);
     codigoIntermediario[indiceVetor] = func;
     indiceVetor++;
     
@@ -230,10 +232,13 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         codigoIntermediario[indiceVetor] = criaInstrucao("END");
         codigoIntermediario[indiceVetor]->arg1 = criaEndereco(String, 0, arvoreSintatica->filho[1]->lexema, 0);
         indiceVetor++;
+
+        func->arg3 = criaEndereco(IntConst, numParam, NULL, 0);
         return;
     }
 
     while(noParam != NULL){
+        numParam++;
         param = criaInstrucao("ARG");
 
         if(noParam->tipoDeclaracao == VarParamK)
@@ -249,6 +254,8 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         
         noParam = noParam->irmao;
     }
+
+    func->arg3 = criaEndereco(IntConst, numParam, NULL, numParam);
 
     noParam = arvoreSintatica->filho[0];
     while(noParam != NULL){
