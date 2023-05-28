@@ -197,7 +197,7 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
 	}
 	
-	mostrarReg(); // Mostra os registradores em uso
+	//mostrarReg(); // Mostra os registradores em uso
 
 	desaloca_estruturas_analise(arvoreSintatica, tabelaHash); // Desaloca as estruturas de analise
 
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
 	}  
 
-	imprimirLabels(); // Imprime os labels
+	//imprimirLabels(); // Imprime os labels
 
 	if(!arquivoSaida_Binario){
 		arquivoSaida_Binario = fopen("bin/codigoBinario.txt", "w");
@@ -223,6 +223,7 @@ int main(int argc, char *argv[]){
 			return 0;
 		}
 	}
+	
 	binario(arquivoSaida_Binario); // Inicia o processo de conversao do codigo assembly para binario
 	fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
 

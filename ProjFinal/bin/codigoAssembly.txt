@@ -14,18 +14,21 @@ soma:
 	add $t2 $zero $t3
 	sw $t2 8($fp)
 	lw $t2 8($fp)
-	sw $t2 4($fp)
+	lw $temp 2($fp)
+	sw $t2 2($temp)
 	j Label 0
 Label 0:
 main:
 	ori $fp $zero 0
 	ori $sp $zero 4
 	lw $t4 6($fp)
-	ori $t5 $zero 10
+	subi $sp $sp 0
+	in $t5 $zero 0
 	add $t4 $zero $t5
 	sw $t4 6($fp)
 	lw $t6 7($fp)
-	ori $t7 $zero 5
+	subi $sp $sp 0
+	in $t7 $zero 0
 	add $t6 $zero $t7
 	sw $t6 7($fp)
 	lw $t8 8($fp)
@@ -38,9 +41,10 @@ main:
 	subi $sp $sp 2
 	sw $fp 4($fp)
 	sw $sp 5($fp)
+	add $temp $fp $zero
+	addi $temp $temp 0
 	addi $fp $sp 1
 	jal soma
-	lw $fp 4($fp)
 	lw $sp 5($fp)
 	lw $t9 2($fp)
 	add $t8 $zero $t9
@@ -50,8 +54,9 @@ main:
 	addi $sp $sp 1
 	subi $sp $sp 1
 	lw $temp 1($sp)
-	out $t1 $t-1 -1
-	sw $zero 4($fp)
+	out $zero $temp 0
+	lw $temp 0($fp)
+	sw $zero 2($temp)
 	j Label 1
 Label 1:
 	halt $zero

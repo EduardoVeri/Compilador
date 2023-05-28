@@ -21,11 +21,11 @@ ALLOC, x, main, -
 ALLOC, y, main, -
 ALLOC, resposta, main, -
 LOAD, $t4, x, -
-LOADI, $t5, 10, -
+CALL, input, 0, $t5
 ASSIGN, $t4, $t5, -
 STORE, x, $t4, -
 LOAD, $t6, y, -
-LOADI, $t7, 5, -
+CALL, input, 0, $t7
 ASSIGN, $t6, $t7, -
 STORE, y, $t6, -
 LOAD, $t8, resposta, -

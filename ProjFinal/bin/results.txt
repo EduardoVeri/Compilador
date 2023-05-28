@@ -44,15 +44,19 @@
 	8: reserved word , int
 	8: ID, resposta
 	8: SEMICOLON, ;
-9: x = 10;
+9: x = input();
 	9: ID, x
 	9: ATRIB, =
-	9: NUM, 10
+	9: ID, input
+	9: ABREPARENTESES, (
+	9: FECHAPARENTESES, )
 	9: SEMICOLON, ;
-10: y = 5;
+10: y = input();
 	10: ID, y
 	10: ATRIB, =
-	10: NUM, 5
+	10: ID, input
+	10: ABREPARENTESES, (
+	10: FECHAPARENTESES, )
 	10: SEMICOLON, ;
 11: resposta = soma(x, y);
 	11: ID, resposta
@@ -105,10 +109,10 @@ INT
 			resposta
 		=
 			x
-			10
+			input
 		=
 			y
-			5
+			input
 		=
 			resposta
 			soma
@@ -135,7 +139,7 @@ Linhas: 7
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 
+Linhas: 0 9 10 
 
 Nome: output
 Tipo de dado: VOID
