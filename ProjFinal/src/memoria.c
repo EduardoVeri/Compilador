@@ -34,6 +34,7 @@ MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
 
 	insere_variavel(funcao, "Vinculo Controle", controle);
 	insere_variavel(funcao, "Endereco Retorno", retorno);
+	insere_variavel(funcao, "Valor Retorno", retorno);
 	insere_variavel(funcao, "Registrador Temporario", inteiro);
 	insere_variavel(funcao, "Registrador $fp", inteiro);
 	insere_variavel(funcao, "Registrador $sp", inteiro);
@@ -168,11 +169,11 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 }
 
 
-void imprime_memoria(MEMORIA memoria){
-	MEMORIA_FUNCOES* aux = memoria.funcoes;
+void imprime_memoria(){
+	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
 	VARIAVEL* aux2 = NULL;
 
-	for(int i = 0; i < memoria.tamanho; i++, aux = aux->prox){
+	for(int i = 0; i < vetorMemoria.tamanho; i++, aux = aux->prox){
 
 		printf("===============================================\n");
 		printf("\t\t%s: %d\n", aux->nome, aux->tamanho);
@@ -193,6 +194,7 @@ void imprime_memoria(MEMORIA memoria){
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
 		}
 	}
+	printf("\n");
 }
 
 MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
@@ -262,8 +264,8 @@ int get_fp(MEMORIA_FUNCOES* funcao){
 	return 0;
 }
 
-void liberarTabMemoria(MEMORIA* memoria){
-	MEMORIA_FUNCOES* aux = memoria->funcoes;
+void liberarTabMemoria(){
+	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
 	MEMORIA_FUNCOES* aux2 = aux;
 	VARIAVEL* aux3 = NULL;
 	VARIAVEL* aux4 = NULL;

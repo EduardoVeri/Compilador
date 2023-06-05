@@ -1,0 +1,20 @@
+int soma(int x, int y){
+	int resultado;
+	output(x);
+	output(y);
+	resultado = x + y;
+	output(resultado);
+	return resultado;
+}
+
+int main(void){
+	int x; int y; int resposta;
+	x = 5;
+	output(x);
+	y = 10;
+	output(y);
+	resposta = soma(x, y);
+	output(resposta);
+
+	return 0;
+}

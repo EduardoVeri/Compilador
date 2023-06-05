@@ -24,7 +24,7 @@
 #include "codInterm.h"
 #include "assembly.h"
 #include "binario.h"
-
+#include "memoria.h"
 
 #define MAX_ARG 5 // Numero maximo de argumentos que podem ser passados para o compilador
 
@@ -36,6 +36,7 @@ FILE * arquivoSaida_Intermediario = NULL; // Arquivo de saída do código interm
 FILE * arquivoSaida_Assembly = NULL; // Arquivo de saída do código assembly
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
+void desaloca_estruturas_sintese();
 
 // Funcao Principal do Compilador 
 int main(int argc, char *argv[]){	
@@ -197,7 +198,7 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
 	}
 	
-	mostrarReg(); // Mostra os registradores em uso
+	//mostrarReg(); // Mostra os registradores em uso
 
 	desaloca_estruturas_analise(arvoreSintatica, tabelaHash); // Desaloca as estruturas de analise
 
@@ -212,24 +213,34 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
 	}  
 
-	imprimirLabels(); // Imprime os labels
-
+	imprime_memoria(); // Imprime a memoria
+	//imprimirLabels(); // Imprime os labels
+	
 	if(!arquivoSaida_Binario){
 		arquivoSaida_Binario = fopen("bin/codigoBinario.txt", "w");
 		if(arquivoSaida == NULL){
-			printf("Erro: Nao foi possivel criar o arquivo de saida.\n");
-			desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
-			liberarAssembly(); // Libera a memoria alocada para o codigo assembly
+			printf(ANSI_COLOR_RED "Erro:" ANSI_COLOR_RESET);
+			printf("Nao foi possivel criar o arquivo de saida.\n");
+			desaloca_estruturas_sintese();
 			return 0;
 		}
 	}
+	
 	binario(arquivoSaida_Binario); // Inicia o processo de conversao do codigo assembly para binario
 	fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
 
+	desaloca_estruturas_sintese(); 
+
+	printf(ANSI_COLOR_GREEN "Compilacao realizada com sucesso!\n" ANSI_COLOR_RESET);
+	
+	return 0;
+}
+
+void desaloca_estruturas_sintese(){
 	desalocaVetor(); // Libera a memoria alocada para o codigo intermediario
 	liberarAssembly(); // Libera a memoria alocada para o codigo assembly
-
-	return 0;
+	liberarTabMemoria(); // Libera a memoria alocada para a memoria
+	liberarLabels(); // Libera a memoria alocada para os labels
 }
 
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash){

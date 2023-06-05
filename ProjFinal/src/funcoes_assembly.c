@@ -78,39 +78,35 @@ void liberarAssembly(){
 		free(instrucoesAssembly[i]);
 	}
 	free(instrucoesAssembly);
-
-	liberarLabels(); // Libera a memoria alocada para os labels
-	liberarTabMemoria(&vetorMemoria); // Libera a memoria alocada para a memoria
 }
 
 void tipo_reg(int reg){
 	switch (reg){
 	case $zero:
-		fprintf(arquivoSaida_Assembly, "$zero ");
+		fprintf(arquivoSaida_Assembly, "$zero");
 		break;
 	
 	case $fp:
-		fprintf(arquivoSaida_Assembly, "$fp ");
+		fprintf(arquivoSaida_Assembly, "$fp");
 		break;
 
 	case $sp:
-		fprintf(arquivoSaida_Assembly, "$sp ");
+		fprintf(arquivoSaida_Assembly, "$sp");
 		break;
 
 	case $ra:
-		fprintf(arquivoSaida_Assembly, "$ra ");
+		fprintf(arquivoSaida_Assembly, "$ra");
 		break;
 
 	case $temp:
-		fprintf(arquivoSaida_Assembly, "$temp ");
+		fprintf(arquivoSaida_Assembly, "$temp");
 		break;
 		
 	default:
-		fprintf(arquivoSaida_Assembly, "$t%d ", reg);
+		fprintf(arquivoSaida_Assembly, "$t%d", reg);
 		break;
 	}
 }
-
 
 // Mostrar as instrucoes em assembly
 void imprimirAssembly(){
@@ -126,17 +122,27 @@ void imprimirAssembly(){
 			tipoI = instrucoesAssembly[i]->tipoI;		
 			fprintf(arquivoSaida_Assembly, "\t%s ", tipoI->nome);
 			tipo_reg(tipoI->rt);
-			tipo_reg(tipoI->rs);
-			
-			if(tipoI->label != -1) printf("Label %d\n", tipoI->label);
-			else fprintf(arquivoSaida_Assembly, "%d\n", tipoI->imediato);
-			
+			fprintf(arquivoSaida_Assembly, " ");
+
+			if(!strcmp(tipoI->nome, "lw") || !strcmp(tipoI->nome, "sw")){
+				fprintf(arquivoSaida_Assembly, "%d(", tipoI->imediato);
+				tipo_reg(tipoI->rs);
+				fprintf(arquivoSaida_Assembly, ")\n");
+			}
+			else{
+				tipo_reg(tipoI->rs);
+				fprintf(arquivoSaida_Assembly, " ");
+				if(tipoI->label != -1) fprintf(arquivoSaida_Assembly, "Label %d\n", tipoI->label);
+				else fprintf(arquivoSaida_Assembly, "%d\n", tipoI->imediato);
+			}
 		}
 		else if(instrucoesAssembly[i]->tipo == typeR){
 			tipoR = instrucoesAssembly[i]->tipoR;
 			fprintf(arquivoSaida_Assembly, "\t%s ", tipoR->nome);
 			tipo_reg(tipoR->rd);
+			fprintf(arquivoSaida_Assembly, " ");
 			tipo_reg(tipoR->rs);
+			fprintf(arquivoSaida_Assembly, " ");
 			tipo_reg(tipoR->rt);
 			fprintf(arquivoSaida_Assembly, "\n");
 		}

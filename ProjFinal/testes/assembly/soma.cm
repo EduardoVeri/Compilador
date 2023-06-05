@@ -1,14 +1,10 @@
-int soma(int x, int y){
-	int resultado;
-	resultado = x + y;
-	return resultado;
-}
-
 int main(void){
 	int x; int y; int resposta;
-	x = 10;
-	y = 5;
-	resposta = soma(x, y);
+	x = 5;
+	output(x);
+	y = 10;
+	output(y);
+	resposta = x + y;
 	output(resposta);
 
 	return 0;
