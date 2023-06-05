@@ -1,57 +1,47 @@
-1: int fibonacci(int n){
+1: int soma(int x, int y){
 	1: reserved word , int
-	1: ID, fibonacci
+	1: ID, soma
 	1: ABREPARENTESES, (
 	1: reserved word , int
-	1: ID, n
+	1: ID, x
+	1: COMMA, ,
+	1: reserved word , int
+	1: ID, y
 	1: FECHAPARENTESES, )
 	1: ABRECHAVES, {
-2: int x;
+2: int resultado;
 	2: reserved word , int
-	2: ID, x
+	2: ID, resultado
 	2: SEMICOLON, ;
-3: if(n == 1) return 1;
-	3: reserved word , if
+3: output(x);
+	3: ID, output
 	3: ABREPARENTESES, (
-	3: ID, n
-	3: EQ, ==
-	3: NUM, 1
+	3: ID, x
 	3: FECHAPARENTESES, )
-	3: reserved word , return
-	3: NUM, 1
 	3: SEMICOLON, ;
-4: else{
-	4: reserved word , else
-	4: ABRECHAVES, {
-5: if(n == 2) return 1;
-	5: reserved word , if
-	5: ABREPARENTESES, (
-	5: ID, n
-	5: EQ, ==
-	5: NUM, 2
-	5: FECHAPARENTESES, )
-	5: reserved word , return
-	5: NUM, 1
+4: output(y);
+	4: ID, output
+	4: ABREPARENTESES, (
+	4: ID, y
+	4: FECHAPARENTESES, )
+	4: SEMICOLON, ;
+5: resultado = x + y;
+	5: ID, resultado
+	5: ATRIB, =
+	5: ID, x
+	5: SOMA, +
+	5: ID, y
 	5: SEMICOLON, ;
-6: else return fibonacci(n-1) + fibonacci(n-2);
-	6: reserved word , else
-	6: reserved word , return
-	6: ID, fibonacci
+6: output(resultado);
+	6: ID, output
 	6: ABREPARENTESES, (
-	6: ID, n
-	6: SUB, -
-	6: NUM, 1
-	6: FECHAPARENTESES, )
-	6: SOMA, +
-	6: ID, fibonacci
-	6: ABREPARENTESES, (
-	6: ID, n
-	6: SUB, -
-	6: NUM, 2
+	6: ID, resultado
 	6: FECHAPARENTESES, )
 	6: SEMICOLON, ;
-7: }
-	7: FECHACHAVES, }
+7: return resultado;
+	7: reserved word , return
+	7: ID, resultado
+	7: SEMICOLON, ;
 8: }
 	8: FECHACHAVES, }
 9: 
@@ -62,70 +52,121 @@
 	10: reserved word , void
 	10: FECHAPARENTESES, )
 	10: ABRECHAVES, {
-11: int resp;
+11: int x; int y; int resposta;
 	11: reserved word , int
-	11: ID, resp
+	11: ID, x
 	11: SEMICOLON, ;
-12: resp = fibonacci(4);
-	12: ID, resp
+	11: reserved word , int
+	11: ID, y
+	11: SEMICOLON, ;
+	11: reserved word , int
+	11: ID, resposta
+	11: SEMICOLON, ;
+12: x = 5;
+	12: ID, x
 	12: ATRIB, =
-	12: ID, fibonacci
-	12: ABREPARENTESES, (
-	12: NUM, 4
-	12: FECHAPARENTESES, )
+	12: NUM, 5
 	12: SEMICOLON, ;
-13: output(resp);
+13: output(x);
 	13: ID, output
 	13: ABREPARENTESES, (
-	13: ID, resp
+	13: ID, x
 	13: FECHAPARENTESES, )
 	13: SEMICOLON, ;
-	14: FECHACHAVES, }
-	14: EOF
+14: y = 10;
+	14: ID, y
+	14: ATRIB, =
+	14: NUM, 10
+	14: SEMICOLON, ;
+15: output(y);
+	15: ID, output
+	15: ABREPARENTESES, (
+	15: ID, y
+	15: FECHAPARENTESES, )
+	15: SEMICOLON, ;
+16: resposta = soma(x, y);
+	16: ID, resposta
+	16: ATRIB, =
+	16: ID, soma
+	16: ABREPARENTESES, (
+	16: ID, x
+	16: COMMA, ,
+	16: ID, y
+	16: FECHAPARENTESES, )
+	16: SEMICOLON, ;
+17: output(resposta);
+	17: ID, output
+	17: ABREPARENTESES, (
+	17: ID, resposta
+	17: FECHAPARENTESES, )
+	17: SEMICOLON, ;
+18: 
+19: return 0;
+	19: reserved word , return
+	19: NUM, 0
+	19: SEMICOLON, ;
+	20: FECHACHAVES, }
+	20: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
 	INT
-		n
-	fibonacci
+		x
+	INT
+		y
+	soma
 		INT
+			resultado
+		output
 			x
-		IF
-			==
-				n
-				1
-			ReturnINT
-				1
-			IF
-				==
-					n
-					2
-				ReturnINT
-					1
-				ReturnINT
-					+
-						fibonacci
-							-
-								n
-								1
-						fibonacci
-							-
-								n
-								2
+		output
+			y
+		=
+			resultado
+			+
+				x
+				y
+		output
+			resultado
+		ReturnINT
+			resultado
 INT
 	VOID
 	main
 		INT
-			resp
+			x
+		INT
+			y
+		INT
+			resposta
 		=
-			resp
-			fibonacci
-				4
+			x
+			5
 		output
-			resp
+			x
+		=
+			y
+			10
+		output
+			y
+		=
+			resposta
+			soma
+				x
+				y
+		output
+			resposta
+		ReturnINT
+			0
 
 
 ============== Tabela de Simbolos ===============
+Nome: resultado
+Escopo: soma
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 2 
+
 Nome: main
 Tipo de dado: INT
 Tipo de identificador: FUN
@@ -136,31 +177,43 @@ Tipo de dado: INT
 Tipo de identificador: FUN
 Linhas: 0 
 
-Nome: fibonacci
-Tipo de dado: INT
-Tipo de identificador: FUN
-Linhas: 1 6 6 12 
-
-Nome: n
-Escopo: fibonacci
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 1 3 5 6 6 
-
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 13 
+Linhas: 0 3 13 
 
 Nome: x
-Escopo: fibonacci
+Escopo: soma
 Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 2 
+Tipo de identificador: PARAM
+Linhas: 1 3 
 
-Nome: resp
+Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
 Linhas: 11 12 13 
+
+Nome: y
+Escopo: soma
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 1 
+
+Nome: y
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 11 
+
+Nome: soma
+Tipo de dado: INT
+Tipo de identificador: FUN
+Linhas: 1 
+
+Nome: resposta
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 11 
 

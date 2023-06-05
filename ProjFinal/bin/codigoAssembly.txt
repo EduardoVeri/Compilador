@@ -1,99 +1,97 @@
 ============== Assembly ==============
 	j main
-fibonacci:
-	sw $ra 2($fp)
+soma:
+	sw $ra 3($fp)
 	addi $sp $fp 5
 	addi $sp $sp 1
-	lw $t0 0($fp)
 	addi $sp $sp 1
-	lw $t0 0($fp)
-	ori $t1 $zero 1
-	slt $t2 $t0 $t1
-	slt $t2 $t1 $t0
-	bne $t2 $zero Label 1
-	ori $t3 $zero 1
-	lw $temp 1($fp)
-	sw $t3 2($temp)
-	j Label 0
-	j Label 2
-Label 1:
-	lw $t0 0($fp)
-	ori $t4 $zero 2
-	slt $t5 $t0 $t4
-	slt $t5 $t4 $t0
-	bne $t5 $zero Label 3
-	ori $t6 $zero 1
-	lw $temp 1($fp)
-	sw $t6 2($temp)
-	j Label 0
-	j Label 4
-Label 3:
-	lw $t0 0($fp)
-	ori $t7 $zero 1
-	sub $t8 $t0 $t7
-	sw $t8 1($sp)
+	lw $t0 1($fp)
+	lw $t1 0($fp)
+	addi $sp $sp 1
+	lw $t0 1($fp)
+	sw $t0 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 1
-	sw $fp 5($fp)
-	sw $sp 6($fp)
-	add $temp $fp $zero
-	addi $temp $temp 1
-	addi $fp $sp 1
-	sw $temp 2($sp)
-	jal fibonacci
-	lw $sp 6($fp)
-	lw $t9 3($fp)
-	lw $t0 0($fp)
-	ori $t10 $zero 2
-	sub $t11 $t0 $t10
-	sw $t11 1($sp)
+	lw $temp 1($sp)
+	out $zero $temp 0
+	lw $t1 0($fp)
+	sw $t1 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 1
-	sw $fp 5($fp)
-	sw $sp 6($fp)
-	add $temp $fp $zero
-	addi $temp $temp 1
-	addi $fp $sp 1
-	sw $temp 2($sp)
-	jal fibonacci
-	lw $sp 6($fp)
-	lw $t12 3($fp)
-	add $t13 $t9 $t12
-	lw $temp 1($fp)
-	sw $t13 2($temp)
+	lw $temp 1($sp)
+	out $zero $temp 0
+	lw $t2 8($fp)
+	lw $t0 1($fp)
+	lw $t1 0($fp)
+	add $t3 $t0 $t1
+	add $t2 $zero $t3
+	sw $t2 8($fp)
+	lw $t2 8($fp)
+	sw $t2 1($sp)
+	addi $sp $sp 1
+	subi $sp $sp 1
+	lw $temp 1($sp)
+	out $zero $temp 0
+	lw $t2 8($fp)
+	lw $temp 2($fp)
+	sw $t2 2($temp)
 	j Label 0
-Label 4:
-Label 2:
 Label 0:
-	lw $ra 2($fp)
-	lw $temp 1($fp)
+	lw $ra 3($fp)
+	lw $temp 2($fp)
 	lw $fp 4($temp)
 	jr $zero $ra $zero
 main:
 	ori $fp $zero 0
 	ori $sp $zero 5
 	addi $sp $sp 1
-	lw $t14 6($fp)
-	ori $t15 $zero 4
-	sw $t15 1($sp)
+	addi $sp $sp 1
+	addi $sp $sp 1
+	lw $t4 6($fp)
+	ori $t5 $zero 5
+	add $t4 $zero $t5
+	sw $t4 6($fp)
+	lw $t4 6($fp)
+	sw $t4 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 1
+	lw $temp 1($sp)
+	out $zero $temp 0
+	lw $t6 7($fp)
+	ori $t7 $zero 10
+	add $t6 $zero $t7
+	sw $t6 7($fp)
+	lw $t6 7($fp)
+	sw $t6 1($sp)
+	addi $sp $sp 1
+	subi $sp $sp 1
+	lw $temp 1($sp)
+	out $zero $temp 0
+	lw $t8 8($fp)
+	lw $t4 6($fp)
+	sw $t4 1($sp)
+	addi $sp $sp 1
+	lw $t6 7($fp)
+	sw $t6 1($sp)
+	addi $sp $sp 1
+	subi $sp $sp 2
 	sw $fp 4($fp)
 	sw $sp 5($fp)
 	add $temp $fp $zero
 	addi $temp $temp 0
 	addi $fp $sp 1
-	sw $temp 2($sp)
-	jal fibonacci
+	sw $temp 3($sp)
+	jal soma
 	lw $sp 5($fp)
-	lw $t16 2($fp)
-	add $t14 $zero $t16
-	sw $t14 6($fp)
-	lw $t14 6($fp)
-	sw $t14 1($sp)
+	lw $t9 2($fp)
+	add $t8 $zero $t9
+	sw $t8 8($fp)
+	lw $t8 8($fp)
+	sw $t8 1($sp)
 	addi $sp $sp 1
 	subi $sp $sp 1
 	lw $temp 1($sp)
 	out $zero $temp 0
-Label 5:
+	j Label 1
+Label 1:
 	halt $zero
