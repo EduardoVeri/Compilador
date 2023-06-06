@@ -195,13 +195,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			printf("NULL no argumento 3\n");
 			return;
 		}
-
-		if(!instrucao->arg3){
-			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
-			printf("NULL no argumento 3\n");
-			return;
-		}
-
+		
 		if(instrucao->arg3->tipo == Vazio){
 			insere_variavel(funcao, instrucao->arg1->nome, inteiro);
 			count = 1;
@@ -274,13 +268,39 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + get_fp(funcaoAtual) + 1;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+			if(DEBUG_MODE){
+				novaInstrucao = criarNoAssembly(typeI, "out");
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->rt = $zero;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $sp;
 			novaInstrucao->tipoI->rs = $zero;
 			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + get_sp(funcaoAtual) + 1;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+			if(DEBUG_MODE){
+				novaInstrucao = criarNoAssembly(typeI, "out");
+				novaInstrucao->tipoI->rs = $sp;
+				novaInstrucao->tipoI->rt = $zero;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+
 		}
 		else{
+
+			if(DEBUG_MODE){
+				novaInstrucao = criarNoAssembly(typeI, "out");
+				novaInstrucao->tipoI->rs = $ra;
+				novaInstrucao->tipoI->rt = $zero;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+
 			// Guarda o valor de controle para a funcao anterior
 			novaInstrucao = criarNoAssembly(typeI, "sw");
 			novaInstrucao->tipoI->rt = $ra;
@@ -315,7 +335,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 	}
 	else if(!strcmp(instrucao->op, "PARAM")){
-
 		novaInstrucao = criarNoAssembly(typeI, "sw");
 		novaInstrucao->tipoI->rs = $sp;
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
@@ -338,6 +357,8 @@ void geraAssembly(INSTRUCAO* instrucao){
 			return;
 		}
 
+
+		// TODO: Rever essa parte, principalmente quando for global
 		if(instrucao->arg3->tipo != Vazio){
 			// Load de um indice de um vetor
 			novaInstrucao = criarNoAssembly(typeI, "addi");

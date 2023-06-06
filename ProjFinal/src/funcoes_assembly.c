@@ -118,6 +118,8 @@ void imprimirAssembly(){
 
 	fprintf(arquivoSaida_Assembly, "============== Assembly ==============\n");
 	for(int i = 0; i < indiceAssembly; i++){
+		fprintf(arquivoSaida_Assembly, "%d: ", i);
+		if(i<10) fprintf(arquivoSaida_Assembly, " ");
 		if(instrucoesAssembly[i]->tipo == typeI){
 			tipoI = instrucoesAssembly[i]->tipoI;		
 			fprintf(arquivoSaida_Assembly, "\t%s ", tipoI->nome);
