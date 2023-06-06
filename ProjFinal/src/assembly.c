@@ -207,13 +207,14 @@ void geraAssembly(INSTRUCAO* instrucao){
 			count = instrucao->arg3->val;
 		}
 
-		// TODO: Verificar se o count aqui esta correto para uso com vetores
-		
-		novaInstrucao = criarNoAssembly(typeI, "addi");
-		novaInstrucao->tipoI->rt = $sp;
-		novaInstrucao->tipoI->rs = $sp;
-		novaInstrucao->tipoI->imediato = count;
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		int static flag = 0;
+		if(funcao->tamanho > get_sp(funcao) && !flag){
+			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+			printf("Memoria insuficiente na funcao %s\n", funcao->nome);
+			printf("Aumente a memoria alocada pelo compilador ou diminua as variaveis da funcao\n");
+			flag = 1;
+		}
+
 	}
 	else if(!strcmp(instrucao->op, "ARG")){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg3->nome);
@@ -222,11 +223,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			insere_variavel(funcao, instrucao->arg2->nome, inteiroArg);
 		else insere_variavel(funcao, instrucao->arg2->nome, vetorArg);
 		
-		novaInstrucao = criarNoAssembly(typeI, "addi");
-		novaInstrucao->tipoI->rt = $sp;
-		novaInstrucao->tipoI->rs = $sp;
-		novaInstrucao->tipoI->imediato = 1;
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 	}	
 	else if(!strcmp(instrucao->op, "IFF")){
 		novaInstrucao = criarNoAssembly(typeI, "bne");
@@ -265,8 +261,9 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $fp;
 			novaInstrucao->tipoI->rs = $zero; 
-			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + get_fp(funcaoAtual) + 1;
+			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_fp(funcaoAtual);
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			printf("fp: %d\n", novaInstrucao->tipoI->imediato);
 
 			if(DEBUG_MODE){
 				novaInstrucao = criarNoAssembly(typeI, "out");
@@ -279,8 +276,9 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $sp;
 			novaInstrucao->tipoI->rs = $zero;
-			novaInstrucao->tipoI->imediato = get_sp(buscar_funcao(&vetorMemoria, "global")) + get_sp(funcaoAtual) + 1;
+			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_sp(funcaoAtual);
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			printf("sp: %d\n", novaInstrucao->tipoI->imediato);
 
 			if(DEBUG_MODE){
 				novaInstrucao = criarNoAssembly(typeI, "out");
@@ -342,12 +340,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 		insere_variavel(funcaoAtual, "Param", temp); // Apenas para incrementar o sp
-
-		novaInstrucao = criarNoAssembly(typeI, "addi");
-		novaInstrucao->tipoI->rt = $sp;
-		novaInstrucao->tipoI->rs = $sp;
-		novaInstrucao->tipoI->imediato = 1;
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		
 	} 
 	else if(!strcmp(instrucao->op, "LOAD")){
