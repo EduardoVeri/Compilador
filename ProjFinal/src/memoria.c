@@ -20,7 +20,16 @@ void inicializa_memoria(MEMORIA *memoria){
 	
 	global = func_global; // Variavel global para a funcao get_variavel
 
-	memoria->tamanho = 1;
+	MEMORIA_FUNCOES* parametros = (MEMORIA_FUNCOES*)malloc(sizeof(MEMORIA_FUNCOES));
+
+	parametros->tamanho = 0;
+	parametros->nome = strdup("parametros");
+	parametros->prox = NULL;
+	parametros->tabelaVar = NULL;
+
+	global->prox = parametros;
+
+	memoria->tamanho = 2;
 	memoria->funcoes = func_global;
 }
 
@@ -105,7 +114,7 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 			aux->indice = i;
 			aux = aux->prox;
 		}
-		
+
 		return;
 	}
 
@@ -167,7 +176,24 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 
 	VARIAVEL* aux = funcao->tabelaVar;
 	VARIAVEL* aux2 = aux;
+	
+	// Caso nao tenha parametros
+	if(funcao->tamanho == 0){
+		printf("Nao ha temporarios a serem apagados!\n");
+		return;
+	}
 
+	// Caso so tenha um parametro
+	if(funcao->tamanho == 1){
+		if(!strcmp(aux->nome, "Param")){
+			free(aux);
+			funcao->tamanho--;
+			funcao->tabelaVar = NULL;
+			return;
+		}
+	}
+
+	// Caso tenha mais de um parametro
 	while(aux->prox != NULL){
 		aux2 = aux;
 		aux = aux->prox;
@@ -223,6 +249,7 @@ MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
 		printf("NULL passado como argumento em buscar_funcao\n");
 		return NULL;
 	}
+	
 	
 	MEMORIA_FUNCOES* aux = memoria->funcoes;
 	while(aux != NULL){

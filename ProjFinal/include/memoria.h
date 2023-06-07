@@ -1,6 +1,7 @@
 #ifndef _MEMORIA_H_
 #define _MEMORIA_H_ 1
 
+#define MEM_PARAM 1000;
 
 typedef enum tipo{
 	inteiro,

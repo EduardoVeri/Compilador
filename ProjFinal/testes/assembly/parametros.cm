@@ -1,0 +1,10 @@
+void soma(int x){
+    x = x+35;
+    output(x);
+}
+
+int main(void){
+    int x;
+    x = 10;
+    soma(x);
+}

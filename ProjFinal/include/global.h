@@ -1,7 +1,7 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_ 1
 
-#define DEBUG_MODE 1 // Ativa o modo debug
+#define DEBUG_MODE 0 // Ativa o modo debug
 #define MAXLEXEMA 21 // Tamanho máximo do lexema
 
 extern int flagVerbose; // Flag para ativar o modo verbose

@@ -1,0 +1,9 @@
+int soma(void){
+}
+
+int main(void){
+    output(3);
+    soma();
+    output(20);
+    return;
+}
