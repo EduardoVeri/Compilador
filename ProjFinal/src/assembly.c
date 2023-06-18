@@ -67,6 +67,7 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 
 		instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
 
+		//TODO: Ver o que isso faz!
 		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
 		(*novaInstrucao)->tipoR->rd = rd;
 		(*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
@@ -89,10 +90,10 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 
 		int rd = (*novaInstrucao)->tipoR->rd;
 
-		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
-		(*novaInstrucao)->tipoR->rd = rd;
-		(*novaInstrucao)->tipoR->rs = rd;
-		(*novaInstrucao)->tipoR->rt = $zero;
+		(*novaInstrucao) = criarNoAssembly(typeI, "xori");
+		(*novaInstrucao)->tipoI->rt = rd;
+		(*novaInstrucao)->tipoI->rs = rd;
+		(*novaInstrucao)->tipoI->imediato = 1;
 	}
 	else if(strcmp(instrucao->op, "LET") == 0){
 		(*novaInstrucao) = criarNoAssembly(typeR, "slt");
@@ -104,10 +105,10 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 
 		int rd = (*novaInstrucao)->tipoR->rd;
 
-		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
-		(*novaInstrucao)->tipoR->rd = rd;
-		(*novaInstrucao)->tipoR->rs = rd;
-		(*novaInstrucao)->tipoR->rt = $zero;
+		(*novaInstrucao) = criarNoAssembly(typeI, "xori");
+		(*novaInstrucao)->tipoI->rt = rd;
+		(*novaInstrucao)->tipoI->rs = rd;
+		(*novaInstrucao)->tipoI->imediato = 1;
 	}
 	else{
 		return 0;
@@ -516,7 +517,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->imediato = i + 1;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
-			if(1){
+			if(DEBUG_MODE){
 				// Mostra o valor do $temp para o usuario
 				novaInstrucao = criarNoAssembly(typeI, "out");
 				novaInstrucao->tipoI->rs = $temp;

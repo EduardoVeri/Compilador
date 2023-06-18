@@ -24,6 +24,7 @@ unsigned int get_opcode(char* nome, tipoInstrucao tipo){
 	else if(!strcmp(nome, "j")) opcode = 0b000010;
 	else if(!strcmp(nome, "jal")) opcode = 0b000011;
 	else if(!strcmp(nome, "halt")) opcode = 0b111111;
+	else if(!strcmp(nome, "xori")) opcode = 0b101101;
     
     return opcode;
 }
@@ -43,6 +44,7 @@ unsigned int get_funct(char* nome){
 	else if(!strcmp(nome, "srl")) funct = 0b000010;
 	else if(!strcmp(nome, "div")) funct = 0b011010;
 	else if(!strcmp(nome, "mult")) funct = 0b011000;
+	else if(!strcmp(nome, "xor")) funct = 0b101101;
 	
 	return funct;
 }
@@ -115,7 +117,7 @@ BIN_J* binarioJ(ASSEMBLY* instrucao){
 	return bin;
 }		
 
-// Assumes little endian
+
 void printBits(size_t const size, void const * const ptr, FILE* arquivo)
 {
     unsigned char *b = (unsigned char*) ptr;
@@ -128,7 +130,6 @@ void printBits(size_t const size, void const * const ptr, FILE* arquivo)
             fprintf(arquivo, "%u", byte);
         }
     }
-   // fprintf(arquivo, "\n");
 }
 
 void mostrar_binario(tipoInstrucao tipo, void* binario, FILE* arquivo){

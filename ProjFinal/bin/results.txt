@@ -1,166 +1,205 @@
-1: int fibonacci(int n){
-	1: reserved word , int
-	1: ID, fibonacci
-	1: ABREPARENTESES, (
-	1: reserved word , int
-	1: ID, n
-	1: FECHAPARENTESES, )
-	1: ABRECHAVES, {
-2: int x;
+1: 
+2: int fatorial(int n)
 	2: reserved word , int
-	2: ID, x
-	2: SEMICOLON, ;
-3: if(n == 1) return 1;
-	3: reserved word , if
-	3: ABREPARENTESES, (
-	3: ID, n
-	3: EQ, ==
-	3: NUM, 1
-	3: FECHAPARENTESES, )
-	3: reserved word , return
-	3: NUM, 1
-	3: SEMICOLON, ;
-4: else{
-	4: reserved word , else
-	4: ABRECHAVES, {
-5: if(n == 2) return 1;
-	5: reserved word , if
-	5: ABREPARENTESES, (
-	5: ID, n
-	5: EQ, ==
-	5: NUM, 2
-	5: FECHAPARENTESES, )
-	5: reserved word , return
-	5: NUM, 1
-	5: SEMICOLON, ;
-6: else return fibonacci(n-1) + fibonacci(n-2);
-	6: reserved word , else
-	6: reserved word , return
-	6: ID, fibonacci
+	2: ID, fatorial
+	2: ABREPARENTESES, (
+	2: reserved word , int
+	2: ID, n
+	2: FECHAPARENTESES, )
+3: {
+	3: ABRECHAVES, {
+4: int vfat; int valor; 
+	4: reserved word , int
+	4: ID, vfat
+	4: SEMICOLON, ;
+	4: reserved word , int
+	4: ID, valor
+	4: SEMICOLON, ;
+5: 
+6: if (n == 1){
+	6: reserved word , if
 	6: ABREPARENTESES, (
 	6: ID, n
-	6: SUB, -
+	6: EQ, ==
 	6: NUM, 1
 	6: FECHAPARENTESES, )
-	6: SOMA, +
-	6: ID, fibonacci
-	6: ABREPARENTESES, (
-	6: ID, n
-	6: SUB, -
-	6: NUM, 2
-	6: FECHAPARENTESES, )
-	6: SEMICOLON, ;
-7: }
-	7: FECHACHAVES, }
+	6: ABRECHAVES, {
+7: return (1);
+	7: reserved word , return
+	7: ABREPARENTESES, (
+	7: NUM, 1
+	7: FECHAPARENTESES, )
+	7: SEMICOLON, ;
 8: }
 	8: FECHACHAVES, }
-9: 
-10: int main(void){
-	10: reserved word , int
-	10: ID, main
-	10: ABREPARENTESES, (
-	10: reserved word , void
-	10: FECHAPARENTESES, )
+9: else
+	9: reserved word , else
+10: {
 	10: ABRECHAVES, {
-11: int resp;
-	11: reserved word , int
-	11: ID, resp
-	11: SEMICOLON, ;
-12: resp = fibonacci(4);
-	12: ID, resp
-	12: ATRIB, =
-	12: ID, fibonacci
-	12: ABREPARENTESES, (
-	12: NUM, 4
-	12: FECHAPARENTESES, )
-	12: SEMICOLON, ;
-13: output(resp);
-	13: ID, output
+11: /*valor = fatorial(n-1);
+12: output(valor);*/
+13: vfat = n * fatorial(n-1);
+	13: ID, vfat
+	13: ATRIB, =
+	13: ID, n
+	13: MULT, *
+	13: ID, fatorial
 	13: ABREPARENTESES, (
-	13: ID, resp
+	13: ID, n
+	13: SUB, -
+	13: NUM, 1
 	13: FECHAPARENTESES, )
 	13: SEMICOLON, ;
-	14: FECHACHAVES, }
-	14: EOF
+14: /*output(vfat);*/
+15: return (vfat);
+	15: reserved word , return
+	15: ABREPARENTESES, (
+	15: ID, vfat
+	15: FECHAPARENTESES, )
+	15: SEMICOLON, ;
+16: }
+	16: FECHACHAVES, }
+17: }
+	17: FECHACHAVES, }
+18: 
+19: int main(void)
+	19: reserved word , int
+	19: ID, main
+	19: ABREPARENTESES, (
+	19: reserved word , void
+	19: FECHAPARENTESES, )
+20: {
+	20: ABRECHAVES, {
+21: int numero;
+	21: reserved word , int
+	21: ID, numero
+	21: SEMICOLON, ;
+22: int f;
+	22: reserved word , int
+	22: ID, f
+	22: SEMICOLON, ;
+23: 
+24: numero = 5;
+	24: ID, numero
+	24: ATRIB, =
+	24: NUM, 5
+	24: SEMICOLON, ;
+25: 
+26: f = fatorial(numero);
+	26: ID, f
+	26: ATRIB, =
+	26: ID, fatorial
+	26: ABREPARENTESES, (
+	26: ID, numero
+	26: FECHAPARENTESES, )
+	26: SEMICOLON, ;
+27: output(f);
+	27: ID, output
+	27: ABREPARENTESES, (
+	27: ID, f
+	27: FECHAPARENTESES, )
+	27: SEMICOLON, ;
+28: return 0;
+	28: reserved word , return
+	28: NUM, 0
+	28: SEMICOLON, ;
+29: }
+	29: FECHACHAVES, }
+	30: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
 	INT
 		n
-	fibonacci
+	fatorial
 		INT
-			x
+			vfat
+		INT
+			valor
 		IF
 			==
 				n
 				1
 			ReturnINT
 				1
-			IF
-				==
+			=
+				vfat
+				*
 					n
-					2
-				ReturnINT
-					1
-				ReturnINT
-					+
-						fibonacci
-							-
-								n
-								1
-						fibonacci
-							-
-								n
-								2
+					fatorial
+						-
+							n
+							1
+			ReturnINT
+				vfat
 INT
 	VOID
 	main
 		INT
-			resp
+			numero
+		INT
+			f
 		=
-			resp
-			fibonacci
-				4
+			numero
+			5
+		=
+			f
+			fatorial
+				numero
 		output
-			resp
+			f
+		ReturnINT
+			0
 
 
 ============== Tabela de Simbolos ===============
 Nome: main
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 10 
+Linhas: 19 
+
+Nome: vfat
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 4 13 15 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
 Linhas: 0 
 
-Nome: fibonacci
+Nome: valor
+Escopo: fatorial
 Tipo de dado: INT
-Tipo de identificador: FUN
-Linhas: 1 6 6 12 
+Tipo de identificador: VAR
+Linhas: 4 
+
+Nome: f
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 22 26 27 
+
+Nome: numero
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 21 24 26 
 
 Nome: n
-Escopo: fibonacci
+Escopo: fatorial
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 1 3 5 6 6 
+Linhas: 2 6 13 13 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 13 
+Linhas: 0 27 
 
-Nome: x
-Escopo: fibonacci
+Nome: fatorial
 Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 2 
-
-Nome: resp
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 11 12 13 
+Tipo de identificador: FUN
+Linhas: 2 13 26 
 

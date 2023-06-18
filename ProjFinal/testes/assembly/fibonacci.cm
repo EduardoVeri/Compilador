@@ -9,6 +9,6 @@ int fibonacci(int n){
 
 int main(void){
     int resp;
-    resp = fibonacci(4);
+    resp = fibonacci(5);
     output(resp);
 }

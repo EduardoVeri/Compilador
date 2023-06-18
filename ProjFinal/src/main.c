@@ -6,7 +6,7 @@
  *  Fase de Sintese desenvolvida na disciplina de Lab. de Compiladores
  * 
  *  Docente: Prof. Dr. Luis Augusto Martins Pereira
- *  Docente: Profa. Dra. Taina Aparecida Azevedo Tosta
+ *  Docente: Profa. Dra. Thaina Aparecida Azevedo Tosta
  * 
  *  Desenvolvido por: Eduardo Verissimo Faccio
  *  RA: 148859
