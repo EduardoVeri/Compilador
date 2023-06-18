@@ -29,5 +29,5 @@ typedef struct {
 } BIN_J;
 
 void binario(FILE* arquivo);
-
+void binario_debug(FILE* arquivo);
 #endif

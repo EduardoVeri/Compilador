@@ -1,95 +1,102 @@
 ============== Assembly ==============
 0:  	j main
-1:  soma:
-2:  	sw $ra 3($fp)
+1:  fibonacci:
+2:  	sw $ra 2($fp)
 3:  	lw $t0 0($fp)
-4:  	lw $t1 1($fp)
-5:  	lw $t0 0($fp)
-6:  	ori $temp $zero 1000
-7:  	sw $t0 0($temp)
-8:  	ori $temp $zero 1000
-9:  	lw $temp 0($temp)
-10: 	out $zero $temp 0
-11: 	lw $t1 1($fp)
-12: 	ori $temp $zero 1000
-13: 	sw $t1 0($temp)
-14: 	ori $temp $zero 1000
-15: 	lw $temp 0($temp)
-16: 	out $zero $temp 0
-17: 	lw $t2 8($fp)
-18: 	lw $t0 0($fp)
-19: 	lw $t1 1($fp)
-20: 	add $t3 $t0 $t1
-21: 	add $t2 $zero $t3
-22: 	sw $t2 8($fp)
-23: 	lw $t2 8($fp)
-24: 	ori $temp $zero 1000
-25: 	sw $t2 0($temp)
-26: 	ori $temp $zero 1000
-27: 	lw $temp 0($temp)
-28: 	out $zero $temp 0
-29: 	lw $t2 8($fp)
-30: 	lw $temp 2($fp)
-31: 	sw $t2 2($temp)
-32: 	j Label 0
-33: Label 0:
-34: 	lw $ra 3($fp)
-35: 	jr $zero $ra $zero
-36: main:
-37: 	ori $fp $zero 0
-38: 	ori $sp $zero 24
-39: 	lw $t4 6($fp)
-40: 	ori $t5 $zero 5
-41: 	add $t4 $zero $t5
-42: 	sw $t4 6($fp)
-43: 	lw $t4 6($fp)
-44: 	ori $temp $zero 1000
-45: 	sw $t4 0($temp)
-46: 	ori $temp $zero 1000
-47: 	lw $temp 0($temp)
-48: 	out $zero $temp 0
-49: 	lw $t6 7($fp)
-50: 	ori $t7 $zero 10
-51: 	add $t6 $zero $t7
-52: 	sw $t6 7($fp)
-53: 	lw $t6 7($fp)
-54: 	ori $temp $zero 1000
-55: 	sw $t6 0($temp)
-56: 	ori $temp $zero 1000
-57: 	lw $temp 0($temp)
-58: 	out $zero $temp 0
-59: 	lw $t8 8($fp)
-60: 	lw $t4 6($fp)
-61: 	ori $temp $zero 1000
-62: 	sw $t4 0($temp)
-63: 	lw $t6 7($fp)
-64: 	ori $temp $zero 1000
-65: 	sw $t6 1($temp)
-66: 	ori $temp $zero 1000
-67: 	lw $temp 1($temp)
-68: 	sw $temp 1($sp)
-69: 	out $zero $temp 0
-70: 	ori $temp $zero 1000
-71: 	lw $temp 0($temp)
-72: 	sw $temp 2($sp)
-73: 	out $zero $temp 0
-74: 	add $temp $fp $zero
-75: 	addi $temp $temp 0
-76: 	sw $temp 3($sp)
-77: 	addi $fp $fp 25
-78: 	addi $sp $sp 25
-79: 	jal soma
-80: 	subi $fp $fp 25
-81: 	subi $sp $sp 25
-82: 	lw $t9 2($fp)
-83: 	add $t8 $zero $t9
-84: 	sw $t8 8($fp)
-85: 	lw $t8 8($fp)
-86: 	ori $temp $zero 1000
-87: 	sw $t8 0($temp)
-88: 	ori $temp $zero 1000
-89: 	lw $temp 0($temp)
-90: 	out $zero $temp 0
-91: 	j Label 1
-92: Label 1:
-93: 	halt $zero
+4:  	lw $t0 0($fp)
+5:  	ori $t1 $zero 1
+6:  	slt $t2 $t0 $t1
+7:  	slt $t2 $t1 $t0
+8:  	bne $t2 $zero Label 1
+9:  	ori $t3 $zero 1
+10: 	lw $temp 1($fp)
+11: 	sw $t3 2($temp)
+12: 	j Label 0
+13: 	j Label 2
+14: Label 1:
+15: 	lw $t0 0($fp)
+16: 	ori $t4 $zero 2
+17: 	slt $t5 $t0 $t4
+18: 	slt $t5 $t4 $t0
+19: 	bne $t5 $zero Label 3
+20: 	ori $t6 $zero 1
+21: 	lw $temp 1($fp)
+22: 	sw $t6 2($temp)
+23: 	j Label 0
+24: 	j Label 4
+25: Label 3:
+26: 	lw $t0 0($fp)
+27: 	ori $t7 $zero 1
+28: 	sub $t8 $t0 $t7
+29: 	ori $temp $zero 1000
+30: 	sw $t8 0($temp)
+31: 	ori $temp $zero 1000
+32: 	lw $temp 0($temp)
+33: 	sw $temp 1($sp)
+34: 	out $zero $temp 0
+35: 	add $temp $fp $zero
+36: 	addi $temp $temp 1
+37: 	sw $temp 2($sp)
+38: 	addi $fp $fp 25
+39: 	addi $sp $sp 25
+40: 	jal fibonacci
+41: 	subi $fp $fp 25
+42: 	subi $sp $sp 25
+43: 	lw $t9 3($fp)
+44: 	lw $t0 0($fp)
+45: 	ori $t10 $zero 2
+46: 	sub $t11 $t0 $t10
+47: 	ori $temp $zero 1000
+48: 	sw $t11 0($temp)
+49: 	ori $temp $zero 1000
+50: 	lw $temp 0($temp)
+51: 	sw $temp 1($sp)
+52: 	out $zero $temp 0
+53: 	add $temp $fp $zero
+54: 	addi $temp $temp 1
+55: 	sw $temp 2($sp)
+56: 	addi $fp $fp 25
+57: 	addi $sp $sp 25
+58: 	jal fibonacci
+59: 	subi $fp $fp 25
+60: 	subi $sp $sp 25
+61: 	lw $t12 3($fp)
+62: 	add $t13 $t9 $t12
+63: 	lw $temp 1($fp)
+64: 	sw $t13 2($temp)
+65: 	j Label 0
+66: Label 4:
+67: Label 2:
+68: Label 0:
+69: 	lw $ra 2($fp)
+70: 	jr $zero $ra $zero
+71: main:
+72: 	ori $fp $zero 0
+73: 	ori $sp $zero 24
+74: 	lw $t14 6($fp)
+75: 	ori $t15 $zero 4
+76: 	ori $temp $zero 1000
+77: 	sw $t15 0($temp)
+78: 	ori $temp $zero 1000
+79: 	lw $temp 0($temp)
+80: 	sw $temp 1($sp)
+81: 	out $zero $temp 0
+82: 	add $temp $fp $zero
+83: 	addi $temp $temp 0
+84: 	sw $temp 2($sp)
+85: 	addi $fp $fp 25
+86: 	addi $sp $sp 25
+87: 	jal fibonacci
+88: 	subi $fp $fp 25
+89: 	subi $sp $sp 25
+90: 	lw $t16 2($fp)
+91: 	add $t14 $zero $t16
+92: 	sw $t14 6($fp)
+93: 	lw $t14 6($fp)
+94: 	ori $temp $zero 1000
+95: 	sw $t14 0($temp)
+96: 	ori $temp $zero 1000
+97: 	lw $temp 0($temp)
+98: 	out $zero $temp 0
+99: Label 5:
+100: 	halt $zero

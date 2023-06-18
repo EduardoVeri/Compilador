@@ -60,7 +60,9 @@ unsigned int get_immediate(int imediato){
 }	
 
 unsigned int get_address(char* label){
+	printf("get_address: %s", label);
 	int endereco = getEnderecoLabel(label);
+	printf("\tendereco: %d\n", endereco);
 	return endereco;
 }
 
@@ -92,7 +94,17 @@ BIN_I* binarioI(ASSEMBLY* instrucao){
 	bin->opcode = get_opcode(instrucao->tipoI->nome, instrucao->tipo);
 	bin->rs = get_register(instrucao->tipoI->rs);
 	bin->rt = get_register(instrucao->tipoI->rt);
-	bin->immediate = get_immediate(instrucao->tipoI->imediato);
+	
+	if(!strcmp(instrucao->tipoI->nome, "bne") || !strcmp(instrucao->tipoI->nome, "beq")){
+		// Converte numero para string
+		char label[26];
+		sprintf(label, "Label %d", instrucao->tipoI->label);
+		bin->immediate = get_address(label);
+	}
+	else{
+		bin->immediate = get_immediate(instrucao->tipoI->imediato);
+	}
+
 	return bin;
 }
 
@@ -151,6 +163,7 @@ void binario(FILE* arquivo){
 			free(binR);
 			break;
 		case typeI:
+			if(!strcmp(instrucoesAssembly[i]->tipoI->nome, "bne")) printf("%d: bne -> \t", i);
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
 			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoI->nome);
@@ -180,6 +193,7 @@ void binario_debug(FILE* arquivo){
 	BIN_R* binR;
 	
 	for(int i = 0; i < indiceAssembly; i++){
+		fprintf(arquivo, "%d:\t", i);
 		switch (instrucoesAssembly[i]->tipo)
 		{
 		case typeR:

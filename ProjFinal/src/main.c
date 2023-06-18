@@ -214,7 +214,7 @@ int main(int argc, char *argv[]){
 	}  
 
 	imprime_memoria(); // Imprime a memoria
-	//imprimirLabels(); // Imprime os labels
+	imprimirLabels(); // Imprime os labels
 	
 	if(!arquivoSaida_Binario){
 		arquivoSaida_Binario = fopen("bin/codigoBinario.txt", "w");
@@ -228,6 +228,10 @@ int main(int argc, char *argv[]){
 	
 	binario(arquivoSaida_Binario); // Inicia o processo de conversao do codigo assembly para binario
 	fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
+
+	FILE* arquivo_debug = fopen("bin/debug.txt", "w");
+	binario_debug(arquivo_debug);
+	fclose(arquivo_debug);
 
 	desaloca_estruturas_sintese(); 
 
