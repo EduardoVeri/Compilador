@@ -8,9 +8,8 @@
 unsigned int get_opcode(char* nome, tipoInstrucao tipo){
     int opcode = -1;
 
-    if(tipo == typeR) return 0b000000;
-    
-    if(!strcmp(nome, "lw")) opcode = 0b100011;
+    if(tipo == typeR) opcode = 0b000000;
+    else if(!strcmp(nome, "lw")) opcode = 0b100011;
     else if(!strcmp(nome, "sw")) opcode = 0b101011;
     else if(!strcmp(nome, "addi")) opcode = 0b001000;
 	else if(!strcmp(nome, "subi")) opcode = 0b001001;
@@ -62,10 +61,7 @@ unsigned int get_immediate(int imediato){
 }	
 
 unsigned int get_address(char* label){
-	printf("get_address: %s", label);
-	int endereco = getEnderecoLabel(label);
-	printf("\tendereco: %d\n", endereco);
-	return endereco;
+	return getEnderecoLabel(label);
 }
 
 BIN_R* binarioNop(){
@@ -159,32 +155,25 @@ void binario(FILE* arquivo){
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
-			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoR->nome);
-			fprintf(arquivo, "\n");
 			free(binR);
 			break;
 		case typeI:
-			if(!strcmp(instrucoesAssembly[i]->tipoI->nome, "bne")) printf("%d: bne -> \t", i);
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
-			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoI->nome);
-			fprintf(arquivo, "\n");
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
-			//fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoJ->nome);
-			fprintf(arquivo, "\n");
 			free(binJ);
 			break;
 		case typeLabel:
 			binR = binarioNop();
 			mostrar_binario(typeR, binR, arquivo);
-			//fprintf(arquivo, " : nop");
-			fprintf(arquivo, "\n");
+			free(binR);
 			break;
 		}
+		fprintf(arquivo, "\n");
 	}
 }
 
@@ -201,29 +190,27 @@ void binario_debug(FILE* arquivo){
 			binR = binarioR(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoR->nome);
-			fprintf(arquivo, "\n");
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoI->nome);
-			fprintf(arquivo, "\n");
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
 			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoJ->nome);
-			fprintf(arquivo, "\n");
 			free(binJ);
 			break;
 		case typeLabel:
 			binR = binarioNop();
 			mostrar_binario(typeR, binR, arquivo);
 			fprintf(arquivo, " : nop");
-			fprintf(arquivo, "\n");
+			free(binR);
 			break;
 		}
+		fprintf(arquivo, "\n");
 	}
 }

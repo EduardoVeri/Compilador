@@ -1,153 +1,113 @@
-1: 
-2: int fatorial(int n)
-	2: reserved word , int
-	2: ID, fatorial
-	2: ABREPARENTESES, (
-	2: reserved word , int
-	2: ID, n
-	2: FECHAPARENTESES, )
-3: {
-	3: ABRECHAVES, {
-4: int vfat; int valor; 
-	4: reserved word , int
-	4: ID, vfat
-	4: SEMICOLON, ;
-	4: reserved word , int
-	4: ID, valor
-	4: SEMICOLON, ;
-5: 
-6: if (n == 1){
-	6: reserved word , if
-	6: ABREPARENTESES, (
-	6: ID, n
-	6: EQ, ==
+1: int main(void)
+	1: reserved word , int
+	1: ID, main
+	1: ABREPARENTESES, (
+	1: reserved word , void
+	1: FECHAPARENTESES, )
+2: {
+	2: ABRECHAVES, {
+3: int fat; int n;
+	3: reserved word , int
+	3: ID, fat
+	3: SEMICOLON, ;
+	3: reserved word , int
+	3: ID, n
+	3: SEMICOLON, ;
+4: 
+5: n = 5;
+	5: ID, n
+	5: ATRIB, =
+	5: NUM, 5
+	5: SEMICOLON, ;
+6: fat = 1;
+	6: ID, fat
+	6: ATRIB, =
 	6: NUM, 1
-	6: FECHAPARENTESES, )
-	6: ABRECHAVES, {
-7: return (1);
-	7: reserved word , return
+	6: SEMICOLON, ;
+7: while(n > 1){
+	7: reserved word , while
 	7: ABREPARENTESES, (
+	7: ID, n
+	7: GT, >
 	7: NUM, 1
 	7: FECHAPARENTESES, )
-	7: SEMICOLON, ;
-8: }
-	8: FECHACHAVES, }
-9: else
-	9: reserved word , else
-10: {
-	10: ABRECHAVES, {
-11: /*valor = fatorial(n-1);
-12: output(valor);*/
-13: vfat = n * fatorial(n-1);
-	13: ID, vfat
-	13: ATRIB, =
-	13: ID, n
-	13: MULT, *
-	13: ID, fatorial
-	13: ABREPARENTESES, (
-	13: ID, n
-	13: SUB, -
-	13: NUM, 1
-	13: FECHAPARENTESES, )
-	13: SEMICOLON, ;
-14: /*output(vfat);*/
-15: return (vfat);
+	7: ABRECHAVES, {
+8: fat = fat*n;
+	8: ID, fat
+	8: ATRIB, =
+	8: ID, fat
+	8: MULT, *
+	8: ID, n
+	8: SEMICOLON, ;
+9: n = n - 1;
+	9: ID, n
+	9: ATRIB, =
+	9: ID, n
+	9: SUB, -
+	9: NUM, 1
+	9: SEMICOLON, ;
+10: output(fat);
+	10: ID, output
+	10: ABREPARENTESES, (
+	10: ID, fat
+	10: FECHAPARENTESES, )
+	10: SEMICOLON, ;
+11: output(n);
+	11: ID, output
+	11: ABREPARENTESES, (
+	11: ID, n
+	11: FECHAPARENTESES, )
+	11: SEMICOLON, ;
+12: }
+	12: FECHACHAVES, }
+13: 
+14: output(fat);
+	14: ID, output
+	14: ABREPARENTESES, (
+	14: ID, fat
+	14: FECHAPARENTESES, )
+	14: SEMICOLON, ;
+15: return 0;
 	15: reserved word , return
-	15: ABREPARENTESES, (
-	15: ID, vfat
-	15: FECHAPARENTESES, )
+	15: NUM, 0
 	15: SEMICOLON, ;
-16: }
 	16: FECHACHAVES, }
-17: }
-	17: FECHACHAVES, }
-18: 
-19: int main(void)
-	19: reserved word , int
-	19: ID, main
-	19: ABREPARENTESES, (
-	19: reserved word , void
-	19: FECHAPARENTESES, )
-20: {
-	20: ABRECHAVES, {
-21: int numero;
-	21: reserved word , int
-	21: ID, numero
-	21: SEMICOLON, ;
-22: int f;
-	22: reserved word , int
-	22: ID, f
-	22: SEMICOLON, ;
-23: 
-24: numero = 5;
-	24: ID, numero
-	24: ATRIB, =
-	24: NUM, 5
-	24: SEMICOLON, ;
-25: 
-26: f = fatorial(numero);
-	26: ID, f
-	26: ATRIB, =
-	26: ID, fatorial
-	26: ABREPARENTESES, (
-	26: ID, numero
-	26: FECHAPARENTESES, )
-	26: SEMICOLON, ;
-27: output(f);
-	27: ID, output
-	27: ABREPARENTESES, (
-	27: ID, f
-	27: FECHAPARENTESES, )
-	27: SEMICOLON, ;
-28: return 0;
-	28: reserved word , return
-	28: NUM, 0
-	28: SEMICOLON, ;
-29: }
-	29: FECHACHAVES, }
-	30: EOF
+	16: EOF
 
 ========== Arvore de Analise Sintatica ========== 
-INT
-	INT
-		n
-	fatorial
-		INT
-			vfat
-		INT
-			valor
-		IF
-			==
-				n
-				1
-			ReturnINT
-				1
-			=
-				vfat
-				*
-					n
-					fatorial
-						-
-							n
-							1
-			ReturnINT
-				vfat
 INT
 	VOID
 	main
 		INT
-			numero
+			fat
 		INT
-			f
+			n
 		=
-			numero
+			n
 			5
 		=
-			f
-			fatorial
-				numero
+			fat
+			1
+		WHILE
+			>
+				n
+				1
+			=
+				fat
+				*
+					fat
+					n
+			=
+				n
+				-
+					n
+					1
+			output
+				fat
+			output
+				n
 		output
-			f
+			fat
 		ReturnINT
 			0
 
@@ -156,50 +116,27 @@ INT
 Nome: main
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 19 
-
-Nome: vfat
-Escopo: fatorial
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 4 13 15 
+Linhas: 1 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
 Linhas: 0 
 
-Nome: valor
-Escopo: fatorial
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 4 
-
-Nome: f
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 22 26 27 
-
-Nome: numero
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 21 24 26 
-
 Nome: n
-Escopo: fatorial
+Escopo: main
 Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 2 6 13 13 
+Tipo de identificador: VAR
+Linhas: 3 5 7 8 9 9 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 27 
+Linhas: 0 10 14 
 
-Nome: fatorial
+Nome: fat
+Escopo: main
 Tipo de dado: INT
-Tipo de identificador: FUN
-Linhas: 2 13 26 
+Tipo de identificador: VAR
+Linhas: 3 6 8 8 10 14 
 

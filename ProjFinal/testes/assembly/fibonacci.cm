@@ -1,9 +1,13 @@
 int fibonacci(int n){
-    int x;
-    if(n == 1) return 1;
+    int x; int aux;
+    if(n == 1){return 1;}
     else{
-        if(n == 2) return 1;
-        else return fibonacci(n-1) + fibonacci(n-2);
+        if(n == 2){return 1;}
+        else{ 
+            aux = fibonacci(n-1);
+            aux = fibonacci(n-2) + aux;
+            return aux;
+        }
     }
 }
 

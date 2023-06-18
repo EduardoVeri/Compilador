@@ -10,7 +10,7 @@ int fatorial(int n)
   {
     /*valor = fatorial(n-1);
     output(valor);*/
-    vfat = n * fatorial(n-1);
+    vfat = n*fatorial(n-1);
     /*output(vfat);*/
     return (vfat);
   }
