@@ -3,7 +3,7 @@
 1:  soma:
 2:  	sw $ra 2($fp)
 3:  	lw $t0 0($fp)
-4:  	addi $temp $fp 0
+4:  	lw $temp 0($fp)
 5:  	add $temp $temp $zero
 6:  	lw $t1 0($temp)
 7:  	ori $temp $zero 1000
@@ -12,7 +12,7 @@
 10: 	lw $temp 0($temp)
 11: 	out $zero $temp 0
 12: 	ori $t2 $zero 1
-13: 	addi $temp $fp 0
+13: 	lw $temp 0($fp)
 14: 	add $temp $temp $t2
 15: 	lw $t3 0($temp)
 16: 	ori $temp $zero 1000
@@ -21,11 +21,11 @@
 19: 	lw $temp 0($temp)
 20: 	out $zero $temp 0
 21: 	lw $t4 7($fp)
-22: 	addi $temp $fp 0
+22: 	lw $temp 0($fp)
 23: 	add $temp $temp $zero
 24: 	lw $t5 0($temp)
 25: 	ori $t6 $zero 1
-26: 	addi $temp $fp 0
+26: 	lw $temp 0($fp)
 27: 	add $temp $temp $t6
 28: 	lw $t7 0($temp)
 29: 	add $t8 $t5 $t7
