@@ -15,7 +15,7 @@
 13: 	lw $t0 7($fp)
 14: 	ori $t4 $zero 1
 15: 	slt $t5 $t4 $t0
-16: 	bne $t5 $zero Label 2
+16: 	beq $t5 $zero Label 2
 17: 	lw $t2 6($fp)
 18: 	lw $t2 6($fp)
 19: 	lw $t0 7($fp)

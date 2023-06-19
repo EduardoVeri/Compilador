@@ -43,6 +43,14 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 		(*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
 		(*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
 		(*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
+
+		instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
+
+		(*novaInstrucao) = criarNoAssembly(typeI, "xori");
+		(*novaInstrucao)->tipoI->rt = instrucao->arg3->val;
+		(*novaInstrucao)->tipoI->rs = instrucao->arg3->val;
+		(*novaInstrucao)->tipoI->imediato = 1;
+
 	}
 	else if(strcmp(instrucao->op, "LT") == 0){
 		(*novaInstrucao) = criarNoAssembly(typeR, "slt");
@@ -226,7 +234,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		
 	}	
 	else if(!strcmp(instrucao->op, "IFF")){
-		novaInstrucao = criarNoAssembly(typeI, "bne");
+		novaInstrucao = criarNoAssembly(typeI, "beq");
 		novaInstrucao->tipoI->rs = $zero;
 		novaInstrucao->tipoI->rt = instrucao->arg1->val;
 		novaInstrucao->tipoI->label = instrucao->arg2->val;
