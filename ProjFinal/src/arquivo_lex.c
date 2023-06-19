@@ -810,7 +810,7 @@ YY_RULE_SETUP
 			/* Caso o NUM possua um tamanho maior do que o valor trabalhado,
 			seu conteudo sera cortado para poder ser utilizado na linguagem */
 			if(strlen(yytext) >= MAXLEXEMA){
-				printf(ANSI_COLOR_PURPLE "\tWARNING: Digito muito grande - " ANSI_COLOR_RESET ); 
+				printf(ANSI_COLOR_PURPLE "WARNING: Digito muito grande - " ANSI_COLOR_RESET ); 
 				yytext[MAXLEXEMA-1] = '\0';
 				printf("valor reduzido para apenas %s\n", yytext);
 			}
@@ -836,7 +836,7 @@ YY_RULE_SETUP
 			/* Caso o ID possua um tamanho maior do que o trabalhado,
 			seu conteudo sera cortado para poder ser utilizado na linguagem */
 			if(strlen(yytext) >= MAXLEXEMA){
-				printf(ANSI_COLOR_PURPLE "\tWARNING: ID muito grande - " ANSI_COLOR_RESET ); 
+				printf(ANSI_COLOR_PURPLE "WARNING: ID muito grande - " ANSI_COLOR_RESET ); 
 				yytext[MAXLEXEMA-1] = '\0';
 				printf("nome reduzido para '%s'\n", yytext);
 			}

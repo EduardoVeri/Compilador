@@ -198,7 +198,7 @@ int main(int argc, char *argv[]){
 		remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
 	}
 	
-	//mostrarReg(); // Mostra os registradores em uso
+	mostrarReg(); // Mostra os registradores em uso
 
 	desaloca_estruturas_analise(arvoreSintatica, tabelaHash); // Desaloca as estruturas de analise
 
