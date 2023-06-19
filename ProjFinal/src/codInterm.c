@@ -505,7 +505,7 @@ void codIntExpCall(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         */
 
         PONTEIROITEM itemAux = procuraTabelaQualquer(tabelaHash, noAux->lexema, funcName);
-        if(itemAux != NULL && itemAux->tipoIdentificador == VetDeclK && noAux->filho[0] == NULL){
+        if(itemAux != NULL && (itemAux->tipoIdentificador == VetDeclK || itemAux->tipoIdentificador == VetParamK) && noAux->filho[0] == NULL){
             numReg = verificacaoRegistradores(NULL, NULL, 1);
             instrucaoParam->arg2 = criaEndereco(String, 0, "VET", 0);
             instrucaoParam->arg3 = criaEndereco(String, 0, noAux->lexema, 0);

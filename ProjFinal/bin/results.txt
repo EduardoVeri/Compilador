@@ -1,228 +1,297 @@
-1: int soma(int vetor[]){
-	1: reserved word , int
-	1: ID, soma
-	1: ABREPARENTESES, (
-	1: reserved word , int
-	1: ID, vetor
-	1: ABRECOLCHETES, [
-	1: FECHACOLCHETES, ]
-	1: FECHAPARENTESES, )
-	1: ABRECHAVES, {
-2: int resp;
+1: 
+2: int fatorial(int n, int vet[])
 	2: reserved word , int
-	2: ID, resp
-	2: SEMICOLON, ;
-3: output(vetor[0]);
-	3: ID, output
-	3: ABREPARENTESES, (
-	3: ID, vetor
-	3: ABRECOLCHETES, [
-	3: NUM, 0
-	3: FECHACOLCHETES, ]
-	3: FECHAPARENTESES, )
-	3: SEMICOLON, ;
-4: output(vetor[1]);
-	4: ID, output
-	4: ABREPARENTESES, (
-	4: ID, vetor
-	4: ABRECOLCHETES, [
-	4: NUM, 1
-	4: FECHACOLCHETES, ]
-	4: FECHAPARENTESES, )
+	2: ID, fatorial
+	2: ABREPARENTESES, (
+	2: reserved word , int
+	2: ID, n
+	2: COMMA, ,
+	2: reserved word , int
+	2: ID, vet
+	2: ABRECOLCHETES, [
+	2: FECHACOLCHETES, ]
+	2: FECHAPARENTESES, )
+3: {
+	3: ABRECHAVES, {
+4: int vfat; 
+	4: reserved word , int
+	4: ID, vfat
 	4: SEMICOLON, ;
-5: resp = vetor[0] + vetor[1];
-	5: ID, resp
-	5: ATRIB, =
-	5: ID, vetor
-	5: ABRECOLCHETES, [
-	5: NUM, 0
-	5: FECHACOLCHETES, ]
-	5: SOMA, +
-	5: ID, vetor
-	5: ABRECOLCHETES, [
-	5: NUM, 1
-	5: FECHACOLCHETES, ]
-	5: SEMICOLON, ;
-6: return resp;
-	6: reserved word , return
-	6: ID, resp
+5: 
+6: vet[3] = vet[3] + 1;
+	6: ID, vet
+	6: ABRECOLCHETES, [
+	6: NUM, 3
+	6: FECHACOLCHETES, ]
+	6: ATRIB, =
+	6: ID, vet
+	6: ABRECOLCHETES, [
+	6: NUM, 3
+	6: FECHACOLCHETES, ]
+	6: SOMA, +
+	6: NUM, 1
 	6: SEMICOLON, ;
-7: }
-	7: FECHACHAVES, }
-8: 
-9: void main(void){
-	9: reserved word , void
-	9: ID, main
+7: output(vet[3]);
+	7: ID, output
+	7: ABREPARENTESES, (
+	7: ID, vet
+	7: ABRECOLCHETES, [
+	7: NUM, 3
+	7: FECHACOLCHETES, ]
+	7: FECHAPARENTESES, )
+	7: SEMICOLON, ;
+8: if (n == 1){
+	8: reserved word , if
+	8: ABREPARENTESES, (
+	8: ID, n
+	8: EQ, ==
+	8: NUM, 1
+	8: FECHAPARENTESES, )
+	8: ABRECHAVES, {
+9: return (1);
+	9: reserved word , return
 	9: ABREPARENTESES, (
-	9: reserved word , void
+	9: NUM, 1
 	9: FECHAPARENTESES, )
-	9: ABRECHAVES, {
-10: int vetor[10];
-	10: reserved word , int
-	10: ID, vetor
-	10: ABRECOLCHETES, [
-	10: NUM, 10
-	10: FECHACOLCHETES, ]
-	10: SEMICOLON, ;
-11: vetor[0] = 30;
-	11: ID, vetor
-	11: ABRECOLCHETES, [
-	11: NUM, 0
-	11: FECHACOLCHETES, ]
-	11: ATRIB, =
-	11: NUM, 30
-	11: SEMICOLON, ;
-12: vetor[1] = 50;
-	12: ID, vetor
-	12: ABRECOLCHETES, [
-	12: NUM, 1
-	12: FECHACOLCHETES, ]
-	12: ATRIB, =
-	12: NUM, 50
-	12: SEMICOLON, ;
-13: 
-14: vetor[1+3] = 4;
-	14: ID, vetor
-	14: ABRECOLCHETES, [
-	14: NUM, 1
-	14: SOMA, +
-	14: NUM, 3
-	14: FECHACOLCHETES, ]
-	14: ATRIB, =
-	14: NUM, 4
+	9: SEMICOLON, ;
+10: }
+	10: FECHACHAVES, }
+11: else
+	11: reserved word , else
+12: {
+	12: ABRECHAVES, {
+13: vfat = fatorial(n-1, vet)*n;
+	13: ID, vfat
+	13: ATRIB, =
+	13: ID, fatorial
+	13: ABREPARENTESES, (
+	13: ID, n
+	13: SUB, -
+	13: NUM, 1
+	13: COMMA, ,
+	13: ID, vet
+	13: FECHAPARENTESES, )
+	13: MULT, *
+	13: ID, n
+	13: SEMICOLON, ;
+14: return (vfat);
+	14: reserved word , return
+	14: ABREPARENTESES, (
+	14: ID, vfat
+	14: FECHAPARENTESES, )
 	14: SEMICOLON, ;
-15: output(vetor[4]);
-	15: ID, output
-	15: ABREPARENTESES, (
-	15: ID, vetor
-	15: ABRECOLCHETES, [
-	15: NUM, 4
-	15: FECHACOLCHETES, ]
-	15: FECHAPARENTESES, )
-	15: SEMICOLON, ;
-16: vetor[2] = 6;
-	16: ID, vetor
-	16: ABRECOLCHETES, [
-	16: NUM, 2
-	16: FECHACOLCHETES, ]
-	16: ATRIB, =
-	16: NUM, 6
-	16: SEMICOLON, ;
-17: output(vetor[2]);
-	17: ID, output
-	17: ABREPARENTESES, (
-	17: ID, vetor
-	17: ABRECOLCHETES, [
-	17: NUM, 2
-	17: FECHACOLCHETES, ]
-	17: FECHAPARENTESES, )
-	17: SEMICOLON, ;
-18: 
-19: output(soma(vetor));
-	19: ID, output
-	19: ABREPARENTESES, (
-	19: ID, soma
-	19: ABREPARENTESES, (
-	19: ID, vetor
-	19: FECHAPARENTESES, )
-	19: FECHAPARENTESES, )
-	19: SEMICOLON, ;
-	20: FECHACHAVES, }
-	20: EOF
+15: }
+	15: FECHACHAVES, }
+16: }
+	16: FECHACHAVES, }
+17: 
+18: int main(void)
+	18: reserved word , int
+	18: ID, main
+	18: ABREPARENTESES, (
+	18: reserved word , void
+	18: FECHAPARENTESES, )
+19: {
+	19: ABRECHAVES, {
+20: int vetor[5];
+	20: reserved word , int
+	20: ID, vetor
+	20: ABRECOLCHETES, [
+	20: NUM, 5
+	20: FECHACOLCHETES, ]
+	20: SEMICOLON, ;
+21: int numero;
+	21: reserved word , int
+	21: ID, numero
+	21: SEMICOLON, ;
+22: int f;
+	22: reserved word , int
+	22: ID, f
+	22: SEMICOLON, ;
+23: 
+24: vetor[3] = 10;
+	24: ID, vetor
+	24: ABRECOLCHETES, [
+	24: NUM, 3
+	24: FECHACOLCHETES, ]
+	24: ATRIB, =
+	24: NUM, 10
+	24: SEMICOLON, ;
+25: output(vetor[3]);
+	25: ID, output
+	25: ABREPARENTESES, (
+	25: ID, vetor
+	25: ABRECOLCHETES, [
+	25: NUM, 3
+	25: FECHACOLCHETES, ]
+	25: FECHAPARENTESES, )
+	25: SEMICOLON, ;
+26: numero = 5;
+	26: ID, numero
+	26: ATRIB, =
+	26: NUM, 5
+	26: SEMICOLON, ;
+27: output(fatorial(5, vet));
+	27: ID, output
+	27: ABREPARENTESES, (
+	27: ID, fatorial
+	27: ABREPARENTESES, (
+	27: NUM, 5
+	27: COMMA, ,
+	27: ID, vet
+	27: FECHAPARENTESES, )
+	27: FECHAPARENTESES, )
+	27: SEMICOLON, ;
+28: numero = vetor[3] + 10;
+	28: ID, numero
+	28: ATRIB, =
+	28: ID, vetor
+	28: ABRECOLCHETES, [
+	28: NUM, 3
+	28: FECHACOLCHETES, ]
+	28: SOMA, +
+	28: NUM, 10
+	28: SEMICOLON, ;
+29: output(numero);
+	29: ID, output
+	29: ABREPARENTESES, (
+	29: ID, numero
+	29: FECHAPARENTESES, )
+	29: SEMICOLON, ;
+30: return 0;
+	30: reserved word , return
+	30: NUM, 0
+	30: SEMICOLON, ;
+31: }
+	31: FECHACHAVES, }
+	32: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
 	INT
-		vetor
-	soma
+		n
+	INT
+		vet
+	fatorial
 		INT
-			resp
-		output
-			vetor
-				0
-		output
-			vetor
-				1
+			vfat
 		=
-			resp
+			vet
+				3
 			+
-				vetor
-					0
-				vetor
-					1
-		ReturnINT
-			resp
-VOID
+				vet
+					3
+				1
+		output
+			vet
+				3
+		IF
+			==
+				n
+				1
+			ReturnINT
+				1
+			=
+				vfat
+				*
+					fatorial
+						-
+							n
+							1
+						vet
+					n
+			ReturnINT
+				vfat
+INT
 	VOID
 	main
 		INT
 			vetor
+			5
+		INT
+			numero
+		INT
+			f
+		=
+			vetor
+				3
 			10
-		=
-			vetor
-				0
-			30
-		=
-			vetor
-				1
-			50
-		=
-			vetor
-				+
-					1
-					3
-			4
 		output
 			vetor
-				4
+				3
 		=
-			vetor
-				2
-			6
+			numero
+			5
 		output
-			vetor
-				2
-		output
-			soma
+			fatorial
+				5
+				vet
+		=
+			numero
+			+
 				vetor
+					3
+				10
+		output
+			numero
+		ReturnINT
+			0
 
 
 ============== Tabela de Simbolos ===============
 Nome: main
-Tipo de dado: VOID
+Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 9 
+Linhas: 18 
+
+Nome: vfat
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 4 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
 Linhas: 0 
 
+Nome: vet
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 2 6 6 7 
+
+Nome: f
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 22 
+
+Nome: numero
+Escopo: main
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 21 
+
+Nome: n
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 2 
+
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 3 15 
+Linhas: 0 7 25 
 
-Nome: resp
-Escopo: soma
+Nome: fatorial
 Tipo de dado: INT
-Tipo de identificador: VAR
+Tipo de identificador: FUN
 Linhas: 2 
-
-Nome: vetor
-Escopo: soma
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 1 3 
 
 Nome: vetor
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VET
-Linhas: 10 11 12 14 15 
-
-Nome: soma
-Tipo de dado: INT
-Tipo de identificador: FUN
-Linhas: 1 
+Linhas: 20 24 25 
 

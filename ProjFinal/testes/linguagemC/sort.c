@@ -1,3 +1,6 @@
+#include <stdio.h>
+
+
 /* programa para ordenacao por selecao de 
    uma matriz com dez elementos. */
 
@@ -30,7 +33,7 @@ void sort(int a[], int low, int high)
 	}
 }
 
-void main(void)
+int main(void)
 {	
 	int vet[ 5 ];
 	int i;
@@ -42,9 +45,11 @@ void main(void)
 	vet[4] = 3;
 
 	sort(vet,0,5);
-
-	while (1 == 1){
-		output(vet[i]);
+	i = 0;
+	while (i < 5){
+        printf("%d\n", vet[i]);
+		i = i + 1;
 	}
+    return 0;
 }
 
