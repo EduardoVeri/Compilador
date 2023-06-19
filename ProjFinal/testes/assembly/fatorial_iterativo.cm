@@ -1,0 +1,16 @@
+int main(void)
+{
+    int fat; int n;
+    
+    n = 5;
+    fat = 1;
+    while(n > 1){
+        fat = fat*n;
+        n = n - 1;
+        output(fat);
+        output(n);
+    }
+
+    output(fat);
+    return 0;
+}

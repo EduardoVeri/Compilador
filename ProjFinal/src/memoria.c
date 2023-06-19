@@ -20,7 +20,16 @@ void inicializa_memoria(MEMORIA *memoria){
 	
 	global = func_global; // Variavel global para a funcao get_variavel
 
-	memoria->tamanho = 1;
+	MEMORIA_FUNCOES* parametros = (MEMORIA_FUNCOES*)malloc(sizeof(MEMORIA_FUNCOES));
+
+	parametros->tamanho = 0;
+	parametros->nome = strdup("parametros");
+	parametros->prox = NULL;
+	parametros->tabelaVar = NULL;
+
+	global->prox = parametros;
+
+	memoria->tamanho = 2;
 	memoria->funcoes = func_global;
 }
 
@@ -60,7 +69,7 @@ MEMORIA_FUNCOES* insere_funcao(MEMORIA *memoria, char * nome_funcao){
 
 void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tipo){
 	if(funcao == NULL){
-		printf(ANSI_COLOR_RED); printf("ERRO: "); printf(ANSI_COLOR_RESET);
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
 		printf("NULL passado como argumento em insere_variavel\n");
 		return;
 	}
@@ -80,12 +89,28 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 
 	if(tipo == inteiroArg || tipo == vetorArg){
 		aux = funcao->tabelaVar;
-		funcao->tabelaVar = variavel;
-		variavel->prox = aux;
-		variavel->indice = 0;
-		funcao->tamanho++;
 
-		for(int i = 1; aux != NULL; i++){
+		// Se for o primeiro argumento
+		if(aux->tipo != inteiroArg && aux->tipo != vetorArg){
+			variavel->prox = aux;
+			funcao->tabelaVar = variavel;
+		}
+		else{
+			while(aux->prox != NULL && (aux->prox->tipo == inteiroArg || aux->prox->tipo == vetorArg)){
+				aux = aux->prox;
+			}
+
+			VARIAVEL* aux2 = aux->prox;
+
+			aux->prox = variavel;
+			variavel->prox = aux2;
+		}
+
+		funcao->tamanho++;
+		
+		// Atualizar os indices
+		aux = funcao->tabelaVar;
+		for(int i = 0; aux != NULL; i++){
 			aux->indice = i;
 			aux = aux->prox;
 		}
@@ -104,7 +129,7 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 
 VARIAVEL* get_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel){
 	if(funcao == NULL){
-		printf(ANSI_COLOR_RED); printf("ERRO: "); printf(ANSI_COLOR_RESET);
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
 		printf("NULL passado como argumento em get_variavel\n");
 		return NULL;
 	}
@@ -151,7 +176,24 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 
 	VARIAVEL* aux = funcao->tabelaVar;
 	VARIAVEL* aux2 = aux;
+	
+	// Caso nao tenha parametros
+	if(funcao->tamanho == 0){
+		printf("Nao ha temporarios a serem apagados!\n");
+		return;
+	}
 
+	// Caso so tenha um parametro
+	if(funcao->tamanho == 1){
+		if(!strcmp(aux->nome, "Param")){
+			free(aux);
+			funcao->tamanho--;
+			funcao->tabelaVar = NULL;
+			return;
+		}
+	}
+
+	// Caso tenha mais de um parametro
 	while(aux->prox != NULL){
 		aux2 = aux;
 		aux = aux->prox;
@@ -181,17 +223,21 @@ void imprime_memoria(){
 
 		int fp = get_fp(aux);
 		int sp = get_sp(aux);
-
+		int flag_sp = 0;
 		aux2 = aux->tabelaVar;
 		for (int j = 0; j < aux->tamanho; j++, aux2 = aux2->prox){
 			if(j == sp){
 				printf("$sp -> ");
+				flag_sp = 1;
 			}
 			if(j == fp){
 				printf("$fp -> ");
 			}
 			printf("\t%d: %s [$fp + %d] [$sp - %d]\n",
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
+		}
+		if(!flag_sp && strcmp(aux->nome, "global")){
+			printf("$sp -> \t%d:\n", sp);
 		}
 	}
 	printf("\n");
@@ -203,6 +249,7 @@ MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
 		printf("NULL passado como argumento em buscar_funcao\n");
 		return NULL;
 	}
+	
 	
 	MEMORIA_FUNCOES* aux = memoria->funcoes;
 	while(aux != NULL){
@@ -219,6 +266,27 @@ MEMORIA_FUNCOES* buscar_funcao(MEMORIA* memoria, char* nome_funcao){
 }
 
 
+int get_sp(MEMORIA_FUNCOES* funcao){
+	if(funcao == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_sp\n");
+		return -1;
+	}
+	
+	return 24;
+}
+
+int get_fp(MEMORIA_FUNCOES* funcao){
+	if(funcao == NULL){
+		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
+		printf("NULL passado como argumento em get_fp\n");
+		return -1;
+	}
+	if (funcao == global) return 0;
+	//return (get_variavel(funcao, "Vinculo Controle")->indice);
+	return 0;
+}
+
 int get_sp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
 	if(funcao == NULL || var == NULL){
 		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
@@ -226,7 +294,7 @@ int get_sp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
 		return -1;
 	}
 	
-	return funcao->tamanho - var->indice - 1;
+	return get_sp(funcao) - var->indice;
 }
 
 int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
@@ -243,26 +311,6 @@ int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
 	return var->indice - get_fp(funcao);
 }
 
-int get_sp(MEMORIA_FUNCOES* funcao){
-	if(funcao == NULL){
-		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
-		printf("NULL passado como argumento em get_sp\n");
-		return -1;
-	}
-	
-	return funcao->tamanho-1;
-}
-
-int get_fp(MEMORIA_FUNCOES* funcao){
-	if(funcao == NULL){
-		printf(ANSI_COLOR_RED); printf("Erro: "); printf(ANSI_COLOR_RESET);
-		printf("NULL passado como argumento em get_fp\n");
-		return -1;
-	}
-	if (funcao == global) return 0;
-	//return (get_variavel(funcao, "Vinculo Controle")->indice);
-	return 0;
-}
 
 void liberarTabMemoria(){
 	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
