@@ -587,7 +587,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $sp"));
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
 
-		for(int i = 0; i < instrucao->arg2->val; i++) {
+		for(int i = instrucao->arg2->val; i > 0; i--) {
 			// Salva o valor do param no $temp para ser usado no output
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $temp;
@@ -606,7 +606,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "sw");
 			novaInstrucao->tipoI->rs = $sp;
 			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->imediato = i + 1;
+			novaInstrucao->tipoI->imediato = i;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 			if(DEBUG_MODE){
