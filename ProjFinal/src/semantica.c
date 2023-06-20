@@ -196,13 +196,12 @@ void percorrerArvore(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash, char*
 	}
 
 	//Necessario pois a arvore ja foi percorrida dentro da funcao percorrerExp
-	if(arvoreSintatica->tipo == EXPRESSAO && arvoreSintatica->tipoExpressao == AtivK)
-		return;
-
-    //Percorre os filhos do no atual
-	for(int i = 0; i < 3; i++){
-		if(arvoreSintatica->filho[i] != NULL){
-			percorrerArvore(arvoreSintatica->filho[i], tabelaHash, auxEscopo);
+	if(arvoreSintatica->tipoExpressao != AtivK){
+		//Percorre os filhos do no atual
+		for(int i = 0; i < 3; i++){
+			if(arvoreSintatica->filho[i] != NULL){
+				percorrerArvore(arvoreSintatica->filho[i], tabelaHash, auxEscopo);
+			}
 		}
 	}
 

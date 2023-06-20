@@ -326,3 +326,21 @@ void imprimirTabela(PONTEIROITEM tabelaHash[]){
         }
     }
 }
+
+// Buscar qualquer tipo de delcaracao com o mesmo nome
+PONTEIROITEM procuraTabelaQualquer(PONTEIROITEM tabelaHash[], char identificador[], char escopo[]){
+    unsigned int indice = longhash(identificador);
+
+    PONTEIROITEM aux = tabelaHash[indice];
+
+    while(aux != NULL){
+        if(strcmp(identificador, aux->nomeIdentificador) == 0){
+            if((strcmp(escopo, aux->escopo) == 0 || strcmp(aux->escopo, "global") == 0)){
+                break;
+            }
+        }
+        aux = aux->proximo;
+    }
+
+    return aux;
+}

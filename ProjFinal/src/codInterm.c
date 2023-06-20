@@ -496,11 +496,26 @@ void codIntExpCall(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
     instrucaoCall->arg1 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
 
     while(noAux !=  NULL){
-        criarCodigoIntermediario(noAux, tabelaHash, 0);   
         instrucaoParam = criaInstrucao("PARAM");
-        instrucaoParam->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-        instrucaoParam->arg2 = criaEndereco(Vazio, 0, NULL, 0);
-        instrucaoParam->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+        
+        /* 
+        1) Buscar na tabela para ver se eh um vetor
+        2) Ver se ele tem algum filho
+        3) Se for um vetor e nao tiver filhos, ele vai ser passado com o valor da memoria
+        */
+
+        PONTEIROITEM itemAux = procuraTabelaQualquer(tabelaHash, noAux->lexema, funcName);
+        if(itemAux != NULL && (itemAux->tipoIdentificador == VetDeclK || itemAux->tipoIdentificador == VetParamK) && noAux->filho[0] == NULL){
+            numReg = verificacaoRegistradores(NULL, NULL, 1);
+            instrucaoParam->arg2 = criaEndereco(String, 0, "VET", 0);
+            instrucaoParam->arg3 = criaEndereco(String, 0, noAux->lexema, 0);
+        }
+        else{
+            criarCodigoIntermediario(noAux, tabelaHash, 0);   
+            instrucaoParam->arg2 = criaEndereco(String, 0, "INT", 0);
+            instrucaoParam->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+        }
+        instrucaoParam->arg1 = criaEndereco(IntConst, numReg, NULL, 1);       
 
         codigoIntermediario[indiceVetor] = instrucaoParam;
         indiceVetor++;
@@ -533,7 +548,15 @@ void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     instrucaoAtrib = criaInstrucao("ASSIGN");
 
+
     criarCodigoIntermediario(arvoreSintatica->filho[0], tabelaHash, 1);
+    /*if(arvoreSintatica->filho[0]->tipoExpressao == VetorK){
+        criarCodigoIntermediario(arvoreSintatica->filho[0]->filho[0], tabelaHash, 1);
+    }
+    else{
+        
+    }*/
+    
     instrucaoAtrib->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
 
     instrucaoStore = criaInstrucao("STORE");

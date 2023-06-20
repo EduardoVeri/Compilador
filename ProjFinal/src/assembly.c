@@ -71,15 +71,6 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 		(*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
 		(*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
 		
-		int rd = (*novaInstrucao)->tipoR->rd;
-
-		instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
-
-		//TODO: Ver o que isso faz!
-		(*novaInstrucao) = criarNoAssembly(typeR, "nor");
-		(*novaInstrucao)->tipoR->rd = rd;
-		(*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
-		(*novaInstrucao)->tipoR->rt = $zero;
 
 	}
 	else if(strcmp(instrucao->op, "GT") == 0){
@@ -348,13 +339,47 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		
-		novaInstrucao = criarNoAssembly(typeI, "sw");
-		novaInstrucao->tipoI->rs = $temp;
-		novaInstrucao->tipoI->rt = instrucao->arg1->val;
-		novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		if(!strcmp(instrucao->arg2->nome, "VET")){
 
-		// TODO: Ver se vai ser preciso passar algo a mais no cod Interm para decidir se vai ser um vetor ou nao
+			VARIAVEL* varVetor = get_variavel(funcaoAtual, instrucao->arg3->nome);
+
+			if(varVetor->tipo == vetorArg){
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+			else{
+				novaInstrucao = criarNoAssembly(typeI, "addi");
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+
+		}
+		else{
+			novaInstrucao = criarNoAssembly(typeI, "sw");
+			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->rt = instrucao->arg1->val;
+			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+		}
+
+		// TODO: Ver se vai ser preciso passar algo a mais no cod Interm para decidir se vai ser um vetor ou nao <- Realmente necessario?
 		insere_variavel(buscar_funcao(&vetorMemoria, "parametros"), "Param", inteiro);
 		
 	} 
@@ -369,23 +394,58 @@ void geraAssembly(INSTRUCAO* instrucao){
 		// TODO: Rever essa parte, principalmente quando for global
 		if(instrucao->arg3->tipo != Vazio){
 			// Load de um indice de um vetor
-			novaInstrucao = criarNoAssembly(typeI, "addi");
-			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $fp;
-			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
-			novaInstrucao = criarNoAssembly(typeR, "add");
-			novaInstrucao->tipoR->rd = $temp;
-			novaInstrucao->tipoR->rs = $temp;
-			novaInstrucao->tipoR->rt = instrucao->arg3->val;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			VARIAVEL* varVetor = get_variavel(funcaoAtual, instrucao->arg2->nome);
 
-			novaInstrucao = criarNoAssembly(typeI, "lw");
-			novaInstrucao->tipoI->rt = instrucao->arg1->val;
-			novaInstrucao->tipoI->rs = $temp;
-			novaInstrucao->tipoI->imediato = 0;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			if(varVetor->tipo == vetor){
+				novaInstrucao = criarNoAssembly(typeI, "addi");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+			else{
+				/* novaInstrucao = criarNoAssembly(typeI, "nop");
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+				novaInstrucao = criarNoAssembly(typeI, "nop");
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
+
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg2->nome));
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = instrucao->arg1->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				/* novaInstrucao = criarNoAssembly(typeI, "nop");
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+				novaInstrucao = criarNoAssembly(typeI, "nop");
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
+			}
+
 		}
 		else{
 			// Load de um inteiro
@@ -405,23 +465,47 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 		if(instrucao->arg3->tipo != Vazio){
 			// Store de um valor em um vetor
-			novaInstrucao = criarNoAssembly(typeI, "addi");
-			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $fp;
-			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg1->nome));
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
-			novaInstrucao = criarNoAssembly(typeR, "add");
-			novaInstrucao->tipoR->rd = $temp;
-			novaInstrucao->tipoR->rs = $temp;
-			novaInstrucao->tipoR->rt = instrucao->arg3->val;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			VARIAVEL* varVetor = get_variavel(funcaoAtual, instrucao->arg1->nome);
 
-			novaInstrucao = criarNoAssembly(typeI, "sw");
-			novaInstrucao->tipoI->rt = instrucao->arg2->val;
-			novaInstrucao->tipoI->rs = $temp;
-			novaInstrucao->tipoI->imediato = 0;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			if(varVetor->tipo == vetor){
+				novaInstrucao = criarNoAssembly(typeI, "addi");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rt = instrucao->arg2->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+			else{
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rt = instrucao->arg2->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
 		}
 		else{
 			novaInstrucao = criarNoAssembly(typeI, "sw");
@@ -503,7 +587,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Registrador $sp"));
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
 
-		for(int i = 0; i < instrucao->arg2->val; i++) {
+		for(int i = instrucao->arg2->val; i > 0; i--) {
 			// Salva o valor do param no $temp para ser usado no output
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $temp;
@@ -522,7 +606,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao = criarNoAssembly(typeI, "sw");
 			novaInstrucao->tipoI->rs = $sp;
 			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->imediato = i + 1;
+			novaInstrucao->tipoI->imediato = i;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 			if(DEBUG_MODE){

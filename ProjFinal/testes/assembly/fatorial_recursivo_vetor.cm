@@ -1,0 +1,29 @@
+
+int fatorial(int vet[], int n)
+{
+  int vfat; 
+  
+  vet[3] = vet[3] + 1;
+  output(vet[3]);
+  if (n == 1){
+    return (1);
+  }
+  else
+  {
+    vfat = fatorial(vet, n-1)*n;
+    return (vfat);
+  }
+}
+
+int main(void)
+{
+  int vetor[5];
+
+  vetor[3] = 10;
+  output(vetor[3]);
+
+  output(fatorial(vetor, 4));
+
+  output(vetor[3] + 10);
+  return 0;
+}

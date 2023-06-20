@@ -1,0 +1,24 @@
+void main(void){
+    int vet[ 5 ];
+    int i;
+
+	vet[0] = 2;
+	vet[1] = 1;
+	vet[2] = 4;
+	vet[3] = 5;
+	vet[4] = 3;
+
+	output(vet[0]);
+	output(vet[1]);
+	output(vet[2]);
+	output(vet[3]);
+	output(vet[4]);
+
+	while (1){
+		output(vet[0]);
+		output(vet[1]);
+		output(vet[2]);
+		output(vet[3]);
+		output(vet[4]);
+	}
+}

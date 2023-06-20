@@ -51,4 +51,6 @@ PONTEIROITEM buscarItemTabelaFunc(PONTEIROITEM tabelaHash[], char* lexema);
 
 PONTEIROITEM buscarItemTabelaId(PONTEIROITEM tabelaHash[], char* nomeIdentificador);
 
+PONTEIROITEM procuraTabelaQualquer(PONTEIROITEM tabelaHash[], char identificador[], char escopo[]);
+
 #endif

@@ -210,6 +210,34 @@ void apagar_temp(MEMORIA_FUNCOES* funcao){
 	printf("Param's nao apagados!\n");
 }
 
+void imprime_tipo(VARIAVEL* var){
+	switch(var->tipo){
+		case inteiro:
+			printf("inteiro");
+			break;
+		case inteiroArg:
+			printf("inteiroArg");
+			break;
+		case vetor:
+			printf("vetor");
+			break;
+		case vetorArg:
+			printf("vetorArg");
+			break;
+		case controle:
+			printf("controle");
+			break;
+		case temp:
+			printf("temp");
+			break;
+		case retorno:
+			printf("retorno");
+			break;
+		default:
+			printf("Erro: tipo nao reconhecido\n");
+			break;
+	}
+}
 
 void imprime_memoria(){
 	MEMORIA_FUNCOES* aux = vetorMemoria.funcoes;
@@ -233,8 +261,10 @@ void imprime_memoria(){
 			if(j == fp){
 				printf("$fp -> ");
 			}
-			printf("\t%d: %s [$fp + %d] [$sp - %d]\n",
+			printf("\t%d: %s [$fp + %d] [$sp - %d] : ",
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
+			imprime_tipo(aux2);
+			printf("\n");
 		}
 		if(!flag_sp && strcmp(aux->nome, "global")){
 			printf("$sp -> \t%d:\n", sp);
