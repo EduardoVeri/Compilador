@@ -1,15 +1,15 @@
 1: 
-2: int fatorial(int n, int vet[])
+2: int fatorial(int vet[], int n)
 	2: reserved word , int
 	2: ID, fatorial
 	2: ABREPARENTESES, (
 	2: reserved word , int
-	2: ID, n
-	2: COMMA, ,
-	2: reserved word , int
 	2: ID, vet
 	2: ABRECOLCHETES, [
 	2: FECHACOLCHETES, ]
+	2: COMMA, ,
+	2: reserved word , int
+	2: ID, n
 	2: FECHAPARENTESES, )
 3: {
 	3: ABRECHAVES, {
@@ -131,14 +131,14 @@
 	26: ATRIB, =
 	26: NUM, 5
 	26: SEMICOLON, ;
-27: output(fatorial(5, vet));
+27: output(fatorial(5, vetor));
 	27: ID, output
 	27: ABREPARENTESES, (
 	27: ID, fatorial
 	27: ABREPARENTESES, (
 	27: NUM, 5
 	27: COMMA, ,
-	27: ID, vet
+	27: ID, vetor
 	27: FECHAPARENTESES, )
 	27: FECHAPARENTESES, )
 	27: SEMICOLON, ;
@@ -169,9 +169,9 @@
 ========== Arvore de Analise Sintatica ========== 
 INT
 	INT
-		n
-	INT
 		vet
+	INT
+		n
 	fatorial
 		INT
 			vfat
@@ -225,7 +225,7 @@ INT
 		output
 			fatorial
 				5
-				vet
+				vetor
 		=
 			numero
 			+

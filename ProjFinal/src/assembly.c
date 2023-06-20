@@ -465,23 +465,47 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 		if(instrucao->arg3->tipo != Vazio){
 			// Store de um valor em um vetor
-			novaInstrucao = criarNoAssembly(typeI, "addi");
-			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $fp;
-			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, instrucao->arg1->nome));
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
-			novaInstrucao = criarNoAssembly(typeR, "add");
-			novaInstrucao->tipoR->rd = $temp;
-			novaInstrucao->tipoR->rs = $temp;
-			novaInstrucao->tipoR->rt = instrucao->arg3->val;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			VARIAVEL* varVetor = get_variavel(funcaoAtual, instrucao->arg1->nome);
 
-			novaInstrucao = criarNoAssembly(typeI, "sw");
-			novaInstrucao->tipoI->rt = instrucao->arg2->val;
-			novaInstrucao->tipoI->rs = $temp;
-			novaInstrucao->tipoI->imediato = 0;
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			if(varVetor->tipo == vetor){
+				novaInstrucao = criarNoAssembly(typeI, "addi");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rt = instrucao->arg2->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
+			else{
+				novaInstrucao = criarNoAssembly(typeI, "lw");
+				novaInstrucao->tipoI->rt = $temp;
+				novaInstrucao->tipoI->rs = $fp;
+				novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, varVetor);
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeR, "add");
+				novaInstrucao->tipoR->rd = $temp;
+				novaInstrucao->tipoR->rs = $temp;
+				novaInstrucao->tipoR->rt = instrucao->arg3->val;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+				novaInstrucao = criarNoAssembly(typeI, "sw");
+				novaInstrucao->tipoI->rt = instrucao->arg2->val;
+				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->imediato = 0;
+				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+			}
 		}
 		else{
 			novaInstrucao = criarNoAssembly(typeI, "sw");
