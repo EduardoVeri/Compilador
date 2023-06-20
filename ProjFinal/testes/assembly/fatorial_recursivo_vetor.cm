@@ -10,7 +10,7 @@ int fatorial(int vet[], int n)
   }
   else
   {
-    vfat = fatorial(n-1, vet)*n;
+    vfat = fatorial(vet, n-1)*n;
     return (vfat);
   }
 }
@@ -18,14 +18,12 @@ int fatorial(int vet[], int n)
 int main(void)
 {
   int vetor[5];
-  int numero;
-  int f;
 
   vetor[3] = 10;
   output(vetor[3]);
-  numero = 5;
-  output(fatorial(5, vetor));
-  numero = vetor[3] + 10;
-  output(numero);
+
+  output(fatorial(vetor, 4));
+
+  output(vetor[3] + 10);
   return 0;
 }
