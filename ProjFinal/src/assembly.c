@@ -285,6 +285,13 @@ void geraAssembly(INSTRUCAO* instrucao){
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 			}
 
+			// Inicia o ponteiro de memoria para os parametros
+			novaInstrucao = criarNoAssembly(typeI, "ori");
+			novaInstrucao->tipoI->rt = $pilha;
+			novaInstrucao->tipoI->rs = $zero;
+			novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
+			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
 		}
 		else{
 
@@ -330,13 +337,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 	}
 	else if(!strcmp(instrucao->op, "PARAM")){
-
-		// TODO: Na otimizacao, atribuir um registrador para ficar com esse valor
-		novaInstrucao = criarNoAssembly(typeI, "ori");
-		novaInstrucao->tipoI->rt = $temp;
-		novaInstrucao->tipoI->rs = $zero;
-		novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
-		instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		
 		if(!strcmp(instrucao->arg2->nome, "VET")){
 
@@ -350,7 +350,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 				novaInstrucao = criarNoAssembly(typeI, "sw");
-				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->rs = $pilha;
 				novaInstrucao->tipoI->rt = instrucao->arg1->val;
 				novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
@@ -363,7 +363,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
 				novaInstrucao = criarNoAssembly(typeI, "sw");
-				novaInstrucao->tipoI->rs = $temp;
+				novaInstrucao->tipoI->rs = $pilha;
 				novaInstrucao->tipoI->rt = instrucao->arg1->val;
 				novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
@@ -372,7 +372,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 		}
 		else{
 			novaInstrucao = criarNoAssembly(typeI, "sw");
-			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->rs = $pilha;
 			novaInstrucao->tipoI->rt = instrucao->arg1->val;
 			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
@@ -522,18 +522,12 @@ void geraAssembly(INSTRUCAO* instrucao){
 				
 
 		if(!strcmp(instrucao->arg1->nome, "output")){
-			// Salva o valor do param no $temp para ser usado no output
-			novaInstrucao = criarNoAssembly(typeI, "ori");
-			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $zero;
-			novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;			
 			
 			apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
 
 			novaInstrucao = criarNoAssembly(typeI, "lw");
 			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->rs = $pilha;
 			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -570,18 +564,13 @@ void geraAssembly(INSTRUCAO* instrucao){
 		instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
 
 		for(int i = instrucao->arg2->val; i > 0; i--) {
-			// Salva o valor do param no $temp para ser usado no output
-			novaInstrucao = criarNoAssembly(typeI, "ori");
-			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $zero;
-			novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
-			instrucoesAssembly[indiceAssembly++] = novaInstrucao;			
+			// Salva o valor do param no $temp para ser usado no output			
 			
 			apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
 
 			novaInstrucao = criarNoAssembly(typeI, "lw");
 			novaInstrucao->tipoI->rt = $temp;
-			novaInstrucao->tipoI->rs = $temp;
+			novaInstrucao->tipoI->rs = $pilha;
 			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
