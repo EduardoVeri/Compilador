@@ -466,17 +466,22 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
             printf("Escopo da variavel '%s' nao encontrada", arvoreSintatica->lexema);
             numReg = -1;
         }
-        if(!strcmp(varEscopo->escopo, "global")){
-            numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 0);
-        }
-        else{
-            numReg = verificacaoRegistradores(arvoreSintatica->lexema, funcName, 0);
+
+        if((numReg = buscarVarReg(arvoreSintatica->lexema, varEscopo->escopo)) == -1){
+            if(!strcmp(varEscopo->escopo, "global")){
+                numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 0);
+            }
+            else{
+                numReg = verificacaoRegistradores(arvoreSintatica->lexema, funcName, 0);
+            }
+        
+            instrucaoId = criaInstrucao("LOAD");
+            instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
+            instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
+            instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
         }
 		
-		instrucaoId = criaInstrucao("LOAD");
-		instrucaoId->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
-		instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
-		instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
+		
     }
 
 	if(instrucaoId != NULL){
