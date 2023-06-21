@@ -78,6 +78,7 @@ void insere_variavel(MEMORIA_FUNCOES* funcao, char * nome_variavel, TIPO_VAR tip
 	variavel->tipo = tipo;
 	variavel->nome = nome_variavel;
 	variavel->prox = NULL;
+	variavel->bool_global = (!strcmp(funcao->nome, "global") ? 1 : 0);
 
 	VARIAVEL* aux = NULL;
 		if(funcao->tabelaVar == NULL){
@@ -263,12 +264,14 @@ void imprime_memoria(){
 			}
 			printf("\t%d: %s [$fp + %d] [$sp - %d] : ",
 				aux2->indice, aux2->nome, get_fp_relation(aux, aux2), get_sp_relation(aux, aux2));
-			imprime_tipo(aux2);
+			imprime_tipo(aux2); 
+			aux2->bool_global ? printf(" global") : printf(" local");
 			printf("\n");
 		}
 		if(!flag_sp && strcmp(aux->nome, "global")){
 			printf("$sp -> \t%d:\n", sp);
 		}
+		flag_sp = 0;
 	}
 	printf("\n");
 }
@@ -336,7 +339,11 @@ int get_fp_relation(MEMORIA_FUNCOES* funcao, VARIAVEL* var){
 		return -1;
 	}
 
-	if(funcao == global) return var->indice;
+	if(funcao == global){
+		//printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+		//printf("%s - Funcao global nao tem fp\n", var->nome);
+		return var->indice;
+	} 
 	
 	return var->indice - get_fp(funcao);
 }

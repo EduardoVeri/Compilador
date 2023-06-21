@@ -1,24 +1,18 @@
+int vetor[10];
+int x;
+
+int soma(void){
+	output(vetor[3]);
+	output(x);
+	return x+vetor[3];
+}
+
 void main(void){
-    int vet[ 5 ];
-    int i;
+	vetor[3] = 5;
+	x = 20;
 
-	vet[0] = 2;
-	vet[1] = 1;
-	vet[2] = 4;
-	vet[3] = 5;
-	vet[4] = 3;
+	output(vetor[3]);
+	output(x);
 
-	output(vet[0]);
-	output(vet[1]);
-	output(vet[2]);
-	output(vet[3]);
-	output(vet[4]);
-
-	while (1){
-		output(vet[0]);
-		output(vet[1]);
-		output(vet[2]);
-		output(vet[3]);
-		output(vet[4]);
-	}
+	output(soma());
 }
