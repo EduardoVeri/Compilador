@@ -52,6 +52,7 @@ int buscarVarReg(char* nomeVar, char* escopo);
 void mostrarReg();
 int descartarReg();
 int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp);
+void retirarRegistradores();
 
 //Funcoes auxiliares
 void inicializaVetor(); 

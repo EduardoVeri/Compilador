@@ -2,6 +2,7 @@
 #include <string.h>
 #include "global.h"
 #include "codInterm.h"
+#include <strings.h>
 
 #define MAX_REG 26 // Numero maximo de registradores
 #define MAX_REG_DESCARTE 10000000 // Numero maximo de registradores que podem ser descartados
@@ -162,11 +163,28 @@ int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 	}
 	if((reg = adicionaTempReg()) == -1){
 		printf(ANSI_COLOR_RED);
-		printf("Erro ao adicionar variavel no vetor de registradores");
+		printf("Erro ao adicionar variavel no vetor de registradoresz\n");
 		printf(ANSI_COLOR_RESET);
 	}
 
 	return reg;
 	
 
+}
+
+
+void retirarRegistradores(){
+	static int cont = 1;
+
+	printf("\n\n============== Retirando Registradores %d ===============\n", cont);
+	mostrarReg();
+
+	for(int i = 0; i < MAX_REG; i++){
+		if(listaReg[i].descarte == 0 && listaReg[i].nomeVar != NULL){
+			listaReg[i].nomeVar = NULL;
+			bzero(listaReg[i].escopo, strlen(listaReg[i].escopo));
+			totalRegEmUso--;
+		}
+	}
+	cont++;
 }

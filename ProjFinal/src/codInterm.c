@@ -545,6 +545,8 @@ void codIntExpCall(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
 
     codigoIntermediario[indiceVetor] = instrucaoCall;
     indiceVetor++;
+
+    retirarRegistradores(); // Retirar todos os registradores, ja que agora nao faria mais sentido, por causa da chamada de funcao
 }
 
 void codIntExpAtrib(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
