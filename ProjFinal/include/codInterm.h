@@ -8,6 +8,7 @@
 #define $fp 29
 #define $sp 28
 #define $temp 27
+#define $pilha 26
 
 #include "tabelaSimb.h"
 #include "global.h"

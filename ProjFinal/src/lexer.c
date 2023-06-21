@@ -1,6 +1,6 @@
-#line 2 "arquivo_lex.c"
+#line 2 "lexer.c"
 
-#line 4 "arquivo_lex.c"
+#line 4 "lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -483,8 +483,8 @@ void mostrarTela(char palavra[]);
 int indPilha = -1;
 char pilha[4][MAXLEXEMA];
 
-#line 487 "arquivo_lex.c"
-#line 488 "arquivo_lex.c"
+#line 487 "lexer.c"
+#line 488 "lexer.c"
 
 #define INITIAL 0
 
@@ -704,7 +704,7 @@ YY_DECL
 #line 28 "lexer.l"
 
 
-#line 708 "arquivo_lex.c"
+#line 708 "lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1027,7 +1027,7 @@ YY_RULE_SETUP
 #line 214 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1031 "arquivo_lex.c"
+#line 1031 "lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{

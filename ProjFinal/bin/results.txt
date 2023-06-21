@@ -1,328 +1,326 @@
 1: /* programa para ordenacao por selecao de 
 2: uma matriz com dez elementos. */
 3: 
-4: 
-5: int minloc (int a[], int low, int high)
-	5: reserved word , int
-	5: ID, minloc
-	5: ABREPARENTESES, (
-	5: reserved word , int
-	5: ID, a
-	5: ABRECOLCHETES, [
-	5: FECHACOLCHETES, ]
-	5: COMMA, ,
-	5: reserved word , int
-	5: ID, low
-	5: COMMA, ,
-	5: reserved word , int
-	5: ID, high
-	5: FECHAPARENTESES, )
-6: {	int i; int x; int k;
-	6: ABRECHAVES, {
+4: int vet[5];
+	4: reserved word , int
+	4: ID, vet
+	4: ABRECOLCHETES, [
+	4: NUM, 5
+	4: FECHACOLCHETES, ]
+	4: SEMICOLON, ;
+5: 
+6: int minloc (int a[], int low, int high)
 	6: reserved word , int
-	6: ID, i
-	6: SEMICOLON, ;
+	6: ID, minloc
+	6: ABREPARENTESES, (
 	6: reserved word , int
-	6: ID, x
-	6: SEMICOLON, ;
+	6: ID, a
+	6: ABRECOLCHETES, [
+	6: FECHACOLCHETES, ]
+	6: COMMA, ,
 	6: reserved word , int
-	6: ID, k
-	6: SEMICOLON, ;
-7: k = low;
-	7: ID, k
-	7: ATRIB, =
-	7: ID, low
+	6: ID, low
+	6: COMMA, ,
+	6: reserved word , int
+	6: ID, high
+	6: FECHAPARENTESES, )
+7: {	int i; int x; int k;
+	7: ABRECHAVES, {
+	7: reserved word , int
+	7: ID, i
 	7: SEMICOLON, ;
-8: x = a[low];
-	8: ID, x
+	7: reserved word , int
+	7: ID, x
+	7: SEMICOLON, ;
+	7: reserved word , int
+	7: ID, k
+	7: SEMICOLON, ;
+8: k = low;
+	8: ID, k
 	8: ATRIB, =
-	8: ID, a
-	8: ABRECOLCHETES, [
 	8: ID, low
-	8: FECHACOLCHETES, ]
 	8: SEMICOLON, ;
-9: i = low + 1;
-	9: ID, i
+9: x = a[low];
+	9: ID, x
 	9: ATRIB, =
+	9: ID, a
+	9: ABRECOLCHETES, [
 	9: ID, low
-	9: SOMA, +
-	9: NUM, 1
+	9: FECHACOLCHETES, ]
 	9: SEMICOLON, ;
-10: while (i < high){
-	10: reserved word , while
-	10: ABREPARENTESES, (
+10: i = low + 1;
 	10: ID, i
-	10: LT, <
-	10: ID, high
-	10: FECHAPARENTESES, )
-	10: ABRECHAVES, {
-11: if (a[i] < x){
-	11: reserved word , if
+	10: ATRIB, =
+	10: ID, low
+	10: SOMA, +
+	10: NUM, 1
+	10: SEMICOLON, ;
+11: while (i < high){
+	11: reserved word , while
 	11: ABREPARENTESES, (
-	11: ID, a
-	11: ABRECOLCHETES, [
 	11: ID, i
-	11: FECHACOLCHETES, ]
 	11: LT, <
-	11: ID, x
+	11: ID, high
 	11: FECHAPARENTESES, )
 	11: ABRECHAVES, {
-12: x = a[i];
-	12: ID, x
-	12: ATRIB, =
+12: if (a[i] < x){
+	12: reserved word , if
+	12: ABREPARENTESES, (
 	12: ID, a
 	12: ABRECOLCHETES, [
 	12: ID, i
 	12: FECHACOLCHETES, ]
-	12: SEMICOLON, ;
-13: k = i;
-	13: ID, k
+	12: LT, <
+	12: ID, x
+	12: FECHAPARENTESES, )
+	12: ABRECHAVES, {
+13: x = a[i];
+	13: ID, x
 	13: ATRIB, =
+	13: ID, a
+	13: ABRECOLCHETES, [
 	13: ID, i
+	13: FECHACOLCHETES, ]
 	13: SEMICOLON, ;
-14: }
-	14: FECHACHAVES, }
-15: i = i + 1;
-	15: ID, i
-	15: ATRIB, =
-	15: ID, i
-	15: SOMA, +
-	15: NUM, 1
-	15: SEMICOLON, ;
-16: }
-	16: FECHACHAVES, }
-17: return k;
-	17: reserved word , return
-	17: ID, k
-	17: SEMICOLON, ;
-18: }
-	18: FECHACHAVES, }
-19: 
-20: void sort(int a[], int low, int high)
-	20: reserved word , void
-	20: ID, sort
-	20: ABREPARENTESES, (
-	20: reserved word , int
-	20: ID, a
-	20: ABRECOLCHETES, [
-	20: FECHACOLCHETES, ]
-	20: COMMA, ,
-	20: reserved word , int
-	20: ID, low
-	20: COMMA, ,
-	20: reserved word , int
-	20: ID, high
-	20: FECHAPARENTESES, )
-21: {	int i; int k;
-	21: ABRECHAVES, {
+14: k = i;
+	14: ID, k
+	14: ATRIB, =
+	14: ID, i
+	14: SEMICOLON, ;
+15: }
+	15: FECHACHAVES, }
+16: i = i + 1;
+	16: ID, i
+	16: ATRIB, =
+	16: ID, i
+	16: SOMA, +
+	16: NUM, 1
+	16: SEMICOLON, ;
+17: }
+	17: FECHACHAVES, }
+18: return k;
+	18: reserved word , return
+	18: ID, k
+	18: SEMICOLON, ;
+19: }
+	19: FECHACHAVES, }
+20: 
+21: void sort(int a[], int low, int high)
+	21: reserved word , void
+	21: ID, sort
+	21: ABREPARENTESES, (
 	21: reserved word , int
-	21: ID, i
-	21: SEMICOLON, ;
+	21: ID, a
+	21: ABRECOLCHETES, [
+	21: FECHACOLCHETES, ]
+	21: COMMA, ,
 	21: reserved word , int
-	21: ID, k
-	21: SEMICOLON, ;
-22: i = low;
+	21: ID, low
+	21: COMMA, ,
+	21: reserved word , int
+	21: ID, high
+	21: FECHAPARENTESES, )
+22: {	int i; int k;
+	22: ABRECHAVES, {
+	22: reserved word , int
 	22: ID, i
-	22: ATRIB, =
-	22: ID, low
 	22: SEMICOLON, ;
-23: while (i < high-1){
-	23: reserved word , while
-	23: ABREPARENTESES, (
+	22: reserved word , int
+	22: ID, k
+	22: SEMICOLON, ;
+23: i = low;
 	23: ID, i
-	23: LT, <
-	23: ID, high
-	23: SUB, -
-	23: NUM, 1
-	23: FECHAPARENTESES, )
-	23: ABRECHAVES, {
-24: int t;
-	24: reserved word , int
-	24: ID, t
-	24: SEMICOLON, ;
-25: 
-26: k = minloc(a,i,high);
-	26: ID, k
-	26: ATRIB, =
-	26: ID, minloc
-	26: ABREPARENTESES, (
-	26: ID, a
-	26: COMMA, ,
-	26: ID, i
-	26: COMMA, ,
-	26: ID, high
-	26: FECHAPARENTESES, )
-	26: SEMICOLON, ;
-27: t = a[k];
-	27: ID, t
-	27: ATRIB, =
-	27: ID, a
-	27: ABRECOLCHETES, [
+	23: ATRIB, =
+	23: ID, low
+	23: SEMICOLON, ;
+24: while (i < high-1){
+	24: reserved word , while
+	24: ABREPARENTESES, (
+	24: ID, i
+	24: LT, <
+	24: ID, high
+	24: SUB, -
+	24: NUM, 1
+	24: FECHAPARENTESES, )
+	24: ABRECHAVES, {
+25: int t;
+	25: reserved word , int
+	25: ID, t
+	25: SEMICOLON, ;
+26: 
+27: k = minloc(a,i,high);
 	27: ID, k
-	27: FECHACOLCHETES, ]
+	27: ATRIB, =
+	27: ID, minloc
+	27: ABREPARENTESES, (
+	27: ID, a
+	27: COMMA, ,
+	27: ID, i
+	27: COMMA, ,
+	27: ID, high
+	27: FECHAPARENTESES, )
 	27: SEMICOLON, ;
-28: a[k] = a[i];
+28: t = a[k];
+	28: ID, t
+	28: ATRIB, =
 	28: ID, a
 	28: ABRECOLCHETES, [
 	28: ID, k
 	28: FECHACOLCHETES, ]
-	28: ATRIB, =
-	28: ID, a
-	28: ABRECOLCHETES, [
-	28: ID, i
-	28: FECHACOLCHETES, ]
 	28: SEMICOLON, ;
-29: a[i] = t;
+29: a[k] = a[i];
+	29: ID, a
+	29: ABRECOLCHETES, [
+	29: ID, k
+	29: FECHACOLCHETES, ]
+	29: ATRIB, =
 	29: ID, a
 	29: ABRECOLCHETES, [
 	29: ID, i
 	29: FECHACOLCHETES, ]
-	29: ATRIB, =
-	29: ID, t
 	29: SEMICOLON, ;
-30: i = i + 1;
+30: a[i] = t;
+	30: ID, a
+	30: ABRECOLCHETES, [
 	30: ID, i
+	30: FECHACOLCHETES, ]
 	30: ATRIB, =
-	30: ID, i
-	30: SOMA, +
-	30: NUM, 1
+	30: ID, t
 	30: SEMICOLON, ;
-31: }
-	31: FECHACHAVES, }
+31: i = i + 1;
+	31: ID, i
+	31: ATRIB, =
+	31: ID, i
+	31: SOMA, +
+	31: NUM, 1
+	31: SEMICOLON, ;
 32: }
 	32: FECHACHAVES, }
-33: 
-34: void main(void)
-	34: reserved word , void
-	34: ID, main
-	34: ABREPARENTESES, (
-	34: reserved word , void
-	34: FECHAPARENTESES, )
-35: {	
-	35: ABRECHAVES, {
-36: int vet[ 5 ];
-	36: reserved word , int
-	36: ID, vet
-	36: ABRECOLCHETES, [
-	36: NUM, 5
-	36: FECHACOLCHETES, ]
-	36: SEMICOLON, ;
-37: int i;
-	37: reserved word , int
-	37: ID, i
+33: }
+	33: FECHACHAVES, }
+34: 
+35: void main(void)
+	35: reserved word , void
+	35: ID, main
+	35: ABREPARENTESES, (
+	35: reserved word , void
+	35: FECHAPARENTESES, )
+36: {	
+	36: ABRECHAVES, {
+37: vet[0] = 2;
+	37: ID, vet
+	37: ABRECOLCHETES, [
+	37: NUM, 0
+	37: FECHACOLCHETES, ]
+	37: ATRIB, =
+	37: NUM, 2
 	37: SEMICOLON, ;
-38: 
-39: vet[0] = 2;
+38: vet[1] = 1;
+	38: ID, vet
+	38: ABRECOLCHETES, [
+	38: NUM, 1
+	38: FECHACOLCHETES, ]
+	38: ATRIB, =
+	38: NUM, 1
+	38: SEMICOLON, ;
+39: vet[2] = 4;
 	39: ID, vet
 	39: ABRECOLCHETES, [
-	39: NUM, 0
+	39: NUM, 2
 	39: FECHACOLCHETES, ]
 	39: ATRIB, =
-	39: NUM, 2
+	39: NUM, 4
 	39: SEMICOLON, ;
-40: vet[1] = 1;
+40: vet[3] = 5;
 	40: ID, vet
 	40: ABRECOLCHETES, [
-	40: NUM, 1
+	40: NUM, 3
 	40: FECHACOLCHETES, ]
 	40: ATRIB, =
-	40: NUM, 1
+	40: NUM, 5
 	40: SEMICOLON, ;
-41: vet[2] = 4;
+41: vet[4] = 3;
 	41: ID, vet
 	41: ABRECOLCHETES, [
-	41: NUM, 2
+	41: NUM, 4
 	41: FECHACOLCHETES, ]
 	41: ATRIB, =
-	41: NUM, 4
+	41: NUM, 3
 	41: SEMICOLON, ;
-42: vet[3] = 5;
-	42: ID, vet
-	42: ABRECOLCHETES, [
-	42: NUM, 3
-	42: FECHACOLCHETES, ]
-	42: ATRIB, =
-	42: NUM, 5
-	42: SEMICOLON, ;
-43: vet[4] = 3;
+42: 
+43: sort(vet,0,5);
+	43: ID, sort
+	43: ABREPARENTESES, (
 	43: ID, vet
-	43: ABRECOLCHETES, [
-	43: NUM, 4
-	43: FECHACOLCHETES, ]
-	43: ATRIB, =
-	43: NUM, 3
+	43: COMMA, ,
+	43: NUM, 0
+	43: COMMA, ,
+	43: NUM, 5
+	43: FECHAPARENTESES, )
 	43: SEMICOLON, ;
 44: 
-45: sort(vet,0,5);
-	45: ID, sort
+45: while (1){
+	45: reserved word , while
 	45: ABREPARENTESES, (
-	45: ID, vet
-	45: COMMA, ,
-	45: NUM, 0
-	45: COMMA, ,
-	45: NUM, 5
+	45: NUM, 1
 	45: FECHAPARENTESES, )
-	45: SEMICOLON, ;
-46: 
-47: while (1){
-	47: reserved word , while
+	45: ABRECHAVES, {
+46: output(vet[0]);
+	46: ID, output
+	46: ABREPARENTESES, (
+	46: ID, vet
+	46: ABRECOLCHETES, [
+	46: NUM, 0
+	46: FECHACOLCHETES, ]
+	46: FECHAPARENTESES, )
+	46: SEMICOLON, ;
+47: output(vet[1]);
+	47: ID, output
 	47: ABREPARENTESES, (
+	47: ID, vet
+	47: ABRECOLCHETES, [
 	47: NUM, 1
+	47: FECHACOLCHETES, ]
 	47: FECHAPARENTESES, )
-	47: ABRECHAVES, {
-48: output(vet[0]);
+	47: SEMICOLON, ;
+48: output(vet[2]);
 	48: ID, output
 	48: ABREPARENTESES, (
 	48: ID, vet
 	48: ABRECOLCHETES, [
-	48: NUM, 0
+	48: NUM, 2
 	48: FECHACOLCHETES, ]
 	48: FECHAPARENTESES, )
 	48: SEMICOLON, ;
-49: output(vet[1]);
+49: output(vet[3]);
 	49: ID, output
 	49: ABREPARENTESES, (
 	49: ID, vet
 	49: ABRECOLCHETES, [
-	49: NUM, 1
+	49: NUM, 3
 	49: FECHACOLCHETES, ]
 	49: FECHAPARENTESES, )
 	49: SEMICOLON, ;
-50: output(vet[2]);
+50: output(vet[4]);
 	50: ID, output
 	50: ABREPARENTESES, (
 	50: ID, vet
 	50: ABRECOLCHETES, [
-	50: NUM, 2
+	50: NUM, 4
 	50: FECHACOLCHETES, ]
 	50: FECHAPARENTESES, )
 	50: SEMICOLON, ;
-51: output(vet[3]);
-	51: ID, output
-	51: ABREPARENTESES, (
-	51: ID, vet
-	51: ABRECOLCHETES, [
-	51: NUM, 3
-	51: FECHACOLCHETES, ]
-	51: FECHAPARENTESES, )
-	51: SEMICOLON, ;
-52: output(vet[4]);
-	52: ID, output
-	52: ABREPARENTESES, (
-	52: ID, vet
-	52: ABRECOLCHETES, [
-	52: NUM, 4
-	52: FECHACOLCHETES, ]
-	52: FECHAPARENTESES, )
-	52: SEMICOLON, ;
-53: }
-	53: FECHACHAVES, }
-54: }
-	54: FECHACHAVES, }
-55: 
-	56: EOF
+51: }
+	51: FECHACHAVES, }
+52: }
+	52: FECHACHAVES, }
+53: 
+	54: EOF
 
 ========== Arvore de Analise Sintatica ========== 
+INT
+	vet
+	5
 INT
 	INT
 		a
@@ -422,11 +420,6 @@ VOID
 VOID
 	VOID
 	main
-		INT
-			vet
-			5
-		INT
-			i
 		=
 			vet
 				0
@@ -475,23 +468,23 @@ Nome: low
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 5 7 8 9 
+Linhas: 6 8 9 10 
 
 Nome: low
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 20 22 
+Linhas: 21 23 
 
 Nome: main
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 34 
+Linhas: 35 
 
 Nome: sort
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 20 45 
+Linhas: 21 43 
 
 Nome: input
 Tipo de dado: INT
@@ -499,84 +492,78 @@ Tipo de identificador: FUN
 Linhas: 0 
 
 Nome: vet
-Escopo: main
+Escopo: global
 Tipo de dado: INT
 Tipo de identificador: VET
-Linhas: 36 39 40 41 42 43 45 48 49 50 51 52 
+Linhas: 4 37 38 39 40 41 43 46 47 48 49 50 
 
 Nome: minloc
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 5 26 
+Linhas: 6 27 
 
 Nome: a
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 5 8 11 12 
+Linhas: 6 9 12 13 
 
 Nome: a
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 20 26 27 28 28 29 
+Linhas: 21 27 28 29 29 30 
 
 Nome: i
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 6 9 10 11 12 13 15 15 
+Linhas: 7 10 11 12 13 14 16 16 
 
 Nome: i
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 21 22 23 26 28 29 30 30 
-
-Nome: i
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 37 
+Linhas: 22 23 24 27 29 30 31 31 
 
 Nome: k
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 6 7 13 17 
+Linhas: 7 8 14 18 
 
 Nome: k
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 21 26 27 28 
+Linhas: 22 27 28 29 
 
 Nome: t
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 24 27 29 
+Linhas: 25 28 30 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 48 49 50 51 52 
+Linhas: 0 46 47 48 49 50 
 
 Nome: x
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 6 8 11 12 
+Linhas: 7 9 12 13 
 
 Nome: high
 Escopo: minloc
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 5 10 
+Linhas: 6 11 
 
 Nome: high
 Escopo: sort
 Tipo de dado: INT
 Tipo de identificador: PARAM
-Linhas: 20 23 26 
+Linhas: 21 24 27 
 

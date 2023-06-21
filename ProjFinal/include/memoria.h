@@ -16,6 +16,7 @@ typedef enum tipo{
 typedef struct variavel{
 	TIPO_VAR tipo;
 	int indice;
+	int bool_global;
 	char *nome;
 	struct variavel *prox;
 } VARIAVEL;
@@ -49,5 +50,6 @@ void liberarTabMemoria();
 
 extern MEMORIA vetorMemoria;
 extern MEMORIA_FUNCOES* funcaoAtual;
+extern MEMORIA_FUNCOES* global;
 
 #endif

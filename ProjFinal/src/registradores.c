@@ -3,7 +3,7 @@
 #include "global.h"
 #include "codInterm.h"
 
-#define MAX_REG 27 // Numero maximo de registradores
+#define MAX_REG 26 // Numero maximo de registradores
 #define MAX_REG_DESCARTE 10000000 // Numero maximo de registradores que podem ser descartados
 
 char stringTemp[MAXLEXEMA] = "Temporario"; // Nome para identificar variaveis temporarias

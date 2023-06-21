@@ -101,6 +101,10 @@ void tipo_reg(int reg){
 	case $temp:
 		fprintf(arquivoSaida_Assembly, "$temp");
 		break;
+	
+	case $pilha:
+		fprintf(arquivoSaida_Assembly, "$pilha");
+		break;
 		
 	default:
 		fprintf(arquivoSaida_Assembly, "$t%d", reg);
