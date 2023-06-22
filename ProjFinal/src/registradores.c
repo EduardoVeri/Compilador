@@ -18,9 +18,10 @@ int totalRegEmUso = 0;
 
 typedef struct reg{
 	int numReg;
-	char* nomeVar;
 	char escopo[MAXLEXEMA];
 	int descarte; // Diz se o registrador pode ser descartado (1, 2, ..., n) ou nao (0)
+	int pres_aus; // Diz se a var esta presente (1) ou ausente (0) no registrador
+	char* nomeVar;
 }REG;
 
 REG listaReg[MAX_REG]; // Lista encadeada com os registradores
@@ -32,6 +33,7 @@ void inicializaReg(){
 		listaReg[i].nomeVar = NULL;
 		strcpy(listaReg[i].escopo, "");
 		listaReg[i].descarte = 0;
+		listaReg[i].pres_aus = 0;
 	}
 }
 
@@ -42,6 +44,7 @@ int adicionarVarReg(char* nomeVar, char* escopo){
 			listaReg[i].nomeVar = nomeVar;
 			strcpy(listaReg[i].escopo, escopo);
 			listaReg[i].descarte = 0;
+			listaReg[i].pres_aus = 1;
 			totalReg++;
 			totalRegEmUso++;
 			return i;
@@ -58,6 +61,7 @@ int adicionaTempReg(){
 			strcpy(listaReg[i].escopo, funcName);
 			listaReg[i].descarte = totalReg;
 			totalReg++;
+			listaReg[i].pres_aus = 0;
 			totalRegEmUso++;
 			return i;
 		}
@@ -116,6 +120,7 @@ int descartarReg(){
 	listaReg[regDescartado].nomeVar = NULL;
 	strcpy(listaReg[regDescartado].escopo, "");
 	listaReg[regDescartado].descarte = 0;
+	listaReg[regDescartado].pres_aus = 0;
 	totalRegEmUso--;
 
 	printf(ANSI_COLOR_PURPLE "WARNING: " ANSI_COLOR_RESET); 
@@ -149,7 +154,7 @@ int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp){
 				printf(ANSI_COLOR_RESET);
 			}
 		}
-
+		listaReg[reg].pres_aus = 1;
 		return reg;
 	}
 
@@ -181,10 +186,18 @@ void retirarRegistradores(){
 
 	for(int i = 0; i < MAX_REG; i++){
 		if(listaReg[i].descarte == 0 && listaReg[i].nomeVar != NULL){
-			listaReg[i].nomeVar = NULL;
-			bzero(listaReg[i].escopo, strlen(listaReg[i].escopo));
-			totalRegEmUso--;
+			printf(ANSI_COLOR_PURPLE "WARNING: " ANSI_COLOR_RESET);
+			printf("Descartado registrador t%d com variavel %s\n", i, listaReg[i].nomeVar);
+			
+			listaReg[i].pres_aus = 0;
 		}
 	}
 	cont++;
+}
+
+int pres_aus(int reg){
+	if(listaReg[reg].pres_aus == 1){
+		return 1;
+	}
+	return 0;
 }

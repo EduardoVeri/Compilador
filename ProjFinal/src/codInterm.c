@@ -465,9 +465,17 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
             printf(ANSI_COLOR_RED "ERRO: " ANSI_COLOR_RESET);
             printf("Escopo da variavel '%s' nao encontrada", arvoreSintatica->lexema);
             numReg = -1;
+            return;
         }
 
-        if((numReg = buscarVarReg(arvoreSintatica->lexema, varEscopo->escopo)) == -1){
+        if(!strcmp(varEscopo->escopo, "global")){
+            numReg = buscarVarReg(arvoreSintatica->lexema, "global");
+        }
+        else{
+            numReg = buscarVarReg(arvoreSintatica->lexema, funcName);
+        }
+
+        if(pres_aus(numReg) == 0){
             if(!strcmp(varEscopo->escopo, "global")){
                 numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 0);
             }
@@ -480,8 +488,7 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
             instrucaoId->arg2 = criaEndereco(String, 0, arvoreSintatica->lexema, 0);
             instrucaoId->arg3 = criaEndereco(Vazio, 0, NULL, 0);
         }
-		
-		
+			
     }
 
 	if(instrucaoId != NULL){

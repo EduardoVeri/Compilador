@@ -53,6 +53,7 @@ void mostrarReg();
 int descartarReg();
 int verificacaoRegistradores(char *lexema, char* escopo, int boolTemp);
 void retirarRegistradores();
+int pres_aus(int reg);
 
 //Funcoes auxiliares
 void inicializaVetor(); 

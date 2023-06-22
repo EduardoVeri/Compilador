@@ -1,72 +1,226 @@
 ============== Assembly ==============
 0:  	j main
-1:  gcd:
-2:  	sw $ra 3($fp)
+1:  minloc:
+2:  	sw $ra 4($fp)
 3:  	lw $t0 0($fp)
 4:  	lw $t1 1($fp)
-5:  	slt $t2 $t1 $zero
-6:  	slt $t2 $zero $t1
-7:  	xori $t2 $t2 1
-8:  	beq $t2 $zero Label 1
-9:  	lw $temp 2($fp)
-10: 	sw $t0 2($temp)
-11: 	j Label 0
-12: 	j Label 2
-13: Label 1:
-14: 	sw $t1 0($pilha)
-15: 	div $t3 $t0 $t1
-16: 	mult $t4 $t3 $t1
-17: 	sub $t5 $t0 $t4
-18: 	sw $t5 1($pilha)
-19: 	lw $temp 1($pilha)
-20: 	sw $temp 2($sp)
-21: 	lw $temp 0($pilha)
-22: 	sw $temp 1($sp)
-23: 	add $temp $fp $zero
-24: 	addi $temp $temp 2
-25: 	sw $temp 3($sp)
-26: 	addi $fp $fp 25
-27: 	addi $sp $sp 25
-28: 	jal gcd
-29: 	subi $fp $fp 25
-30: 	subi $sp $sp 25
-31: 	lw $t6 4($fp)
-32: 	lw $temp 2($fp)
-33: 	sw $t6 2($temp)
-34: 	j Label 0
-35: Label 2:
-36: Label 0:
-37: 	lw $ra 3($fp)
-38: 	jr $zero $ra $zero
-39: main:
-40: 	ori $fp $zero 0
-41: 	ori $sp $zero 24
-42: 	ori $pilha $zero 1000
-43: 	lw $t7 6($fp)
-44: 	ori $t8 $zero 12
-45: 	add $t7 $zero $t8
-46: 	sw $t7 6($fp)
-47: 	lw $t9 7($fp)
-48: 	ori $t10 $zero 12
-49: 	add $t9 $zero $t10
-50: 	sw $t9 7($fp)
-51: 	sw $t7 0($pilha)
-52: 	sw $t9 1($pilha)
-53: 	lw $temp 1($pilha)
-54: 	sw $temp 2($sp)
-55: 	lw $temp 0($pilha)
-56: 	sw $temp 1($sp)
-57: 	add $temp $fp $zero
-58: 	addi $temp $temp 0
-59: 	sw $temp 3($sp)
-60: 	addi $fp $fp 25
-61: 	addi $sp $sp 25
-62: 	jal gcd
-63: 	subi $fp $fp 25
-64: 	subi $sp $sp 25
-65: 	lw $t11 2($fp)
-66: 	sw $t11 0($pilha)
-67: 	lw $temp 0($pilha)
-68: 	out $zero $temp 0
-69: Label 3:
-70: 	halt $zero
+5:  	lw $t2 2($fp)
+6:  	lw $t3 11($fp)
+7:  	add $t3 $zero $t1
+8:  	sw $t3 11($fp)
+9:  	lw $t4 10($fp)
+10: 	lw $temp 0($fp)
+11: 	add $temp $temp $t1
+12: 	lw $t5 0($temp)
+13: 	add $t4 $zero $t5
+14: 	sw $t4 10($fp)
+15: 	lw $t6 9($fp)
+16: 	ori $t7 $zero 1
+17: 	add $t8 $t1 $t7
+18: 	add $t6 $zero $t8
+19: 	sw $t6 9($fp)
+20: Label 1:
+21: 	slt $t9 $t6 $t2
+22: 	beq $t9 $zero Label 2
+23: 	lw $temp 0($fp)
+24: 	add $temp $temp $t6
+25: 	lw $t10 0($temp)
+26: 	slt $t11 $t10 $t4
+27: 	beq $t11 $zero Label 3
+28: 	lw $temp 0($fp)
+29: 	add $temp $temp $t6
+30: 	lw $t12 0($temp)
+31: 	add $t4 $zero $t12
+32: 	sw $t4 10($fp)
+33: 	add $t3 $zero $t6
+34: 	sw $t3 11($fp)
+35: Label 3:
+36: 	ori $t13 $zero 1
+37: 	add $t14 $t6 $t13
+38: 	add $t6 $zero $t14
+39: 	sw $t6 9($fp)
+40: 	j Label 1
+41: Label 2:
+42: 	lw $temp 3($fp)
+43: 	sw $t3 2($temp)
+44: 	j Label 0
+45: Label 0:
+46: 	lw $ra 4($fp)
+47: 	jr $zero $ra $zero
+48: sort:
+49: 	sw $ra 4($fp)
+50: 	lw $t15 0($fp)
+51: 	lw $t16 1($fp)
+52: 	lw $t17 2($fp)
+53: 	lw $t18 9($fp)
+54: 	add $t18 $zero $t16
+55: 	sw $t18 9($fp)
+56: Label 6:
+57: 	ori $t19 $zero 1
+58: 	sub $t20 $t17 $t19
+59: 	slt $t21 $t18 $t20
+60: 	beq $t21 $zero Label 7
+61: 	lw $t22 10($fp)
+62: 	lw $t23 0($fp)
+63: 	sw $t23 0($pilha)
+64: 	sw $t18 1($pilha)
+65: 	sw $t17 2($pilha)
+66: 	lw $temp 2($pilha)
+67: 	sw $temp 3($sp)
+68: 	lw $temp 1($pilha)
+69: 	sw $temp 2($sp)
+70: 	lw $temp 0($pilha)
+71: 	sw $temp 1($sp)
+72: 	add $temp $fp $zero
+73: 	addi $temp $temp 3
+74: 	sw $temp 4($sp)
+75: 	addi $fp $fp 25
+76: 	addi $sp $sp 25
+77: 	jal minloc
+78: 	subi $fp $fp 25
+79: 	subi $sp $sp 25
+80: 	lw $t24 5($fp)
+81: 	add $t22 $zero $t24
+82: 	sw $t22 10($fp)
+83: 	lw $t25 11($fp)
+84: 	lw $t22 10($fp)
+85: 	lw $temp 0($fp)
+86: 	add $temp $temp $t22
+87: 	lw $t5 0($temp)
+88: 	add $t25 $zero $t5
+89: 	sw $t25 11($fp)
+90: 	lw $temp 0($fp)
+91: 	add $temp $temp $t22
+92: 	lw $t7 0($temp)
+93: 	lw $t18 9($fp)
+94: 	lw $temp 0($fp)
+95: 	add $temp $temp $t18
+96: 	lw $t8 0($temp)
+97: 	add $t7 $zero $t8
+98: 	lw $temp 0($fp)
+99: 	add $temp $temp $t22
+100: 	sw $t7 0($temp)
+101: 	lw $temp 0($fp)
+102: 	add $temp $temp $t18
+103: 	lw $t9 0($temp)
+104: 	add $t9 $zero $t25
+105: 	lw $temp 0($fp)
+106: 	add $temp $temp $t18
+107: 	sw $t9 0($temp)
+108: 	ori $t10 $zero 1
+109: 	add $t11 $t18 $t10
+110: 	add $t18 $zero $t11
+111: 	sw $t18 9($fp)
+112: 	j Label 6
+113: Label 7:
+114: Label 5:
+115: 	lw $ra 4($fp)
+116: 	jr $zero $ra $zero
+117: main:
+118: 	ori $fp $zero 5
+119: 	ori $sp $zero 29
+120: 	ori $pilha $zero 1000
+121: 	addi $temp $zero 0
+122: 	add $temp $temp $zero
+123: 	lw $t12 0($temp)
+124: 	ori $t13 $zero 2
+125: 	add $t12 $zero $t13
+126: 	addi $temp $zero 0
+127: 	add $temp $temp $zero
+128: 	sw $t12 0($temp)
+129: 	ori $t14 $zero 1
+130: 	addi $temp $zero 0
+131: 	add $temp $temp $t14
+132: 	lw $t19 0($temp)
+133: 	ori $t20 $zero 1
+134: 	add $t19 $zero $t20
+135: 	addi $temp $zero 0
+136: 	add $temp $temp $t14
+137: 	sw $t19 0($temp)
+138: 	ori $t21 $zero 2
+139: 	addi $temp $zero 0
+140: 	add $temp $temp $t21
+141: 	lw $t23 0($temp)
+142: 	ori $t24 $zero 4
+143: 	add $t23 $zero $t24
+144: 	addi $temp $zero 0
+145: 	add $temp $temp $t21
+146: 	sw $t23 0($temp)
+147: 	ori $t5 $zero 3
+148: 	addi $temp $zero 0
+149: 	add $temp $temp $t5
+150: 	lw $t7 0($temp)
+151: 	ori $t8 $zero 5
+152: 	add $t7 $zero $t8
+153: 	addi $temp $zero 0
+154: 	add $temp $temp $t5
+155: 	sw $t7 0($temp)
+156: 	ori $t9 $zero 4
+157: 	addi $temp $zero 0
+158: 	add $temp $temp $t9
+159: 	lw $t10 0($temp)
+160: 	ori $t11 $zero 3
+161: 	add $t10 $zero $t11
+162: 	addi $temp $zero 0
+163: 	add $temp $temp $t9
+164: 	sw $t10 0($temp)
+165: 	addi $t12 $zero 0
+166: 	sw $t12 0($pilha)
+167: 	sw $zero 1($pilha)
+168: 	ori $t13 $zero 5
+169: 	sw $t13 2($pilha)
+170: 	lw $temp 2($pilha)
+171: 	sw $temp 3($sp)
+172: 	lw $temp 1($pilha)
+173: 	sw $temp 2($sp)
+174: 	lw $temp 0($pilha)
+175: 	sw $temp 1($sp)
+176: 	add $temp $fp $zero
+177: 	addi $temp $temp 0
+178: 	sw $temp 4($sp)
+179: 	addi $fp $fp 25
+180: 	addi $sp $sp 25
+181: 	jal sort
+182: 	subi $fp $fp 25
+183: 	subi $sp $sp 25
+184: Label 9:
+185: 	ori $t14 $zero 1
+186: 	beq $t14 $zero Label 10
+187: 	addi $temp $zero 0
+188: 	add $temp $temp $zero
+189: 	lw $t19 0($temp)
+190: 	sw $t19 0($pilha)
+191: 	lw $temp 0($pilha)
+192: 	out $zero $temp 0
+193: 	ori $t20 $zero 1
+194: 	addi $temp $zero 0
+195: 	add $temp $temp $t20
+196: 	lw $t21 0($temp)
+197: 	sw $t21 0($pilha)
+198: 	lw $temp 0($pilha)
+199: 	out $zero $temp 0
+200: 	ori $t23 $zero 2
+201: 	addi $temp $zero 0
+202: 	add $temp $temp $t23
+203: 	lw $t24 0($temp)
+204: 	sw $t24 0($pilha)
+205: 	lw $temp 0($pilha)
+206: 	out $zero $temp 0
+207: 	ori $t5 $zero 3
+208: 	addi $temp $zero 0
+209: 	add $temp $temp $t5
+210: 	lw $t7 0($temp)
+211: 	sw $t7 0($pilha)
+212: 	lw $temp 0($pilha)
+213: 	out $zero $temp 0
+214: 	ori $t8 $zero 4
+215: 	addi $temp $zero 0
+216: 	add $temp $temp $t8
+217: 	lw $t9 0($temp)
+218: 	sw $t9 0($pilha)
+219: 	lw $temp 0($pilha)
+220: 	out $zero $temp 0
+221: 	j Label 9
+222: Label 10:
+223: Label 8:
+224: 	halt $zero
