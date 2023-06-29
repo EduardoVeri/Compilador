@@ -1,172 +1,173 @@
-1: /* Um programa para calcular o mdc
-2: segundo o algoritmo de euclides. */
-3: 
-4: int gcd (int u, int v)
+1: 
+2: int fatorial(int n)
+	2: reserved word , int
+	2: ID, fatorial
+	2: ABREPARENTESES, (
+	2: reserved word , int
+	2: ID, n
+	2: FECHAPARENTESES, )
+3: {
+	3: ABRECHAVES, {
+4: int vfat; 
 	4: reserved word , int
-	4: ID, gcd
-	4: ABREPARENTESES, (
-	4: reserved word , int
-	4: ID, u
-	4: COMMA, ,
-	4: reserved word , int
-	4: ID, v
-	4: FECHAPARENTESES, )
-5: { 	
-	5: ABRECHAVES, {
-6: if (v == 0) {return u;}
+	4: ID, vfat
+	4: SEMICOLON, ;
+5: 
+6: if (n == 1){
 	6: reserved word , if
 	6: ABREPARENTESES, (
-	6: ID, v
+	6: ID, n
 	6: EQ, ==
-	6: NUM, 0
+	6: NUM, 1
 	6: FECHAPARENTESES, )
 	6: ABRECHAVES, {
-	6: reserved word , return
-	6: ID, u
-	6: SEMICOLON, ;
-	6: FECHACHAVES, }
-7: else return gcd(v,u-u/v*v);
-	7: reserved word , else
+7: return (1);
 	7: reserved word , return
-	7: ID, gcd
 	7: ABREPARENTESES, (
-	7: ID, v
-	7: COMMA, ,
-	7: ID, u
-	7: SUB, -
-	7: ID, u
-	7: DIV, /
-	7: ID, v
-	7: MULT, *
-	7: ID, v
+	7: NUM, 1
 	7: FECHAPARENTESES, )
 	7: SEMICOLON, ;
 8: }
 	8: FECHACHAVES, }
-9: 
-10: void main(void)
-	10: reserved word , void
-	10: ID, main
-	10: ABREPARENTESES, (
-	10: reserved word , void
-	10: FECHAPARENTESES, )
-11: {	int x; int y;
-	11: ABRECHAVES, {
-	11: reserved word , int
-	11: ID, x
+9: else
+	9: reserved word , else
+10: {
+	10: ABRECHAVES, {
+11: vfat = fatorial(n-1)*n;
+	11: ID, vfat
+	11: ATRIB, =
+	11: ID, fatorial
+	11: ABREPARENTESES, (
+	11: ID, n
+	11: SUB, -
+	11: NUM, 1
+	11: FECHAPARENTESES, )
+	11: MULT, *
+	11: ID, n
 	11: SEMICOLON, ;
-	11: reserved word , int
-	11: ID, y
-	11: SEMICOLON, ;
-12: 
-13: x = 12; y = 12;
-	13: ID, x
-	13: ATRIB, =
-	13: NUM, 12
-	13: SEMICOLON, ;
-	13: ID, y
-	13: ATRIB, =
-	13: NUM, 12
-	13: SEMICOLON, ;
-14: output(gcd(x,y));
-	14: ID, output
-	14: ABREPARENTESES, (
-	14: ID, gcd
-	14: ABREPARENTESES, (
-	14: ID, x
-	14: COMMA, ,
-	14: ID, y
-	14: FECHAPARENTESES, )
-	14: FECHAPARENTESES, )
-	14: SEMICOLON, ;
-15: }
-	15: FECHACHAVES, }
-	16: EOF
+12: return (vfat);
+	12: reserved word , return
+	12: ABREPARENTESES, (
+	12: ID, vfat
+	12: FECHAPARENTESES, )
+	12: SEMICOLON, ;
+13: }
+	13: FECHACHAVES, }
+14: }
+	14: FECHACHAVES, }
+15: 
+16: int main(void)
+	16: reserved word , int
+	16: ID, main
+	16: ABREPARENTESES, (
+	16: reserved word , void
+	16: FECHAPARENTESES, )
+17: {
+	17: ABRECHAVES, {
+18: int x;
+	18: reserved word , int
+	18: ID, x
+	18: SEMICOLON, ;
+19: x = input();
+	19: ID, x
+	19: ATRIB, =
+	19: ID, input
+	19: ABREPARENTESES, (
+	19: FECHAPARENTESES, )
+	19: SEMICOLON, ;
+20: 
+21: output(fatorial(x));
+	21: ID, output
+	21: ABREPARENTESES, (
+	21: ID, fatorial
+	21: ABREPARENTESES, (
+	21: ID, x
+	21: FECHAPARENTESES, )
+	21: FECHAPARENTESES, )
+	21: SEMICOLON, ;
+22: 
+23: return 0;
+	23: reserved word , return
+	23: NUM, 0
+	23: SEMICOLON, ;
+24: }
+	24: FECHACHAVES, }
+	25: EOF
 
 ========== Arvore de Analise Sintatica ========== 
 INT
 	INT
-		u
-	INT
-		v
-	gcd
+		n
+	fatorial
+		INT
+			vfat
 		IF
 			==
-				v
-				0
+				n
+				1
 			ReturnINT
-				u
+				1
+			=
+				vfat
+				*
+					fatorial
+						-
+							n
+							1
+					n
 			ReturnINT
-				gcd
-					v
-					-
-						u
-						*
-							/
-								u
-								v
-							v
-VOID
+				vfat
+INT
 	VOID
 	main
 		INT
 			x
-		INT
-			y
 		=
 			x
-			12
-		=
-			y
-			12
+			input
 		output
-			gcd
+			fatorial
 				x
-				y
+		ReturnINT
+			0
 
 
 ============== Tabela de Simbolos ===============
 Nome: main
-Tipo de dado: VOID
+Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 10 
+Linhas: 16 
+
+Nome: vfat
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: VAR
+Linhas: 4 11 12 
 
 Nome: input
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 0 
+Linhas: 0 19 
+
+Nome: n
+Escopo: fatorial
+Tipo de dado: INT
+Tipo de identificador: PARAM
+Linhas: 2 6 11 11 
 
 Nome: output
 Tipo de dado: VOID
 Tipo de identificador: FUN
-Linhas: 0 14 
-
-Nome: u
-Escopo: gcd
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 4 6 7 7 
-
-Nome: v
-Escopo: gcd
-Tipo de dado: INT
-Tipo de identificador: PARAM
-Linhas: 4 6 7 7 7 
+Linhas: 0 21 
 
 Nome: x
 Escopo: main
 Tipo de dado: INT
 Tipo de identificador: VAR
-Linhas: 11 13 14 
+Linhas: 18 19 21 
 
-Nome: y
-Escopo: main
-Tipo de dado: INT
-Tipo de identificador: VAR
-Linhas: 11 13 14 
-
-Nome: gcd
+Nome: fatorial
 Tipo de dado: INT
 Tipo de identificador: FUN
-Linhas: 4 7 14 
+Linhas: 2 11 21 
 

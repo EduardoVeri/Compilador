@@ -34,11 +34,13 @@ void sort(int a[], int low, int high)
 
 void main(void)
 {	
-	vet[0] = 2;
-	vet[1] = 1;
-	vet[2] = 4;
-	vet[3] = 5;
-	vet[4] = 3;
+	int i;
+	
+	i = 0;
+	while(i < 5){
+		vet[i] = input();
+		i = i + 1;
+	}
 
 	sort(vet,0,5);
 

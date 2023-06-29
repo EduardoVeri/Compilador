@@ -1,29 +1,24 @@
 
 int fatorial(int n)
 {
-  int vfat; int valor; 
-  
+  int vfat; 
+
   if (n == 1){
     return (1);
   }
   else
   {
-    /*valor = fatorial(n-1);
-    output(valor);*/
-    vfat = n*fatorial(n-1);
-    /*output(vfat);*/
+    vfat = fatorial(n-1)*n;
     return (vfat);
   }
 }
 
 int main(void)
 {
-  int numero;
-  int f;
+  int x;
+  x = input();
 
-  numero = 5;
+  output(fatorial(x));
 
-  f = fatorial(numero);
-  output(f);
   return 0;
 }
