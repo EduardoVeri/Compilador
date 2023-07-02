@@ -12,7 +12,6 @@ typedef struct vetorLabel{
 	int tamanho;
 } VETOR_LABEL;
 
-// extern FILA_LINHAS filaLinhas;
 extern VETOR_LABEL *vetorLabel;
 
 void inicializaLabels();
