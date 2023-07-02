@@ -187,6 +187,13 @@ void geraAssembly(INSTRUCAO* instrucao){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg2->nome);
 		int count = 0;
 
+		.
+		.
+		.
+
+
+
+
 		if(!instrucao->arg3){
 			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
 			printf("NULL no argumento 3\n");
