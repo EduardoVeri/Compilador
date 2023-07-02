@@ -187,13 +187,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 		MEMORIA_FUNCOES* funcao = buscar_funcao(&vetorMemoria, instrucao->arg2->nome);
 		int count = 0;
 
-		.
-		.
-		.
-
-
-
-
 		if(!instrucao->arg3){
 			printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
 			printf("NULL no argumento 3\n");
@@ -397,11 +390,11 @@ void geraAssembly(INSTRUCAO* instrucao){
 
 		VARIAVEL* var = get_variavel(funcaoAtual, instrucao->arg2->nome);
 
-		// TODO: Rever essa parte, principalmente quando for global
 		if(instrucao->arg3->tipo != Vazio){
 			// Load de um indice de um vetor
 
 			if(var->tipo == vetor){
+				// Vetor alocado no escopo dessa funcao
 				novaInstrucao = criarNoAssembly(typeI, "addi");
 				novaInstrucao->tipoI->rt = $temp;
 				novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
@@ -421,6 +414,7 @@ void geraAssembly(INSTRUCAO* instrucao){
 				instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 			}
 			else{
+				// Vetor passado como parametro
 				novaInstrucao = criarNoAssembly(typeI, "lw");
 				novaInstrucao->tipoI->rt = $temp;
 				novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
