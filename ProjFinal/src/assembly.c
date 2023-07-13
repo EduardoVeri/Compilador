@@ -488,7 +488,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			return;
 		}
 				
-
 		if(!strcmp(instrucao->arg1->nome, "output")){
 			
 			apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
@@ -518,9 +517,10 @@ void geraAssembly(INSTRUCAO* instrucao){
 			return; // Nao precisa fazer mais nada
 		}
 
+		/* Continua */
+
 		for(int i = instrucao->arg2->val; i > 0; i--) {
 			// Salva o valor do param no $temp para ser usado no output			
-			
 			apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
 
 			novaInstrucao = criarNoAssembly(typeI, "lw");
@@ -534,7 +534,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->rt = $temp;
 			novaInstrucao->tipoI->imediato = i;
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-		
 		}
 
 		// Armazena o valor de $fp dessa funcao em $temp para poder ser armazenado no novo frame
