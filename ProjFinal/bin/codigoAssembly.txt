@@ -1,81 +1,231 @@
 ============== Assembly ==============
-0:  	j main
-1:  gcd:
-2:  	sw $ra 3($fp)
-3:  	lw $t0 0($fp)
-4:  	lw $t1 1($fp)
-5:  	lw $t1 1($fp)
-6:  	slt $t2 $t1 $zero
-7:  	slt $t2 $zero $t1
-8:  	xori $t2 $t2 1
-9:  	beq $t2 $zero Label 1
-10: 	lw $t0 0($fp)
-11: 	lw $temp 2($fp)
-12: 	sw $t0 2($temp)
-13: 	j Label 0
-14: 	j Label 2
-15: Label 1:
-16: 	lw $t1 1($fp)
-17: 	sw $t1 0($pilha)
-18: 	lw $t0 0($fp)
-19: 	lw $t0 0($fp)
-20: 	lw $t1 1($fp)
-21: 	div $t3 $t0 $t1
-22: 	lw $t1 1($fp)
-23: 	mult $t4 $t3 $t1
-24: 	sub $t5 $t0 $t4
-25: 	sw $t5 1($pilha)
-26: 	lw $temp 1($pilha)
-27: 	sw $temp 2($sp)
-28: 	lw $temp 0($pilha)
-29: 	sw $temp 1($sp)
-30: 	add $temp $fp $zero
-31: 	addi $temp $temp 2
-32: 	sw $temp 3($sp)
-33: 	addi $fp $fp 25
-34: 	addi $sp $sp 25
-35: 	jal gcd
-36: 	subi $fp $fp 25
-37: 	subi $sp $sp 25
-38: 	lw $t6 4($fp)
-39: 	lw $temp 2($fp)
-40: 	sw $t6 2($temp)
-41: 	j Label 0
-42: Label 2:
-43: Label 0:
-44: 	lw $ra 3($fp)
-45: 	jr $zero $ra $zero
-46: main:
-47: 	ori $fp $zero 0
-48: 	ori $sp $zero 24
-49: 	ori $pilha $zero 1000
-50: 	lw $t7 6($fp)
-51: 	ori $t8 $zero 12
-52: 	add $t7 $zero $t8
-53: 	sw $t7 6($fp)
-54: 	lw $t9 7($fp)
-55: 	ori $t10 $zero 12
-56: 	add $t9 $zero $t10
-57: 	sw $t9 7($fp)
-58: 	lw $t7 6($fp)
-59: 	sw $t7 0($pilha)
-60: 	lw $t9 7($fp)
-61: 	sw $t9 1($pilha)
-62: 	lw $temp 1($pilha)
-63: 	sw $temp 2($sp)
-64: 	lw $temp 0($pilha)
-65: 	sw $temp 1($sp)
-66: 	add $temp $fp $zero
-67: 	addi $temp $temp 0
-68: 	sw $temp 3($sp)
-69: 	addi $fp $fp 25
-70: 	addi $sp $sp 25
-71: 	jal gcd
-72: 	subi $fp $fp 25
-73: 	subi $sp $sp 25
-74: 	lw $t11 2($fp)
-75: 	sw $t11 0($pilha)
-76: 	lw $temp 0($pilha)
-77: 	out $zero $temp 0
-78: Label 3:
-79: 	halt $zero
+ 	j main
+ minloc:
+ 	sw $ra 4($fp)
+ 	lw $t0 0($fp)
+ 	lw $t1 1($fp)
+ 	lw $t2 2($fp)
+ 	lw $t3 11($fp)
+ 	lw $t1 1($fp)
+ 	add $t3 $zero $t1
+ 	sw $t3 11($fp)
+	lw $t4 10($fp)
+	lw $t1 1($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t1
+	lw $t5 0($temp)
+	add $t4 $zero $t5
+	sw $t4 10($fp)
+	lw $t6 9($fp)
+	lw $t1 1($fp)
+	ori $t7 $zero 1
+	add $t8 $t1 $t7
+	add $t6 $zero $t8
+	sw $t6 9($fp)
+Label 1:
+	lw $t6 9($fp)
+	lw $t2 2($fp)
+	slt $t9 $t6 $t2
+	beq $t9 $zero Label 2
+	lw $t6 9($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t6
+	lw $t10 0($temp)
+	lw $t4 10($fp)
+	slt $t11 $t10 $t4
+	beq $t11 $zero Label 3
+	lw $t4 10($fp)
+	lw $t6 9($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t6
+	lw $t12 0($temp)
+	add $t4 $zero $t12
+	sw $t4 10($fp)
+	lw $t3 11($fp)
+	lw $t6 9($fp)
+	add $t3 $zero $t6
+	sw $t3 11($fp)
+Label 3:
+	lw $t6 9($fp)
+	lw $t6 9($fp)
+	ori $t13 $zero 1
+	add $t14 $t6 $t13
+	add $t6 $zero $t14
+	sw $t6 9($fp)
+	j Label 1
+Label 2:
+	lw $t3 11($fp)
+	lw $temp 3($fp)
+	sw $t3 2($temp)
+	j Label 0
+Label 0:
+	lw $ra 4($fp)
+	jr $zero $ra $zero
+sort:
+	sw $ra 4($fp)
+	lw $t15 0($fp)
+	lw $t16 1($fp)
+	lw $t17 2($fp)
+	lw $t18 9($fp)
+	lw $t16 1($fp)
+	add $t18 $zero $t16
+	sw $t18 9($fp)
+Label 6:
+	lw $t18 9($fp)
+	lw $t17 2($fp)
+	ori $t19 $zero 1
+	sub $t20 $t17 $t19
+	slt $t21 $t18 $t20
+	beq $t21 $zero Label 7
+	lw $t22 10($fp)
+	lw $t23 0($fp)
+	sw $t23 0($pilha)
+	lw $t18 9($fp)
+	sw $t18 1($pilha)
+	lw $t17 2($fp)
+	sw $t17 2($pilha)
+	lw $temp 2($pilha)
+	sw $temp 3($sp)
+	lw $temp 1($pilha)
+	sw $temp 2($sp)
+	lw $temp 0($pilha)
+	sw $temp 1($sp)
+	add $temp $fp $zero
+	addi $temp $temp 3
+	sw $temp 4($sp)
+	addi $fp $fp 25
+	addi $sp $sp 25
+	jal minloc
+	subi $fp $fp 25
+	subi $sp $sp 25
+	lw $t24 5($fp)
+	add $t22 $zero $t24
+	sw $t22 10($fp)
+	lw $t25 11($fp)
+	lw $t22 10($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t22
+	lw $t5 0($temp)
+	add $t25 $zero $t5
+	sw $t25 11($fp)
+	lw $t22 10($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t22
+	lw $t7 0($temp)
+	lw $t18 9($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t18
+	lw $t8 0($temp)
+	add $t7 $zero $t8
+	lw $temp 0($fp)
+	add $temp $temp $t22
+	sw $t7 0($temp)
+	lw $t18 9($fp)
+	lw $temp 0($fp)
+	add $temp $temp $t18
+	lw $t9 0($temp)
+	lw $t25 11($fp)
+	add $t9 $zero $t25
+	lw $temp 0($fp)
+	add $temp $temp $t18
+	sw $t9 0($temp)
+	lw $t18 9($fp)
+	lw $t18 9($fp)
+	ori $t10 $zero 1
+	add $t11 $t18 $t10
+	add $t18 $zero $t11
+	sw $t18 9($fp)
+	j Label 6
+Label 7:
+Label 5:
+	lw $ra 4($fp)
+	jr $zero $ra $zero
+main:
+	ori $fp $zero 5
+	ori $sp $zero 29
+	ori $pilha $zero 1000
+	lw $t12 6($fp)
+	add $t12 $zero $zero
+	sw $t12 6($fp)
+Label 9:
+	lw $t12 6($fp)
+	ori $t13 $zero 5
+	slt $t14 $t12 $t13
+	beq $t14 $zero Label 10
+	lw $t12 6($fp)
+	addi $temp $zero 0
+	add $temp $temp $t12
+	lw $t19 0($temp)
+	in $t20 $zero 0
+	add $t19 $zero $t20
+	addi $temp $zero 0
+	add $temp $temp $t12
+	sw $t19 0($temp)
+	lw $t12 6($fp)
+	lw $t12 6($fp)
+	ori $t21 $zero 1
+	add $t23 $t12 $t21
+	add $t12 $zero $t23
+	sw $t12 6($fp)
+	j Label 9
+Label 10:
+	addi $t24 $zero 0
+	sw $t24 0($pilha)
+	sw $zero 1($pilha)
+	ori $t5 $zero 5
+	sw $t5 2($pilha)
+	lw $temp 2($pilha)
+	sw $temp 3($sp)
+	lw $temp 1($pilha)
+	sw $temp 2($sp)
+	lw $temp 0($pilha)
+	sw $temp 1($sp)
+	add $temp $fp $zero
+	addi $temp $temp 0
+	sw $temp 4($sp)
+	addi $fp $fp 25
+	addi $sp $sp 25
+	jal sort
+	subi $fp $fp 25
+	subi $sp $sp 25
+Label 11:
+	ori $t7 $zero 1
+	beq $t7 $zero Label 12
+	addi $temp $zero 0
+	add $temp $temp $zero
+	lw $t8 0($temp)
+	sw $t8 0($pilha)
+	lw $temp 0($pilha)
+	out $zero $temp 0
+	ori $t9 $zero 1
+	addi $temp $zero 0
+	add $temp $temp $t9
+	lw $t10 0($temp)
+	sw $t10 0($pilha)
+	lw $temp 0($pilha)
+	out $zero $temp 0
+	ori $t11 $zero 2
+	addi $temp $zero 0
+	add $temp $temp $t11
+	lw $t13 0($temp)
+	sw $t13 0($pilha)
+	lw $temp 0($pilha)
+	out $zero $temp 0
+	ori $t14 $zero 3
+	addi $temp $zero 0
+	add $temp $temp $t14
+	lw $t19 0($temp)
+	sw $t19 0($pilha)
+	lw $temp 0($pilha)
+	out $zero $temp 0
+	ori $t20 $zero 4
+	addi $temp $zero 0
+	add $temp $temp $t20
+	lw $t21 0($temp)
+	sw $t21 0($pilha)
+	lw $temp 0($pilha)
+	out $zero $temp 0
+	j Label 11
+Label 12:
+Label 8:
+	halt $zero

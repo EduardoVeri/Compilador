@@ -597,7 +597,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, get_variavel(funcaoAtual, "Valor Retorno"));
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 		}
-
 	} 
 	else if(!strcmp(instrucao->op, "END")){
 		if(!strcmp(instrucao->arg1->nome, "main")){
