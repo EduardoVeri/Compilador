@@ -128,22 +128,6 @@ void printBits(size_t const size, void const * const ptr, FILE* arquivo)
     }
 }
 
-void mostrar_binario(tipoInstrucao tipo, void* binario, FILE* arquivo){
-	
-	if(tipo == typeR){
-		BIN_R* bin = (BIN_R*)binario;
-		printBits(sizeof(*bin), &(*bin), arquivo);
-	}
-	else if(tipo == typeI){
-		BIN_I* bin = (BIN_I*)binario;
-		printBits(sizeof(*bin), &(*bin), arquivo);
-	}
-	else if(tipo == typeJ){
-		BIN_J* bin = (BIN_J*)binario;
-		printBits(sizeof(*bin), &(*bin), arquivo);
-	}
-}
-
 void binario(FILE* arquivo){
 	BIN_I* binI;
 	BIN_J* binJ;
@@ -154,22 +138,22 @@ void binario(FILE* arquivo){
 		{
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
+			printBits(sizeof(*binR), &(*binR), arquivo);
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
+			printBits(sizeof(*binI), &(*binI), arquivo);
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
+			printBits(sizeof(*binJ), &(*binJ), arquivo);
 			free(binJ);
 			break;
 		case typeLabel:
 			binR = binarioNop();
-			mostrar_binario(typeR, binR, arquivo);
+			printBits(sizeof(*binR), &(*binR), arquivo);
 			free(binR);
 			break;
 		}
@@ -188,25 +172,25 @@ void binario_debug(FILE* arquivo){
 		{
 		case typeR:
 			binR = binarioR(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binR, arquivo);
+			printBits(sizeof(*binR), &(*binR), arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoR->nome);
 			free(binR);
 			break;
 		case typeI:
 			binI = binarioI(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binI, arquivo);
+			printBits(sizeof(*binI), &(*binI), arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoI->nome);
 			free(binI);
 			break;
 		case typeJ:
 			binJ = binarioJ(instrucoesAssembly[i]);
-			mostrar_binario(instrucoesAssembly[i]->tipo, binJ, arquivo);
+			printBits(sizeof(*binJ), &(*binJ), arquivo);
 			fprintf(arquivo, " : %s", instrucoesAssembly[i]->tipoJ->nome);
 			free(binJ);
 			break;
 		case typeLabel:
 			binR = binarioNop();
-			mostrar_binario(typeR, binR, arquivo);
+			printBits(sizeof(*binR), &(*binR), arquivo);
 			fprintf(arquivo, " : nop");
 			free(binR);
 			break;

@@ -672,9 +672,6 @@ void criarCodigoIntermediario(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHas
         else if(arvoreSintatica->tipoExpressao == AssignK){
             codIntExpAtrib(arvoreSintatica, tabelaHash);
         }
-		else if(arvoreSintatica->tipoExpressao == VetorK){
-			//codIntExpVetor(arvoreSintatica, tabelaHash);
-		}
     }
     
     if(boolean == 1){

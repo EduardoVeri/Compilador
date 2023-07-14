@@ -1,4 +1,3 @@
-
 int fatorial(int n)
 {
   int vfat; 
