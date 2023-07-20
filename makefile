@@ -4,14 +4,14 @@ INCLUDES = -Iinclude
 
 all: compilador
 
-compilador: main.o arquivo_lex.o arvore.o assembly.o binario.o codInterm.o funcoes_assembly.o label.o memoria.o parser.tab.o registradores.o semantica.o tabelaSimb.o
-	$(CC) $(CFLAGS) -o bin/compilador main.o arquivo_lex.o arvore.o assembly.o binario.o codInterm.o funcoes_assembly.o label.o memoria.o parser.tab.o registradores.o semantica.o tabelaSimb.o 
+compilador: main.o lexer.o arvore.o assembly.o binario.o codInterm.o funcoes_assembly.o label.o memoria.o parser.o registradores.o semantica.o tabelaSimb.o
+	$(CC) $(CFLAGS) -o bin/compilador main.o lexer.o arvore.o assembly.o binario.o codInterm.o funcoes_assembly.o label.o memoria.o parser.o registradores.o semantica.o tabelaSimb.o 
 
 main.o: src/main.c include/*
 	$(CC) $(CFLAGS) $(INCLUDES) -c src/main.c
 
-arquivo_lex.o: src/arquivo_lex.c include/*
-	$(CC) $(CFLAGS) $(INCLUDES) -c src/arquivo_lex.c 
+lexer.o: src/lexer.c include/*
+	$(CC) $(CFLAGS) $(INCLUDES) -c src/lexer.c 
 
 assembly.o: src/assembly.c include/*
 	$(CC) $(CFLAGS) $(INCLUDES) -c src/assembly.c
@@ -34,8 +34,8 @@ label.o: src/label.c include/*
 memoria.o: src/memoria.c include/*
 	$(CC) $(CFLAGS) $(INCLUDES) -c src/memoria.c
 
-parser.tab.o: src/parser.tab.c include/*
-	$(CC) $(CFLAGS) $(INCLUDES) -c src/parser.tab.c
+parser.o: src/parser.c include/*
+	$(CC) $(CFLAGS) $(INCLUDES) -c src/parser.c
 
 registradores.o: src/registradores.c include/*
 	$(CC) $(CFLAGS) $(INCLUDES) -c src/registradores.c
@@ -48,7 +48,7 @@ tabelaSimb.o: src/tabelaSimb.c include/*
 
 run: compilador
 	clear
-	./bin/compilador ./testes/assembly/soma.cm -o ./bin/codigoBinario.txt -v -ci -ca 
+	./bin/compilador ./testes/sort.cm -o ./bin/codigoBinario.txt -v -ci -ca 
 
 clean:
 	rm -f program *.o
