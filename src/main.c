@@ -123,6 +123,8 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
     
+	printf(ANSI_COLOR_GREEN "Compilando...\n" ANSI_COLOR_RESET);
+
 	PONTEIRONO arvoreSintatica = parse(); // Chama a funcao do parser, para iniciar a analise do codigo
 
 	if(arquivoEntrada != stdin) fclose(arquivoEntrada); //Fecha os arquivos abertos
