@@ -116,10 +116,11 @@ int descartarReg(){
 	strcpy(listaReg[regDescartado].escopo, "");
 	listaReg[regDescartado].descarte = 0;
 	totalRegEmUso--;
-
-	printf(ANSI_COLOR_PURPLE "WARNING: " ANSI_COLOR_RESET); 
-	printf("Descartado registrador t%d\n", regDescartado);
-
+	
+	if(DEBUG_MODE){
+		printf(ANSI_COLOR_PURPLE "WARNING: " ANSI_COLOR_RESET); 
+		printf("Descartado registrador t%d\n", regDescartado);
+	}
 	return regDescartado;
 
 }

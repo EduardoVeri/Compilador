@@ -260,14 +260,14 @@ void geraAssembly(INSTRUCAO* instrucao){
 			novaInstrucao->tipoI->rs = $zero; 
 			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_fp(funcaoAtual);
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-			printf("fp: %d\n", novaInstrucao->tipoI->imediato);
+			//printf("fp: %d\n", novaInstrucao->tipoI->imediato);
 
 			novaInstrucao = criarNoAssembly(typeI, "ori");
 			novaInstrucao->tipoI->rt = $sp;
 			novaInstrucao->tipoI->rs = $zero;
 			novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_sp(funcaoAtual);
 			instrucoesAssembly[indiceAssembly++] = novaInstrucao;
-			printf("sp: %d\n", novaInstrucao->tipoI->imediato);
+			//printf("sp: %d\n", novaInstrucao->tipoI->imediato);
 
 			// Inicia o ponteiro de memoria para os parametros
 			novaInstrucao = criarNoAssembly(typeI, "ori");
