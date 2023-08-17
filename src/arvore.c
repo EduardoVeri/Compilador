@@ -100,24 +100,24 @@ void desalocaArvore(PONTEIRONO raiz){
 //Mostra a árvore
 int flagMA = 0; //Flag para mostrar o primeiro print apenas uma vez.
 void mostraArvore(PONTEIRONO raiz, int num){
-	if(flagMA == 0){
-		flagMA = 1;
-		fprintf(arquivoSaida, "\n========== Arvore de Analise Sintatica ========== \n");
-	}
-	
-	if(raiz == NULL){
-		return;
-	}
+    if(flagMA == 0){
+        flagMA = 1;
+        fprintf(arquivoSaida, "\n========== Arvore de Analise Sintatica ========== \n");
+    }
+    
+    if(raiz == NULL){
+        return;
+    }
 
-	for(int i = 0; i < num; i++){
-		fprintf(arquivoSaida, "\t");
-	}
-	fprintf(arquivoSaida, "%s\n", raiz->lexema);
-	
-	for(int i = 0; i < 3; i++){
-		mostraArvore(raiz->filho[i], num + 1);
-	}
-	mostraArvore(raiz->irmao, num);
+    for(int i = 0; i < num; i++){
+        fprintf(arquivoSaida, "\t");
+    }
+    fprintf(arquivoSaida, "%s\n", raiz->lexema);
+    
+    for(int i = 0; i < 3; i++){
+        mostraArvore(raiz->filho[i], num + 1);
+    }
+    mostraArvore(raiz->irmao, num);
 
-	
+    
 }

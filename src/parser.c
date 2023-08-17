@@ -1428,22 +1428,22 @@ yyreduce:
   case 2:
 #line 50 "parser.y"
                                                    {
-						arvoreSintatica = yyvsp[0];
-					}
+                        arvoreSintatica = yyvsp[0];
+                    }
 #line 1434 "parser.c"
     break;
 
   case 3:
 #line 56 "parser.y"
                                                       {  
-						if(yyvsp[-1] != NULL){
-							yyval = yyvsp[-1];
-							adicionaIrmao(yyval, yyvsp[0]);
-						}
-						else{
-							yyval = yyvsp[0];
-						}
-					  }
+                        if(yyvsp[-1] != NULL){
+                            yyval = yyvsp[-1];
+                            adicionaIrmao(yyval, yyvsp[0]);
+                        }
+                        else{
+                            yyval = yyvsp[0];
+                        }
+                      }
 #line 1448 "parser.c"
     break;
 
@@ -1468,111 +1468,111 @@ yyreduce:
   case 7:
 #line 72 "parser.y"
                                                           {
-						yyval = yyvsp[-2];
-						yyval->tipo = DECLARACAO;
-						yyval->tipoDeclaracao = VarDeclK;
-						yyval->numLinha = qntLinhas;
-					
-						PONTEIRONO aux = novoNo();
+                        yyval = yyvsp[-2];
+                        yyval->tipo = DECLARACAO;
+                        yyval->tipoDeclaracao = VarDeclK;
+                        yyval->numLinha = qntLinhas;
+                    
+                        PONTEIRONO aux = novoNo();
 
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
+                        strcpy(aux->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						//strcpy(aux->lexema, id);
-						adicionaFilho(yyval, aux);
+                        //strcpy(aux->lexema, id);
+                        adicionaFilho(yyval, aux);
 
-						nos[qntNos] = aux;
-						qntNos++;
+                        nos[qntNos] = aux;
+                        qntNos++;
 
-						}
+                        }
 #line 1489 "parser.c"
     break;
 
   case 8:
 #line 90 "parser.y"
                                                                                                            {
-						yyval = yyvsp[-5];
-						yyval->tipo = DECLARACAO;
-						yyval->tipoDeclaracao = VetDeclK;
-						yyval->numLinha = qntLinhas;
+                        yyval = yyvsp[-5];
+                        yyval->tipo = DECLARACAO;
+                        yyval->tipoDeclaracao = VetDeclK;
+                        yyval->numLinha = qntLinhas;
 
-						PONTEIRONO aux = novoNo();
-						PONTEIRONO aux2 = novoNo();
-						
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
+                        PONTEIRONO aux = novoNo();
+                        PONTEIRONO aux2 = novoNo();
+                        
+                        strcpy(aux->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						nos[qntNos] = aux;
-						qntNos++;
+                        nos[qntNos] = aux;
+                        qntNos++;
 
-						strcpy(aux2->lexema, pilha[indPilha]);
-						indPilha--;
-						
-						adicionaFilho(yyval, aux2);
-						adicionaFilho(yyval, aux);
+                        strcpy(aux2->lexema, pilha[indPilha]);
+                        indPilha--;
+                        
+                        adicionaFilho(yyval, aux2);
+                        adicionaFilho(yyval, aux);
 
-						nos[qntNos] = aux2;
-						qntNos++;
-					}
+                        nos[qntNos] = aux2;
+                        qntNos++;
+                    }
 #line 1518 "parser.c"
     break;
 
   case 9:
 #line 116 "parser.y"
                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "INT");
-						yyval->numLinha = qntLinhas;
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "INT");
+                        yyval->numLinha = qntLinhas;
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1531 "parser.c"
     break;
 
   case 10:
 #line 124 "parser.y"
                                                {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "VOID");
-						yyval->numLinha = qntLinhas;
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "VOID");
+                        yyval->numLinha = qntLinhas;
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1544 "parser.c"
     break;
 
   case 11:
 #line 135 "parser.y"
                                                                                                         { 
-						//strcpy(auxLexema, "")
-						yyval = yyvsp[-5];
+                        //strcpy(auxLexema, "")
+                        yyval = yyvsp[-5];
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[-4]);
-						adicionaFilho(yyvsp[-4], yyvsp[0]);
-						
-						yyval->tipo = DECLARACAO;
-						yyval->tipoDeclaracao = FunDeclK;
-					}
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[-4]);
+                        adicionaFilho(yyvsp[-4], yyvsp[0]);
+                        
+                        yyval->tipo = DECLARACAO;
+                        yyval->tipoDeclaracao = FunDeclK;
+                    }
 #line 1560 "parser.c"
     break;
 
   case 12:
 #line 148 "parser.y"
                                      {
-						yyval = novoNo();
-						
-						strcpy(yyval->lexema, pilha[indPilha]);
-						indPilha--;
+                        yyval = novoNo();
+                        
+                        strcpy(yyval->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						//strcpy($$->lexema, auxNome);
-						yyval->numLinha = qntLinhas;
+                        //strcpy($$->lexema, auxNome);
+                        yyval->numLinha = qntLinhas;
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1577 "parser.c"
     break;
 
@@ -1585,29 +1585,29 @@ yyreduce:
   case 14:
 #line 163 "parser.y"
                                                {
-						yyval = novoNo();
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = ParamVoid;
-						strcpy(yyval->lexema, "VOID");
+                        yyval = novoNo();
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = ParamVoid;
+                        strcpy(yyval->lexema, "VOID");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1598 "parser.c"
     break;
 
   case 15:
 #line 175 "parser.y"
                                                           {
-						if(yyvsp[-2] != NULL){
-							yyval = yyvsp[-2];
-							adicionaIrmao(yyval, yyvsp[0]);
-						}
-						else{
-							yyval = yyvsp[0];
-						}						
-					}
+                        if(yyvsp[-2] != NULL){
+                            yyval = yyvsp[-2];
+                            adicionaIrmao(yyval, yyvsp[0]);
+                        }
+                        else{
+                            yyval = yyvsp[0];
+                        }						
+                    }
 #line 1612 "parser.c"
     break;
 
@@ -1620,74 +1620,74 @@ yyreduce:
   case 17:
 #line 187 "parser.y"
                                                         {
-						yyval = yyvsp[-1];
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = VarParamK;
+                        yyval = yyvsp[-1];
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = VarParamK;
 
-						PONTEIRONO aux = novoNo();
+                        PONTEIRONO aux = novoNo();
 
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
-					
-						//strcpy(aux->lexema, id);
-						adicionaFilho(yyval, aux);
+                        strcpy(aux->lexema, pilha[indPilha]);
+                        indPilha--;
+                    
+                        //strcpy(aux->lexema, id);
+                        adicionaFilho(yyval, aux);
 
-						nos[qntNos] = aux;
-						qntNos++;
+                        nos[qntNos] = aux;
+                        qntNos++;
 
-					}
+                    }
 #line 1641 "parser.c"
     break;
 
   case 18:
 #line 205 "parser.y"
                                                                                              {
-						yyval = yyvsp[-3];
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = VetParamK;
-						PONTEIRONO aux = novoNo();
+                        yyval = yyvsp[-3];
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = VetParamK;
+                        PONTEIRONO aux = novoNo();
 
-	
-						strcpy(aux->lexema, pilha[indPilha]);
-						indPilha--;
+    
+                        strcpy(aux->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						//strcpy(aux->lexema, id);
-						adicionaFilho(yyval, aux);		
+                        //strcpy(aux->lexema, id);
+                        adicionaFilho(yyval, aux);		
 
-						nos[qntNos] = aux;
-						qntNos++;	
-					}
+                        nos[qntNos] = aux;
+                        qntNos++;	
+                    }
 #line 1663 "parser.c"
     break;
 
   case 19:
 #line 224 "parser.y"
                                                                                    { 
-						if(yyvsp[-2] != NULL){
-							yyval = yyvsp[-2];
-							adicionaIrmao(yyval, yyvsp[-1]);
-						}
-						else{
-							yyval = yyvsp[-1];
-						}
-					}
+                        if(yyvsp[-2] != NULL){
+                            yyval = yyvsp[-2];
+                            adicionaIrmao(yyval, yyvsp[-1]);
+                        }
+                        else{
+                            yyval = yyvsp[-1];
+                        }
+                    }
 #line 1677 "parser.c"
     break;
 
   case 20:
 #line 235 "parser.y"
                                                            {
-						if(yyvsp[-1] != NULL){
-							yyval = yyvsp[-1];
-							adicionaIrmao(yyval, yyvsp[0]);
-						}
-						else{
-							yyval = yyvsp[0];
-						}
+                        if(yyvsp[-1] != NULL){
+                            yyval = yyvsp[-1];
+                            adicionaIrmao(yyval, yyvsp[0]);
+                        }
+                        else{
+                            yyval = yyvsp[0];
+                        }
 
-					}
+                    }
 #line 1692 "parser.c"
     break;
 
@@ -1700,14 +1700,14 @@ yyreduce:
   case 22:
 #line 248 "parser.y"
                                                     {
-						if(yyvsp[-1] != NULL){
-							yyval = yyvsp[-1];
-							adicionaIrmao(yyval, yyvsp[0]);
-						}
-						else{
-							yyval = yyvsp[0];
-						}
-					}
+                        if(yyvsp[-1] != NULL){
+                            yyval = yyvsp[-1];
+                            adicionaIrmao(yyval, yyvsp[0]);
+                        }
+                        else{
+                            yyval = yyvsp[0];
+                        }
+                    }
 #line 1712 "parser.c"
     break;
 
@@ -1762,21 +1762,21 @@ yyreduce:
   case 31:
 #line 271 "parser.y"
                                                                                          {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "IF");
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = IfK;
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "IF");
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = IfK;
 
-						adicionaFilho(yyval, yyvsp[-3]);
-						adicionaFilho(yyval, yyvsp[-1]);		
-						if(yyvsp[0] != NULL){
-							adicionaFilho(yyval, yyvsp[0]);
-						}
+                        adicionaFilho(yyval, yyvsp[-3]);
+                        adicionaFilho(yyval, yyvsp[-1]);		
+                        if(yyvsp[0] != NULL){
+                            adicionaFilho(yyval, yyvsp[0]);
+                        }
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1781 "parser.c"
     break;
 
@@ -1795,71 +1795,71 @@ yyreduce:
   case 34:
 #line 293 "parser.y"
                                                                                    {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "WHILE");
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = WhileK;
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "WHILE");
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = WhileK;
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[0]);
 
-						nos[qntNos] = yyval;
-						qntNos++;
+                        nos[qntNos] = yyval;
+                        qntNos++;
 
-					}
+                    }
 #line 1812 "parser.c"
     break;
 
   case 35:
 #line 309 "parser.y"
                                            { 
-						yyval = novoNo();
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = ReturnVOID;
-						strcpy(yyval->lexema, "ReturnVOID");
+                        yyval = novoNo();
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = ReturnVOID;
+                        strcpy(yyval->lexema, "ReturnVOID");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1828 "parser.c"
     break;
 
   case 36:
 #line 320 "parser.y"
                                                                      {
-						yyval = novoNo();
-						yyval->tipo = DECLARACAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoDeclaracao = ReturnINT;
-						strcpy(yyval->lexema, "ReturnINT");
+                        yyval = novoNo();
+                        yyval->tipo = DECLARACAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoDeclaracao = ReturnINT;
+                        strcpy(yyval->lexema, "ReturnINT");
 
-						adicionaFilho(yyval, yyvsp[-1]);
+                        adicionaFilho(yyval, yyvsp[-1]);
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 1845 "parser.c"
     break;
 
   case 37:
 #line 334 "parser.y"
                                                       {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "=");
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = AssignK;
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "=");
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = AssignK;
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[0]);
 
-						nos[qntNos] = yyval;
-						qntNos++;
+                        nos[qntNos] = yyval;
+                        qntNos++;
 
-					}
+                    }
 #line 1864 "parser.c"
     break;
 
@@ -1872,62 +1872,62 @@ yyreduce:
   case 39:
 #line 351 "parser.y"
                                      {
-						yyval = novoNo();
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = IdK;
-						
+                        yyval = novoNo();
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = IdK;
+                        
 
-						strcpy(yyval->lexema, pilha[indPilha]);
-						/*
-						FILE * arquivoAux = fopen("arquivoAux.txt", "a+");
-						fprintf(arquivoAux, "%s\n", $$->lexema);
-						fclose(arquivoAux);
-						*/
-						indPilha--;
-						//strcpy($$->lexema, id);
+                        strcpy(yyval->lexema, pilha[indPilha]);
+                        /*
+                        FILE * arquivoAux = fopen("arquivoAux.txt", "a+");
+                        fprintf(arquivoAux, "%s\n", $$->lexema);
+                        fclose(arquivoAux);
+                        */
+                        indPilha--;
+                        //strcpy($$->lexema, id);
 
-						nos[qntNos] = yyval;
-						qntNos++;
+                        nos[qntNos] = yyval;
+                        qntNos++;
 
-					}
+                    }
 #line 1895 "parser.c"
     break;
 
   case 40:
 #line 371 "parser.y"
                                                                                    {
-						yyval = novoNo();
+                        yyval = novoNo();
 
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = VetorK;
-						
-						//strcpy($$->lexema, id);
-						strcpy(yyval->lexema, pilha[indPilha]);
-						indPilha--;
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = VetorK;
+                        
+                        //strcpy($$->lexema, id);
+                        strcpy(yyval->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						adicionaFilho(yyval, yyvsp[-1]);
+                        adicionaFilho(yyval, yyvsp[-1]);
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1917 "parser.c"
     break;
 
   case 41:
 #line 390 "parser.y"
                                                                    {
-						yyval = yyvsp[-1];
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = OpRel;
+                        yyval = yyvsp[-1];
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = OpRel;
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);	
-						
-					}
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[0]);	
+                        
+                    }
 #line 1932 "parser.c"
     break;
 
@@ -1940,99 +1940,99 @@ yyreduce:
   case 43:
 #line 403 "parser.y"
                                                       {
-						yyval = yyvsp[0];
-					}
+                        yyval = yyvsp[0];
+                    }
 #line 1946 "parser.c"
     break;
 
   case 44:
 #line 408 "parser.y"
                              {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "==");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "==");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1959 "parser.c"
     break;
 
   case 45:
 #line 417 "parser.y"
                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "!=");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "!=");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1972 "parser.c"
     break;
 
   case 46:
 #line 426 "parser.y"
                                              {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "<");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "<");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1985 "parser.c"
     break;
 
   case 47:
 #line 435 "parser.y"
                                              {
-						yyval = novoNo();
-						strcpy(yyval->lexema, ">");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, ">");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 1998 "parser.c"
     break;
 
   case 48:
 #line 444 "parser.y"
                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "<=");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "<=");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-						
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                        
+                    }
 #line 2011 "parser.c"
     break;
 
   case 49:
 #line 453 "parser.y"
                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, ">=");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, ">=");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2023 "parser.c"
     break;
 
   case 50:
 #line 463 "parser.y"
                                                     {
-						yyval = yyvsp[-1];
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = OpK;
+                        yyval = yyvsp[-1];
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = OpK;
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);
-					}
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[0]);
+                    }
 #line 2037 "parser.c"
     break;
 
@@ -2045,39 +2045,39 @@ yyreduce:
   case 52:
 #line 475 "parser.y"
                                        {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "+");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "+");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2055 "parser.c"
     break;
 
   case 53:
 #line 482 "parser.y"
                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "-");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "-");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2067 "parser.c"
     break;
 
   case 54:
 #line 491 "parser.y"
                                                    {
-						yyval = yyvsp[-1];
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = OpK;
+                        yyval = yyvsp[-1];
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = OpK;
 
-						adicionaFilho(yyval, yyvsp[-2]);
-						adicionaFilho(yyval, yyvsp[0]);
-						
-					}
+                        adicionaFilho(yyval, yyvsp[-2]);
+                        adicionaFilho(yyval, yyvsp[0]);
+                        
+                    }
 #line 2082 "parser.c"
     break;
 
@@ -2090,24 +2090,24 @@ yyreduce:
   case 56:
 #line 504 "parser.y"
                                        {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "*");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "*");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2100 "parser.c"
     break;
 
   case 57:
 #line 511 "parser.y"
                                               {
-						yyval = novoNo();
-						strcpy(yyval->lexema, "/");
+                        yyval = novoNo();
+                        strcpy(yyval->lexema, "/");
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2112 "parser.c"
     break;
 
@@ -2132,31 +2132,31 @@ yyreduce:
   case 61:
 #line 523 "parser.y"
                                               { 
-						yyval = novoNo();
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = ConstK;
+                        yyval = novoNo();
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = ConstK;
 
-						strcpy(yyval->lexema, pilha[indPilha]);
-						indPilha--;
+                        strcpy(yyval->lexema, pilha[indPilha]);
+                        indPilha--;
 
-						//strcpy($$->lexema, auxNome);
+                        //strcpy($$->lexema, auxNome);
 
-						nos[qntNos] = yyval;
-						qntNos++;
-					}
+                        nos[qntNos] = yyval;
+                        qntNos++;
+                    }
 #line 2149 "parser.c"
     break;
 
   case 62:
 #line 539 "parser.y"
                                                                              {
-						yyval = yyvsp[-3];
-						yyval->tipo = EXPRESSAO;
-						yyval->numLinha = qntLinhas;
-						yyval->tipoExpressao = AtivK;
-						adicionaFilho(yyval, yyvsp[-1]);
-					}
+                        yyval = yyvsp[-3];
+                        yyval->tipo = EXPRESSAO;
+                        yyval->numLinha = qntLinhas;
+                        yyval->tipoExpressao = AtivK;
+                        adicionaFilho(yyval, yyvsp[-1]);
+                    }
 #line 2161 "parser.c"
     break;
 
@@ -2175,19 +2175,19 @@ yyreduce:
   case 65:
 #line 552 "parser.y"
                                                             {
-						if(yyvsp[-2] != NULL){
-							yyval = yyvsp[-2];
-							adicionaIrmao(yyval, yyvsp[0]);
-						} else yyval = yyvsp[0];
-					}
+                        if(yyvsp[-2] != NULL){
+                            yyval = yyvsp[-2];
+                            adicionaIrmao(yyval, yyvsp[0]);
+                        } else yyval = yyvsp[0];
+                    }
 #line 2184 "parser.c"
     break;
 
   case 66:
 #line 558 "parser.y"
                                                     {
-						yyval = yyvsp[0];
-					}
+                        yyval = yyvsp[0];
+                    }
 #line 2192 "parser.c"
     break;
 
@@ -2429,103 +2429,103 @@ yyreturn:
 
 //Funcao para mostrar o erro sintatico do codigo
 void yyerror (char *s){
-	printf("\n" ANSI_COLOR_RED "ERRO SINTATICO, LINHA: %d", qntLinhas);
-	printf(ANSI_COLOR_RESET);
-	switch(auxErro){
-		case NUM:
-			printf(": '%s' não era esperado (NUM)", yytext);
-			break; 
-		case SOMA:
-			printf(": '%s' não era esperado (SOMA)", yytext);
-			break;
-		case SUB:
-			printf(": '%s' não era esperado (SUB)", yytext);
-			break;
-		case MULT:
-			printf(": '%s' não era esperado (MULT)", yytext);
-			break;
-		case DIV:
-			printf(": '%s' não era esperado (DIV)", yytext);
-			break;
-		case INT:
-			printf(": '%s' não era esperado (INT)", yytext);
-			break;
-		case ID:
-			printf(": '%s' não era esperado (ID)", yytext);
-			break;
-		case VOID:
-			printf(": '%s' não era esperado (VOID)", yytext);
-			break;
-		case WHILE:
-			printf(": '%s' não era esperado (WHILE)", yytext);
-			break;
-		case ELSE:
-			printf(": '%s' não era esperado (ELSE)", yytext);
-			break;
-		case IF:
-			printf(": '%s' não era esperado (IF)", yytext);
-			break;
-		case ABREPARENTESES:
-			printf(": '%s' não era esperado (ABREPARENTESES)", yytext);
-			break;
-		case FECHAPARENTESES:
-			printf(": '%s' não era esperado (FECHAPARENTESES)", yytext);
-			break;
-		case RETURN:
-			printf(": '%s' não era esperado (RETURN)", yytext);
-			break;
-		case COMMA:
-			printf(": '%s' não era esperado (COMA)", yytext);
-			break;
-		case ABRECHAVES:
-			printf(": '%s' não era esperado (ABRECHAVES)", yytext);
-			break;
-		case FECHACHAVES:
-			printf(": '%s' não era esperado (FECHACHAVES)", yytext);
-			break;
-		case SEMICOLON:
-			printf(": '%s' não era esperado (SEMICOLON)", yytext);
-			break;
-		case ATRIB:
-			printf(": '%s' não era esperado (ATRIB)", yytext);
-			break;
-		case ABRECOLCHETES:
-			printf(": '%s' não era esperado (ABRECOLCHETES)", yytext);
-			break;
-		case FECHACOLCHETES:
-			printf(": '%s' não era esperado (FECHACOLCHETES)", yytext);
-			break;
-		case EQ:
-			printf(": '%s' não era esperado (EQ)", yytext);
-			break;
-		case NEQ:
-			printf(": '%s' não era esperado (NEQ)", yytext);
-			break;
-		case LT:
-			printf(": '%s' não era esperado (LT)", yytext);
-			break;
-		case LET:
-			printf(": '%s' não era esperado (LET)", yytext);
-			break;
-		case GT:
-			printf(": '%s' não era esperado (GT)", yytext);
-			break;
-		case GET:
-			printf(": '%s' não era esperado (GET)", yytext);
-			break;
-		case ERRO:
-			printf(": '%s' não era esperado (ERRO)", yytext);
-			break;
-	}
-	printf("\n");
+    printf("\n" ANSI_COLOR_RED "ERRO SINTATICO, LINHA: %d", qntLinhas);
+    printf(ANSI_COLOR_RESET);
+    switch(auxErro){
+        case NUM:
+            printf(": '%s' não era esperado (NUM)", yytext);
+            break; 
+        case SOMA:
+            printf(": '%s' não era esperado (SOMA)", yytext);
+            break;
+        case SUB:
+            printf(": '%s' não era esperado (SUB)", yytext);
+            break;
+        case MULT:
+            printf(": '%s' não era esperado (MULT)", yytext);
+            break;
+        case DIV:
+            printf(": '%s' não era esperado (DIV)", yytext);
+            break;
+        case INT:
+            printf(": '%s' não era esperado (INT)", yytext);
+            break;
+        case ID:
+            printf(": '%s' não era esperado (ID)", yytext);
+            break;
+        case VOID:
+            printf(": '%s' não era esperado (VOID)", yytext);
+            break;
+        case WHILE:
+            printf(": '%s' não era esperado (WHILE)", yytext);
+            break;
+        case ELSE:
+            printf(": '%s' não era esperado (ELSE)", yytext);
+            break;
+        case IF:
+            printf(": '%s' não era esperado (IF)", yytext);
+            break;
+        case ABREPARENTESES:
+            printf(": '%s' não era esperado (ABREPARENTESES)", yytext);
+            break;
+        case FECHAPARENTESES:
+            printf(": '%s' não era esperado (FECHAPARENTESES)", yytext);
+            break;
+        case RETURN:
+            printf(": '%s' não era esperado (RETURN)", yytext);
+            break;
+        case COMMA:
+            printf(": '%s' não era esperado (COMA)", yytext);
+            break;
+        case ABRECHAVES:
+            printf(": '%s' não era esperado (ABRECHAVES)", yytext);
+            break;
+        case FECHACHAVES:
+            printf(": '%s' não era esperado (FECHACHAVES)", yytext);
+            break;
+        case SEMICOLON:
+            printf(": '%s' não era esperado (SEMICOLON)", yytext);
+            break;
+        case ATRIB:
+            printf(": '%s' não era esperado (ATRIB)", yytext);
+            break;
+        case ABRECOLCHETES:
+            printf(": '%s' não era esperado (ABRECOLCHETES)", yytext);
+            break;
+        case FECHACOLCHETES:
+            printf(": '%s' não era esperado (FECHACOLCHETES)", yytext);
+            break;
+        case EQ:
+            printf(": '%s' não era esperado (EQ)", yytext);
+            break;
+        case NEQ:
+            printf(": '%s' não era esperado (NEQ)", yytext);
+            break;
+        case LT:
+            printf(": '%s' não era esperado (LT)", yytext);
+            break;
+        case LET:
+            printf(": '%s' não era esperado (LET)", yytext);
+            break;
+        case GT:
+            printf(": '%s' não era esperado (GT)", yytext);
+            break;
+        case GET:
+            printf(": '%s' não era esperado (GET)", yytext);
+            break;
+        case ERRO:
+            printf(": '%s' não era esperado (ERRO)", yytext);
+            break;
+    }
+    printf("\n");
 
 
-	
-	//Desaloca os nos ate o momento
-	for(int i = 0; i < qntNos; i++){
-		free(nos[i]);
-	} 
-	arvoreSintatica = NULL;
+    
+    //Desaloca os nos ate o momento
+    for(int i = 0; i < qntNos; i++){
+        free(nos[i]);
+    } 
+    arvoreSintatica = NULL;
 
 }
 
@@ -2534,7 +2534,7 @@ int yylex(void)
 
 PONTEIRONO parse(void)
 { 
-	yyparse();
-	return arvoreSintatica;
+    yyparse();
+    return arvoreSintatica;
 }
 

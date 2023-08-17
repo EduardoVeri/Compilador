@@ -40,7 +40,7 @@ typedef enum {
     ReturnVOID, // Retorno de função void.
     NuloDecl, // Nulo
     VarDeclK, // Declaração de variável.
-	VetDeclK, // Declaração de vetor.
+    VetDeclK, // Declaração de vetor.
     FunDeclK, // Declaração de função.
     VarParamK, // Declaração de variável parâmetro.
     VetParamK, // Declaração de vetor parâmetro.
@@ -61,13 +61,13 @@ typedef enum {
 /* Declaracao da arvore de analise sintatica */
 
 typedef struct NoArvore{
-	int numLinha; // Numero da linha
-	tipoNo tipo; // Declaracao ou Expressao
-	tipoDECL tipoDeclaracao; // Tipo da declaracao
-	tipoEXP tipoExpressao; // Tipo da Expressão
-	char lexema[MAXLEXEMA]; // Tamanho máximo lexema é de 25
-	struct NoArvore * filho[3]; // Ponteiro para os filhos. No maximo três filhos
-	struct NoArvore * irmao; // Ponteiro para o irmão
+    int numLinha; // Numero da linha
+    tipoNo tipo; // Declaracao ou Expressao
+    tipoDECL tipoDeclaracao; // Tipo da declaracao
+    tipoEXP tipoExpressao; // Tipo da Expressão
+    char lexema[MAXLEXEMA]; // Tamanho máximo lexema é de 25
+    struct NoArvore * filho[3]; // Ponteiro para os filhos. No maximo três filhos
+    struct NoArvore * irmao; // Ponteiro para o irmão
 } NoArvore;
 
 typedef NoArvore * PONTEIRONO;

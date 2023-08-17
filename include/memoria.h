@@ -4,33 +4,33 @@
 #define MEM_PARAM 1000;
 
 typedef enum tipo{
-	inteiro,
-	vetor,
-	inteiroArg,
-	vetorArg,
-	controle,
-	retorno,
-	temp
+    inteiro,
+    vetor,
+    inteiroArg,
+    vetorArg,
+    controle,
+    retorno,
+    temp
 } TIPO_VAR;
 
 typedef struct variavel{
-	TIPO_VAR tipo;
-	int indice;
-	int bool_global;
-	char *nome;
-	struct variavel *prox;
+    TIPO_VAR tipo;
+    int indice;
+    int bool_global;
+    char *nome;
+    struct variavel *prox;
 } VARIAVEL;
 
 typedef struct memoria_funcoes{
-	int tamanho;
-	char* nome;
-	struct memoria_funcoes *prox;
-	VARIAVEL *tabelaVar;
+    int tamanho;
+    char* nome;
+    struct memoria_funcoes *prox;
+    VARIAVEL *tabelaVar;
 } MEMORIA_FUNCOES;
 
 typedef struct{
-	int tamanho;
-	MEMORIA_FUNCOES *funcoes;
+    int tamanho;
+    MEMORIA_FUNCOES *funcoes;
 } MEMORIA;
 
 // Funcoes para a manipulacao da memoria
