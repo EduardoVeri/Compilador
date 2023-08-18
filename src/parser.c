@@ -1449,7 +1449,7 @@ yyreduce:
 
   case 4:
 #line 65 "parser.y"
-                                                     {yyval = yyvsp[0];}
+                                 {yyval = yyvsp[0];}
 #line 1454 "parser.c"
     break;
 
@@ -1461,7 +1461,7 @@ yyreduce:
 
   case 6:
 #line 69 "parser.y"
-                                                         {yyval = yyvsp[0];}
+                                     {yyval = yyvsp[0];}
 #line 1466 "parser.c"
     break;
 
@@ -1490,7 +1490,7 @@ yyreduce:
 
   case 8:
 #line 90 "parser.y"
-                                                                                                           {
+                                                                                       {
                         yyval = yyvsp[-5];
                         yyval->tipo = DECLARACAO;
                         yyval->tipoDeclaracao = VetDeclK;
@@ -1532,7 +1532,7 @@ yyreduce:
 
   case 10:
 #line 124 "parser.y"
-                                               {
+                           {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "VOID");
                         yyval->numLinha = qntLinhas;
@@ -1584,7 +1584,7 @@ yyreduce:
 
   case 14:
 #line 163 "parser.y"
-                                               {
+                           {
                         yyval = novoNo();
                         yyval->tipo = DECLARACAO;
                         yyval->numLinha = qntLinhas;
@@ -1613,7 +1613,7 @@ yyreduce:
 
   case 16:
 #line 184 "parser.y"
-                                                {yyval = yyvsp[0];}
+                            {yyval = yyvsp[0];}
 #line 1618 "parser.c"
     break;
 
@@ -1642,7 +1642,7 @@ yyreduce:
 
   case 18:
 #line 205 "parser.y"
-                                                                                             {
+                                                                         {
                         yyval = yyvsp[-3];
                         yyval->tipo = DECLARACAO;
                         yyval->numLinha = qntLinhas;
@@ -1693,7 +1693,7 @@ yyreduce:
 
   case 21:
 #line 245 "parser.y"
-                                                 {yyval = NULL;}
+                             {yyval = NULL;}
 #line 1698 "parser.c"
     break;
 
@@ -1713,7 +1713,7 @@ yyreduce:
 
   case 23:
 #line 257 "parser.y"
-                                                 {yyval = NULL;}
+                             {yyval = NULL;}
 #line 1718 "parser.c"
     break;
 
@@ -1725,25 +1725,25 @@ yyreduce:
 
   case 25:
 #line 261 "parser.y"
-                                                        {yyval = yyvsp[0];}
+                                    {yyval = yyvsp[0];}
 #line 1730 "parser.c"
     break;
 
   case 26:
 #line 262 "parser.y"
-                                                       {yyval = yyvsp[0];}
+                                   {yyval = yyvsp[0];}
 #line 1736 "parser.c"
     break;
 
   case 27:
 #line 263 "parser.y"
-                                                        {yyval = yyvsp[0];}
+                                    {yyval = yyvsp[0];}
 #line 1742 "parser.c"
     break;
 
   case 28:
 #line 264 "parser.y"
-                                                       {yyval = yyvsp[0];}
+                                   {yyval = yyvsp[0];}
 #line 1748 "parser.c"
     break;
 
@@ -1755,7 +1755,7 @@ yyreduce:
 
   case 30:
 #line 268 "parser.y"
-                                                    {yyval = NULL;}
+                                {yyval = NULL;}
 #line 1760 "parser.c"
     break;
 
@@ -1788,7 +1788,7 @@ yyreduce:
 
   case 33:
 #line 290 "parser.y"
-                                                 {yyval = NULL;}
+                             {yyval = NULL;}
 #line 1793 "parser.c"
     break;
 
@@ -1829,7 +1829,7 @@ yyreduce:
 
   case 36:
 #line 320 "parser.y"
-                                                                     {
+                                                 {
                         yyval = novoNo();
                         yyval->tipo = DECLARACAO;
                         yyval->numLinha = qntLinhas;
@@ -1865,7 +1865,7 @@ yyreduce:
 
   case 38:
 #line 348 "parser.y"
-                                                            {yyval = yyvsp[0];}
+                                        {yyval = yyvsp[0];}
 #line 1870 "parser.c"
     break;
 
@@ -1896,7 +1896,7 @@ yyreduce:
 
   case 40:
 #line 371 "parser.y"
-                                                                                   {
+                                                               {
                         yyval = novoNo();
 
                         yyval->tipo = EXPRESSAO;
@@ -1933,7 +1933,7 @@ yyreduce:
 
   case 42:
 #line 400 "parser.y"
-                                                         {yyval = yyvsp[0];}
+                                     {yyval = yyvsp[0];}
 #line 1938 "parser.c"
     break;
 
@@ -1960,7 +1960,7 @@ yyreduce:
 
   case 45:
 #line 417 "parser.y"
-                                              {
+                          {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "!=");
 
@@ -1973,7 +1973,7 @@ yyreduce:
 
   case 46:
 #line 426 "parser.y"
-                                             {
+                         {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "<");
 
@@ -1986,7 +1986,7 @@ yyreduce:
 
   case 47:
 #line 435 "parser.y"
-                                             {
+                         {
                         yyval = novoNo();
                         strcpy(yyval->lexema, ">");
 
@@ -1999,7 +1999,7 @@ yyreduce:
 
   case 48:
 #line 444 "parser.y"
-                                              {
+                          {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "<=");
 
@@ -2012,7 +2012,7 @@ yyreduce:
 
   case 49:
 #line 453 "parser.y"
-                                              {
+                          {
                         yyval = novoNo();
                         strcpy(yyval->lexema, ">=");
 
@@ -2038,7 +2038,7 @@ yyreduce:
 
   case 51:
 #line 472 "parser.y"
-                                                {yyval = yyvsp[0];}
+                            {yyval = yyvsp[0];}
 #line 2043 "parser.c"
     break;
 
@@ -2056,7 +2056,7 @@ yyreduce:
 
   case 53:
 #line 482 "parser.y"
-                                              {
+                          {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "-");
 
@@ -2083,7 +2083,7 @@ yyreduce:
 
   case 55:
 #line 501 "parser.y"
-                                                {yyval = yyvsp[0];}
+                            {yyval = yyvsp[0];}
 #line 2088 "parser.c"
     break;
 
@@ -2101,7 +2101,7 @@ yyreduce:
 
   case 57:
 #line 511 "parser.y"
-                                              {
+                          {
                         yyval = novoNo();
                         strcpy(yyval->lexema, "/");
 
@@ -2119,19 +2119,19 @@ yyreduce:
 
   case 59:
 #line 521 "parser.y"
-                                              {yyval = yyvsp[0];}
+                          {yyval = yyvsp[0];}
 #line 2124 "parser.c"
     break;
 
   case 60:
 #line 522 "parser.y"
-                                                   {yyval = yyvsp[0];}
+                               {yyval = yyvsp[0];}
 #line 2130 "parser.c"
     break;
 
   case 61:
 #line 523 "parser.y"
-                                              { 
+                          { 
                         yyval = novoNo();
                         yyval->tipo = EXPRESSAO;
                         yyval->numLinha = qntLinhas;
@@ -2168,7 +2168,7 @@ yyreduce:
 
   case 64:
 #line 549 "parser.y"
-                                                 {yyval = NULL;}
+                             {yyval = NULL;}
 #line 2173 "parser.c"
     break;
 
@@ -2185,7 +2185,7 @@ yyreduce:
 
   case 66:
 #line 558 "parser.y"
-                                                    {
+                                {
                         yyval = yyvsp[0];
                     }
 #line 2192 "parser.c"

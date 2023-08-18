@@ -38,7 +38,14 @@ FILE * arquivoSaida_Assembly = NULL; // Arquivo de saída do código assembly
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
 void desaloca_estruturas_sintese();
 
-// Funcao Principal do Compilador 
+/**
+ * @file main.c
+ * @brief This file contains the main function of the compiler project.
+ * 
+ * This file is responsible for starting the compiler and executing the necessary steps to compile the input code.
+ * The main function calls other functions that handle lexical analysis, syntax analysis, semantic analysis, and code generation.
+ * 
+ */
 int main(int argc, char *argv[]){	
     int flagCI = 0;
     int flagCA = 0;
@@ -233,10 +240,12 @@ int main(int argc, char *argv[]){
     binario(arquivoSaida_Binario); // Inicia o processo de conversao do codigo assembly para binario
     fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
 
-    FILE* arquivo_debug = fopen("bin/debug.txt", "w");
-    binario_debug(arquivo_debug);
-    fclose(arquivo_debug);
-
+    if(DEBUG_MODE){
+        FILE* arquivo_debug = fopen("bin/debug.txt", "w");
+        binario_debug(arquivo_debug);
+        fclose(arquivo_debug);
+    }
+    
     desaloca_estruturas_sintese(); 
 
     printf(ANSI_COLOR_GREEN "Compilacao realizada com sucesso!\n" ANSI_COLOR_RESET);
