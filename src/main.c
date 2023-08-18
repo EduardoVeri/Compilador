@@ -18,7 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "tabelaSimb.h"
-#include "parser.tab.h"
+#include "parser.h"
 #include "global.h"
 #include "semantica.h"
 #include "codInterm.h"

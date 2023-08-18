@@ -464,7 +464,7 @@ char *yytext;
 #line 2 "lexer.l"
 
 #include <string.h>
-#include "parser.tab.h"
+#include "parser.h"
 #include "global.h"
 #include "tabelaSimb.h"
 
