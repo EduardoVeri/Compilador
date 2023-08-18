@@ -1,0 +1,17 @@
+/* Soma de dois números */
+
+int soma(int x, int y){
+	int resultado;
+	resultado = x + y;
+	return resultado;
+}
+
+int main(void){
+	int x; int y;
+	x = input();
+	y = input();
+
+	output(soma(x, y));
+
+	return 0;
+}

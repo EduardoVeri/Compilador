@@ -1,0 +1,20 @@
+/* Calcula da media de valores inteiros para
+a linguagem C- */
+
+int main(void){
+    int total; int i; int num; int media;
+    i = 0; media = 0;
+    total = input();
+
+    while(i < total){
+        num = input();
+        media = media + num;
+        i = i + 1;
+    }
+
+    media = media / total;
+    output(media);
+    
+    return 0;
+}
+

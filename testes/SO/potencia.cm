@@ -1,0 +1,19 @@
+/* Calculo de potencia */
+
+int main(void){
+    int num; int pot; int exp;
+
+    num = input();
+    exp = input();
+    pot = 1;
+     
+    while (exp > 0){
+        pot = pot * num;
+        exp = exp - 1;
+    }
+
+    output(pot);
+    return 0;
+
+
+}

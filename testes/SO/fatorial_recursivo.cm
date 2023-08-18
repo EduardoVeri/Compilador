@@ -1,0 +1,23 @@
+int fatorial(int n)
+{
+  int vfat; 
+
+  if (n == 1){
+    return (1);
+  }
+  else
+  {
+    vfat = fatorial(n-1)*n;
+    return (vfat);
+  }
+}
+
+int main(void)
+{
+  int x;
+  x = input();
+
+  output(fatorial(x));
+
+  return 0;
+}
