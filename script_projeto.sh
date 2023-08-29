@@ -22,3 +22,4 @@ gcc src/*.c -o bin/compilador -lfl -Iinclude
 ./bin/compilador ./testes/SO/fatorial_iterativo.cm -o ./bin/testes_SO/fatorial_iterativo.txt
 ./bin/compilador ./testes/SO/fibonacci.cm -o ./bin/testes_SO/fibonacci.txt 
 ./bin/compilador ./testes/SO/soma_funcao.cm -o ./bin/testes_SO/soma_funcao.txt 
+./bin/compilador ./testes/SO/modulo.cm -o ./bin/testes_SO/modulo.txt
