@@ -2,7 +2,7 @@ int main(void)
 {
     int fat; int n;
     
-    n = 5;
+    n = input();
     fat = 1;
     while(n > 1){
         fat = fat*n;
