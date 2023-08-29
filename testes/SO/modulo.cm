@@ -13,6 +13,6 @@ int main(void){
     num = input();
     div = input();
 
-    output(modulo(x, y));
+    output(modulo(num, div));
 
 }
