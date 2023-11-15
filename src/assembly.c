@@ -257,14 +257,14 @@ void geraAssembly(INSTRUCAO* instrucao){
             /* Carrega os registradores $fp e $sp com seus valores iniciais */
             novaInstrucao = criarNoAssembly(typeI, "ori");
             novaInstrucao->tipoI->rt = $fp;
-            novaInstrucao->tipoI->rs = $zero; 
+            novaInstrucao->tipoI->rs = $s0; // TODO: Verificar se eh isso mesmo
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_fp(funcaoAtual);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
             //printf("fp: %d\n", novaInstrucao->tipoI->imediato);
 
             novaInstrucao = criarNoAssembly(typeI, "ori");
             novaInstrucao->tipoI->rt = $sp;
-            novaInstrucao->tipoI->rs = $zero;
+            novaInstrucao->tipoI->rs = $s0;
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_sp(funcaoAtual);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
             //printf("sp: %d\n", novaInstrucao->tipoI->imediato);
@@ -312,7 +312,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             if(var->tipo == vetorArg){
                 novaInstrucao = criarNoAssembly(typeI, "lw");
                 novaInstrucao->tipoI->rt = instrucao->arg1->val;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp; // Mas teoricamnete ele eh so $fp <- Mante so para ter certeza
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp; // Mas teoricamnete ele eh so $fp <- Mante so para ter certeza
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -325,7 +325,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             else{
                 novaInstrucao = criarNoAssembly(typeI, "addi");
                 novaInstrucao->tipoI->rt = instrucao->arg1->val;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -364,7 +364,7 @@ void geraAssembly(INSTRUCAO* instrucao){
                 // Vetor alocado no escopo dessa funcao
                 novaInstrucao = criarNoAssembly(typeI, "addi");
                 novaInstrucao->tipoI->rt = $temp;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -384,7 +384,7 @@ void geraAssembly(INSTRUCAO* instrucao){
                 // Vetor passado como parametro
                 novaInstrucao = criarNoAssembly(typeI, "lw");
                 novaInstrucao->tipoI->rt = $temp;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -406,7 +406,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             // Load de um inteiro
             novaInstrucao = criarNoAssembly(typeI, "lw");
             novaInstrucao->tipoI->rt = instrucao->arg1->val;
-            novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+            novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
             novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
         }
@@ -426,7 +426,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             if(var->tipo == vetor){
                 novaInstrucao = criarNoAssembly(typeI, "addi");
                 novaInstrucao->tipoI->rt = $temp;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -445,7 +445,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             else{
                 novaInstrucao = criarNoAssembly(typeI, "lw");
                 novaInstrucao->tipoI->rt = $temp;
-                novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp; // Provavelmente nao vai ser preciso verificar aqui
+                novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp; // Provavelmente nao vai ser preciso verificar aqui
                 novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
                 instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
@@ -465,7 +465,7 @@ void geraAssembly(INSTRUCAO* instrucao){
         else{
             novaInstrucao = criarNoAssembly(typeI, "sw");
             novaInstrucao->tipoI->rt = instrucao->arg2->val;
-            novaInstrucao->tipoI->rs = (var->bool_global) ? $zero : $fp;
+            novaInstrucao->tipoI->rs = (var->bool_global) ? $s0 : $fp;
             novaInstrucao->tipoI->imediato = get_fp_relation(funcaoAtual, var);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
         }
