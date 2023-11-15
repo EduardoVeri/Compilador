@@ -1,0 +1,31 @@
+
+int main(void){
+	int bool;
+	int valor;
+	int i;
+	int processos[10];
+	int j;
+	
+	bool = 1;
+	i = 0;
+	while(bool){
+		valor = input();
+		
+		if(valor >= 0){
+			if(valor <= 10){
+				if(valor == 0){
+					bool = 0;
+				}
+				else{
+					processos[i] = valor;
+					i = i + 1;				
+				}
+			}
+		}
+	}
+	j = 0;
+	while(j < i){
+		execute(processos[j]);
+		j = j + 1;
+	}
+}
