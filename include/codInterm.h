@@ -9,8 +9,9 @@
 #define $sp 28
 #define $temp 27
 #define $pilha 26
-#define $s1 25
-#define $s0 24
+#define $s2 25
+#define $s1 24
+#define $s0 23
 
 #include "tabelaSimb.h"
 #include "global.h"
