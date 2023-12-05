@@ -1,20 +1,36 @@
 int main(void){
 	
 	int idprocs[10];
+	int statusproc[10];
 	int total;
 	int interruption;
 	int i;
 	int buffer;
 	
+	total = 10;
+	statusproc[0] = 1;
+	idprocs[0] = 5;
+	i = 20;
+	buffer = 9;
+	interruption = 7;
 	while(total > 0){
 		
-		loadcontext(idprocs[0]);
+
+		if(statusproc[0] == 1){
+			/* Get pci */
+		}
+		/* loadcontext(idprocs[0]); */
 		
-		execute(idprocs[0]);
+		/* Start clock */
+
+		/* execute(idprocs[0]); */
 		
 		/* Interrupcao via clock */
-		if(interruption == 2){
-			savecontext(idprocs[0]);			
+		if(interruption == 1){
+
+			/* Use pci here */
+
+			/*savecontext(idprocs[0]);			*/
 			
 			i = 0;
 			buffer = idprocs[0];
@@ -28,7 +44,7 @@ int main(void){
 		}
 		else{
 			/* Interrupcao via halt */
-			if(interruption == 1){
+			if(interruption == 2){
 				i = 0;
 				total = total - 1;
 				while(i < total){
@@ -37,9 +53,6 @@ int main(void){
 				}
 			}
 		}
-		
-	
-	
 	} 
 }
 

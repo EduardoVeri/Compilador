@@ -2,6 +2,8 @@
 
 int soma(int x, int y){
 	int resultado;
+	output(x);
+	output(y);
 	resultado = x + y;
 	return resultado;
 }
@@ -9,7 +11,9 @@ int soma(int x, int y){
 int main(void){
 	int x; int y;
 	x = input();
+	output(x);
 	y = input();
+	output(y);
 
 	output(soma(x, y));
 

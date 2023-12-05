@@ -257,17 +257,29 @@ void geraAssembly(INSTRUCAO* instrucao){
             /* Carrega os registradores $fp e $sp com seus valores iniciais */
             novaInstrucao = criarNoAssembly(typeI, "ori");
             novaInstrucao->tipoI->rt = $fp;
-            novaInstrucao->tipoI->rs = $s0; // TODO: Verificar se eh isso mesmo
+            novaInstrucao->tipoI->rs = $zero; // TODO: Verificar se eh isso mesmo
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_fp(funcaoAtual);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
             //printf("fp: %d\n", novaInstrucao->tipoI->imediato);
 
+            novaInstrucao = criarNoAssembly(typeR, "add");
+            novaInstrucao->tipoR->rd = $fp;
+            novaInstrucao->tipoR->rs = $fp;
+            novaInstrucao->tipoR->rt = $s0;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
             novaInstrucao = criarNoAssembly(typeI, "ori");
             novaInstrucao->tipoI->rt = $sp;
-            novaInstrucao->tipoI->rs = $s0;
+            novaInstrucao->tipoI->rs = $zero;
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "global")->tamanho + get_sp(funcaoAtual);
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
             //printf("sp: %d\n", novaInstrucao->tipoI->imediato);
+
+            novaInstrucao = criarNoAssembly(typeR, "add");
+            novaInstrucao->tipoR->rd = $sp;
+            novaInstrucao->tipoR->rs = $sp;
+            novaInstrucao->tipoR->rt = $s0;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
             // Inicia o ponteiro de memoria para os parametros
             novaInstrucao = criarNoAssembly(typeI, "ori");
@@ -527,6 +539,12 @@ void geraAssembly(INSTRUCAO* instrucao){
             novaInstrucao->tipoI->rt = $temp;
             novaInstrucao->tipoI->rs = $pilha;
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+            novaInstrucao = criarNoAssembly(typeI, "out");
+            novaInstrucao->tipoI->rs = $temp;
+            novaInstrucao->tipoI->rt = $zero;
+            novaInstrucao->tipoI->imediato = 0;
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
             novaInstrucao = criarNoAssembly(typeI, "sw");
