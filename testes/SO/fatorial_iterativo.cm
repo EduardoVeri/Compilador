@@ -7,8 +7,6 @@ int main(void)
     while(n > 1){
         fat = fat*n;
         n = n - 1;
-        output(fat);
-        output(n);
     }
 
     output(fat);

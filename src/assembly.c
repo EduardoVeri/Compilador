@@ -282,10 +282,16 @@ void geraAssembly(INSTRUCAO* instrucao){
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
             // Inicia o ponteiro de memoria para os parametros
-            novaInstrucao = criarNoAssembly(typeI, "ori");
+            novaInstrucao = criarNoAssembly(typeR, "add");
+            novaInstrucao->tipoR->rd = $pilha;
+            novaInstrucao->tipoR->rs = $zero;
+            novaInstrucao->tipoR->rt = $s0; // Valor fixo para a localizacao dos parametros
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+            novaInstrucao = criarNoAssembly(typeI, "subi");
             novaInstrucao->tipoI->rt = $pilha;
-            novaInstrucao->tipoI->rs = $zero;
-            novaInstrucao->tipoI->imediato = MEM_PARAM; // Valor fixo para a localizacao dos parametros
+            novaInstrucao->tipoI->rs = $pilha;
+            novaInstrucao->tipoI->imediato = 5;
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
         }
         else{
@@ -541,11 +547,12 @@ void geraAssembly(INSTRUCAO* instrucao){
             novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+            /*
             novaInstrucao = criarNoAssembly(typeI, "out");
             novaInstrucao->tipoI->rs = $temp;
             novaInstrucao->tipoI->rt = $zero;
             novaInstrucao->tipoI->imediato = 0;
-            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao; */
 
             novaInstrucao = criarNoAssembly(typeI, "sw");
             novaInstrucao->tipoI->rs = $sp;
