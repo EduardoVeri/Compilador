@@ -1,6 +1,12 @@
 #!/bin/bash
 
 clear
+make generate
+rm -r ./build
+mkdir build
+cmake -B ./build 
+cmake --build ./build
+
 cd ./src
 bison -d -oparser.c parser.y
 flex -olexer.c lexer.l
