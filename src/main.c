@@ -38,14 +38,6 @@ FILE * arquivoSaida_Assembly = NULL; // Arquivo de saída do código assembly
 void desaloca_estruturas_analise(PONTEIRONO arvoreSintatica, PONTEIROITEM* tabelaHash);
 void desaloca_estruturas_sintese();
 
-/**
- * @file main.c
- * @brief This file contains the main function of the compiler project.
- * 
- * This file is responsible for starting the compiler and executing the necessary steps to compile the input code.
- * The main function calls other functions that handle lexical analysis, syntax analysis, semantic analysis, and code generation.
- * 
- */
 int main(int argc, char *argv[]){	
     int flagCI = 0;
     int flagCA = 0;
@@ -68,12 +60,17 @@ int main(int argc, char *argv[]){
         // Para ativar o modo verbose e criar um arquivo de saída "Resultados"
         if((strcmp(argv[i], "-V") == 0) || (strcmp(argv[i], "-v") == 0)){
             flagVerbose = 1;
-            arquivoSaida = fopen("bin/results.txt", "w");
+            arquivoSaida = fopen("lexerAndParserResults.txt", "w");
+            if(arquivoSaida == NULL){
+                printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
+                printf("Nao foi possivel criar o arquivo de resultados.\n");
+                flagVerbose = 0;
+            }
         }
         // Para gerar o código intermediário em um arquivo
         else if((strcmp(argv[i], "-CI") == 0) || (strcmp(argv[i], "-ci") == 0)){
             flagCI = 1;
-            arquivoSaida_Intermediario = fopen("bin/codigoIntermediario.txt", "w");
+            arquivoSaida_Intermediario = fopen("intermediateCode.txt", "w");
             if(arquivoSaida_Intermediario == NULL){
                 printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
                 printf("Nao foi possivel criar o arquivo de codigo intermediario.\n");
@@ -90,7 +87,7 @@ int main(int argc, char *argv[]){
         // Argumento para gerar o código assembly em um arquivo
         else if((!strcmp(argv[i], "-CA")) || (!strcmp(argv[i], "-ca"))){
             flagCA = 1;
-            arquivoSaida_Assembly = fopen("bin/codigoAssembly.txt", "w");
+            arquivoSaida_Assembly = fopen("assemblyCode.txt", "w");
             if(arquivoSaida_Assembly == NULL){
                 printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
                 printf("Nao foi possivel criar o arquivo para o codigo assembly.\n");
@@ -123,7 +120,7 @@ int main(int argc, char *argv[]){
     }
     if (arquivoEntrada == NULL){
         printf("Erro: Arquivo não fornecido.\n");
-        printf("%s <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> --> Com arquivos de entrada\n", argv[0]);
+        printf("%s <-ni> --> Sem arquivos de entrada\n./compilador <arquivo.cm> <-v> <-ci> <-ca> --> Com arquivos de entrada\n", argv[0]);
         if(flagCI) fclose(arquivoSaida_Intermediario);
         if(flagVerbose) fclose(arquivoSaida);
         if(flagCA) fclose(arquivoSaida_Assembly);
@@ -136,7 +133,7 @@ int main(int argc, char *argv[]){
 
     if(arquivoEntrada != stdin) fclose(arquivoEntrada); //Fecha os arquivos abertos
     if(copiaArquivo != NULL) fclose(copiaArquivo); // Fecha e remove o arquivo de copia 
-    remove("src/copia.txt");
+    //remove("src/copia.txt");
 
     // Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){
@@ -175,7 +172,7 @@ int main(int argc, char *argv[]){
         fclose(arquivoSaida); // Fecha o arquivo de saida
     } 
     else{
-        remove("bin/results.txt");
+        remove("lexerAndParserResults.txt");
     }
 
     /* Caso tenha algum erro semantico, nao criar e mostrar o codigo intermediario*/
@@ -204,7 +201,7 @@ int main(int argc, char *argv[]){
         fclose(arquivoSaida_Intermediario); // Fecha o arquivo de codigo intermediario
     } 
     else{
-        remove("bin/codigoIntermediario.txt"); // Remove o arquivo de codigo intermediario
+        remove("intermediateCode.txt"); // Remove o arquivo de codigo intermediario
     }
     
     if(DEBUG_MODE) mostrarReg(); // Mostra os registradores em uso
@@ -219,7 +216,7 @@ int main(int argc, char *argv[]){
         fclose(arquivoSaida_Assembly); // Fecha o arquivo de codigo assembly
     }
     else{
-        remove("bin/codigoAssembly.txt"); // Remove o arquivo de codigo assembly
+        remove("assemblyCode.txt"); // Remove o arquivo de codigo assembly
     }  
 
     if(DEBUG_MODE){
@@ -228,7 +225,7 @@ int main(int argc, char *argv[]){
     }
 
     if(!arquivoSaida_Binario){
-        arquivoSaida_Binario = fopen("bin/codigoBinario.txt", "w");
+        arquivoSaida_Binario = fopen("binaryCode.txt", "w");
         if(arquivoSaida == NULL){
             printf(ANSI_COLOR_RED "Erro:" ANSI_COLOR_RESET);
             printf("Nao foi possivel criar o arquivo de saida.\n");
@@ -241,7 +238,7 @@ int main(int argc, char *argv[]){
     fclose(arquivoSaida_Binario); // Fecha o arquivo de codigo binario
 
     if(DEBUG_MODE){
-        FILE* arquivo_debug = fopen("bin/debug.txt", "w");
+        FILE* arquivo_debug = fopen("debug.txt", "w");
         binario_debug(arquivo_debug);
         fclose(arquivo_debug);
     }
