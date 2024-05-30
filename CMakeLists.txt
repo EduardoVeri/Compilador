@@ -38,7 +38,7 @@ else()
 endif()
 
 # Link the fl library so we can compile the bison .c generated file
-target_link_libraries(${EXECUTABLE_NAME} fl)
+# target_link_libraries(${EXECUTABLE_NAME} fl)
 
 # Change the output directory of the executable
 set_target_properties(${EXECUTABLE_NAME} PROPERTIES

@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
 
     if(arquivoEntrada != stdin) fclose(arquivoEntrada); //Fecha os arquivos abertos
     if(copiaArquivo != NULL) fclose(copiaArquivo); // Fecha e remove o arquivo de copia 
-    //remove("src/copia.txt");
+    remove("copia.txt");
 
     // Verifica se a arvore sintatica foi criada corretamente
     if(arvoreSintatica == NULL){

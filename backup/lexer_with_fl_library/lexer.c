@@ -323,9 +323,6 @@ void yyfree ( void *  );
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
-
-#define yywrap() (/*CONSTCOND*/1)
-#define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -486,8 +483,8 @@ void mostrarTela(char palavra[]);
 int indPilha = -1;
 char pilha[4][MAXLEXEMA];
 
-#line 490 "lexer.c"
-#line 491 "lexer.c"
+#line 487 "lexer.c"
+#line 488 "lexer.c"
 
 #define INITIAL 0
 
@@ -704,10 +701,10 @@ YY_DECL
 		}
 
 	{
-#line 29 "lexer.l"
+#line 28 "lexer.l"
 
 
-#line 711 "lexer.c"
+#line 708 "lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -766,12 +763,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 30 "lexer.l"
 {/*Ignora as entradas com espaços e tabulacoes*/}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 32 "lexer.l"
 {
           char c, aux = 'x'; 
           do
@@ -793,7 +790,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 50 "lexer.l"
 {
     qntLinhas++;
     if (flagVerbose == 1 && copiaArquivo != NULL){
@@ -806,7 +803,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 61 "lexer.l"
 {
             if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: NUM, %s\n", qntLinhas, yytext);
             
@@ -828,7 +825,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 80 "lexer.l"
 {	
             enum yytokentype token;
             if((tabelaNomes(&token)) == 0){
@@ -854,7 +851,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 104 "lexer.l"
+#line 103 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABREPARENTESES, %s\n", qntLinhas, yytext);
     return ABREPARENTESES;
@@ -862,7 +859,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 109 "lexer.l"
+#line 108 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHAPARENTESES, %s\n", qntLinhas, yytext);
     return FECHAPARENTESES;
@@ -870,7 +867,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 114 "lexer.l"
+#line 113 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABRECOLCHETES, %s\n", qntLinhas, yytext);
     return ABRECOLCHETES;
@@ -878,7 +875,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 120 "lexer.l"
+#line 119 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHACOLCHETES, %s\n", qntLinhas, yytext);
     return FECHACOLCHETES;
@@ -886,7 +883,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 126 "lexer.l"
+#line 125 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ABRECHAVES, %s\n", qntLinhas, yytext);
     return ABRECHAVES;
@@ -894,7 +891,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 131 "lexer.l"
+#line 130 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: FECHACHAVES, %s\n", qntLinhas, yytext);
     return FECHACHAVES;	
@@ -902,7 +899,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 137 "lexer.l"
+#line 136 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ATRIB, %s\n", qntLinhas, yytext);
     return ATRIB;
@@ -910,7 +907,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 142 "lexer.l"
+#line 141 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: COMMA, %s\n", qntLinhas, yytext);
     return COMMA;
@@ -918,7 +915,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 147 "lexer.l"
+#line 146 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SEMICOLON, %s\n", qntLinhas, yytext);	
     return SEMICOLON;
@@ -926,7 +923,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 152 "lexer.l"
+#line 151 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SOMA, %s\n", qntLinhas, yytext);
     return SOMA;
@@ -934,7 +931,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 157 "lexer.l"
+#line 156 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: SUB, %s\n", qntLinhas, yytext);
     return SUB;
@@ -942,7 +939,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 162 "lexer.l"
+#line 161 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: MULT, %s\n", qntLinhas, yytext);
     return MULT;
@@ -950,7 +947,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 167 "lexer.l"
+#line 166 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: DIV, %s\n", qntLinhas, yytext);
     return DIV;
@@ -958,7 +955,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 172 "lexer.l"
+#line 171 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: EQ, %s\n", qntLinhas, yytext);
     return EQ;
@@ -966,7 +963,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 177 "lexer.l"
+#line 176 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: NEQ, %s\n", qntLinhas, yytext);
     return NEQ;
@@ -974,7 +971,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 182 "lexer.l"
+#line 181 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: LT, %s\n", qntLinhas, yytext);
     return LT;
@@ -982,7 +979,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 187 "lexer.l"
+#line 186 "lexer.l"
 {
     if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: GT, %s\n", qntLinhas, yytext);
     return GT;
@@ -990,7 +987,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 192 "lexer.l"
+#line 191 "lexer.l"
 {
         if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: LET, %s\n", qntLinhas, yytext);
         return LET;
@@ -998,14 +995,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 197 "lexer.l"
+#line 196 "lexer.l"
 {	
         if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: GET, %s\n", qntLinhas, yytext);
         return GET;
       }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 202 "lexer.l"
+#line 201 "lexer.l"
 {
         if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: EOF\n", qntLinhas);
         return 0;
@@ -1013,12 +1010,12 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 207 "lexer.l"
+#line 206 "lexer.l"
 {if(arquivoEntrada == stdin) return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 209 "lexer.l"
+#line 208 "lexer.l"
 {
     printf(ANSI_COLOR_RED "\nERRO LEXICO, LINHA: %d" ANSI_COLOR_RESET, qntLinhas);
     printf(": %s não identificado na linguagem\n", yytext);
@@ -1027,10 +1024,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 215 "lexer.l"
+#line 214 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1034 "lexer.c"
+#line 1031 "lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2033,7 +2030,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 215 "lexer.l"
+#line 214 "lexer.l"
 
 
 //Funcao que verifica se o id eh uma palavra reservada
@@ -2100,7 +2097,7 @@ void mostrarTela(char palavra[]){
 //Funcao que copia o arquivo de entrada para um arquivo de saida extra
 void copiar(FILE* velho){
     FILE *novo;
-    novo=fopen("copia.txt","w");
+    novo=fopen("src/copia.txt","w");
     if (novo==NULL){
         printf("Erro de abertura\n");
         exit(1);
@@ -2129,7 +2126,7 @@ enum yytokentype getToken(void)
         else{
             copiar(arquivoEntrada);
             rewind(arquivoEntrada);
-            copiaArquivo = fopen("copia.txt", "r");
+            copiaArquivo = fopen("src/copia.txt", "r");
             
             if(flagVerbose == 1){
                 fgets(stringAux, 1000, copiaArquivo);

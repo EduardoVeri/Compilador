@@ -21,6 +21,7 @@ int indPilha = -1;
 char pilha[4][MAXLEXEMA];
 
 %}
+%option noyywrap
 
 DIGIT [0-9]
 LETRA [a-zA-Z]
@@ -277,7 +278,7 @@ void mostrarTela(char palavra[]){
 //Funcao que copia o arquivo de entrada para um arquivo de saida extra
 void copiar(FILE* velho){
     FILE *novo;
-    novo=fopen("src/copia.txt","w");
+    novo=fopen("copia.txt","w");
     if (novo==NULL){
         printf("Erro de abertura\n");
         exit(1);
@@ -306,7 +307,7 @@ enum yytokentype getToken(void)
         else{
             copiar(arquivoEntrada);
             rewind(arquivoEntrada);
-            copiaArquivo = fopen("src/copia.txt", "r");
+            copiaArquivo = fopen("copia.txt", "r");
             
             if(flagVerbose == 1){
                 fgets(stringAux, 1000, copiaArquivo);
