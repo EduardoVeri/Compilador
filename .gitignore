@@ -64,3 +64,4 @@ dkms.conf
 .vscode/launch.json
 
 build/
+CMakeFiles/
