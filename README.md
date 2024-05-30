@@ -92,15 +92,17 @@ To use the compiler, run the executable with the following commands:
 
 
 - `-v` (Optional)  
-  **Description:** Enables verbose mode. The program will print the tokens and the syntax tree to a file named `output.txt`.
+  **Description:** Enables verbose mode. The program will print the tokens, the syntax tree and the symbol table to a file named `lexerAndParserResults.txt`.
 
 
 - `-ca` (Optional)  
-  **Description:** Creates an assembly file. The program will generate a file named `output.asm`.
+  **Description:** Creates an assembly file. The program will generate a file named `assemblyCode.txt`.
 
 
 - `-ci` (Optional)  
-  **Description:** Creates an intermediate code file. The program will generate a file named `output.ic`.
+  **Description:** Creates an intermediate code file. The program will generate a file named `intermediateCode.txt`.
 
+## Automated System Tests
 
+Under construction... But you can run manual tests using the files in the `test_files` directory.
 
