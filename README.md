@@ -40,7 +40,7 @@ After these steps, the executable will be located in the `./bin` directory named
 If you don't want to use CMake, you can compile the project using gcc with the following command:
 
 ```sh
-gcc src/*.c -o bin/compilador -lfl -Iinclude 
+gcc src/*.c -o bin/compilador -Iinclude 
 ```
 
 ## Generating Lexer and Parser .c files
