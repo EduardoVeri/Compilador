@@ -8,7 +8,7 @@ find_path(CMOCKA_INCLUDE_DIR NAMES cmocka.h)
 find_library(CMOCKA_LIBRARY NAMES cmocka)
 
 if (NOT CMOCKA_INCLUDE_DIR OR NOT CMOCKA_LIBRARY)
-    message(FATAL_ERROR "Could not find CMocka. Please set CMOCKA_INCLUDE_DIR and CMOCKA_LIBRARY.")
+    message(STATUS "Could not find CMocka. Please set CMOCKA_INCLUDE_DIR and CMOCKA_LIBRARY.")
     return()
 else()
     message(STATUS "Found CMocka: ${CMOCKA_INCLUDE_DIR}, ${CMOCKA_LIBRARY}")
