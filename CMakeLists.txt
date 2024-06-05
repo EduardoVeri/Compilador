@@ -8,8 +8,23 @@ option(SHOW_WARNINGS "Enable or disable compiler warnings" OFF)
 set(SRC_DIR "src")
 set(INCLUDE_DIR "include")
 
+set (SOURCES 
+    ${SRC_DIR}/arvore.c
+    ${SRC_DIR}/assembly.c
+    ${SRC_DIR}/binario.c
+    ${SRC_DIR}/codInterm.c
+    ${SRC_DIR}/funcoes_assembly.c
+    ${SRC_DIR}/label.c
+    ${SRC_DIR}/lexer.c
+    ${SRC_DIR}/main.c
+    ${SRC_DIR}/memoria.c
+    ${SRC_DIR}/parser.c
+    ${SRC_DIR}/registradores.c
+    ${SRC_DIR}/semantica.c
+    ${SRC_DIR}/tabelaSimb.c
+)
+
 include_directories(${INCLUDE_DIR})
-file(GLOB SOURCES "${SRC_DIR}/*.c")
 
 add_executable(${EXECUTABLE_NAME} ${SOURCES})
         
