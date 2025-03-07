@@ -263,7 +263,7 @@ Um processador MIPS possuí estruturas indispensáveis para o seu correto funcio
 \begin{figure}[ht]
 \centering 
 \caption{Caminho de dados para o processador desenvolvido.} \label{fig:Datapath_Alterado}
-\graphicspath{ {./Imagens/} } 
+\graphicspath{ {./imgs/} } 
 \includegraphics[scale=0.11]{Datapath_Alterado.png}
 \legend{Fonte: O Autor }
 \end{figure}
@@ -462,8 +462,8 @@ A fase de análise é o momento em que o compilador irá analisar se o que foi e
 \begin{figure}[H]
 \centering 
 \caption{Diagrama de blocos para a fase de análise} \label{fig:DiagramaBlocosAnalise}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.3]{Imagens/Diagrama de Blocos Fase Análise.jpg}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.3]{imgs/Diagrama de Blocos Fase Análise.jpg}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -472,8 +472,8 @@ A fase de análise é o momento em que o compilador irá analisar se o que foi e
 \begin{figure}[H]
 \centering 
 \caption{Diagrama de atividades para a fase de análise} \label{fig:DiagramaAtividadesAnalise}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.35]{Imagens/Diagrama de Atividades Fase de Análise.jpg}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.35]{imgs/Diagrama de Atividades Fase de Análise.jpg}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -730,8 +730,8 @@ Nesse momento, o compilador já realizou todas as verificações cabíveis e est
 \begin{figure}[H]
 \centering 
 \caption{Diagrama de blocos para a fase de síntese} \label{fig:DiagramaBlocosSintese}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.3]{Imagens/Diagrama de Blocos Codigo Intermediário.jpg}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.3]{imgs/Diagrama de Blocos Codigo Intermediário.jpg}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -741,8 +741,8 @@ Nesse momento, o compilador já realizou todas as verificações cabíveis e est
 \begin{figure}[H]
 \centering 
 \caption{Diagrama de atividades para a fase de síntese} \label{fig:DiagramaAtividadesSintese}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.3]{Imagens/Diagrama de Atividades Código Intermediário.jpg}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.3]{imgs/Diagrama de Atividades Código Intermediário.jpg}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -807,7 +807,7 @@ Primeiramente, é necessário a construção de uma estrutura de dados que consi
 \centering 
 \caption{Estrutura de dados para o código intermediário, presente no arquivo \nohyphens{``codIterm.h''}} 
 \label{fig:StructsCodInterm}
-\graphicspath{ {./Imagens/} } 
+\graphicspath{ {./imgs/} } 
 \includegraphics[scale=0.5]{Codigo/Struct_Codigo_Interm.png}
 \legend{Fonte: O Autor }
 \end{figure}
@@ -819,8 +819,8 @@ Assim, basta percorrer os nós da árvore e analisando o seus tipos, já que cad
 \centering 
 \caption{Função para gerar o código intermediário, com base nos possíveis nós da arvore sintática, no \nohyphens{``codIterm.c''}} 
 \label{fig:GerarCodInterm}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/CodCriarCodInterm.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/CodCriarCodInterm.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -831,8 +831,8 @@ Para exemplificar esse procedimento, será descrito uma das funções utilizadas
 \centering 
 \caption{Função para gerar o código intermediário ao encontrar um operador aritmético no \nohyphens{``codIterm.c''}} 
 \label{fig:CodIntermOp}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/CodIntermOp.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/CodIntermOp.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -854,8 +854,8 @@ A estrutura desse código pode ser visualizada na \autoref{fig:StructsCodAssembl
 \centering 
 \caption{Estrutura para armazenar o código assembly gerado, presente no arquivo \nohyphens{``assembly.h''}} 
 \label{fig:StructsCodAssembly}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Struct_Codigo_Assembly.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Struct_Codigo_Assembly.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -911,8 +911,8 @@ Os registradores \$fp e \$sp devem apontar, respectivamente, para o início do q
 \centering 
 \caption{Saída do terminal para a memória de uma função genérica, para um programa compilado} 
 \label{fig:SaidaMemoria}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.6]{Imagens/Codigo/Saida_Memoria.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.6]{imgs/Codigo/Saida_Memoria.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -920,8 +920,8 @@ Os registradores \$fp e \$sp devem apontar, respectivamente, para o início do q
 \centering 
 \caption{Estrutura de dados para armazenar e gerenciar a memória da pilha de funções, presente no arquivo \nohyphens{``memoria.h''}} 
 \label{fig:StructsMemoria}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Struct_Memoria.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Struct_Memoria.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -931,8 +931,8 @@ Outra estrutura que será importante para a geração do código binário é as 
 \centering 
 \caption{Estrutura de dados para armazenar e gerenciar as \emph{labels} presentes no código \emph{assembly} \nohyphens{``label.h''}} 
 \label{fig:StructsLabels}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.6]{Imagens/Codigo/Struct_Labels.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.6]{imgs/Codigo/Struct_Labels.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -944,8 +944,8 @@ Após a inicialização do vetor do código, a primeira instrução a ser adicio
 \centering 
 \caption{Função ``assembly'' utilizada para inicializar a geração do código \emph{assembly} para o processador MIPS em \nohyphens{``assembly.c''}} 
 \label{fig:CodAssemblyIniciar}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.6]{Imagens/Codigo/Cod_Assembly.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.6]{imgs/Codigo/Cod_Assembly.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -957,8 +957,8 @@ Para a maior parte das instruções de código intermediário basta adicionar ap
 \centering 
 \caption{Função ``geraAssembly'' utilizada para gerar efetivamente o código \emph{assembly} para o processador MIPS, presente no arquivo \nohyphens{``assembly.c''}} 
 \label{fig:CodGerarAssembly}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.6]{Imagens/Codigo/Cod_GeraAssembly.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.6]{imgs/Codigo/Cod_GeraAssembly.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -972,8 +972,8 @@ Para realizar a alocação de memória das variáveis existem duas instruções 
 \centering 
 \caption{Verificação para a instrução ALLOC presente em \nohyphens{``assembly.c''}} 
 \label{fig:AssemblyALLOC}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Assembly_ALLOC.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Assembly_ALLOC.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -982,8 +982,8 @@ Para realizar a alocação de memória das variáveis existem duas instruções 
 \centering 
 \caption{Verificação para a instrução ARG presente em \nohyphens{``assembly.c''}} 
 \label{fig:AssemblyARG}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Assembly_ARG.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Assembly_ARG.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -995,8 +995,8 @@ Para a realização de uma leitura a um valor inteiro basta utilizar o ponteiro 
 \centering 
 \caption{Verificação para a instrução LOAD para vetores alocados no escopo da função, presente em \nohyphens{``assembly.c''}} 
 \label{fig:AssemblyLOAD1}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Assembly_LOAD_Vetor.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Assembly_LOAD_Vetor.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1004,8 +1004,8 @@ Para a realização de uma leitura a um valor inteiro basta utilizar o ponteiro 
 \centering 
 \caption{Verificação para a instrução LOAD para vetores passados como argumento e variáveis inteiras, presente em \nohyphens{``assembly.c''}} 
 \label{fig:AssemblyLOAD2}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Assembly_LOAD_Inteiros.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Assembly_LOAD_Inteiros.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1026,8 +1026,8 @@ Para adicionar um valor como parâmetro primeiro é preciso verificar qual o tip
 \centering 
 \caption{Verificação para a instrução PARAM, presente em \nohyphens{``assembly.c''}} 
 \label{fig:AssemblyPARAM}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Assembly_Param.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Assembly_Param.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1046,24 +1046,24 @@ As Figuras \ref{fig:AssemblyCALL1}, \ref{fig:AssemblyCALL2} e \ref{fig:AssemblyC
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária CALL - parte 1 - presente no arquivo ``assembly.c''} \label{fig:AssemblyCALL1}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_Call1.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_Call1.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária CALL - parte 2 - presente no arquivo ``assembly.c''} \label{fig:AssemblyCALL2}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_Call2.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_Call2.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária CALL - parte 3 - presente no arquivo ``assembly.c''} \label{fig:AssemblyCALL3}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_Call3.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_Call3.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1075,8 +1075,8 @@ A instrução de código intermediário ``FUN'' tem a fundamental importância d
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária FUN, presente no arquivo ``assembly.c''} \label{fig:AssemblyFUN}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_Fun.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_Fun.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1086,16 +1086,16 @@ Por fim, basta exemplificar o que será feito nas instruções de ``RET'' (\auto
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária END presente no arquivo ``assembly.c''} \label{fig:AssemblyEnd}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_End.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_End.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
 \begin{figure}[H]
 \centering 
 \caption{Geração de código \emph{assembly} para a instrução intermediária RET presente no arquivo ``assembly.c''} \label{fig:AssemblyRET}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Codigo/Cod_Assembly_Ret.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Codigo/Cod_Assembly_Ret.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1107,8 +1107,8 @@ Após obter o código \emph{assembly}, basta convertê-lo para o valor binário 
 \centering 
 \caption{Estruturas para armazenar os valores binários do código, presente no arquivo \nohyphens{``binario.h''}} 
 \label{fig:StructsBinario}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.6]{Imagens/Codigo/Struct_CodigoBinario.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.6]{imgs/Codigo/Struct_CodigoBinario.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1118,8 +1118,8 @@ A estrutura foi implementada seguindo o padrão já mencionado das instruções 
 \centering 
 \caption{Funçao ``binario'' utilizada para converter o código \emph{assembly} para binário, implementado no arquivo \nohyphens{``binario.c''}} 
 \label{fig:GeracaoBinario}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Binario_Geracao.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Binario_Geracao.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1129,8 +1129,8 @@ Na \autoref{fig:GeracaoBinario} a função ``binario'' irá realizar um laço pa
 \centering 
 \caption{Funções específicas para a conversão do código \emph{assembly} em formatos do tipo R, I e J, respectivamente. Implementado no arquivo \nohyphens{``binario.c''}} 
 \label{fig:ConversaoBinario}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Binario_Conversao.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Binario_Conversao.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1138,8 +1138,8 @@ Na \autoref{fig:GeracaoBinario} a função ``binario'' irá realizar um laço pa
 \centering 
 \caption{Funções para conversão do nome da instrução em seu opcode e funct (para tipo R) em binário. Presente no arquivo \nohyphens{``binario.c''}} 
 \label{fig:BinarioOpcodeFunct}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Binario_opcode_funct.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Binario_opcode_funct.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1150,8 +1150,8 @@ Por fim, para imprimir o valor do código binário em um arquivo, a função ``p
 \centering 
 \caption{Função para mostrar o valor binário para um arquivo esterno. Presente no arquivo \nohyphens{``binario.c''}} 
 \label{fig:BinarioPrintBits}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.5]{Imagens/Codigo/Binario_printbits.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.5]{imgs/Codigo/Binario_printbits.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1309,8 +1309,8 @@ Para finalizar, um teste foi realizada com o envio do processador programado par
 \centering 
 \caption{Inserindo o valor decimal 6 para o cálculo do fatorial na placa FPGA} 
 \label{fig:FPGAFatorialEntrada}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.43]{Imagens/Resultados/Fatorial_FPGA_Entrada.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.43]{imgs/Resultados/Fatorial_FPGA_Entrada.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1318,8 +1318,8 @@ Para finalizar, um teste foi realizada com o envio do processador programado par
 \centering 
 \caption{Resultado obtido para o cálculo do fatorial de 6 na placa FPGA} 
 \label{fig:FPGAFatorialSaida}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.43]{Imagens/Resultados/Fatorial_FPGA_Saida.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.43]{imgs/Resultados/Fatorial_FPGA_Saida.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1523,8 +1523,8 @@ HALT, -, -, - & halt \$zero & 11111111111111111111111111111111
 \centering 
 \caption{Inserindo como primeiro valor o número 15 para o programa do máximo divisor comum} 
 \label{fig:FPGAMDCEntrada1}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Resultados/MDC_FPGA_Entrada2.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Resultados/MDC_FPGA_Entrada2.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1532,8 +1532,8 @@ HALT, -, -, - & halt \$zero & 11111111111111111111111111111111
 \centering 
 \caption{Inserindo como segundo valor o número 20 para o programa do máximo divisor comum} 
 \label{fig:FPGAMDCEntrada2}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Resultados/MDC_FPGA_Entrada1.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Resultados/MDC_FPGA_Entrada1.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
@@ -1541,8 +1541,8 @@ HALT, -, -, - & halt \$zero & 11111111111111111111111111111111
 \centering 
 \caption{Número 5 obtido como resultado após o cálculo do máximo divisor comum} 
 \label{fig:FPGAMDCSaida}
-\graphicspath{ {./Imagens/} } 
-\includegraphics[scale=0.4]{Imagens/Resultados/MDC_FPGA_Saida.png}
+\graphicspath{ {./imgs/} } 
+\includegraphics[scale=0.4]{imgs/Resultados/MDC_FPGA_Saida.png}
 \legend{Fonte: O Autor }
 \end{figure}
 
