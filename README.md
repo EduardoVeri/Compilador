@@ -9,6 +9,7 @@ The project is a part of a broader initiative at the **Federal University of Sã
 3. [Compiler (Current Project)](https://github.com/EduardoVeri/Compilador)
 4. [Operating System](https://github.com/EduardoVeri/Assembler-Mips/tree/main/project)
 
+---
 
 ## 🚀 About This Project
 
@@ -21,6 +22,14 @@ The generated assembly and binary code follow a simplified MIPS architecture, al
 
 - **Analysis Phase**: Completed as a final project for the **Compilers course (2022)**, supervised by Prof. Dr. Luis Augusto Martins Pereira.
 - **Synthesis Phase**: Developed as the final project for the **Compilers Laboratory course (2023)**, supervised by Prof. Dra. Thaina Aparecida Azevedo Tosta.
+
+---
+
+## 📚 Project Report
+
+A detailed project report is available in the `docs` folder. This report includes comprehensive documentation about the compiler's architecture, the methodologies employed, experimental results, and analysis of the implementation process. Available in Portuguese (PT-BR) only.
+
+📖 Click [here](./docs/report-LabComp.pdf) to access the report.
 
 ---
 
@@ -115,3 +124,4 @@ Execute the compiler with:
 
 ---
 
+For further questions or contributions, please refer to the GitHub issues page or contact the
