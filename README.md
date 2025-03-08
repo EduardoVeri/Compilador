@@ -1,77 +1,95 @@
 # C- Compiler Project
 
-This project is a compiler for a simple language called C Minus (`C-`). The compiler is able to generate the intermediate code, the assembly code, and the binary code for the language. 
+This repository contains a compiler implementation for a simplified programming language named **C Minus (`C-`)**. The compiler is capable of generating intermediate code, assembly code, and binary code from C- source code.
 
-The project was developed using C. The lexical and syntax analysis was implemented using Flex and Bison, respectively. 
+The project is a part of a broader initiative at the **Federal University of São Paulo (UNIFESP)** aiming to create a comprehensive computational system, encompassing:
 
-The assembly and binary code correspond to a simplified version of the MIPS architecture that was made by me for another project. You can find it in the [MIPS project repository](https://github.com/EduardoVeri/MIPS-Processor).
+1. [MIPS Processor](https://github.com/EduardoVeri/MIPS-Processor)
+2. [Assembler](https://github.com/EduardoVeri/Assembler-Mips)
+3. [Compiler (Current Project)](https://github.com/EduardoVeri/Compilador)
+4. [Operating System](https://github.com/EduardoVeri/Assembler-Mips/tree/main/project)
 
-The analysis part was developed as a final project for the Compilers course at the Federal University of São Paulo (UNIFESP) in 2022, taught by Professor Dr. Luis Augusto Martins Pereira.
 
-The synthesis part was developed as a final project for the Compilers Laboratory course at the Federal University of São Paulo (UNIFESP) in 2023, taught by Dra. Thaina Aparecida Azevedo Tosta.
+## 🚀 About This Project
 
-## Compilation Steps
+The compiler was developed using the **C programming language**, with:
 
-The project was developed using CMake. To compile the project, follow these steps:
+- **Flex** for lexical analysis (lexer).
+- **Bison** for syntax analysis (parser).
 
-0. Install the required dependencies. For Ubuntu, you can run the following command to install the required dependencies:
+The generated assembly and binary code follow a simplified MIPS architecture, also developed in the context of this initiative. Refer to the [MIPS project repository](https://github.com/EduardoVeri/MIPS-Processor) for details.
 
-    ```sh
-    sudo apt-get install cmake
-    ```
+- **Analysis Phase**: Completed as a final project for the **Compilers course (2022)**, supervised by Prof. Dr. Luis Augusto Martins Pereira.
+- **Synthesis Phase**: Developed as the final project for the **Compilers Laboratory course (2023)**, supervised by Prof. Dra. Thaina Aparecida Azevedo Tosta.
 
-1. Create a build directory:
+---
 
-    ```sh
-    mkdir -p build
-    cmake -B ./build [-DSHOW_WARNINGS=ON]
-    ```
+## ⚙️ Compilation Steps
 
-3. Compile the project:
+The project uses **CMake** by default. Follow the instructions below to compile the compiler:
 
-    ```sh
-    cmake --build ./build
-    ```
+### 1. Install Dependencies
 
-To enable warnings, add the `-DSHOW_WARNINGS=ON` flag to the `cmake` configuration command.
-
-After these steps, the executable will be located in the `./bin` directory named by default `compilador`.
-
-If you don't want to use CMake, you can compile the project using gcc with the following command:
+On Ubuntu, install CMake with:
 
 ```sh
-gcc src/*.c -o bin/compilador -Iinclude 
+sudo apt-get install cmake
 ```
 
-## Generating Lexer and Parser .c files
+> [!TIP]
+> You can enable compiler warnings with `-DSHOW_WARNINGS=ON` for additional diagnostic messages.
 
-The project uses Flex and Bison to generate the lexer and parser files. **They are already generated and included in the project.** However, if you want to generate them again, you can use the following commands:
+### 2. Compile with CMake
 
-Install the required dependencies. For Ubuntu, you can run the following command to install the required dependencies:
+```sh
+mkdir -p build
+cmake -B ./build [-DSHOW_WARNINGS=ON]
+cmake --build ./build
+```
+
+After compilation, the executable (`compilador`) will be available in the `./bin` directory.
+
+### Alternative: Compile with GCC (Without CMake)
+
+```sh
+gcc src/*.c -o bin/compilador -Iinclude
+```
+
+---
+
+## 🛠️ Generating Lexer and Parser Files (Optional)
+
+The lexer (`lexer.c`) and parser (`parser.c`, `parser.h`) files are pre-generated. If needed, you can regenerate them as follows:
+
+### Install Flex and Bison
 
 ```sh
 sudo apt-get install bison flex
 ```
 
-Generate the files using the Makefile:
+### Generate via Makefile
 
 ```sh
 make generate
 ```
 
-Using command line:
+### Generate via Command Line
 
 ```sh
 cd ./src
-bison -d -oparser.c parser.y
-flex -olexer.c lexer.l
+bison -d -o parser.c parser.y
+flex -o lexer.c lexer.l
 mv parser.h ../include
 ```
 
+> [!NOTE]
+> Regenerating these files is not necessary unless changes are made to `lexer.l` or `parser.y`.
 
-## Usage
+---
 
-To use the compiler, run the executable with the following commands:
+## 🖥️ Usage
+
+Execute the compiler with:
 
 ```sh
 ./bin/compilador <input_file.cm> [-o <binary_output_file.txt>] [-ni] [-ci] [-v] [-ca]
@@ -79,30 +97,21 @@ To use the compiler, run the executable with the following commands:
 
 ### Parameters
 
-- `<input_file.cm>`  
-  **Description:** Specifies the input file. The program will read the code from this file.
+| Parameter                     | Description                                                                                 |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| `<input_file.cm>`             | Input source file to compile.                                                               |
+| `-o <binary_output_file.txt>` | Specify output file for binary code (default: `binaryCode.txt`).                            |
+| `-ni`                         | Read source code from standard input instead of a file.                                     |
+| `-v`                          | Verbose mode; outputs tokens, syntax tree, and symbol table to `lexerAndParserResults.txt`. |
+| `-ca`                         | Generate assembly code in `assemblyCode.txt`.                                               |
+| `-ci`                         | Generate intermediate code in `intermediateCode.txt`.                                       |
 
+---
 
-- `-o <binary_output_file.txt>` (Optional)  
-  **Description:** Specifies the output file. If not provided, the program writes the binary output to a file named `binaryCode.txt`.
+## 📋 Automated Testing
 
+> [!WARNING]
+> Automated tests are under construction. Currently, you can manually test the compiler using sample files in the `test_files` directory.
 
-- `-ni` (Optional)  
-  **Description:** Indicates that there is no input file. The program will read from the standard input.
-
-
-- `-v` (Optional)  
-  **Description:** Enables verbose mode. The program will print the tokens, the syntax tree and the symbol table to a file named `lexerAndParserResults.txt`.
-
-
-- `-ca` (Optional)  
-  **Description:** Creates an assembly file. The program will generate a file named `assemblyCode.txt`.
-
-
-- `-ci` (Optional)  
-  **Description:** Creates an intermediate code file. The program will generate a file named `intermediateCode.txt`.
-
-## Automated System Tests
-
-Under construction... But you can run manual tests using the files in the `test_files` directory.
+---
 
