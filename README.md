@@ -7,7 +7,7 @@ The project is a part of a broader initiative at the **Federal University of Sã
 1. [MIPS Processor](https://github.com/EduardoVeri/MIPS-Processor)
 2. [Assembler](https://github.com/EduardoVeri/Assembler-Mips)
 3. [Compiler (Current Project)](https://github.com/EduardoVeri/Compilador)
-4. [Operating System](https://github.com/EduardoVeri/Assembler-Mips/tree/main/project)
+4. [Operating System](https://github.com/EduardoVeri/Assembler-Mips/tree/main/OS_project)
 
 ---
 
