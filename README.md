@@ -122,6 +122,3 @@ Execute the compiler with:
 > [!WARNING]
 > Automated tests are under construction. Currently, you can manually test the compiler using sample files in the `test_files` directory.
 
----
-
-For further questions or contributions, please refer to the GitHub issues page or contact the
