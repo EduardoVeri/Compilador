@@ -81,8 +81,7 @@ static int yylex(void);
 void yyerror(char* s);
 int yyparse(void);
 
-char auxNome[MAXLEXEMA];
-char id[MAXLEXEMA];
+
 enum yytokentype auxErro;
 
 int teste = 0;
