@@ -24,6 +24,7 @@ unsigned int get_opcode(char* nome, tipoInstrucao tipo){
     else if(!strcmp(nome, "jal")) opcode = 0b000011;
     else if(!strcmp(nome, "halt")) opcode = 0b111111;
     else if(!strcmp(nome, "xori")) opcode = 0b101101;
+    else if(!strcmp(nome, "inkey")) opcode = 0b000111;
     
     return opcode;
 }

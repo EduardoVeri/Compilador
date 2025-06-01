@@ -155,6 +155,7 @@ int main(int argc, char *argv[]){
     // Adiciona as funções input e output na tabela de simbolos
     inserirTabela(tabelaHash, FunDeclK, Type_Int, "input", "global", 0);
     inserirTabela(tabelaHash, FunDeclK, Type_Void, "output", "global", 0);
+    inserirTabela(tabelaHash, FunDeclK, Type_Int, "keyboardinput", "global", 0);
 
     // Percorre a arvore sintatica e adiciona os itens de declaracao na tabela de simbolos
     percorrerArvore(arvoreSintatica, tabelaHash, "global");
