@@ -11,7 +11,7 @@ The project is a part of a broader initiative at the **Federal University of Sã
 
 ---
 
-## 🚀 About This Project
+## About This Project
 
 The compiler was developed using the **C programming language**, with:
 
@@ -25,7 +25,7 @@ The generated assembly and binary code follow a simplified MIPS architecture, al
 
 ---
 
-## 📚 Project Report
+## Project Report
 
 A detailed project report is available in the `docs` folder. This report includes comprehensive documentation about the compiler's architecture, the methodologies employed, experimental results, and analysis of the implementation process. Available in Portuguese (PT-BR) only.
 
@@ -33,7 +33,7 @@ A detailed project report is available in the `docs` folder. This report include
 
 ---
 
-## ⚙️ Compilation Steps
+## Compilation Steps
 
 The project uses **CMake** by default. Follow the instructions below to compile the compiler:
 
@@ -66,7 +66,7 @@ gcc src/*.c -o bin/compilador -Iinclude
 
 ---
 
-## 🛠️ Generating Lexer and Parser Files (Optional)
+## Generating Lexer and Parser Files (Optional)
 
 The lexer (`lexer.c`) and parser (`parser.c`, `parser.h`) files are pre-generated. If needed, you can regenerate them as follows:
 
@@ -96,7 +96,7 @@ mv parser.h ../include
 
 ---
 
-## 🖥️ Usage
+## Usage
 
 Execute the compiler with:
 
@@ -115,9 +115,18 @@ Execute the compiler with:
 | `-ca`                         | Generate assembly code in `assemblyCode.txt`.                                               |
 | `-ci`                         | Generate intermediate code in `intermediateCode.txt`.                                       |
 
+### Especial functions
+
+Inside the C- language, you can use some special functions that are used to interact directly with MIPS instructions. These functions are:
+| Function Name   | Description                                                                                       | Usage Example          |
+| --------------- | ------------------------------------------------------------------------------------------------- | ---------------------- |
+| `input`         | Get an integer value from the FPGA switch keys (Stop the CPU until the input is given)            | `x = input(); `        |
+| `output`        | Output an integer value to the FPGA 7-segment                                                     | `output(x);`           |
+| `keyboardinput` | Get an integer value from the FPGA keyboard (Doesn't stop the CPU, return 0 if no input is given) | `x = keyboardinput();` |
+
 ---
 
-## 📋 Automated Testing
+## Automated Testing
 
 > [!WARNING]
 > Automated tests are under construction. Currently, you can manually test the compiler using sample files in the `test_files` directory.
