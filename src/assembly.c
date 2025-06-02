@@ -534,7 +534,7 @@ void geraAssembly(INSTRUCAO* instrucao){
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
             return; // Nao precisa fazer mais nada
         }
-        else if (!strcmp(instrucao->arg1->nome, "keyboardInput")){
+        else if (!strcmp(instrucao->arg1->nome, "keyboardinput")){
             novaInstrucao = criarNoAssembly(typeI, "inkey");
             novaInstrucao->tipoI->rt = instrucao->arg3->val;
             novaInstrucao->tipoI->rs = $zero;
