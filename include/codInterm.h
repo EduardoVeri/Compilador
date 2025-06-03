@@ -12,6 +12,7 @@
 #define $s2 25
 #define $s1 24
 #define $s0 23
+#define $temp2 22
 
 #include "tabelaSimb.h"
 #include "global.h"

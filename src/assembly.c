@@ -550,6 +550,33 @@ void geraAssembly(INSTRUCAO* instrucao){
 
             return; // Nao precisa fazer mais nada
         }
+        if(!strcmp(instrucao->arg1->nome, "drawpixel")){
+            
+            apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
+
+            novaInstrucao = criarNoAssembly(typeI, "lw");
+            novaInstrucao->tipoI->rt = $temp2;
+            novaInstrucao->tipoI->rs = $pilha;
+            novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+            
+            apagar_temp(buscar_funcao(&vetorMemoria, "parametros")); // Apaga os temporarios usados na chamada
+            
+            novaInstrucao = criarNoAssembly(typeI, "lw");
+            novaInstrucao->tipoI->rt = $temp;
+            novaInstrucao->tipoI->rs = $pilha;
+            novaInstrucao->tipoI->imediato = buscar_funcao(&vetorMemoria, "parametros")->tamanho;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+            // Mostra o valor do $temp para o usuario
+            novaInstrucao = criarNoAssembly(typeI, "drawpixel");
+            novaInstrucao->tipoI->rt = $temp2;
+            novaInstrucao->tipoI->rs = $temp;
+            novaInstrucao->tipoI->imediato = 0;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+            return; // Nao precisa fazer mais nada
+        }
         else if(!strcmp(instrucao->arg1->nome, "input")){
             // Como essa funcao nao tem param, basta colocar o input no registrador
             novaInstrucao = criarNoAssembly(typeI, "in");
