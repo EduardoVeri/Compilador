@@ -22,6 +22,7 @@ typedef struct tipoR{
     int rd; // Registrador destino
     int rt; // Registrador fonte
     int rs; // Registrador fonte
+    int shamt; // valor de Shift
 } TIPO_R;
 
 /* Struct para armazenar as informacoes

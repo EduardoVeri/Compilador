@@ -82,7 +82,7 @@ BIN_R* binarioR(ASSEMBLY* instrucao){
     bin->rs = get_register(instrucao->tipoR->rs);
     bin->rt = get_register(instrucao->tipoR->rt);
     bin->rd = get_register(instrucao->tipoR->rd);
-    bin->shamt = get_shamt(0);
+    bin->shamt = get_shamt(instrucao->tipoR->shamt);
     bin->funct = get_funct(instrucao->tipoR->nome);
     return bin;
     

@@ -176,9 +176,34 @@ void geraAssembly(INSTRUCAO* instrucao){
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
     }
     else if(!strcmp(instrucao->op, "LOADI")){
+        int aux_register = $zero;
+        
+        if (instrucao->arg2->val > 0xFFFF) {
+            // Se o valor for maior que 16bits, precisamos adicionar o valor
+            // em dois passos: primeiro o valor alto, depois o valor baixo.
+            // Usar um ori para carregar primeiramente o valor alto, shiftar os bits
+            // e depois adicionar o valor baixo
+            
+            aux_register = instrucao->arg1->val; // Guardar o registrador de destino
+            
+            novaInstrucao = criarNoAssembly(typeI, "ori");
+            novaInstrucao->tipoI->rt = instrucao->arg1->val; 
+            novaInstrucao->tipoI->rs = $zero; 
+            novaInstrucao->tipoI->imediato = (instrucao->arg2->val >> 16) & 0xFFFF; // Pega os 16 bits mais altos
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+            novaInstrucao = criarNoAssembly(typeR, "sll");
+            novaInstrucao->tipoR->rd = instrucao->arg1->val; 
+            novaInstrucao->tipoR->rs = instrucao->arg1->val; 
+            novaInstrucao->tipoR->rt = $zero; // Qualquer registrador
+            novaInstrucao->tipoR->shamt = 16; // Shiftar 16 bits
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+
+        }
+
         novaInstrucao = criarNoAssembly(typeI, "ori");
         novaInstrucao->tipoI->rt = instrucao->arg1->val;
-        novaInstrucao->tipoI->rs = $zero;
+        novaInstrucao->tipoI->rs = aux_register;
         novaInstrucao->tipoI->imediato = instrucao->arg2->val;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 

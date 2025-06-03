@@ -33,6 +33,7 @@ ASSEMBLY * criarNoAssembly(tipoInstrucao tipo, char *nome){
         novoNoAssembly->tipoR->rd = -1;
         novoNoAssembly->tipoR->rs = -1;
         novoNoAssembly->tipoR->rt = -1;
+        novoNoAssembly->tipoR->shamt = 0;
         break;
 
     case typeI:
