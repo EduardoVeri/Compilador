@@ -4,6 +4,10 @@ int ORIGINALVGAWIDTH; int ORIGINALVGAHEIGHT;
 int currentvgaheight; int currentvgawidth;
 int DIVISORFACTOR;
 
+
+int BALLSIZE;        
+int COLORBACKGROUND; int COLORBALL; int COLORBAR;
+
 int SLEEPTIME;
 
 void sleep(int time) {
@@ -21,7 +25,7 @@ void outputAndSleep(int value, int sleeptime) {
 
 /* Draw a pixel at (x, y) on the VGA screen.
 * (!) The x zero point is at the top left corner
- * (!) and the y zero point is at the top left corner.
+* (!) and the y zero point is at the top left corner.
  */
 void drawpixelVGA(int x, int y, int color) {
     int framebufferindex; 
@@ -41,29 +45,46 @@ void drawpixelVGA(int x, int y, int color) {
     }
     
     framebufferindex = y * currentvgawidth + x;
-
+    
     drawpixel(framebufferindex, color);
 }
 
+/* Draws a square ball of 'size' at (x,y) with the specified 'color' */
+void printBall(int x, int y, int size, int color){ 
+    int i; int j;
+    int starty; int endy;
+    int startx; int endx;
+
+    starty = y;
+    endy = y + size;
+    startx = x;
+    endx = x + size;
+    
+    i = starty;
+    while(i < endy){
+        j = startx;
+        while(j < endx){
+            drawpixelVGA(j, i, color); 
+            j = j + 1;
+        } 
+        i = i + 1;
+    }
+}
 
 /* Create bars and ball */ 
 void initFrameVGA(void) {
     int barwidth; int barheight; int ballsize;
-    int colorbar; int colorball;
-    int centerheight;
-    int halfbarheight;
+    int centerheight; int centerwidth;
+    int halfbarheight; int halfballsize;
     int i; int j;
     int spaceedgebar;
     
     spaceedgebar = 1; /* Space from the edge of the screen to the bar */
     barwidth = 2; 
     barheight = 10; 
-    ballsize = 2; /* 2x2 square */
-    colorbar = 5; 
-    colorball = 3; 
-    
     
     centerheight = currentvgaheight / 2; /* Center of the screen */
+    centerwidth = currentvgawidth / 2;
     halfbarheight = barheight / 2;
     
     /* Draw left bar */
@@ -71,7 +92,7 @@ void initFrameVGA(void) {
     while (i < (centerheight + halfbarheight)) {
         j = spaceedgebar;
         while (j < (spaceedgebar + barwidth)) {
-            drawpixelVGA(j, i, colorbar);
+            drawpixelVGA(j, i, COLORBAR);
             j = j + 1;
         }
         i = i + 1;
@@ -82,17 +103,151 @@ void initFrameVGA(void) {
     while (i < (centerheight + halfbarheight)) {
         j = currentvgawidth - spaceedgebar - barwidth;
         while (j < (currentvgawidth - spaceedgebar)) {
-            drawpixelVGA(j, i, colorbar);
+            drawpixelVGA(j, i, COLORBAR);
             j = j + 1;
         }
         i = i + 1;
     }
 
-
-
+    halfballsize = (BALLSIZE / 2);
+    /* Calculate top-left coordinates for the ball to be centered */
+    printBall(
+        centerwidth - halfballsize, 
+        centerheight - halfballsize, 
+        BALLSIZE, COLORBALL
+    );
 }
 
 
+int mod(int num, int n){
+    if (n == 0){
+        return 0;
+    }
+    return num-num/n*n;
+}
+
+void game(void){
+    int currentPosBar1; int currentPosBar2;
+    int ballX; int ballY; /* Ball's top-left coordinates */
+
+    // Use 0 and 1 to represent direction
+    // For X: 0 for Left, 1 for Right
+    // For Y: 0 for Up,   1 for Down
+    int ballDirectionX; 
+    int ballDirectionY; 
+
+    int i;               /* Loop variable for timing */
+    int keypressed;
+    int ballSpeed;
+
+    /* Initialize bar positions */
+    currentPosBar1 = currentvgaheight / 2 - 5; /* Assuming bar height is 10 */
+    currentPosBar2 = currentvgaheight / 2 - 5;
+
+    /* Initialize ball's starting position to the center */
+    ballX = currentvgawidth / 2 - (BALLSIZE / 2);
+    ballY = currentvgaheight / 2 - (BALLSIZE / 2);
+    
+    /* Initialize ball direction */
+    ballDirectionX = 1; /* Start moving Right */
+    ballDirectionY = 1; /* Start moving Down */
+    
+    ballSpeed = 1;      /* Pixels the ball moves per update tick */
+
+    i = 0; /* Initialize loop counter for game tick */
+
+    while (1){ /* Start of the game loop */
+        keypressed = keyboardinput(); /* Assuming this function exists */
+
+        if (keypressed == 29) { /* W Key */
+            /* TODO: Move bar 1 upwards, add boundary checks */
+            /* Ensure currentPosBar1 does not go below 0 */
+        }
+        else {
+            if (keypressed == 27) { /* S Key */
+                /* TODO: Move bar 1 downwards, add boundary checks */
+                /* Ensure currentPosBar1 + barHeight does not exceed currentvgaheight */
+            }
+        }
+        /* Add similar logic for player 2 if applicable */
+
+        /* Game tick for ball movement */
+        if (mod(i, 100) == 0){ /* Adjust 100 to change ball speed relative to game speed */
+            
+            // 1. Clear the old ball
+            printBall(ballX, ballY, BALLSIZE, COLORBACKGROUND);
+            
+            // 2. Update ball position based on direction
+            // Update Y position
+            if (ballDirectionY == 0) { // Moving Up
+                if (ballY >= ballSpeed) {
+                    ballY = ballY - ballSpeed;
+                } else {
+                    ballY = 0; // Cannot move further up, set to edge
+                }
+            } else { // Moving Down (ballDirectionY == 1)
+                ballY = ballY + ballSpeed;
+            }
+
+            // Update X position
+            if (ballDirectionX == 0) { // Moving Left
+                if (ballX >= ballSpeed) {
+                    ballX = ballX - ballSpeed;
+                } else {
+                    ballX = 0; // Cannot move further left, set to edge
+                }
+            } else { // Moving Right (ballDirectionX == 1)
+                ballX = ballX + ballSpeed;
+            }
+            
+            // 3. Collision detection and response with walls
+            
+            // Vertical collisions (Top and Bottom walls)
+            if (ballDirectionY == 0) { // If ball was moving Up
+                if (ballY == 0) { // Hit or was already at the top edge
+                    ballDirectionY = 1; // Change direction to Down
+                }
+            } else { // If ball was moving Down (ballDirectionY == 1)
+                if (ballY + BALLSIZE >= currentvgaheight) { // Hit or passed the bottom edge
+                    ballY = currentvgaheight - BALLSIZE; // Clamp ball to the edge
+                    ballDirectionY = 0; // Change direction to Up
+                }
+            }
+            
+            // Horizontal collisions (Left and Right walls)
+            if (ballDirectionX == 0) { // If ball was moving Left
+                if (ballX == 0) { // Hit or was already at the left edge
+                    ballDirectionX = 1; // Change direction to Right
+                    /* TODO: Add logic for Player 2 score */
+                }
+            } else { // If ball was moving Right (ballDirectionX == 1)
+                if (ballX + BALLSIZE >= currentvgawidth) { // Hit or passed the right edge
+                    ballX = currentvgawidth - BALLSIZE; // Clamp ball to the edge
+                    ballDirectionX = 0; // Change direction to Left
+                    /* TODO: Add logic for Player 1 score */
+                }
+            }
+
+            /* TODO: Add collision detection with paddles here */
+            /* Example for paddle 1 (left paddle):
+            if (ballX <= paddle1X + PADDLEWIDTH && ballX + BALLSIZE >= paddle1X &&
+                ballY + BALLSIZE >= paddle1Y && ballY <= paddle1Y + PADDLEHEIGHT) {
+                if (ballDirectionX == 0) { // If moving left (towards paddle)
+                    ballDirectionX = 1; // Bounce right
+                    // Optional: Adjust ballY based on where it hit the paddle
+                }
+            }
+            */
+
+            /* 4. Draw the new ball at its updated position */
+            printBall(ballX, ballY, BALLSIZE, COLORBALL);
+        }
+        
+        i = i + 1; /* Increment game tick counter */
+        
+        sleep(SLEEPTIME); /* Pause for a short duration */
+    }
+}
 
 int main(void){
     int count;
@@ -101,6 +256,11 @@ int main(void){
     ORIGINALVGAWIDTH = 640;
     ORIGINALVGAHEIGHT = 480;
 
+    COLORBALL = 3;
+    COLORBAR = 5;
+    COLORBACKGROUND = 0; 
+    BALLSIZE = 2;    
+
     SLEEPTIME = 1; /* Sleep time in milliseconds */
     
     currentvgawidth = ORIGINALVGAWIDTH / DIVISORFACTOR;
@@ -108,6 +268,7 @@ int main(void){
 
     initFrameVGA(); /* Create the bars and ball */
     while (1) { /* Game logic */
+        game();
         output(1); 
 
     }
