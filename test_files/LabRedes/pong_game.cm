@@ -1,89 +1,110 @@
 /* Defines for VGA */
 
-int ORIGINAL_VGA_WIDTH; int ORIGINAL_VGA_HEIGHT;
-int current_vga_height; int current_vga_width;
-int DIVISOR_FACTOR;
+int ORIGINALVGAWIDTH; int ORIGINALVGAHEIGHT;
+int currentvgaheight; int currentvgawidth;
+int DIVISORFACTOR;
+
+int SLEEPTIME;
+
+void sleep(int time) {
+    int i;
+    i = 0;
+    while (i < time) {
+        i = i + 1;
+    }
+}
+void outputAndSleep(int value, int sleeptime) {
+    output(value);
+    sleep(sleeptime); 
+}
+
 
 /* Draw a pixel at (x, y) on the VGA screen.
- * (!) The x zero point is at the top left corner
+* (!) The x zero point is at the top left corner
  * (!) and the y zero point is at the top left corner.
  */
 void drawpixelVGA(int x, int y, int color) {
+    int framebufferindex; 
 
-    // Out of bounds checks
+    /* Out of bounds checks */
     if (x < 0) {
         return; 
     }
-    if (x >= current_vga_width) {
+    if (x >= currentvgawidth) {
         return; 
     }
     if (y < 0) {
         return; 
     }
-    if (y >= current_vga_height) {
+    if (y >= currentvgaheight) {
         return; 
     }
+    
+    framebufferindex = y * currentvgawidth + x;
 
-    int framebuffer_index; 
-
-    framebuffer_index = y * current_vga_height + x;
-
-    drawpixel(framebuffer_index, color);
+    drawpixel(framebufferindex, color);
 }
 
 
 /* Create bars and ball */ 
 void initFrameVGA(void) {
-    int bar_width; int bar_height; int ball_size;
-    int color_bar; int color_ball;
+    int barwidth; int barheight; int ballsize;
+    int colorbar; int colorball;
+    int centerheight;
+    int halfbarheight;
+    int i; int j;
+    int spaceedgebar;
     
-    bar_width = 2; 
-    bar_height = 10; 
-    ball_size = 2; /* 2x2 square */
-    color_bar = 2; 
-    color_ball = 3; 
+    spaceedgebar = 1; /* Space from the edge of the screen to the bar */
+    barwidth = 2; 
+    barheight = 10; 
+    ballsize = 2; /* 2x2 square */
+    colorbar = 5; 
+    colorball = 3; 
     
-    int space_edge_bar = 1; /* Space from the edge of the screen to the bar */
     
-    int center_height;
-    center_height = current_vga_height / 2; /* Center of the screen */
-    
-    int half_bar_height;
-    half_bar_height = bar_height / 2;
+    centerheight = currentvgaheight / 2; /* Center of the screen */
+    halfbarheight = barheight / 2;
     
     /* Draw left bar */
-    int i; int j;
-    i = center_height - half_bar_height;
-    while (i < (center_height + half_bar_height)) {
-        j = space_edge_bar;
-        while (j < (space_edge_bar + bar_width)) {
-            drawpixelVGA(j, i, color_bar);
+    i = centerheight - halfbarheight;
+    while (i < (centerheight + halfbarheight)) {
+        j = spaceedgebar;
+        while (j < (spaceedgebar + barwidth)) {
+            drawpixelVGA(j, i, colorbar);
             j = j + 1;
         }
         i = i + 1;
     }
 
     /* Draw right bar */
-    i = center_height - half_bar_height;
-    while (i < current_vga_height) {
-        j = current_vga_width - space_edge_bar - bar_width;
-        while (j < (current_vga_width - space_edge_bar)) {
-            drawpixelVGA(j, i, 0);
+    i = centerheight - halfbarheight;
+    while (i < (centerheight + halfbarheight)) {
+        j = currentvgawidth - spaceedgebar - barwidth;
+        while (j < (currentvgawidth - spaceedgebar)) {
+            drawpixelVGA(j, i, colorbar);
             j = j + 1;
         }
         i = i + 1;
     }
 
+
+
 }
 
 
-int main(void){
 
-    DIVISOR_FACTOR = 16;
-    ORIGINAL_VGA_WIDTH = 640;
-    ORIGINAL_VGA_HEIGHT = 480;
-    current_vga_width = ORIGINAL_VGA_WIDTH / DIVISOR_FACTOR;
-    current_vga_height = ORIGINAL_VGA_HEIGHT / DIVISOR_FACTOR;
+int main(void){
+    int count;
+
+    DIVISORFACTOR = 16;
+    ORIGINALVGAWIDTH = 640;
+    ORIGINALVGAHEIGHT = 480;
+
+    SLEEPTIME = 1; /* Sleep time in milliseconds */
+    
+    currentvgawidth = ORIGINALVGAWIDTH / DIVISORFACTOR;
+    currentvgaheight = ORIGINALVGAHEIGHT / DIVISORFACTOR;
 
     initFrameVGA(); /* Create the bars and ball */
     while (1) { /* Game logic */
