@@ -1,21 +1,27 @@
 /* Defines for VGA */
 
-int ORIGINAL_VGA_WIDTH; int ORIGINAL_VGA_HEIGHT;
-int current_vga_height; int current_vga_width;
+int ORIGINAL_VGA_WIDTH;
+int ORIGINAL_VGA_HEIGHT;
+int current_vga_height;
+int current_vga_width;
 int DIVISOR_FACTOR;
 
-int BALL_SIZE;        
-int COLOR_BACKGROUND; int COLOR_BALL; int COLOR_BAR;
+int BALL_SIZE;
+int COLOR_BACKGROUND;
+int COLOR_BALL;
+int COLOR_BAR;
 
-int BAR_HEIGHT; int BAR_WIDTH; int SPACE_EDGE_BAR; 
-int BAR_SPEED;       
+int BAR_HEIGHT;
+int BAR_WIDTH;
+int SPACE_EDGE_BAR;
+int BAR_SPEED;
 
-int KEY_P2_UP; int KEY_P2_DOWN;
+int KEY_P2_UP;
+int KEY_P2_DOWN;
 
 int SLEEP_TIME;
 
 int prng_seed;
-
 
 void sleep(int time) {
     int i;
@@ -25,11 +31,11 @@ void sleep(int time) {
     }
 }
 
-int mod(int num, int n){
-    if (n == 0){
+int mod(int num, int n) {
+    if (n == 0) {
         return 0;
     }
-    return num-num/n*n;
+    return num - num / n * n;
 }
 
 void seedRandom(int seed) {
@@ -37,9 +43,9 @@ void seedRandom(int seed) {
 }
 
 /*
-* Generates the next pseudo-random number using an LCG.
-* Returns a number between 0 and 2147483646.
-*/
+ * Generates the next pseudo-random number using an LCG.
+ * Returns a number between 0 and 2147483646.
+ */
 int random(void) {
     /* These are the 'magic numbers' for the LCG formula. */
     /* They are from the well-known Park-Miller PRNG. */
@@ -48,7 +54,7 @@ int random(void) {
 
     multiplier = 48271;
     modulus = 2147483647; /* A very large prime number (2^31 - 1) */
-    
+
     /* Calculate the next number in the sequence */
     /* Formula: X_n+1 = (a * X_n) % m */
     prng_seed = mod(prng_seed * multiplier, modulus);
@@ -56,19 +62,17 @@ int random(void) {
     return prng_seed;
 }
 
-
 /* Get a random number in the range [min, max]. */
 int randomInRange(int min, int max) {
     int range;
     int randomNumber;
 
     range = max - min + 1;
-    
+
     randomNumber = mod(random(), range);
 
     return min + randomNumber;
 }
-
 
 /* Output a value to the Hexa display and wait for a key press. */
 void outputAndSleep(int value, int sleeptime) {
@@ -77,57 +81,60 @@ void outputAndSleep(int value, int sleeptime) {
     }
 }
 
-
 /* Draw a pixel at (x, y) on the VGA screen.
-* (!) The x zero point is at the top left corner
-* (!) and the y zero point is at the top left corner.
-*/
+ * (!) The x zero point is at the top left corner
+ * (!) and the y zero point is at the top left corner.
+ */
 void drawpixelVGA(int x, int y, int color) {
-    int framebufferindex; 
+    int framebufferindex;
 
     /* Out of bounds checks */
     if (x < 0) {
-        return; 
+        return;
     }
     if (x >= current_vga_width) {
-        return; 
+        return;
     }
     if (y < 0) {
-        return; 
+        return;
     }
     if (y >= current_vga_height) {
-        return; 
+        return;
     }
-    
+
     framebufferindex = y * current_vga_width + x;
-    
+
     drawpixel(framebufferindex, color);
 }
 
 /* Draws a square ball of 'size' at (x,y) with the specified 'color' */
-void printBall(int x, int y, int size, int color){ 
-    int i; int j;
-    int starty; int endy;
-    int startx; int endx;
+void printBall(int x, int y, int size, int color) {
+    int i;
+    int j;
+    int starty;
+    int endy;
+    int startx;
+    int endx;
 
     starty = y;
     endy = y + size;
     startx = x;
     endx = x + size;
-    
+
     i = starty;
-    while(i < endy){
+    while (i < endy) {
         j = startx;
-        while(j < endx){
-            drawpixelVGA(j, i, color); 
+        while (j < endx) {
+            drawpixelVGA(j, i, color);
             j = j + 1;
-        } 
+        }
         i = i + 1;
     }
 }
 
 void printBar(int x, int y, int width, int height, int color) {
-    int i; int j;
+    int i;
+    int j;
     int endy;
     int endx;
 
@@ -135,10 +142,18 @@ void printBar(int x, int y, int width, int height, int color) {
     endx = x + width;
 
     /* Basic sanity check for coordinates, though drawpixelVGA also checks */
-    if (x < 0) { x = 0; }
-    if (y < 0) { y = 0; }
-    if (endx > current_vga_width) { endx = current_vga_width; }
-    if (endy > current_vga_height) { endy = current_vga_height; }
+    if (x < 0) {
+        x = 0;
+    }
+    if (y < 0) {
+        y = 0;
+    }
+    if (endx > current_vga_width) {
+        endx = current_vga_width;
+    }
+    if (endy > current_vga_height) {
+        endy = current_vga_height;
+    }
 
     i = y;
     while (i < endy) {
@@ -151,103 +166,119 @@ void printBar(int x, int y, int width, int height, int color) {
     }
 }
 
-/* Create bars and ball */ 
+/* Create bars and ball */
 void initFrameVGA(void) {
-    int barwidth; int barheight; int ballsize;
-    int centerheight; int centerwidth;
-    int halfbarheight; int halfballsize;
-    int i; int j;
+    int barwidth;
+    int barheight;
+    int ballsize;
+    int centerheight;
+    int centerwidth;
+    int halfbarheight;
+    int halfballsize;
+    int i;
+    int j;
     int spaceedgebar;
-    
+
     spaceedgebar = 1; /* Space from the edge of the screen to the bar */
-    barwidth = 2; 
-    barheight = 10; 
-    
+    barwidth = 2;
+    barheight = 10;
+
     centerheight = current_vga_height / 2; /* Center of the screen */
     centerwidth = current_vga_width / 2;
     halfbarheight = barheight / 2;
-    
+
     /* Draw left bar */
-    printBar(SPACE_EDGE_BAR, 
-             centerheight - halfbarheight, 
-             BAR_WIDTH, 
-             BAR_HEIGHT, 
+    printBar(SPACE_EDGE_BAR,
+             centerheight - halfbarheight,
+             BAR_WIDTH,
+             BAR_HEIGHT,
              COLOR_BAR);
 
     /* Draw right bar using printBar */
-    printBar(current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH, 
-             centerheight - halfbarheight, 
-             BAR_WIDTH, 
-             BAR_HEIGHT, 
+    printBar(current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH,
+             centerheight - halfbarheight,
+             BAR_WIDTH,
+             BAR_HEIGHT,
              COLOR_BAR);
 
     halfballsize = (BALL_SIZE / 2);
-    
+
     /* Calculate top-left coordinates for the ball to be centered */
     printBall(
-        centerwidth - halfballsize, 
-        centerheight - halfballsize, 
-        BALL_SIZE, COLOR_BALL
-    );
+        centerwidth - halfballsize,
+        centerheight - halfballsize,
+        BALL_SIZE, COLOR_BALL);
 }
 
-void game(void){
-    int currentPosBar1;     /* Top Y of left/AI bar */
-    int oldPosBar1;         /* Previous Y of left/AI bar for clearing */
-    int currentPosBar2;     /* Top Y of right/Player bar */
-    int oldPosBar2;         /* Previous Y of right/Player bar */
-    int rightBarX;          /* X coordinate of the right bar (fixed) */
-    int leftBarX;           /* X coordinate of the left bar (fixed) */
+void game(void) {
+    int currentPosBar1; /* Top Y of left/AI bar */
+    int oldPosBar1;     /* Previous Y of left/AI bar for clearing */
+    int currentPosBar2; /* Top Y of right/Player bar */
+    int oldPosBar2;     /* Previous Y of right/Player bar */
+    int rightBarX;      /* X coordinate of the right bar (fixed) */
+    int leftBarX;       /* X coordinate of the left bar (fixed) */
 
-    int ballX; int ballY;
+    int ballX;
+    int ballY;
 
-    int ballDirectionX; 
-    int ballDirectionY; 
+    int ballDirectionX;
+    int ballDirectionY;
 
-    int i;               
+    int i;
     int keypressed;
     int ballSpeed;
 
-    int rightPaddleHit; int leftPaddleHit;
+    int rightPaddleHit;
+    int leftPaddleHit;
     int score;
 
     /* Initialize bar Y positions (top of the bar) */
-    currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2); 
+    currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2);
     currentPosBar2 = current_vga_height / 2 - (BAR_HEIGHT / 2);
     oldPosBar1 = currentPosBar1; /* Initialize old position for AI bar */
     oldPosBar2 = currentPosBar2; /* Initialize old position for Player bar */
 
     /* Calculate fixed X positions for the bars */
-    leftBarX = SPACE_EDGE_BAR; 
-    rightBarX = current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH; 
+    leftBarX = SPACE_EDGE_BAR;
+    rightBarX = current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH;
 
     ballX = current_vga_width / 2 - (BALL_SIZE / 2);
     ballY = current_vga_height / 2 - (BALL_SIZE / 2);
-    
-    ballDirectionX = 1; 
-    ballDirectionY = 1; 
-    ballSpeed = 1;      
-    i = 0; 
-    score = 0; 
-    
-    while (1){ 
-        keypressed = keyboardinput(); 
+
+    ballDirectionX = 1;
+    ballDirectionY = 1;
+    ballSpeed = 1;
+    i = 0;
+    score = 0;
+
+    while (1) {
+        keypressed = keyboardinput();
 
         oldPosBar2 = currentPosBar2;
-        
+
         /* --- Right Bar (Player 2) Movement --- */
-        if (keypressed == KEY_P2_UP) { 
-            if (currentPosBar2 >= BAR_SPEED) { currentPosBar2 = currentPosBar2 - BAR_SPEED; } 
-            else { currentPosBar2 = 0; }
+        if (keypressed == KEY_P2_UP) {
+            if (currentPosBar2 >= BAR_SPEED) {
+                currentPosBar2 = currentPosBar2 - BAR_SPEED;
+            } else {
+                currentPosBar2 = 0;
+            }
         } else {
-            if (keypressed == KEY_P2_DOWN) { 
-                if (currentPosBar2 + BAR_HEIGHT + BAR_SPEED <= current_vga_height) { currentPosBar2 = currentPosBar2 + BAR_SPEED; } 
-                else { currentPosBar2 = current_vga_height - BAR_HEIGHT; }
+            if (keypressed == KEY_P2_DOWN) {
+                if (currentPosBar2 + BAR_HEIGHT + BAR_SPEED <= current_vga_height) {
+                    currentPosBar2 = currentPosBar2 + BAR_SPEED;
+                } else {
+                    currentPosBar2 = current_vga_height - BAR_HEIGHT;
+                }
             }
         }
-        
-        if (currentPosBar2 < 0) { currentPosBar2 = 0; }
-        if (currentPosBar2 + BAR_HEIGHT > current_vga_height) { currentPosBar2 = current_vga_height - BAR_HEIGHT; }
+
+        if (currentPosBar2 < 0) {
+            currentPosBar2 = 0;
+        }
+        if (currentPosBar2 + BAR_HEIGHT > current_vga_height) {
+            currentPosBar2 = current_vga_height - BAR_HEIGHT;
+        }
 
         if (oldPosBar2 != currentPosBar2) {
             printBar(rightBarX, oldPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
@@ -255,21 +286,26 @@ void game(void){
         }
 
         /* Game tick for ball and AI movement */
-        if (mod(i, SLEEP_TIME * 2) == 0){ 
-            
+        if (mod(i, SLEEP_TIME * 2) == 0) {
             printBall(ballX, ballY, BALL_SIZE, COLOR_BACKGROUND); /* 1. Clear old ball */
-            
+
             /* 2. Update ball position */
             if (ballDirectionY == 0) { /* Moving Up */
-                if (ballY >= ballSpeed) { ballY = ballY - ballSpeed; } 
-                else { ballY = 0; }
+                if (ballY >= ballSpeed) {
+                    ballY = ballY - ballSpeed;
+                } else {
+                    ballY = 0;
+                }
             } else { /* Moving Down */
                 ballY = ballY + ballSpeed;
             }
 
             if (ballDirectionX == 0) { /* Moving Left */
-                if (ballX >= ballSpeed) { ballX = ballX - ballSpeed; } 
-                else { ballX = 0; }
+                if (ballX >= ballSpeed) {
+                    ballX = ballX - ballSpeed;
+                } else {
+                    ballX = 0;
+                }
             } else { /* Moving Right */
                 ballX = ballX + ballSpeed;
             }
@@ -279,7 +315,7 @@ void game(void){
 
             /* AI tries to center its paddle on the ball's Y position */
             currentPosBar1 = ballY + (BALL_SIZE / 2);
-            if (currentPosBar1 > (BAR_HEIGHT / 2)){
+            if (currentPosBar1 > (BAR_HEIGHT / 2)) {
                 currentPosBar1 = currentPosBar1 - (BAR_HEIGHT / 2);
             } else {
                 currentPosBar1 = 0; /* If ball is too high, keep AI paddle at top */
@@ -298,22 +334,24 @@ void game(void){
                 printBar(leftBarX, oldPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
                 printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
             }
-            
+
             /* 3. Ball collision detection and response */
-            
+
             /* Vertical wall collisions */
-            if (ballDirectionY == 0) { 
-                if (ballY == 0) { ballDirectionY = 1; }
-            } else { 
-                if (ballY + BALL_SIZE >= current_vga_height) { 
-                    ballY = current_vga_height - BALL_SIZE; 
-                    ballDirectionY = 0; 
+            if (ballDirectionY == 0) {
+                if (ballY == 0) {
+                    ballDirectionY = 1;
+                }
+            } else {
+                if (ballY + BALL_SIZE >= current_vga_height) {
+                    ballY = current_vga_height - BALL_SIZE;
+                    ballDirectionY = 0;
                 }
             }
-            
+
             /* Horizontal collisions (Paddles and Left/Right walls) */
             if (ballDirectionX == 0) { /* If ball was moving Left */
-                leftPaddleHit = 0; 
+                leftPaddleHit = 0;
 
                 /* Check collision with LEFT PADDLE (AI) */
                 if (ballX <= (leftBarX + BAR_WIDTH)) {
@@ -321,14 +359,14 @@ void game(void){
                         if ((ballY + BALL_SIZE) > currentPosBar1) {
                             if (ballY < (currentPosBar1 + BAR_HEIGHT)) {
                                 /* --- LEFT PADDLE HIT --- */
-                                ballDirectionX = 1; /* Bounce Right */
+                                ballDirectionX = 1;           /* Bounce Right */
                                 ballX = leftBarX + BAR_WIDTH; /* Reposition ball */
                                 leftPaddleHit = 1;
                             }
                         }
                     }
                 }
-                
+
                 /* If NO left paddle hit, check for far LEFT WALL */
                 if (leftPaddleHit == 0) {
                     if (ballX == 0) {
@@ -337,7 +375,7 @@ void game(void){
                     }
                 }
             } else { /* If ball was moving Right */
-                rightPaddleHit = 0; 
+                rightPaddleHit = 0;
 
                 /* Check collision with RIGHT PADDLE (Player) */
                 if ((ballX + BALL_SIZE) >= rightBarX) {
@@ -346,8 +384,11 @@ void game(void){
                             if (ballY < (currentPosBar2 + BAR_HEIGHT)) {
                                 /* --- RIGHT PADDLE HIT --- */
                                 ballDirectionX = 0;
-                                if (BALL_SIZE > 0) { ballX = rightBarX - BALL_SIZE; } 
-                                else { ballX = rightBarX; }
+                                if (BALL_SIZE > 0) {
+                                    ballX = rightBarX - BALL_SIZE;
+                                } else {
+                                    ballX = rightBarX;
+                                }
                                 rightPaddleHit = 1;
                             }
                         }
@@ -356,24 +397,26 @@ void game(void){
 
                 /* If NO right paddle hit, check for far RIGHT WALL */
                 if (rightPaddleHit == 0) {
-                    if ((ballX + BALL_SIZE) >= current_vga_width) { 
+                    if ((ballX + BALL_SIZE) >= current_vga_width) {
                         ballX = current_vga_width - BALL_SIZE;
                         ballDirectionX = 0;
-                        if (score > 0){ score = score - 1; } /* Player 1 (AI) scores */
+                        if (score > 0) {
+                            score = score - 1;
+                        } /* Player 1 (AI) scores */
                     }
                 }
             }
 
             printBall(ballX, ballY, BALL_SIZE, COLOR_BALL); /* 4. Draw new ball */
         }
-        
-        i = i + 1; 
-        output(score);        
-        sleep(SLEEP_TIME); 
+
+        i = i + 1;
+        output(score);
+        sleep(SLEEP_TIME);
     }
 }
 
-int main(void){
+int main(void) {
     int seed_counter;
 
     DIVISOR_FACTOR = 16;
@@ -382,29 +425,26 @@ int main(void){
 
     COLOR_BALL = 3;
     COLOR_BAR = 5;
-    COLOR_BACKGROUND = 0; 
-    BALL_SIZE = 1;    
+    COLOR_BACKGROUND = 0;
+    BALL_SIZE = 1;
 
-    BAR_HEIGHT = 10;     /* Define bar height */
-    BAR_WIDTH = 2;       /* Define bar width */
-    SPACE_EDGE_BAR = 1;   /* Define space from edge */
+    BAR_HEIGHT = 10;    /* Define bar height */
+    BAR_WIDTH = 2;      /* Define bar width */
+    SPACE_EDGE_BAR = 1; /* Define space from edge */
     BAR_SPEED = 1;      /* Define bar movement speed */
 
     SLEEP_TIME = 83; /* How many iter to get ~1ms */
 
-    KEY_P2_UP = 29; 
+    KEY_P2_UP = 29;
     KEY_P2_DOWN = 27; /* W and S keys for Player 2 */
-    
+
     current_vga_width = ORIGINAL_VGA_WIDTH / DIVISOR_FACTOR;
     current_vga_height = ORIGINAL_VGA_HEIGHT / DIVISOR_FACTOR;
 
     initFrameVGA(); /* Create the bars and ball */
 
-
     /* --- Seeding the Random Number Generator --- */
-    /* This simple method creates a variable seed based on how long */
-    /* the player waits before pressing a key to start the game. */
-    /* You would need to print a "Press any key to start" message first. */
+    /* The player waits before pressing a key to start the game. */
     seed_counter = 1;
     while (keyboardinput() == 0) { /* Wait for any key press */
         seed_counter = seed_counter + 1;
@@ -413,7 +453,6 @@ int main(void){
 
     /* --- Start the Game --- */
     game();
-    output(1); 
 
     return 0;
 }
