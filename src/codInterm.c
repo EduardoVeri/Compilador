@@ -267,7 +267,7 @@ void codIntDeclFunc(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
         /* Primeiro busca se a variavel ja esta no vetor de registradores, se nao estiver, deve ser adicionada
         Caso de algum erro ao adicionar, mostrar um erro */
 
-        numReg = verificacaoRegistradores(noParam->filho[0]->lexema, arvoreSintatica->filho[1]->lexema, 0);
+        numReg = verificacaoRegistradores(noParam->filho[0]->lexema, arvoreSintatica->filho[1]->lexema, 1);
     
         param->arg1 = criaEndereco(IntConst, numReg, NULL, 1);
         param->arg2 = criaEndereco(String, 0, noParam->filho[0]->lexema, 0);
@@ -387,7 +387,7 @@ void codIntExpConst(PONTEIRONO arvoreSintativa, PONTEIROITEM tabelaHash[]){
 
     
     if(strcmp(arvoreSintativa->lexema, "0") == 0){
-        numReg = 31;
+        numReg = $zero;
         return;
     }
 
@@ -467,10 +467,10 @@ void codIntExpId(PONTEIRONO arvoreSintatica, PONTEIROITEM tabelaHash[]){
             numReg = -1;
         }
         if(!strcmp(varEscopo->escopo, "global")){
-            numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 0);
+            numReg = verificacaoRegistradores(arvoreSintatica->lexema, "global", 1);
         }
         else{
-            numReg = verificacaoRegistradores(arvoreSintatica->lexema, funcName, 0);
+            numReg = verificacaoRegistradores(arvoreSintatica->lexema, funcName, 1);
         }
         
         instrucaoId = criaInstrucao("LOAD");
