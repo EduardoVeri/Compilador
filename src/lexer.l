@@ -78,7 +78,7 @@ LETRA [a-zA-Z]
               return NUM; 
          }
           
-{LETRA}({LETRA}|{DIGIT})* {	
+{LETRA}({LETRA}|{DIGIT}|_)* {	
             enum yytokentype token;
             if((tabelaNomes(&token)) == 0){
                 if(flagVerbose == 1) fprintf(arquivoSaida, "\t%d: ID, %s\n", qntLinhas, yytext);
