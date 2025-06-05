@@ -22,6 +22,8 @@ void sleep(int time) {
         i = i + 1;
     }
 }
+
+
 void outputAndSleep(int value, int sleeptime) {
     output(value);
     sleep(sleeptime); 
@@ -167,6 +169,8 @@ void game(void){
 
     int rightPaddleHit; int leftPaddleHit;
 
+    int score;
+
     /* Initialize bar Y positions (top of the bar) */
     currentPosBar1 = currentvgaheight / 2 - (BARHEIGHT / 2); 
     currentPosBar2 = currentvgaheight / 2 - (BARHEIGHT / 2);
@@ -186,6 +190,7 @@ void game(void){
 
     i = 0; 
 
+    score = 0; /* Initialize score */
     while (1){ 
         keypressed = keyboardinput(); 
 
@@ -226,7 +231,7 @@ void game(void){
         /* (Logic for left bar movement would go here) */
 
         /* Game tick for ball movement */
-        if (mod(i, 20) == 0){ 
+        if (mod(i, SLEEPTIME * 2) == 0){ 
             
             printBall(ballX, ballY, BALLSIZE, COLORBACKGROUND); /* 1. Clear old ball */
             
@@ -265,26 +270,27 @@ void game(void){
                 leftPaddleHit = 0; /* Flag: 0 for no hit, 1 for hit */
 
                 /* Check collision with LEFT PADDLE (currentPosBar1) - Requires P1 movement implemented */
-                /*
-                if (ballX <= (leftBarX + BARWIDTH)) {                         // Cond LA: Ball's left edge at/past paddle's right face
-                    if ((ballX + BALLSIZE) > leftBarX) {                     // Cond LB: Ball's right edge right of paddle's left face
-                        if ((ballY + BALLSIZE) > currentPosBar1) {           // Cond LC: Ball's bottom below paddle's top
-                            if (ballY < (currentPosBar1 + BARHEIGHT)) {      // Cond LD: Ball's top above paddle's bottom
-                                // --- LEFT PADDLE HIT ---
-                                ballDirectionX = 1; // Bounce Right
-                                ballX = leftBarX + BARWIDTH; // Reposition ball to the right of the left paddle
+                
+                if (ballX <= (leftBarX + BARWIDTH)) {                         /* Cond LA: Ball's left edge at/past paddle's right face */
+                    if ((ballX + BALLSIZE) > leftBarX) {                     /* Cond LB: Ball's right edge right of paddle's left face */
+                        if ((ballY + BALLSIZE) > currentPosBar1) {           /* Cond LC: Ball's bottom below paddle's top */
+                            if (ballY < (currentPosBar1 + BARHEIGHT)) {      /* Cond LD: Ball's top above paddle's bottom */
+                                /* --- LEFT PADDLE HIT --- */
+                                ballDirectionX = 1; /* Bounce Right */
+                                ballX = leftBarX + BARWIDTH; /* Reposition ball to the right of the left paddle */
                                 leftPaddleHit = 1;
                             }
                         }
                     }
                 }
-                */
+               
 
                 /* If NO left paddle hit, check for far LEFT WALL */
                 if (leftPaddleHit == 0) {
                     if (ballX == 0) { /* Hit far left wall (or already clamped to 0) */
                         ballDirectionX = 1; /* Bounce Right from wall */
                         /* Player 2 scores (ball went past P1) */
+                        score = score + 1;
                     }
                 }
             } else { /* If ball was moving Right (ballDirectionX == 1) */
@@ -313,7 +319,10 @@ void game(void){
                     if ((ballX + BALLSIZE) >= currentvgawidth) { 
                         ballX = currentvgawidth - BALLSIZE; /* Clamp to wall */
                         ballDirectionX = 0; /* Bounce Left from wall */
-                        /* Player 1 scores */
+                        
+                        if (score > 0){
+                            score = score - 1;
+                        }
                     }
                 }
             }
@@ -322,6 +331,8 @@ void game(void){
         }
         
         i = i + 1; 
+
+        output(score);        
         sleep(SLEEPTIME); 
     }
 }
@@ -343,7 +354,7 @@ int main(void){
     SPACEEDGEBAR = 1;   /* Define space from edge */
     BARSPEED = 1;      /* Define bar movement speed */
 
-    SLEEPTIME = 1; 
+    SLEEPTIME = 83; /* How many iter to get ~1ms */
 
     KEYP2UP = 29; 
     KEYP2DOWN = 27; /* W and S keys for Player 2 */
@@ -353,6 +364,7 @@ int main(void){
 
     initFrameVGA(); /* Create the bars and ball */
     while (1) { /* Game logic */
+        sleep(SLEEPTIME * 5000);
         game();
         output(1); 
 
