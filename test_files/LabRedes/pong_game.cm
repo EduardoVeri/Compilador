@@ -4,7 +4,6 @@ int ORIGINALVGAWIDTH; int ORIGINALVGAHEIGHT;
 int currentvgaheight; int currentvgawidth;
 int DIVISORFACTOR;
 
-
 int BALLSIZE;        
 int COLORBACKGROUND; int COLORBALL; int COLORBAR;
 
@@ -15,6 +14,9 @@ int KEYP2UP; int KEYP2DOWN;
 
 int SLEEPTIME;
 
+int prng_seed;
+
+
 void sleep(int time) {
     int i;
     i = 0;
@@ -23,17 +25,63 @@ void sleep(int time) {
     }
 }
 
+int mod(int num, int n){
+    if (n == 0){
+        return 0;
+    }
+    return num-num/n*n;
+}
 
+void seedRandom(int seed) {
+    prng_seed = seed;
+}
+
+/*
+* Generates the next pseudo-random number using an LCG.
+* Returns a number between 0 and 2147483646.
+*/
+int random(void) {
+    /* These are the 'magic numbers' for the LCG formula. */
+    /* They are from the well-known Park-Miller PRNG. */
+    int multiplier;
+    int modulus;
+
+    multiplier = 48271;
+    modulus = 2147483647; /* A very large prime number (2^31 - 1) */
+    
+    /* Calculate the next number in the sequence */
+    /* Formula: X_n+1 = (a * X_n) % m */
+    prng_seed = mod(prng_seed * multiplier, modulus);
+
+    return prng_seed;
+}
+
+
+/* Get a random number in the range [min, max]. */
+int randomInRange(int min, int max) {
+    int range;
+    int randomNumber;
+
+    range = max - min + 1;
+    
+    randomNumber = mod(random(), range);
+
+    return min + randomNumber;
+}
+
+
+/* Output a value to the Hexa display and wait for a key press. */
 void outputAndSleep(int value, int sleeptime) {
     output(value);
-    sleep(sleeptime); 
+    while (keyboardinput() == 0) {
+    }
 }
 
 
 /* Draw a pixel at (x, y) on the VGA screen.
 * (!) The x zero point is at the top left corner
 * (!) and the y zero point is at the top left corner.
- */
+*/
 void drawpixelVGA(int x, int y, int color) {
     int framebufferindex; 
 
@@ -141,14 +189,6 @@ void initFrameVGA(void) {
         centerheight - halfballsize, 
         BALLSIZE, COLORBALL
     );
-}
-
-
-int mod(int num, int n){
-    if (n == 0){
-        return 0;
-    }
-    return num-num/n*n;
 }
 
 void game(void){
@@ -334,7 +374,7 @@ void game(void){
 }
 
 int main(void){
-    int count;
+    int seed_counter;
 
     DIVISORFACTOR = 16;
     ORIGINALVGAWIDTH = 640;
@@ -359,8 +399,19 @@ int main(void){
     currentvgaheight = ORIGINALVGAHEIGHT / DIVISORFACTOR;
 
     initFrameVGA(); /* Create the bars and ball */
-    
-    sleep(SLEEPTIME * 5000); /* Wait for ~5 seconds so the VGA can start up properly */
+
+
+    /* --- Seeding the Random Number Generator --- */
+    /* This simple method creates a variable seed based on how long */
+    /* the player waits before pressing a key to start the game. */
+    /* You would need to print a "Press any key to start" message first. */
+    seed_counter = 1;
+    while (keyboardinput() == 0) { /* Wait for any key press */
+        seed_counter = seed_counter + 1;
+    }
+    seedRandom(seed_counter); /* Seed with the resulting number */
+
+    /* --- Start the Game --- */
     game();
     output(1); 
 
