@@ -29,25 +29,17 @@ void assembly(){
 int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
 
     if(strcmp(instrucao->op, "EQ") == 0){
-        (*novaInstrucao) = criarNoAssembly(typeR, "slt");
+        (*novaInstrucao) = criarNoAssembly(typeR, "xor");
         (*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
         (*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
         (*novaInstrucao)->tipoR->rt = instrucao->arg2->val;
 
         instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
 
-        (*novaInstrucao) = criarNoAssembly(typeR, "slt");
-        (*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
-        (*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
-        (*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
-
-        instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
-
-        (*novaInstrucao) = criarNoAssembly(typeI, "xori");
+        (*novaInstrucao) = criarNoAssembly(typeI, "slti");
         (*novaInstrucao)->tipoI->rt = instrucao->arg3->val;
         (*novaInstrucao)->tipoI->rs = instrucao->arg3->val;
         (*novaInstrucao)->tipoI->imediato = 1;
-
     }
     else if(strcmp(instrucao->op, "LT") == 0){
         (*novaInstrucao) = criarNoAssembly(typeR, "slt");
@@ -57,7 +49,7 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
     }
     else if(strcmp(instrucao->op, "NEQ") == 0){
         (*novaInstrucao) = criarNoAssembly(typeR, "slt");
-        (*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
+        (*novaInstrucao)->tipoR->rd = $temp;
         (*novaInstrucao)->tipoR->rs = instrucao->arg1->val;
         (*novaInstrucao)->tipoR->rt = instrucao->arg2->val;
 
@@ -67,6 +59,13 @@ int opRelacionais(INSTRUCAO* instrucao, ASSEMBLY** novaInstrucao){
         (*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
         (*novaInstrucao)->tipoR->rs = instrucao->arg2->val;
         (*novaInstrucao)->tipoR->rt = instrucao->arg1->val;
+
+        instrucoesAssembly[indiceAssembly++] = *novaInstrucao;
+
+        (*novaInstrucao) = criarNoAssembly(typeR, "or");
+        (*novaInstrucao)->tipoR->rd = instrucao->arg3->val;
+        (*novaInstrucao)->tipoR->rs = $temp;
+        (*novaInstrucao)->tipoR->rt = instrucao->arg3->val;
         
 
     }
