@@ -130,9 +130,9 @@ void game(void){
     int currentPosBar1; int currentPosBar2;
     int ballX; int ballY; /* Ball's top-left coordinates */
 
-    // Use 0 and 1 to represent direction
-    // For X: 0 for Left, 1 for Right
-    // For Y: 0 for Up,   1 for Down
+    /* Use 0 and 1 to represent direction */
+    /* For X: 0 for Left, 1 for Right */
+    /* For Y: 0 for Up,   1 for Down */
     int ballDirectionX; 
     int ballDirectionY; 
 
@@ -172,58 +172,58 @@ void game(void){
         /* Add similar logic for player 2 if applicable */
 
         /* Game tick for ball movement */
-        if (mod(i, 100) == 0){ /* Adjust 100 to change ball speed relative to game speed */
+        if (mod(i, 5) == 0){ /* Adjust 100 to change ball speed relative to game speed */
             
-            // 1. Clear the old ball
+            /* 1. Clear the old ball */
             printBall(ballX, ballY, BALLSIZE, COLORBACKGROUND);
             
-            // 2. Update ball position based on direction
-            // Update Y position
-            if (ballDirectionY == 0) { // Moving Up
+            /* 2. Update ball position based on direction */
+            /* Update Y position */
+            if (ballDirectionY == 0) { /* Moving Up */
                 if (ballY >= ballSpeed) {
                     ballY = ballY - ballSpeed;
                 } else {
-                    ballY = 0; // Cannot move further up, set to edge
+                    ballY = 0; /* Cannot move further up, set to edge */
                 }
-            } else { // Moving Down (ballDirectionY == 1)
+            } else { /* Moving Down (ballDirectionY == 1) */
                 ballY = ballY + ballSpeed;
             }
 
-            // Update X position
-            if (ballDirectionX == 0) { // Moving Left
+            /* Update X position */
+            if (ballDirectionX == 0) { /* Moving Left */
                 if (ballX >= ballSpeed) {
                     ballX = ballX - ballSpeed;
                 } else {
-                    ballX = 0; // Cannot move further left, set to edge
+                    ballX = 0; /* Cannot move further left, set to edge */
                 }
-            } else { // Moving Right (ballDirectionX == 1)
+            } else { /* Moving Right (ballDirectionX == 1) */
                 ballX = ballX + ballSpeed;
             }
             
-            // 3. Collision detection and response with walls
+            /* 3. Collision detection and response with walls */
             
-            // Vertical collisions (Top and Bottom walls)
-            if (ballDirectionY == 0) { // If ball was moving Up
-                if (ballY == 0) { // Hit or was already at the top edge
-                    ballDirectionY = 1; // Change direction to Down
+            /* Vertical collisions (Top and Bottom walls) */
+            if (ballDirectionY == 0) { /* If ball was moving Up */
+                if (ballY == 0) { /* Hit or was already at the top edge */
+                    ballDirectionY = 1; /* Change direction to Down */
                 }
-            } else { // If ball was moving Down (ballDirectionY == 1)
-                if (ballY + BALLSIZE >= currentvgaheight) { // Hit or passed the bottom edge
-                    ballY = currentvgaheight - BALLSIZE; // Clamp ball to the edge
-                    ballDirectionY = 0; // Change direction to Up
+            } else { /* If ball was moving Down (ballDirectionY == 1) */
+                if (ballY + BALLSIZE >= currentvgaheight) { /* Hit or passed the bottom edge */
+                    ballY = currentvgaheight - BALLSIZE; /* Clamp ball to the edge */
+                    ballDirectionY = 0; /* Change direction to Up */
                 }
             }
             
-            // Horizontal collisions (Left and Right walls)
-            if (ballDirectionX == 0) { // If ball was moving Left
-                if (ballX == 0) { // Hit or was already at the left edge
-                    ballDirectionX = 1; // Change direction to Right
+            /* Horizontal collisions (Left and Right walls) */
+            if (ballDirectionX == 0) { /* If ball was moving Left */
+                if (ballX == 0) { /* Hit or was already at the left edge */
+                    ballDirectionX = 1; /* Change direction to Right */
                     /* TODO: Add logic for Player 2 score */
                 }
-            } else { // If ball was moving Right (ballDirectionX == 1)
-                if (ballX + BALLSIZE >= currentvgawidth) { // Hit or passed the right edge
-                    ballX = currentvgawidth - BALLSIZE; // Clamp ball to the edge
-                    ballDirectionX = 0; // Change direction to Left
+            } else { /* If ball was moving Right (ballDirectionX == 1) */
+                if (ballX + BALLSIZE >= currentvgawidth) { /* Hit or passed the right edge */
+                    ballX = currentvgawidth - BALLSIZE; /* Clamp ball to the edge */
+                    ballDirectionX = 0; /* Change direction to Left */
                     /* TODO: Add logic for Player 1 score */
                 }
             }
@@ -232,12 +232,12 @@ void game(void){
             /* Example for paddle 1 (left paddle):
             if (ballX <= paddle1X + PADDLEWIDTH && ballX + BALLSIZE >= paddle1X &&
                 ballY + BALLSIZE >= paddle1Y && ballY <= paddle1Y + PADDLEHEIGHT) {
-                if (ballDirectionX == 0) { // If moving left (towards paddle)
-                    ballDirectionX = 1; // Bounce right
-                    // Optional: Adjust ballY based on where it hit the paddle
-                }
-            }
-            */
+                if (ballDirectionX == 0) { /* If moving left (towards paddle) */
+            /* ballDirectionX = 1; /* Bounce right */
+            /* // Optional: Adjust ballY based on where it hit the paddle */
+            /* }
+            }*/
+            
 
             /* 4. Draw the new ball at its updated position */
             printBall(ballX, ballY, BALLSIZE, COLORBALL);
@@ -259,7 +259,7 @@ int main(void){
     COLORBALL = 3;
     COLORBAR = 5;
     COLORBACKGROUND = 0; 
-    BALLSIZE = 2;    
+    BALLSIZE = 1;    
 
     SLEEPTIME = 1; /* Sleep time in milliseconds */
     
