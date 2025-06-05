@@ -2,7 +2,7 @@
 #define CodInterm_H 1
 
 //Define o tamanho maximo do vetor que armazena o codigo intermediario
-#define MAX_INSTRUCTION 1000
+#define MAX_INSTRUCTION 10000
 #define $zero 31
 #define $ra 30
 #define $fp 29
