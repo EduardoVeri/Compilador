@@ -77,8 +77,7 @@ int randomInRange(int min, int max) {
 /* Output a value to the Hexa display and wait for a key press. */
 void outputAndSleep(int value, int sleeptime) {
     output(value);
-    while (keyboardinput() == 0) {
-    }
+    while (keyboardinput() == 0);
 }
 
 /* Draw a pixel at (x, y) on the VGA screen.
@@ -221,6 +220,9 @@ void game(void) {
     int ballX;
     int ballY;
 
+    int ball_startX;
+    int ball_startY;
+
     int ballDirectionX;
     int ballDirectionY;
 
@@ -231,6 +233,7 @@ void game(void) {
     int rightPaddleHit;
     int leftPaddleHit;
     int score;
+    int score_flag; /* Flag to indicate if a score has occurred */
 
     /* Initialize bar Y positions (top of the bar) */
     currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2);
@@ -242,16 +245,25 @@ void game(void) {
     leftBarX = SPACE_EDGE_BAR;
     rightBarX = current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH;
 
-    ballX = current_vga_width / 2 - (BALL_SIZE / 2);
-    ballY = current_vga_height / 2 - (BALL_SIZE / 2);
+    ball_startX = current_vga_width / 2 - (BALL_SIZE / 2);
+    ball_startY = current_vga_height / 2 - (BALL_SIZE / 2);
+
+    ballX = ball_startX;
+    ballY = ball_startY;
 
     ballDirectionX = 1;
     ballDirectionY = 1;
     ballSpeed = 1;
     i = 0;
     score = 0;
+    score_flag = 0; 
 
     while (1) {
+        if (score_flag == 1) {
+            outputAndSleep(score, SLEEP_TIME);
+            score_flag = 0; /* Reset the score flag */
+        }
+
         keypressed = keyboardinput();
 
         oldPosBar2 = currentPosBar2;
@@ -372,6 +384,9 @@ void game(void) {
                     if (ballX == 0) {
                         ballDirectionX = 1;
                         score = score + 1; /* Player 2 scores */
+                        ballX = ball_startX; /* Reset ball position */
+                        ballY = ball_startY;
+                        score_flag = 1; 
                     }
                 }
             } else { /* If ball was moving Right */
@@ -403,6 +418,11 @@ void game(void) {
                         if (score > 0) {
                             score = score - 1;
                         } /* Player 1 (AI) scores */
+                        ballX = ball_startX; /* Reset ball position */
+                        ballY = ball_startY;
+                        score_flag = 1; 
+
+
                     }
                 }
             }
