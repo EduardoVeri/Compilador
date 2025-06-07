@@ -21,6 +21,8 @@ int KEY_P2_DOWN;
 
 int SLEEP_TIME;
 
+int AI_DIFFICULTY;
+
 int prng_seed;
 
 void sleep(int time) {
@@ -438,6 +440,7 @@ void game(void) {
 
 int main(void) {
     int seed_counter;
+    int keyboard_input;
 
     DIVISOR_FACTOR = 16;
     ORIGINAL_VGA_WIDTH = 640;
@@ -465,10 +468,19 @@ int main(void) {
 
     /* --- Seeding the Random Number Generator --- */
     /* The player waits before pressing a key to start the game. */
+    keyboard_input = 0;
     seed_counter = 1;
-    while (keyboardinput() == 0) { /* Wait for any key press */
+    while (keyboard_input == 0) { /* Wait for any key press */
+        keyboard_input = keyboardinput();
         seed_counter = seed_counter + 1;
     }
+    
+    AI_DIFFICULTY = 1; /* Default AI level is Easy mode */
+    if (keyboard_input == 50){ /* Press Key 2 */
+        AI_DIFFICULTY = 2; /* Impossible AI */
+    }
+    
+
     seedRandom(seed_counter); /* Seed with the resulting number */
 
     /* --- Start the Game --- */
