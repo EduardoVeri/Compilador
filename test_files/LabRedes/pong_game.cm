@@ -240,8 +240,8 @@ void game(void) {
     /* Initialize bar Y positions (top of the bar) */
     currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2);
     currentPosBar2 = current_vga_height / 2 - (BAR_HEIGHT / 2);
-    oldPosBar1 = currentPosBar1; /* Initialize old position for AI bar */
-    oldPosBar2 = currentPosBar2; /* Initialize old position for Player bar */
+    oldPosBar1 = currentPosBar1;
+    oldPosBar2 = currentPosBar2;
 
     /* Calculate fixed X positions for the bars */
     leftBarX = SPACE_EDGE_BAR;
@@ -253,17 +253,17 @@ void game(void) {
     ballX = ball_startX;
     ballY = ball_startY;
 
-    ballDirectionX = 1;
-    ballDirectionY = 1;
+    ballDirectionX = randomInRange(0, 1); /* Start with a random direction */
+    ballDirectionY = randomInRange(0, 1);
     ballSpeed = 1;
     i = 0;
     score = 0;
-    score_flag = 0; 
+    score_flag = 0;
 
     while (1) {
         if (score_flag == 1) {
             outputAndSleep(score, SLEEP_TIME);
-            score_flag = 0; /* Reset the score flag */
+            score_flag = 0;
         }
 
         keypressed = keyboardinput();
@@ -301,41 +301,95 @@ void game(void) {
 
         /* Game tick for ball and AI movement */
         if (mod(i, SLEEP_TIME * 2) == 0) {
-            printBall(ballX, ballY, BALL_SIZE, COLOR_BACKGROUND); /* 1. Clear old ball */
+            printBall(ballX, ballY, BALL_SIZE, COLOR_BACKGROUND);
 
-            /* 2. Update ball position */
-            if (ballDirectionY == 0) { /* Moving Up */
+            /* --- Update Ball Position --- */
+            if (ballDirectionY == 0) { /* Up */
                 if (ballY >= ballSpeed) {
                     ballY = ballY - ballSpeed;
                 } else {
                     ballY = 0;
                 }
-            } else { /* Moving Down */
+            } else { /* Down */
                 ballY = ballY + ballSpeed;
             }
-
-            if (ballDirectionX == 0) { /* Moving Left */
+            if (ballDirectionX == 0) { /* Left */
                 if (ballX >= ballSpeed) {
                     ballX = ballX - ballSpeed;
                 } else {
                     ballX = 0;
                 }
-            } else { /* Moving Right */
+            } else { /* Right */
                 ballX = ballX + ballSpeed;
             }
 
             /* --- Left Bar (Player 1) AI Movement --- */
             oldPosBar1 = currentPosBar1; /* Store previous position */
 
-            /* AI tries to center its paddle on the ball's Y position */
-            currentPosBar1 = ballY + (BALL_SIZE / 2);
-            if (currentPosBar1 > (BAR_HEIGHT / 2)) {
-                currentPosBar1 = currentPosBar1 - (BAR_HEIGHT / 2);
+            if (AI_DIFFICULTY == 2) {
+                /* --- IMPOSSIBLE AI LOGIC (Teleports) --- */
+                /* AI tries to center its paddle on the ball's Y position */
+                currentPosBar1 = ballY + (BALL_SIZE / 2) - (BAR_HEIGHT / 2);
             } else {
-                currentPosBar1 = 0; /* If ball is too high, keep AI paddle at top */
+                /* --- EASY AI LOGIC (Moves one step, can make mistakes) --- */
+                int ballCenterY;
+                int aiBarCenterY;
+                int correctMove; /* 0=Still, 1=Up, 2=Down */
+                int randomDecision;
+                int finalMove; 
+
+                /* 1. Determine the correct direction to move */
+                ballCenterY = ballY + (BALL_SIZE / 2);
+                aiBarCenterY = currentPosBar1 + (BAR_HEIGHT / 2);
+                correctMove = 0; /* Default to staying still */
+                if (aiBarCenterY > ballCenterY) {
+                    correctMove = 1;
+                } /* Should move Up */
+                else {
+                    if (aiBarCenterY < ballCenterY) {
+                        correctMove = 2;
+                    }
+                } /* Should move Down */
+
+                /* 2. Make a random choice about what to actually do */
+                randomDecision = randomInRange(1, 10);
+                finalMove = correctMove; /* By default, plan to make the correct move */
+
+                /* Check if the AI will make a mistake (30% chance) */
+                if (randomDecision > 7) {      /* This gives a 3/10 chance of not doing the correct move */
+                    if (randomDecision <= 9) { /* 2/10 chance to just stay still */
+                        finalMove = 0;
+                    } else { /* 1/10 chance to move the wrong way */
+                        if (correctMove == 1) {
+                            finalMove = 2;
+                        } /* If should go Up, go Down instead */
+                        else {
+                            if (correctMove == 2) {
+                                finalMove = 1;
+                            }
+                        } /* If should go Down, go Up instead */
+                    }
+                }
+
+                /* 3. Execute the final chosen move (one step at a time) */
+                if (finalMove == 1) { /* Move Up */
+                    if (currentPosBar1 >= BAR_SPEED) {
+                        currentPosBar1 = currentPosBar1 - BAR_SPEED;
+                    } else {
+                        currentPosBar1 = 0;
+                    }
+                } else {
+                    if (finalMove == 2) { /* Move Down */
+                        if (currentPosBar1 + BAR_HEIGHT + BAR_SPEED <= current_vga_height) {
+                            currentPosBar1 = currentPosBar1 + BAR_SPEED;
+                        } else {
+                            currentPosBar1 = current_vga_height - BAR_HEIGHT;
+                        }
+                    }
+                }
             }
 
-            /* Clamp the AI paddle's position to stay within screen bounds */
+            /* This clamping and redrawing logic applies to BOTH AI types */
             if (currentPosBar1 < 0) {
                 currentPosBar1 = 0;
             }
@@ -343,14 +397,12 @@ void game(void) {
                 currentPosBar1 = current_vga_height - BAR_HEIGHT;
             }
 
-            /* Redraw the AI bar only if it has moved */
             if (oldPosBar1 != currentPosBar1) {
                 printBar(leftBarX, oldPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
                 printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
             }
 
-            /* 3. Ball collision detection and response */
-
+            /* --- Ball Collision Detection --- */
             /* Vertical wall collisions */
             if (ballDirectionY == 0) {
                 if (ballY == 0) {
@@ -364,42 +416,34 @@ void game(void) {
             }
 
             /* Horizontal collisions (Paddles and Left/Right walls) */
-            if (ballDirectionX == 0) { /* If ball was moving Left */
+            if (ballDirectionX == 0) { /* Moving Left */
                 leftPaddleHit = 0;
-
-                /* Check collision with LEFT PADDLE (AI) */
                 if (ballX <= (leftBarX + BAR_WIDTH)) {
                     if ((ballX + BALL_SIZE) > leftBarX) {
                         if ((ballY + BALL_SIZE) > currentPosBar1) {
                             if (ballY < (currentPosBar1 + BAR_HEIGHT)) {
-                                /* --- LEFT PADDLE HIT --- */
-                                ballDirectionX = 1;           /* Bounce Right */
-                                ballX = leftBarX + BAR_WIDTH; /* Reposition ball */
+                                ballDirectionX = 1;
+                                ballX = leftBarX + BAR_WIDTH;
                                 leftPaddleHit = 1;
                             }
                         }
                     }
                 }
-
-                /* If NO left paddle hit, check for far LEFT WALL */
                 if (leftPaddleHit == 0) {
                     if (ballX == 0) {
                         ballDirectionX = 1;
-                        score = score + 1; /* Player 2 scores */
-                        ballX = ball_startX; /* Reset ball position */
+                        score = score + 1;
+                        ballX = ball_startX;
                         ballY = ball_startY;
-                        score_flag = 1; 
+                        score_flag = 1;
                     }
                 }
-            } else { /* If ball was moving Right */
+            } else { /* Moving Right */
                 rightPaddleHit = 0;
-
-                /* Check collision with RIGHT PADDLE (Player) */
                 if ((ballX + BALL_SIZE) >= rightBarX) {
                     if (ballX < (rightBarX + BAR_WIDTH)) {
                         if ((ballY + BALL_SIZE) > currentPosBar2) {
                             if (ballY < (currentPosBar2 + BAR_HEIGHT)) {
-                                /* --- RIGHT PADDLE HIT --- */
                                 ballDirectionX = 0;
                                 if (BALL_SIZE > 0) {
                                     ballX = rightBarX - BALL_SIZE;
@@ -411,25 +455,19 @@ void game(void) {
                         }
                     }
                 }
-
-                /* If NO right paddle hit, check for far RIGHT WALL */
                 if (rightPaddleHit == 0) {
                     if ((ballX + BALL_SIZE) >= current_vga_width) {
-                        ballX = current_vga_width - BALL_SIZE;
                         ballDirectionX = 0;
                         if (score > 0) {
                             score = score - 1;
                         } /* Player 1 (AI) scores */
                         ballX = ball_startX; /* Reset ball position */
                         ballY = ball_startY;
-                        score_flag = 1; 
-
-
+                        score_flag = 1;
                     }
                 }
             }
-
-            printBall(ballX, ballY, BALL_SIZE, COLOR_BALL); /* 4. Draw new ball */
+            printBall(ballX, ballY, BALL_SIZE, COLOR_BALL);
         }
 
         i = i + 1;
@@ -474,12 +512,11 @@ int main(void) {
         keyboard_input = keyboardinput();
         seed_counter = seed_counter + 1;
     }
-    
-    AI_DIFFICULTY = 1; /* Default AI level is Easy mode */
-    if (keyboard_input == 50){ /* Press Key 2 */
-        AI_DIFFICULTY = 2; /* Impossible AI */
+
+    AI_DIFFICULTY = 1;          /* Default AI level is Easy mode */
+    if (keyboard_input == 50) { /* Press Key 2 */
+        AI_DIFFICULTY = 2;      /* Impossible AI */
     }
-    
 
     seedRandom(seed_counter); /* Seed with the resulting number */
 
