@@ -9,7 +9,7 @@ ASSEMBLY ** instrucoesAssembly = NULL; // Vetor de instrucoes assembly
 int indiceAssembly = 0; // Indice para o vetor de instrucoes assembly
 
 void inicializaAssembly(){
-    instrucoesAssembly = (ASSEMBLY **)malloc(sizeof(ASSEMBLY*)*MAX_ASSEMBLY);
+    instrucoesAssembly = (ASSEMBLY **)malloc(sizeof(ASSEMBLY*)*MAX_ASSEMBLY); // TODO Change to dinamic allocation
 
     for(int i = 0; i < MAX_INSTRUCTION; i++){
         instrucoesAssembly[i] = NULL;

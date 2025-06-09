@@ -6,7 +6,7 @@
 #include "global.h"
 
 #define YYSTYPE PONTEIRONO
-#define MAX_NOS 1000
+#define MAX_NOS 10000 // TODO Change to dinamic allocation
 
 static int yylex(void);
 void yyerror(char* s);

@@ -64,7 +64,7 @@ void desalocaVetor(){
 
 //Cria o vetor de codigo intermediario
 void inicializaVetor(){
-    codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION);
+    codigoIntermediario = (INSTRUCAO**) malloc(sizeof(INSTRUCAO*) * MAX_INSTRUCTION); // TODO Change to dinamic allocation
     
     for(int i = 0; i < MAX_INSTRUCTION; i++){
         codigoIntermediario[i] = NULL;
