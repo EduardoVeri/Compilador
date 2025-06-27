@@ -329,7 +329,14 @@ void game(void) {
             if (AI_DIFFICULTY == 2) {
                 /* --- IMPOSSIBLE AI LOGIC (Teleports) --- */
                 /* AI tries to center its paddle on the ball's Y position */
-                currentPosBar1 = ballY + (BALL_SIZE / 2) - (BAR_HEIGHT / 2);
+                
+                currentPosBar1 = ballY + (BALL_SIZE / 2);
+                if (currentPosBar1 > (BAR_HEIGHT / 2)) {
+                    currentPosBar1 = currentPosBar1 - (BAR_HEIGHT / 2);
+                } else {
+                    currentPosBar1 = 0; /* If ball is too high, keep AI paddle at top */
+                }
+
             } else {
                 /* --- EASY AI LOGIC (Moves one step, can make mistakes) --- */
                 int ballCenterY;
