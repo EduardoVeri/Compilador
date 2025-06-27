@@ -306,7 +306,7 @@ int get_sp(MEMORIA_FUNCOES* funcao){
         return -1;
     }
     
-    return 24;
+    return 34;
 }
 
 int get_fp(MEMORIA_FUNCOES* funcao){

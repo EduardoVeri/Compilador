@@ -255,7 +255,7 @@ void geraAssembly(INSTRUCAO* instrucao){
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
     }
     else if(!strcmp(instrucao->op, "LABEL")){
-        char* auxLabel = (char*) malloc(sizeof(char) * 10);
+        char* auxLabel = (char*) malloc(sizeof(char) * 12);
         sprintf(auxLabel, "Label %d", instrucao->arg1->val);
         novaInstrucao = criarNoAssembly(typeLabel, auxLabel); 
         novaInstrucao->tipoLabel->endereco = instrucao->arg1->val;
@@ -306,16 +306,16 @@ void geraAssembly(INSTRUCAO* instrucao){
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
             // Inicia o ponteiro de memoria para os parametros
-            novaInstrucao = criarNoAssembly(typeR, "add");
-            novaInstrucao->tipoR->rd = $pilha;
-            novaInstrucao->tipoR->rs = $zero;
-            novaInstrucao->tipoR->rt = $s0; // Valor fixo para a localizacao dos parametros
-            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+            // novaInstrucao = criarNoAssembly(typeR, "add");
+            // novaInstrucao->tipoR->rd = $pilha;
+            // novaInstrucao->tipoR->rs = $zero;
+            // novaInstrucao->tipoR->rt = $s0; // Valor fixo para a localizacao dos parametros
+            // instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
-            novaInstrucao = criarNoAssembly(typeI, "subi");
+            novaInstrucao = criarNoAssembly(typeI, "addi");
             novaInstrucao->tipoI->rt = $pilha;
-            novaInstrucao->tipoI->rs = $pilha;
-            novaInstrucao->tipoI->imediato = 5;
+            novaInstrucao->tipoI->rs = $zero;
+            novaInstrucao->tipoI->imediato = 4000;
             instrucoesAssembly[indiceAssembly++] = novaInstrucao;
         }
         else{
@@ -664,14 +664,14 @@ void geraAssembly(INSTRUCAO* instrucao){
         novaInstrucao = criarNoAssembly(typeI, "subi");
         novaInstrucao->tipoI->rt = $fp;
         novaInstrucao->tipoI->rs = $fp;
-        novaInstrucao->tipoI->imediato = 25;
+        novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
         // Volta os valores de $sp
         novaInstrucao = criarNoAssembly(typeI, "subi");
         novaInstrucao->tipoI->rt = $sp;
         novaInstrucao->tipoI->rs = $sp;
-        novaInstrucao->tipoI->imediato = 25;
+        novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
         if(instrucao->arg3->tipo != Vazio){
