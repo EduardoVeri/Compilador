@@ -237,6 +237,12 @@ void game(void) {
     int score;
     int score_flag; /* Flag to indicate if a score has occurred */
 
+    int ballCenterY;
+    int aiBarCenterY;
+    int correctMove; /* 0=Still, 1=Up, 2=Down */
+    int randomDecision;
+    int finalMove; 
+
     /* Initialize bar Y positions (top of the bar) */
     currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2);
     currentPosBar2 = current_vga_height / 2 - (BAR_HEIGHT / 2);
@@ -339,12 +345,7 @@ void game(void) {
 
             } else {
                 /* --- EASY AI LOGIC (Moves one step, can make mistakes) --- */
-                int ballCenterY;
-                int aiBarCenterY;
-                int correctMove; /* 0=Still, 1=Up, 2=Down */
-                int randomDecision;
-                int finalMove; 
-
+                
                 /* 1. Determine the correct direction to move */
                 ballCenterY = ballY + (BALL_SIZE / 2);
                 aiBarCenterY = currentPosBar1 + (BAR_HEIGHT / 2);
@@ -478,7 +479,6 @@ void game(void) {
         }
 
         i = i + 1;
-        output(score);
         sleep(SLEEP_TIME);
     }
 }
