@@ -224,6 +224,7 @@ void game(void) {
 
     int ball_startX;
     int ball_startY;
+    int bar_startPos;
 
     int ballDirectionX;
     int ballDirectionY;
@@ -244,8 +245,9 @@ void game(void) {
     int finalMove; 
 
     /* Initialize bar Y positions (top of the bar) */
-    currentPosBar1 = current_vga_height / 2 - (BAR_HEIGHT / 2);
-    currentPosBar2 = current_vga_height / 2 - (BAR_HEIGHT / 2);
+    bar_startPos = current_vga_height / 2 - (BAR_HEIGHT / 2);
+    currentPosBar1 = bar_startPos;
+    currentPosBar2 = bar_startPos;
     oldPosBar1 = currentPosBar1;
     oldPosBar2 = currentPosBar2;
 
@@ -364,10 +366,10 @@ void game(void) {
                 finalMove = correctMove; /* By default, plan to make the correct move */
 
                 /* Check if the AI will make a mistake (30% chance) */
-                if (randomDecision > 7) {      /* This gives a 3/10 chance of not doing the correct move */
-                    if (randomDecision <= 9) { /* 2/10 chance to just stay still */
+                if (randomDecision > 5) {      /* This gives a 4/10 chance of not doing the correct move */
+                    if (randomDecision <= 8) { /* 2/10 chance to just stay still */
                         finalMove = 0;
-                    } else { /* 1/10 chance to move the wrong way */
+                    } else { /* 2/10 chance to move the wrong way */
                         if (correctMove == 1) {
                             finalMove = 2;
                         } /* If should go Up, go Down instead */
@@ -491,15 +493,15 @@ int main(void) {
     ORIGINAL_VGA_WIDTH = 640;
     ORIGINAL_VGA_HEIGHT = 480;
 
-    COLOR_BALL = 3;
-    COLOR_BAR = 5;
+    COLOR_BALL = 7;
+    COLOR_BAR = 7;
     COLOR_BACKGROUND = 0;
     BALL_SIZE = 1;
 
-    BAR_HEIGHT = 10;    /* Define bar height */
+    BAR_HEIGHT = 7;    /* Define bar height */
     BAR_WIDTH = 2;      /* Define bar width */
     SPACE_EDGE_BAR = 1; /* Define space from edge */
-    BAR_SPEED = 1;      /* Define bar movement speed */
+    BAR_SPEED = 2;      /* Define bar movement speed */
 
     SLEEP_TIME = 83; /* How many iter to get ~1ms */
 
