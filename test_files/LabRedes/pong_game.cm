@@ -486,7 +486,7 @@ void game(void) {
 
         i = i + 1;
         if (AI_DIFFICULTY == 2) {
-            sleep(SLEEP_TIME / 4);
+            sleep(SLEEP_TIME / 2);
         } else {
             sleep(SLEEP_TIME);
         }
