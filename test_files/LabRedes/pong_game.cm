@@ -169,45 +169,26 @@ void printBar(int x, int y, int width, int height, int color) {
 
 /* Create bars and ball */
 void initFrameVGA(void) {
-    int barwidth;
-    int barheight;
-    int ballsize;
-    int centerheight;
-    int centerwidth;
-    int halfbarheight;
-    int halfballsize;
-    int i;
-    int j;
-    int spaceedgebar;
-
-    spaceedgebar = 1; /* Space from the edge of the screen to the bar */
-    barwidth = 2;
-    barheight = 10;
-
-    centerheight = current_vga_height / 2; /* Center of the screen */
-    centerwidth = current_vga_width / 2;
-    halfbarheight = barheight / 2;
-
     /* Draw left bar */
+
+    outputAndSleep(COLOR_BAR, SLEEP_TIME);
     printBar(SPACE_EDGE_BAR,
-             centerheight - halfbarheight,
+             current_vga_height / 2 - (BAR_HEIGHT / 2),
              BAR_WIDTH,
              BAR_HEIGHT,
              COLOR_BAR);
 
     /* Draw right bar using printBar */
     printBar(current_vga_width - SPACE_EDGE_BAR - BAR_WIDTH,
-             centerheight - halfbarheight,
+             current_vga_height / 2 - (BAR_HEIGHT / 2),
              BAR_WIDTH,
              BAR_HEIGHT,
              COLOR_BAR);
 
-    halfballsize = (BALL_SIZE / 2);
-
     /* Calculate top-left coordinates for the ball to be centered */
     printBall(
-        centerwidth - halfballsize,
-        centerheight - halfballsize,
+        current_vga_width / 2 - (BALL_SIZE / 2),
+        current_vga_height / 2 - (BALL_SIZE / 2),
         BALL_SIZE, COLOR_BALL);
 }
 
@@ -242,7 +223,7 @@ void game(void) {
     int aiBarCenterY;
     int correctMove; /* 0=Still, 1=Up, 2=Down */
     int randomDecision;
-    int finalMove; 
+    int finalMove;
 
     /* Initialize bar Y positions (top of the bar) */
     bar_startPos = current_vga_height / 2 - (BAR_HEIGHT / 2);
@@ -270,6 +251,14 @@ void game(void) {
 
     while (1) {
         if (score_flag == 1) {
+            /* Reset Bars to center */
+            printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
+            printBar(rightBarX, currentPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
+            currentPosBar1 = bar_startPos;
+            currentPosBar2 = bar_startPos;
+            printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
+            printBar(rightBarX, currentPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
+
             outputAndSleep(score, SLEEP_TIME);
             score_flag = 0;
         }
@@ -337,7 +326,7 @@ void game(void) {
             if (AI_DIFFICULTY == 2) {
                 /* --- IMPOSSIBLE AI LOGIC (Teleports) --- */
                 /* AI tries to center its paddle on the ball's Y position */
-                
+
                 currentPosBar1 = ballY + (BALL_SIZE / 2);
                 if (currentPosBar1 > (BAR_HEIGHT / 2)) {
                     currentPosBar1 = currentPosBar1 - (BAR_HEIGHT / 2);
@@ -347,7 +336,7 @@ void game(void) {
 
             } else {
                 /* --- EASY AI LOGIC (Moves one step, can make mistakes) --- */
-                
+
                 /* 1. Determine the correct direction to move */
                 ballCenterY = ballY + (BALL_SIZE / 2);
                 aiBarCenterY = currentPosBar1 + (BAR_HEIGHT / 2);
@@ -469,7 +458,7 @@ void game(void) {
                     if ((ballX + BALL_SIZE) >= current_vga_width) {
                         ballDirectionX = 0;
                         if (score > 0) {
-                            score = score - 1;
+                            score = score + 1000;
                         } /* Player 1 (AI) scores */
                         ballX = ball_startX; /* Reset ball position */
                         ballY = ball_startY;
@@ -498,7 +487,7 @@ int main(void) {
     COLOR_BACKGROUND = 0;
     BALL_SIZE = 1;
 
-    BAR_HEIGHT = 7;    /* Define bar height */
+    BAR_HEIGHT = 7;     /* Define bar height */
     BAR_WIDTH = 2;      /* Define bar width */
     SPACE_EDGE_BAR = 1; /* Define space from edge */
     BAR_SPEED = 2;      /* Define bar movement speed */
