@@ -259,13 +259,13 @@ void game(void) {
             currentPosBar2 = bar_startPos;
             printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
             printBar(rightBarX, currentPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
-            
+
             output(score);
             keypressed = keyboardinput();
-            while (keypressed == 0){
+            while (keypressed == 0) {
                 keypressed = keyboardinput();
             }
-            
+
             /* Change AI difficulty if the user wants to */
             if (keypressed == 50) {
                 if (AI_DIFFICULTY == 2) {
@@ -274,6 +274,7 @@ void game(void) {
                     AI_DIFFICULTY = 2; /* Switch to Impossible AI */
                 }
                 score = 0; /* Reset score */
+                output(score);
             }
         }
 
@@ -368,9 +369,9 @@ void game(void) {
                 randomDecision = randomInRange(1, 10);
                 finalMove = correctMove; /* By default, plan to make the correct move */
 
-                /* Check if the AI will make a mistake (30% chance) */
-                if (randomDecision > 5) {      /* This gives a 4/10 chance of not doing the correct move */
-                    if (randomDecision <= 8) { /* 2/10 chance to just stay still */
+                /* Check if the AI will make a mistake (50% chance) */
+                if (randomDecision > 5) {      /* This gives a 5/10 chance of not doing the correct move */
+                    if (randomDecision <= 8) { /* 3/10 chance to just stay still */
                         finalMove = 0;
                     } else { /* 2/10 chance to move the wrong way */
                         if (correctMove == 1) {
