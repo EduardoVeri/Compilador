@@ -659,10 +659,6 @@ void geraAssembly(INSTRUCAO* instrucao){
 
         MEMORIA_FUNCOES* funcaoChamada = buscar_funcao(&vetorMemoria, instrucao->arg1->nome);
 
-        printf("Chamada da funcao %s\n", funcaoChamada->nome);
-        printf("Valor de $sp da funcao atual: %d\n", get_sp(funcaoAtual));
-        printf("Valor de $sp da funcao chamada: %d\n", get_sp(funcaoChamada));
-
         novaInstrucao = criarNoAssembly(typeI, "addi");
         novaInstrucao->tipoI->rt = $sp;
         novaInstrucao->tipoI->rs = $sp;
