@@ -306,7 +306,8 @@ int get_sp(MEMORIA_FUNCOES* funcao){
         return -1;
     }
     
-    return 34;
+    // O sp aponta para o ultimo elemento da tabela de variaveis
+    return funcao->tamanho == 0 ? 0 : funcao->tamanho - 1; 
 }
 
 int get_fp(MEMORIA_FUNCOES* funcao){

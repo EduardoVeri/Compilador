@@ -228,12 +228,12 @@ void geraAssembly(INSTRUCAO* instrucao){
             count = instrucao->arg3->val;
         }
 
-        int static flag = 0;
-        if(funcao->tamanho > get_sp(funcao) && !flag){
-            printf(ANSI_COLOR_RED "Erro: " ANSI_COLOR_RESET);
-            printf("Memoria insuficiente na funcao %s\n", funcao->nome);
-            printf("Aumente a memoria alocada pelo compilador ou diminua as variaveis da funcao\n");
-            flag = 1;
+        if (strcmp(funcaoAtual->nome, "main") == 0) {
+            novaInstrucao = criarNoAssembly(typeI, "addi");
+            novaInstrucao->tipoI->rt = $sp;
+            novaInstrucao->tipoI->rs = $sp;
+            novaInstrucao->tipoI->imediato = instrucao->arg3->tipo == Vazio ? 1 : instrucao->arg3->val;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
         }
 
     }
@@ -243,6 +243,14 @@ void geraAssembly(INSTRUCAO* instrucao){
         if(!strcmp(instrucao->arg1->nome, "INT")) 
             insere_variavel(funcao, instrucao->arg2->nome, inteiroArg);
         else insere_variavel(funcao, instrucao->arg2->nome, vetorArg);
+
+        if (strcmp(funcaoAtual->nome, "main") == 0) {
+            novaInstrucao = criarNoAssembly(typeI, "addi");
+            novaInstrucao->tipoI->rt = $sp;
+            novaInstrucao->tipoI->rs = $sp;
+            novaInstrucao->tipoI->imediato = 1;
+            instrucoesAssembly[indiceAssembly++] = novaInstrucao;
+        }
         
     }	
     else if(!strcmp(instrucao->op, "IFF")){
@@ -649,10 +657,16 @@ void geraAssembly(INSTRUCAO* instrucao){
         novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
+        MEMORIA_FUNCOES* funcaoChamada = buscar_funcao(&vetorMemoria, instrucao->arg1->nome);
+
+        printf("Chamada da funcao %s\n", funcaoChamada->nome);
+        printf("Valor de $sp da funcao atual: %d\n", get_sp(funcaoAtual));
+        printf("Valor de $sp da funcao chamada: %d\n", get_sp(funcaoChamada));
+
         novaInstrucao = criarNoAssembly(typeI, "addi");
         novaInstrucao->tipoI->rt = $sp;
         novaInstrucao->tipoI->rs = $sp;
-        novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1;
+        novaInstrucao->tipoI->imediato = get_sp(funcaoChamada) + 1;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
         // Pulando para a funcao chamada
@@ -671,7 +685,7 @@ void geraAssembly(INSTRUCAO* instrucao){
         novaInstrucao = criarNoAssembly(typeI, "subi");
         novaInstrucao->tipoI->rt = $sp;
         novaInstrucao->tipoI->rs = $sp;
-        novaInstrucao->tipoI->imediato = get_sp(funcaoAtual) + 1;
+        novaInstrucao->tipoI->imediato = get_sp(funcaoChamada) + 1;
         instrucoesAssembly[indiceAssembly++] = novaInstrucao;
 
         if(instrucao->arg3->tipo != Vazio){
