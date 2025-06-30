@@ -250,6 +250,8 @@ void game(void) {
 
     while (1) {
         if (score_flag == 1) {
+            score_flag = 0;
+
             /* Reset Bars to center */
             printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
             printBar(rightBarX, currentPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BACKGROUND);
@@ -257,9 +259,22 @@ void game(void) {
             currentPosBar2 = bar_startPos;
             printBar(leftBarX, currentPosBar1, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
             printBar(rightBarX, currentPosBar2, BAR_WIDTH, BAR_HEIGHT, COLOR_BAR);
-
-            outputAndSleep(score);
-            score_flag = 0;
+            
+            output(score);
+            keypressed = keyboardinput();
+            while (keypressed == 0){
+                keypressed = keyboardinput();
+            }
+            
+            /* Change AI difficulty if the user wants to */
+            if (keypressed == 50) {
+                if (AI_DIFFICULTY == 2) {
+                    AI_DIFFICULTY = 1; /* Switch to Easy AI */
+                } else {
+                    AI_DIFFICULTY = 2; /* Switch to Impossible AI */
+                }
+                score = 0; /* Reset score */
+            }
         }
 
         keypressed = keyboardinput();
@@ -469,7 +484,11 @@ void game(void) {
         }
 
         i = i + 1;
-        sleep(SLEEP_TIME);
+        if (AI_DIFFICULTY == 2) {
+            sleep(SLEEP_TIME / 4);
+        } else {
+            sleep(SLEEP_TIME);
+        }
     }
 }
 
