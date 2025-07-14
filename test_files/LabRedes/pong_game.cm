@@ -471,10 +471,9 @@ void game(void) {
                 }
                 if (rightPaddleHit == 0) {
                     if ((ballX + BALL_SIZE) >= current_vga_width) {
+                        /* Player 1 (AI) scores */
                         ballDirectionX = 0;
-                        if (score > 0) {
-                            score = score + 1000;
-                        } /* Player 1 (AI) scores */
+                        score = score + 1000;
                         ballX = ball_startX; /* Reset ball position */
                         ballY = ball_startY;
                         score_flag = 1;
