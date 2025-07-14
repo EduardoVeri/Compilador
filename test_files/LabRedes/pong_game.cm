@@ -486,9 +486,9 @@ void game(void) {
 
         i = i + 1;
         if (AI_DIFFICULTY == 2) {
-            sleep(SLEEP_TIME / 2);
+            sleep(SLEEP_TIME / 3);
         } else {
-            sleep(SLEEP_TIME);
+            sleep(SLEEP_TIME / 2);
         }
     }
 }
