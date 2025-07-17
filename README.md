@@ -118,11 +118,12 @@ Execute the compiler with:
 ### Especial functions
 
 Inside the C- language, you can use some special functions that are used to interact directly with MIPS instructions. These functions are:
-| Function Name   | Description                                                                                       | Usage Example          |
-| --------------- | ------------------------------------------------------------------------------------------------- | ---------------------- |
-| `input`         | Get an integer value from the FPGA switch keys (Stop the CPU until the input is given)            | `x = input(); `        |
-| `output`        | Output an integer value to the FPGA 7-segment                                                     | `output(x);`           |
-| `keyboardinput` | Get an integer value from the FPGA keyboard (Doesn't stop the CPU, return 0 if no input is given) | `x = keyboardinput();` |
+| Function Name | Description | Usage Example |
+| --------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
+| `input` | Get an integer value from the FPGA switch keys (Stop the CPU until the input is given) | `x = input(); ` |
+| `output` | Output an integer value to the FPGA 7-segment | `output(x);` |
+| `keyboardinput` | Get an integer value from the PS2 keyboard (Doesn't stop the CPU, return 0 if no input is given) | `x = keyboardinput();` |
+| `drawpixel` | Draw a pixel on the VGA screen at the specified location and with the specified color | `drawpixel(index, color);` |
 
 ---
 
@@ -130,4 +131,3 @@ Inside the C- language, you can use some special functions that are used to inte
 
 > [!WARNING]
 > Automated tests are under construction. Currently, you can manually test the compiler using sample files in the `test_files` directory.
-
